@@ -6,10 +6,10 @@
 | @Editor	: Sublime Text3
 | @UPDATE	: 2010-04-13
 ----------------------------------------------------------*/
-namespace Fus3\Files;
+namespace Flex\Files;
 
-use Fus3\Out\Out;
-use Fus3\R\R;
+use Flex\Out\Out;
+use Flex\R\R;
 
 # parnet : Files
 # purpose : 파일 다운로드

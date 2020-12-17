@@ -1,5 +1,5 @@
 <?php
-namespace Fus3\Mail;
+namespace Flex\Mail;
 
 class MailSendObject
 {

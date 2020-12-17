@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @update	: 1.0.1
 ----------------------------------------------------------*/
-namespace Fus3\Html;
+namespace Flex\Html;
 
 # purpose : xss 방지 및
 class HtmlXssChars

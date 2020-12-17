@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @version : 1.0
 ----------------------------------------------------------*/
-namespace Fus3\Html;
+namespace Flex\Html;
 
 # purpose : 디바이스 단말기등에서 셀렉트 메뉴로 년월일등을 출력하기 위해서
 class HtmlDateSelect extends HtmlButtonMenu

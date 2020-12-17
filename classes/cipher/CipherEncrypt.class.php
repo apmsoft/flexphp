@@ -6,7 +6,7 @@
 | @Editor	: Sublime Text3
 | @UPDATE	: 1.0.2
 ----------------------------------------------------------*/
-namespace Fus3\Cipher;
+namespace Flex\Cipher;
 
 use \ErrorException;
 

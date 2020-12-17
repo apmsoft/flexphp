@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @version : 1.0
 ----------------------------------------------------------*/
-namespace Fus3\Html;
+namespace Flex\Html;
 
 # purpose : 체크박스, 라디오메뉴, 셀렉트 메뉴등을 출력하는 목적으로 사용
 class HtmlButtonMenu{

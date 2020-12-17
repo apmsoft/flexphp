@@ -6,7 +6,7 @@
 | @Editor	: Sublime Text3
 | @UPDATE	: 2011-07-11
 ----------------------------------------------------------*/
-namespace Fus3\Dir;
+namespace Flex\Dir;
 
 # purpose : 디렉토리 관련
 class DirInfo

@@ -6,9 +6,9 @@
 | @Editor   : Sublime Text3
 | @UPDATE   : 2011-07-11
 ----------------------------------------------------------*/
-namespace Fus3\Dir;
+namespace Flex\Dir;
 
-use Fus3\Dir\DirInfo;
+use Flex\Dir\DirInfo;
 
 # 디렉토리 목록 및 디렉토리에 해달하는 파일 가져오기
 class DirObject extends DirInfo{

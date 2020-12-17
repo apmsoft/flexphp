@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	:
 ----------------------------------------------------------*/
-namespace Fus3\Auth;
+namespace Flex\Auth;
 
 # _AUTH_MODE_
 class AuthCookie

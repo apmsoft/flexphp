@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 2010-02-16
 ----------------------------------------------------------*/
-namespace Fus3\Image;
+namespace Flex\Image;
 
 # purpose : 이미지 효과주기
 class ImageDrawCircle extends ImageGDS

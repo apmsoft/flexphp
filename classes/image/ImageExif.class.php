@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 1.0.3
 ----------------------------------------------------------*/
-namespace Fus3\Image;
+namespace Flex\Image;
 
 # purpose : 카메라 촬영 정보
 class ImageExif 
