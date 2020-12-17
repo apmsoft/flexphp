@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 2010-07-09
 ----------------------------------------------------------*/
-namespace Fus3\Image;
+namespace Flex\Image;
 
 # parnet : 
 # purpose : 이미지를(비율에 맞춰) 출력하기 위해

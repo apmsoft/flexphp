@@ -13,7 +13,7 @@ $calendar->set_memorials($memorials);
 $calendar->set_days_of_month();
 $month_days =$calendar->days_of_month;
 ----------------------------------------------------------*/
-namespace Fus3\Calendars;
+namespace Flex\Calendars;
 
 use \DateTime;
 

@@ -6,7 +6,7 @@
 | @Editor	: Sublime Text3
 | @UPDATE	: 1.0.1
 ----------------------------------------------------------*/
-namespace Fus3\Files;
+namespace Flex\Files;
 
 # 파일 용량을 알아보기 쉽도록 변환
 class FilesSizeConvert

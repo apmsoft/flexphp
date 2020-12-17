@@ -6,9 +6,9 @@
 | @Editor	: Sublime Text3
 | @UPDATE	: 1.3.2
 ----------------------------------------------------------*/
-namespace Fus3\Files;
+namespace Flex\Files;
 
-use Fus3\R\R;
+use Flex\R\R;
 
 # parnet : Files
 # purpose : 파일 전송 값 처리를 목적으로 함

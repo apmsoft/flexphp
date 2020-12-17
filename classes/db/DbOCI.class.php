@@ -6,7 +6,7 @@
 | @Editor	: Sublime Text3
 | @Version	: 1
 ----------------------------------------------------------*/
-namespace Fus3\Db;
+namespace Flex\Db;
 
 use \ArrayAccess;
 use \ErrorException;

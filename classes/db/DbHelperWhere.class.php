@@ -6,9 +6,9 @@
 | @Editor	: VSCode
 | @UPDATE	: 1.4
 ----------------------------------------------------------*/
-namespace Fus3\Db;
+namespace Flex\Db;
 
-use Fus3\String\StringKeyword;
+use Flex\String\StringKeyword;
 
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class DbHelperWhere extends StringKeyword

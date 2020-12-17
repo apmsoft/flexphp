@@ -6,7 +6,7 @@
 | @Editor   : Eclipse(default)
 | @version  : 0.9
 ----------------------------------------------------------*/
-namespace Fus3\Ftp;
+namespace Flex\Ftp;
 
 final class Ftp extends FtpObject
 {

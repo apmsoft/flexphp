@@ -6,7 +6,7 @@
 | @Editor	: Sublime Text3
 | @UPDATE	: 1.3.1
 ----------------------------------------------------------*/
-namespace Fus3\Db;
+namespace Flex\Db;
 
 # purpose : 각종 SQL 관련 디비를 통일성있게  작성할 수 있도록 틀을 제공
 interface DbSwitch

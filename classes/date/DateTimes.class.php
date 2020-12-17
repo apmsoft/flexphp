@@ -6,7 +6,7 @@
 | @Editor	: Sublime Text3
 | @version 	: 1.0.4
 ----------------------------------------------------------*/
-namespace Fus3\Date;
+namespace Flex\Date;
 
 use \DateTime;
 use \ErrorException;

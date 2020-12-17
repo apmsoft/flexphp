@@ -23,7 +23,7 @@ $mainSendObj->setAttachmentFiles($file_args);
 $mainSendObj->setTo($emv, trim($emv));
 $mainSendObj->send($is_member['name'].'님이 글을 등록하였습니다');
 ----------------------------------------------------------*/
-namespace Fus3\Mail;
+namespace Flex\Mail;
 
 class MailSend
 {

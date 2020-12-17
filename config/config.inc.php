@@ -48,8 +48,6 @@ define('_AUTH_SUPERDEVEL_LEVEL', 999);
 
 # 어플리케이션과 연동용
 define('_AUTHTOKEN_', '');
-define('_GCM_API_KEY_','');
-define('_IOS_APNS_PEM_', '');
 
 # 데이타베이스 정보
 include_once _ROOT_PATH_.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.db.php';

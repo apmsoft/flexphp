@@ -1,5 +1,5 @@
 <?php
-namespace Fus3\Ftp;
+namespace Flex\Ftp;
 
 class FtpCurl
 {

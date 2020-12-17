@@ -6,10 +6,10 @@
 | @Editor	: Sublime Text3
 | @UPDATE	: 1.4.3
 ----------------------------------------------------------*/
-namespace Fus3\Db;
+namespace Flex\Db;
 
-use Fus3\R\R;
-use Fus3\Req\ReqStrChecker;
+use Flex\R\R;
+use Flex\Req\ReqStrChecker;
 use \MySQLi;
 use \ArrayAccess;
 use \ErrorException;

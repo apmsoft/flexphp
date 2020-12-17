@@ -6,7 +6,7 @@
 | @Editor	: Sublime Text3
 | @UPDATE	: 2010-02-04
 ----------------------------------------------------------*/
-namespace Fus3\Db;
+namespace Flex\Db;
 
 # purpose : oci 함수를 활용해 확장한다
 class DbOCIResult
