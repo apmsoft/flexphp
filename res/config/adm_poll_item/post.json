@@ -1,0 +1,115 @@
+{
+    "validation": {
+        "poll_id": {
+            "title"   : "설문조사",
+            "required": true,
+            "filter"  : "chkNumber"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "id",
+                "table"  : "{__TABLES__.poll}",
+                "where"  : {
+                    "id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.poll_id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+
+            "then" : null
+        },
+
+        "total_record" : {
+            "query"  : "{__QUERIES__.total_record}",
+            "query_type": "single",
+            "params" : {
+                "columns": "pitem_id",
+                "table"  : "{__TABLES__.poll_item}",
+                "where"  : {
+                    "poll_id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.poll_id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : null
+        },
+
+        "post" :{
+            "query"  : null,
+            "query_type": "post",
+            "scheme" : {
+                "pitem_num" : {
+                    "type" : "integer",
+                    "title" : "순번*",
+                    "value" : "{__FUNC__.simpleCalculate}({__DATA__.total_record.count},{__TEXT__.+},{__TEXT__.1})"
+                },
+                "pitem_type" : {
+                    "type" : "radio",
+                    "title" : "문항타입*",
+                    "default":"{__ARRAY__.poll_pitem_type}"
+                },
+                "pitem_title" : {
+                    "title" : "제목*"
+                },
+                "q1":{
+                    "title": "문항1"
+                },
+                "q2":{
+                    "title": "문항2"
+                },
+                "q3":{
+                    "title": "문항3"
+                },
+                "q4":{
+                    "title": "문항4"
+                },
+                "q5":{
+                    "title": "문항5"
+                },
+                "q6":{
+                    "title": "문항6"
+                },
+                "q7":{
+                    "title": "문항7"
+                },
+                "q8":{
+                    "title": "문항8"
+                },
+                "q9":{
+                    "title": "문항9"
+                },
+                "q10":{
+                    "title": "문항10"
+                }
+            },
+            "params" : null,
+            "outmsg" : null
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "scheme":"{__SCHEME__.post}",
+        "msg": ""
+    }
+}

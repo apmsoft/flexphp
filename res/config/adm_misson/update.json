@@ -1,0 +1,127 @@
+{
+    "validation": {
+        "evtid" : {
+            "title"   : "이벤트",
+            "required": true,
+            "filter"  : "chkNumber"
+        },
+        "sortno" : {
+            "title"   : "미션순번",
+            "required": true,
+            "filter"  : "chkNumber"
+        },
+        "msg" : {
+            "title"   : "메세지",
+            "required": true,
+            "filter"  : "chkNull"
+        },
+        "linkurl" : {
+            "title"   : "링크",
+            "required": false,
+            "filter"  : "chkLinkurl"
+        },
+        "extract_id": {
+            "title"   : "첨부파일토큰",
+            "required": true,
+            "filter"  : "chkEngNumUnderline"
+        },
+        "misson_way" : {
+            "title"   : "미션조건",
+            "required": true,
+            "filter"  : "chkEngNumUnderline"
+        },
+        "misson_token":{
+            "title"   : "미션토큰",
+            "required": true,
+            "filter"  : "chkEngNumUnderline"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "id",
+                "table"  : "{__TABLES__.misson}",
+                "where"  : {
+                    "id" : {
+                        "condition": " = ",
+                        "value"    : "{__FUNC__.intval}({__REQ__.id})",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+
+            "then" : {
+                "update" : {
+                    "query"  : null,
+                    "query_type": "update",
+                    "scheme" : {
+                        "evtid" : {
+                            "value" : "{__FUNC__.intval}({__REQ__.evtid})"
+                        },
+                        "sortno" : {
+                            "value" : "{__FUNC__.intval}({__REQ__.sortno})"
+                        },
+                        "msg" : {
+                            "value" : "{__REQ__.msg}"
+                        },
+                        "description" : {
+                            "value" : "{__REQ__.description}"
+                        },
+                        "linkurl" : {
+                            "value" : "{__REQ__.linkurl}"
+                        },
+                        "coupon" : {
+                            "value" : "{__REQ__.coupon}"
+                        },
+                        "misson_way" : {
+                            "value" : "{__REQ__.misson_way}"
+                        },
+                        "misson_token":{
+                            "value" : "{__REQ__.misson_token}"
+                        },
+                        "extract_id":{
+                            "type" : "file",
+                            "table" : "{__UPLOADABLE__.table}",
+                            "image_size" : "{__UPLOADABLE__.image_size}",
+                            "value" : "{__REQ__.extract_id}"
+                        }
+                    },
+                    "params" : {
+                        "table"  : "{__TABLES__.misson}",
+                        "where"  : {
+                            "id": {
+                                "condition": " = ",
+                                "value"    : "{__DATA__.id}",
+                                "coord"    : "AND"
+                            },
+                            "evtid": {
+                                "condition": " = ",
+                                "value"    : "{__REQ__.evtid}",
+                                "coord"    : "AND"
+                            }                            
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_update}"
+    }
+}

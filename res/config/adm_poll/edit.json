@@ -1,0 +1,73 @@
+{
+    "validation": {
+        "id": {
+            "title"   : "식별번호",
+            "required": true,
+            "filter"  : "chkNumber"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : {
+                "id" : {
+                    "type" : "hidden"
+                },
+                "start_date" : {
+                    "type" : "datepicker",
+                    "title" : "시작일"
+                },
+                "end_date" : {
+                    "type" : "datepicker",
+                    "title" : "종료일"
+                },
+                "is_print" : {
+                    "title" : "출판/정지",
+                    "type" : "radio",
+                    "default": "{__ARRAY__.poll_print_type}"
+                },
+                "poll_type":{
+                    "type": "hidden"
+                },
+                "epa_total" : {
+                    "title" : "예상참여인수",
+                    "type" : "number"
+                },
+                "title" : {
+                    "title" : "타이틀"
+                }
+            },
+            "params" : {
+                "columns": "id,start_date,end_date,is_print,poll_type,epa_total,title",
+                "table"  : "{__TABLES__.poll}",
+                "where"  : {
+                    "id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+
+            "then" : null
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "scheme":"{__SCHEME__.info}",
+        "msg": "{__DATA__.info.fetch()}"
+    }
+}

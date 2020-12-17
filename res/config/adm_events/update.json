@@ -1,0 +1,125 @@
+{
+    "validation": {
+        "category": {
+            "title"   : "카테고리",
+            "required": false,
+            "filter"  : "chkAlphabet"
+        },
+        "title": {
+            "title"   : "제목",
+            "required": true,
+            "filter"  : "chkNull"
+        },
+        "lat": {
+            "title"   : "위치정보",
+            "required": false,
+            "filter"  : "chkFloat"
+        },
+        "lon": {
+            "title"   : "위치정보",
+            "required": false,
+            "filter"  : "chkFloat"
+        },
+        "start_date": {
+            "title"   : "시작일",
+            "required": true,
+            "filter"  : "chkDateformat"
+        },
+        "end_date": {
+            "title"   : "종료일",
+            "required": true,
+            "filter"  : "chkDateformat"
+        },
+        "extract_id": {
+            "title"   : "첨부파일토큰",
+            "required": true,
+            "filter"  : "chkEngNumUnderline"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "id",
+                "table"  : "{__TABLES__.events}",
+                "where"  : {
+                    "id" : {
+                        "condition": " = ",
+                        "value"    : "{__FUNC__.intval}({__REQ__.id})",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+
+            "then" : {
+                "update" : {
+                    "query"  : null,
+                    "query_type": "update",
+                    "scheme" : {
+                        "category": {
+                            "value" : "{__REQ__.category}"
+                        },
+                        "title" : {
+                            "value" : "{__REQ__.title}"
+                        },
+                        "postcode" : {
+                            "value" : "{__REQ__.postcode}"
+                        },
+                        "address1" : {
+                            "value" : "{__REQ__.address1}"
+                        },
+                        "address2" : {
+                            "value" : "{__REQ__.address2}"
+                        },
+                        "lat" : {
+                            "value" : "{__FUNC__.floatval}({__REQ__.lat})"
+                        },
+                        "lon" : {
+                            "value" : "{__FUNC__.floatval}({__REQ__.lon})"
+                        },
+                        "start_date" : {
+                            "value" : "{__REQ__.start_date}"
+                        },
+                        "end_date" : {
+                            "value" : "{__REQ__.end_date}"
+                        },
+                        "extract_id":{
+                            "type" : "file",
+                            "table" : "{__UPLOADABLE__.table}",
+                            "image_size" : "{__UPLOADABLE__.image_size}",
+                            "value" : "{__REQ__.extract_id}"
+                        }
+                    },
+                    "params" : {
+                        "table"  : "{__TABLES__.events}",
+                        "where"  : {
+                            "id": {
+                                "condition": " = ",
+                                "value"    : "{__DATA__.id}",
+                                "coord"    : "AND"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_modify}"
+    }
+}

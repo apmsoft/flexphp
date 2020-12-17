@@ -1,0 +1,86 @@
+{
+    "validation": {
+        "category": {
+            "title": "분류",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "title": {
+            "title": "제목",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "description": {
+            "title": "내용",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "extract_id": {
+            "title": "첨부파일토큰",
+            "required": true,
+            "filter": "chkEngNumUnderline"
+        }
+    },
+    "authority": "0",
+    "model": [],
+    "data": {
+        "member" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "id",
+                "table"  : "{__TABLES__.member}",
+                "where"  : {
+                    "userid" : {
+                        "condition": " = ",
+                        "value"    : "{__FUNC__.makeDevicemodelId}({__REQ__.device_uuid},{__REQ__.device_model})",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+
+            "then" : null
+        },
+        "insert": {
+            "query": null,
+            "query_type": "insert",
+            "scheme": {
+                "muid": {
+                    "value": "{__DATA__.member.id}"
+                },
+                "category": {
+                    "value": "{__REQ__.category}"
+                },
+                "title": {
+                    "value": "{__REQ__.title}"
+                },
+                "description": {
+                    "value": "{__REQ__.description}"
+                },
+                "signdate": {
+                    "value": "{__FUNC__.time}()"
+                },
+                "extract_id": {
+                    "type": "file",
+                    "table": "{__UPLOADABLE__.table}",
+                    "image_size": "{__UPLOADABLE__.image_size}",
+                    "value": "{__REQ__.extract_id}"
+                }
+            },
+            "params": {
+                "table": "{__TABLES__.notice}",
+                "where": null
+            }
+        }
+    },
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_insert}"
+    }
+}

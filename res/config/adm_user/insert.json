@@ -1,0 +1,73 @@
+{
+    "validation": {
+        "userid": {
+            "title"   : "이메일 아이디",
+            "required": true,
+            "filter"  : "chkEmail"
+        },
+        "passwd": {
+            "title"   : "비밀번호",
+            "required": true,
+            "filter"  : "chkPasswd"
+        },
+        "passwd,re_passwd": {
+            "title"   : "비밀번호확인",
+            "required": true,
+            "filter"  : "chkEquals"
+        },
+        "name": {
+            "title"   : "이름",
+            "required": true,
+            "filter"  : "chkName"
+        },
+        "cellphone": {
+            "title"   : "전화번호",
+            "required": true,
+            "filter"  : "chkPhone"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "insert" : {
+            "query"  : null,
+            "query_type": "insert",
+            "scheme" : {
+                "userid" : {
+                    "value" : "{__REQ__.userid}"
+                },
+                "passwd" : {
+                    "value" : "{__FUNC__.password}({__REQ__.passwd})"
+                },
+                "level" : {
+                    "value" : "1"
+                },
+                "name" : {
+                    "value" : "{__REQ__.name}"
+                },
+                "cellphone" : {
+                    "value" : "{__REQ__.cellphone}"
+                },
+                "signdate" : {
+                    "value" : "{__FUNC__.time}()"
+                },
+                "extract_id":{
+                    "value" : "{__FUNC__.create_upload_token}({__TABLES__.member})"
+                }
+            },
+            "params" : {
+                "table"  : "{__TABLES__.member}",
+                "where"  : null
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_insert}"
+    }
+}

@@ -1,0 +1,51 @@
+{
+    "validation": {
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "post" :{
+            "query"  : null,
+            "query_type": "post",
+            "scheme" : {
+                "start_date" : {
+                    "type" : "datepicker",
+                    "title" : "시작일",
+                    "value" : "{__FUNC__.date}({__TEXT__.Y-m-d},{__FUNC__.time}())"
+                },
+                "end_date" : {
+                    "type" : "datepicker",
+                    "title" : "종료일"
+                },
+                "is_print" : {
+                    "title" : "출판/정지",
+                    "type" : "radio",
+                    "default": "{__ARRAY__.poll_print_type}"
+                },
+                "poll_type":{
+                    "type": "hidden",
+                    "value": "mem"
+                },
+                "epa_total" : {
+                    "title" : "예상참여인수",
+                    "type" : "number"
+                },
+                "title" : {
+                    "title" : "타이틀"
+                }
+            },
+            "params" : null,
+            "outmsg" : null
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "scheme":"{__SCHEME__.post}",
+        "msg": ""
+    }
+}

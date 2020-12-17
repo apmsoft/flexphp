@@ -1,0 +1,73 @@
+{
+    "validation": {
+        "misson_token": {
+            "title"   : "미션토큰",
+            "required": true,
+            "filter"  : "chkEngNumUnderline"
+        },
+        "couponno": {
+            "title"   : "쿠폰",
+            "required": true,
+            "filter"  : "chkEngNumUnderline"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "id,misson_token",
+                "table"  : "{__TABLES__.misson_coupon}",
+                "where"  : {
+                    "misson_token" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.misson_token}",
+                        "coord"    : "AND"
+                    },
+                    "couponno" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.couponno}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"true",
+                "msg_code":"w_alreay_mscoupon",
+                "msg":"w_alreay_mscoupon"
+            },
+            "then" : null
+        },
+        "insert" : {
+            "query"  : null,
+            "query_type": "insert",
+            "scheme" : {
+                "misson_token": {
+                    "value" : "{__REQ__.misson_token}"
+                },
+                "couponno" : {
+                    "value" : "{__REQ__.couponno}"
+                },
+                "signdate" : {
+                    "value" : "{__FUNC__.time}()"
+                }
+            },
+            "params" : {
+                "table"  : "{__TABLES__.misson_coupon}",
+                "where"  : null
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_insert}"
+    }
+}

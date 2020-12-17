@@ -1,0 +1,91 @@
+{
+    "validation": {
+        "id": {
+            "title": "식별번호",
+            "required": true,
+            "filter": "chkNumber"
+        },
+        "category": {
+            "title": "분류",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "title": {
+            "title": "제목",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "description": {
+            "title": "내용",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "extract_id": {
+            "title": "첨부파일토큰",
+            "required": true,
+            "filter": "chkEngNumUnderline"
+        }
+    },
+    "authority": "0",
+    "model": [],
+    "data": {
+        "info": {
+            "query": "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme": null,
+            "params": {
+                "columns": "id",
+                "table": "{__TABLES__.notice}",
+                "where": {
+                    "id": {
+                        "condition": " = ",
+                        "value": "{__REQ__.id}",
+                        "coord": "AND"
+                    }
+                }
+            },
+            "outmsg": {
+                "mode": "false",
+                "msg_code": "e_db_unenabled",
+                "msg": "e_db_unenabled"
+            },
+            "then": {
+                "update": {
+                    "query": null,
+                    "query_type": "update",
+                    "scheme": {
+                        "category": {
+                            "value": "{__REQ__.category}"
+                        },
+                        "title": {
+                            "value": "{__REQ__.title}"
+                        },
+                        "description": {
+                            "value": "{__REQ__.description}"
+                        },
+                        "extract_id": {
+                            "type": "file",
+                            "table": "{__UPLOADABLE__.table}",
+                            "image_size": "{__UPLOADABLE__.image_size}",
+                            "value": "{__REQ__.extract_id}"
+                        }
+                    },
+                    "params": {
+                        "table": "{__TABLES__.notice}",
+                        "where": {
+                            "id": {
+                                "condition": " = ",
+                                "value": "{__DATA__.info.id}",
+                                "coord": "AND"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_update}"
+    }
+}

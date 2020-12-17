@@ -1,0 +1,75 @@
+{
+    "validation": {
+        "pitem_id": {
+            "title"   : "식별번호",
+            "required": true,
+            "filter"  : "chkNumber"
+        },
+        "poll_id": {
+            "title"   : "설문조사",
+            "required": true,
+            "filter"  : "chkNumber"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "pitem_id",
+                "table"  : "{__TABLES__.poll_item}",
+                "where"  : {
+                    "pitem_id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.pitem_id}",
+                        "coord"    : "AND"
+                    },
+                    "poll_id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.poll_id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+            "then" : {
+                "delete" : {
+                    "query"  : null,
+                    "query_type": "delete",
+                    "scheme" : null,
+                    "params" : {
+                        "table"  : "{__TABLES__.poll_item}",
+                        "where"  : {
+                            "pitem_id" : {
+                                "condition": " = ",
+                                "value"    : "{__REQ__.pitem_id}",
+                                "coord"    : "AND"
+                            },
+                            "poll_id" : {
+                                "condition": " = ",
+                                "value"    : "{__REQ__.poll_id}",
+                                "coord"    : "AND"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_delete}"
+    }
+}

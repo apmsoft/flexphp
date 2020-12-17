@@ -1,0 +1,98 @@
+{
+    "validation": {
+        "id": {
+            "title"   : "식별번호",
+            "required": true,
+            "filter"  : "chkNumber"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+        "authority"         : 100,
+        "join_default_level": "{_DEFINE._AUTH_SUPERADMIN_LEVEL}"
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : {
+                "id" : {
+                    "type": "hidden"
+                },
+                "category" : {
+                    "type":"select",
+                    "title" : "카테고리",
+                    "default":"{__ARRAY__.notice_category}"
+                },
+                "headline" : {
+                    "title" : "공지글",
+                    "type":"radio",
+                    "default":"{__ARRAY__.headline}"
+                },
+                "title" : {
+                    "title" : "제목"
+                },
+                "description" : {
+                    "type" : "wysiwyg",
+                    "title" : "내용"
+                },
+                "extract_id" : {
+                    "type" : "file",
+                    "doc_id" : "adm_bbs_notice",
+                    "default" : "{__UPLOADABLE__.file_extension}",
+                    "number_files_allowed" : "{__FUNC__.intval}({__UPLOADABLE__.number_files_allowed})",
+                    "title" : "첨부파일"
+                }
+            },
+            "params" : {
+                "columns": "id,category,headline,title,description,extract_id",
+                "table"  : "{__TABLES__.notice}",
+                "where"  : {
+                    "id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+
+            "then" : {
+                "upfiles" : {
+                    "query"  : "{__QUERIES__.single_query}",
+                    "query_type": "multiple",
+                    "scheme" : null,
+                    "params" : {
+                        "columns": "id,file_type,directory,sfilename",
+                        "table"  : "{__TABLES__.uploadfiles}",
+                        "where"  : {
+                            "extract_id": {
+                                "condition": " = ",
+                                "value"    : "{__DATA__.info.extract_id}",
+                                "coord"    : "AND"
+                            },
+                            "is_regi": {
+                                "condition": " = ",
+                                "value"    : "1",
+                                "coord"    : "AND"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "scheme":"{__SCHEME__.info}",
+        "msg": "{__DATA__.info.fetch()}"
+    }
+}

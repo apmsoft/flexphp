@@ -1,0 +1,81 @@
+{
+    "validation": {
+        "headline": {
+            "title": "공지글",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "title": {
+            "title": "제목",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "description": {
+            "title": "내용",
+            "required": true,
+            "filter": "chkNull"
+        },
+        "extract_id": {
+            "title": "첨부파일토큰",
+            "required": true,
+            "filter": "chkEngNumUnderline"
+        }
+    },
+    "authority": "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+    "model": [],
+    "data": {
+        "insert": {
+            "query": null,
+            "query_type": "insert",
+            "scheme": {
+                "muid": {
+                    "value": "{_SESSION.auth_id}"
+                },
+                "category": {
+                    "value": "{__REQ__.category}"
+                },
+                "headline": {
+                    "value": "{__REQ__.headline}"
+                },
+                "title": {
+                    "value": "{__REQ__.title}"
+                },
+                "description": {
+                    "value": "{__REQ__.description}"
+                },
+                "signdate": {
+                    "value": "{__FUNC__.time}()"
+                },
+                "extract_id": {
+                    "type": "file",
+                    "table": "{__UPLOADABLE__.table}",
+                    "image_size": "{__UPLOADABLE__.image_size}",
+                    "value": "{__REQ__.extract_id}"
+                }
+            },
+            "params": {
+                "table": "{__TABLES__.notice}",
+                "where": null
+            }
+        }
+    },
+    "alarm" : {
+        "state" : true,
+        "msg" : "{__REQ__.title}",
+        "params" : "{__TABLES__.notice}",
+        "condition" : {
+            "headline" : {
+                "condi": " = ",
+                "value"    : "y"
+            }
+        },
+        "send_option" : "all",
+        "push" : true,
+        "mail": true,
+        "sms" : false
+    },
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_insert}"
+    }
+}

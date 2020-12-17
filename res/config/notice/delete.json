@@ -1,0 +1,60 @@
+{
+    "validation": {
+        "id": {
+            "title"   : "식별번호",
+            "required": true,
+            "filter"  : "chkNumber"
+        }
+    },
+
+    "authority" : "0",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "id",
+                "table"  : "{__TABLES__.notice}",
+                "where"  : {
+                    "id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+            "then" : {
+                "delete" : {
+                    "query"  : null,
+                    "query_type": "delete",
+                    "scheme" : null,
+                    "params" : {
+                        "table"  : "{__TABLES__.notice}",
+                        "where"  : {
+                            "id": {
+                                "condition": " = ",
+                                "value"    : "{__DATA__.info.id}",
+                                "coord"    : "AND"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_delete}"
+    }
+}

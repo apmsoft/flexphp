@@ -1,0 +1,138 @@
+[
+	{
+		"date"        : "2013-01-01",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "신정"
+	},
+	{
+		"date"        : "2013-01-01",
+		"smtype"      : "m",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 1,
+		"title"       : "설날"
+	},
+	{
+		"date"        : "2012-03-01",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "3.1절"
+	},
+	{
+		"date"        : "2012-04-08",
+		"smtype"      : "m",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "석가탄신일"
+	},
+	{
+		"date"        : "2012-05-01",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 0,
+		"holiday_plus": 0,
+		"title"       : "근로자의 날"
+	},
+	{
+		"date"        : "2012-05-05",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "어린이날"
+	},
+	{
+		"date"        : "2012-05-08",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 0,
+		"holiday_plus": 0,
+		"title"       : "어버이날"
+	},
+	{
+		"date"        : "2012-05-15",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 0,
+		"holiday_plus": 0,
+		"title"       : "스승의 날"
+	},
+	{
+		"date"        : "2012-06-06",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "현충일"
+	},
+	{
+		"date"        : "2012-07-17",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 0,
+		"holiday_plus": 0,
+		"title"       : "제헌절"
+	},
+	{
+		"date"        : "2012-08-15",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "광복절"
+	},
+	{
+		"date"        : "2012-08-15",
+		"smtype"      : "m",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 1,
+		"title"       : "추석"
+	},
+	{
+		"date"        : "2012-10-01",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "국군의날"
+	},
+	{
+		"date"        : "2012-10-03",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "개천절"
+	},
+	{
+		"date"        : "2012-10-09",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "한글날"
+	},
+	{
+		"date"        : "2012-12-25",
+		"smtype"      : "s",
+		"repeat"      : "y",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "성탄절"
+	},
+	{
+		"date"        : "2015-09-29",
+		"smtype"      : "s",
+		"repeat"      : "n",
+		"holiday"     : 1,
+		"holiday_plus": 0,
+		"title"       : "대체휴일"
+	}
+]

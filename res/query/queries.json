@@ -1,0 +1,23 @@
+{
+    "total_record": "SELECT count({columns}) as count FROM `{table}` {where}",
+    "total_record_distinct": "SELECT count(distinct {columns}) as count FROM `{table}` {where}",
+    "single_query": "SELECT {columns} FROM `{table}` {where}",
+    "login_adm_query": "SELECT {columns} FROM `{table}` WHERE `userid`='{userid}' AND `passwd`='{passwd}' AND `level`>='{level}'",
+    "login_query": "SELECT {columns} FROM `{table}` WHERE `userid`='{userid}' AND `passwd`='{passwd}'",
+    "recently_query": "UPDATE `{table}` SET `recently_connect_date`=UNIX_TIMESTAMP() WHERE `userid`='{userid}'",
+    "loop_query": "SELECT {columns} FROM `{table}` {where} ORDER BY {orderby} LIMIT {limit}",
+    "inner_join": "SELECT {columns} FROM `{table_a}` a INNER JOIN `{table_b}` b ON {on} {where} ORDER BY {orderby} LIMIT {limit}",
+    "left_join": "SELECT {columns} FROM `{table_a}` a LEFT JOIN `{table_b}` b ON {on} {where}",
+    "outter_join": "SELECT {columns} FROM `{table_a}` AS a LEFT OUTER JOIN `{table_b}` AS b ON {on}",
+    "sub_query_from": "SELECT {columns_a} FROM `{table_a}` a, (SELECT {columns_b} FROM `{table_b}` {where_b}) b WHERE {where}",
+    "single_update": "UPDATE `{table}` SET {columns} {where}",
+    "group_by": "SELECT {columns} FROM `{table}` GROUP BY {group_by}",
+    "min_max": "SELECT min({columns_min}) as minv, max({columns_max}) as maxv FROM `{table}` {where}",
+    "max": "SELECT max({columns_max}) as maxv FROM `{table}` {where}",
+    "sum": "SELECT sum({columns_sum}) as sum FROM `{table}` {where}",
+    "upfiles_image": "SELECT {columns} FROM `{table}` WHERE extract_id='{extract_id}' AND `is_regi`='1' AND `file_type` LIKE 'image%' ORDER BY `id` ASC LIMIT 1",
+    "upfiles": "SELECT id,file_type,directory,sfilename,ofilename FROM `{table}` WHERE extract_id='{extract_id}' AND `is_regi`='1' ORDER BY `id` ASC",
+    "category1": "SELECT {columns} FROM `{table}` WHERE LENGTH(REPLACE(`{field}`,'000',''))='3' ORDER BY `{orderby}` ASC",
+    "category2": "SELECT {columns} FROM `{table}` WHERE `{field}` LIKE '{q}%' AND LENGTH(REPLACE(`{field2}`,'000',''))='6' ORDER BY `{orderby}` ASC",
+    "category3": "SELECT {columns} FROM `{table}` WHERE `{field}` LIKE '{q}%' AND LENGTH(`{field2}`)='9' ORDER BY `{orderby}` ASC"
+}

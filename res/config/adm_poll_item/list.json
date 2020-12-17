@@ -1,0 +1,107 @@
+{
+    "validation": {
+        "poll_id": {
+            "title"   : "설문조사",
+            "required": true,
+            "filter"  : "chkNumber"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "poll_info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : {
+                "is_print" : {
+                    "default" : "{__ARRAY__.poll_print_type}",
+                    "value" : "{__DATA__.is_print}"
+                }
+            },
+            "params" : {
+                "columns": "id,title,start_date,end_date,is_print,poll_type,q_count,a_count,epa_total",
+                "table"  : "{__TABLES__.poll}",
+                "where"  : {
+                    "id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.poll_id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : null,
+            "then" : null
+        },
+
+        "total_record" : {
+            "query"  : "{__QUERIES__.total_record}",
+            "query_type": "single",
+            "params" : {
+                "columns": "pitem_id",
+                "table"  : "{__TABLES__.poll_item}",
+                "where"  : {
+                    "poll_id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.poll_id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : null
+        },
+
+        "list" :{
+            "query"  : "{__QUERIES__.loop_query}",
+            "query_type": "multiple",
+            "scheme" : {
+                "signdate" : {
+                    "value" : "{__FUNC__.timetodatetime}({__DATA__.signdate})"
+                }
+            },
+            "params" : {
+                "columns": "pitem_id,poll_id,pitem_num,pitem_type,pitem_title,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10",
+                "table"  : "{__TABLES__.poll_item}",
+                "where"  : {
+                    "poll_id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.poll_id}",
+                        "coord"    : "AND"
+                    }
+                },
+                "orderby": "`pitem_num` ASC",
+                "limit"  : 100
+            },
+            "outmsg" : null,
+            "then" : null
+        },
+
+        "item_log_count" : {
+            "query"  : "{__QUERIES__.total_record}",
+            "query_type": "single",
+            "params" : {
+                "columns": "plog_id",
+                "table"  : "{__TABLES__.poll_item_log}",
+                "where"  : {
+                    "poll_id" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.poll_id}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : null
+        }
+    },
+
+    "output": {
+        "result"       : "true",
+        "total_record" : "{__DATA__.total_record.count}",
+        "poll_info"    : "{__DATA__.poll_info.fetch()}",
+        "item_log_count": "{__DATA__.item_log_count.count}",
+        "msg"          : "{__DATA__.list.fetch()}"
+    }
+}

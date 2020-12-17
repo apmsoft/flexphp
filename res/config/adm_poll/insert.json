@@ -1,0 +1,81 @@
+{
+    "validation": {
+        "start_date" : {
+            "title"   : "시작일",
+            "required": true,
+            "filter"  : "chkDateFormat"
+        },
+        "end_date" : {
+            "title"   : "종료일",
+            "required": true,
+            "filter"  : "chkDateFormat"
+        },
+        "is_print" : {
+            "title"   : "출판/정지",
+            "required": true,
+            "filter"  : "chkAlphabet"
+        },
+        "poll_type" : {
+            "title"   : "투표방식",
+            "required": true,
+            "filter"  : "chkAlphabet"
+        },
+        "epa_total" : {
+            "title"   : "예상참여인수",
+            "required": true,
+            "filter"  : "chkNumber"
+        },
+        "title": {
+            "title"   : "제목",
+            "required": true,
+            "filter"  : "chkNull"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "insert" : {
+            "query"  : null,
+            "query_type": "insert",
+            "scheme" : {
+                "start_date" : {
+                    "value" : "{__REQ__.start_date})"
+                },
+                "end_date" : {
+                    "value" : "{__REQ__.end_date}"
+                },
+                "is_print" : {
+                    "value" : "{__REQ__.is_print}"
+                },
+                "poll_type" : {
+                    "value" : "{__REQ__.poll_type}"
+                },
+                "title" : {
+                    "value" : "{__REQ__.title}"
+                },
+                "signdate" : {
+                    "value" : "{__FUNC__.time}()"
+                },
+                "epa_total" : {
+                    "value" : "{__REQ__.epa_total}"
+                },
+                "muid":{
+                    "value" : "{_SESSION.auth_id}"
+                }
+            },
+            "params" : {
+                "table"  : "{__TABLES__.poll}",
+                "where"  : null
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_insert}"
+    }
+}

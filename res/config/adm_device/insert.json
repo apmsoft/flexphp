@@ -1,0 +1,79 @@
+{
+    "validation": {
+        "category": {
+            "title"   : "카테고리",
+            "required": true,
+            "filter"  : "chkAlphabet"
+        },
+        "dvmac": {
+            "title"   : "맥주소",
+            "required": true,
+            "filter"  : "chkEngNumUnderline"
+        },
+        "title": {
+            "title"   : "제목",
+            "required": true,
+            "filter"  : "chkNull"
+        },
+        "lat": {
+            "title"   : "위치정보",
+            "required": false,
+            "filter"  : "chkFloat"
+        },
+        "lon": {
+            "title"   : "위치정보",
+            "required": false,
+            "filter"  : "chkFloat"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "insert" : {
+            "query"  : null,
+            "query_type": "insert",
+            "scheme" : {
+                "category": {
+                    "value" : "{__REQ__.category}"
+                },
+                "dvmac" : {
+                    "value" : "{__FUNC__.strtoupper}({__REQ__.dvmac})"
+                },
+                "title" : {
+                    "value" : "{__REQ__.title}"
+                },
+                "postcode" : {
+                    "value" : "{__REQ__.postcode}"
+                },
+                "address1" : {
+                    "value" : "{__REQ__.address1}"
+                },
+                "address2" : {
+                    "value" : "{__REQ__.address2}"
+                },
+                "lat" : {
+                    "value" : "{__FUNC__.floatval}({__REQ__.lat})"
+                },
+                "lon" : {
+                    "value" : "{__FUNC__.floatval}({__REQ__.lon})"
+                },
+                "signdate" : {
+                    "value" : "{__FUNC__.time}()"
+                }
+            },
+            "params" : {
+                "table"  : "{__TABLES__.device}",
+                "where"  : null
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "msg": "{__SYSMSG__.v_insert}"
+    }
+}

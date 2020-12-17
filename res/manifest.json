@@ -1,0 +1,36 @@
+{
+    "auth": {
+        "category": "member",
+        "title": "로그인",
+        "config": {
+            "login": "login",
+            "logout": "logout"
+        },
+        "uploadable": null
+    },
+    "notice": {
+        "category": "bbs",
+        "title": "소식",
+        "config": {
+            "list": "list",
+            "view": "view"
+        },
+        "uploadable": {
+            "table": "{__TABLES__.uploadfiles}",
+            "authority": "0",
+            "image_size": {
+                "thumbnail": {
+                    "width": "110",
+                    "height": "110"
+                },
+                "middle": {
+                    "width": "600",
+                    "height": "600"
+                }
+            },
+            "file_extension": "jpg,jpeg,png",
+            "file_maxsize": "8",
+            "number_files_allowed": "10"
+        }
+    }
+}

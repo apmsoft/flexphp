@@ -1,0 +1,78 @@
+{
+    "validation": {
+        "misson_token": {
+            "title"   : "미션토큰",
+            "required": true,
+            "filter"  : "chkEngNumUnderline"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "total_record" : {
+            "query"  : "{__QUERIES__.total_record}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "id",
+                "table"  : "{__TABLES__.misson_coupon}",
+                "where"  : {
+                    "misson_token" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.misson_token}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : null
+        },
+
+        "list" :{
+            "query"  : "{__QUERIES__.loop_query}",
+            "query_type": "multiple",
+            "scheme" : null,
+            "params" : {
+                "columns": "id,misson_token,couponno",
+                "table"  : "{__TABLES__.misson_coupon}",
+                "where"  : {
+                    "misson_token" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.misson_token}",
+                        "coord"    : "AND"
+                    }
+                },
+                "orderby": "`id` DESC",
+                "limit" : 100
+            },
+            "outmsg" : null,
+            "then" : {
+                "coupon" :{
+                    "query"  : "{__QUERIES__.single_query}",
+                    "query_type": "single",
+                    "scheme" : null,
+                    "params" : {
+                        "columns": "id,number,title,start_date,end_date,ea",
+                        "table"  : "{__TABLES__.coupon}",
+                        "where"  : {
+                            "number" : {
+                                "condition": " = ",
+                                "value"    : "{__DATA__.list.couponno}",
+                                "coord"    : "AND"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "output": {
+        "result"      : "true",
+        "total_record": "{__DATA__.total_record.count}",
+        "msg"         : "{__DATA__.list.fetch()}"
+    }
+}

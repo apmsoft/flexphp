@@ -1,0 +1,81 @@
+{
+    "validation": {
+        "id": {
+            "title"   : "식별번호",
+            "required": true,
+            "filter"  : "chkNumber"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : {
+                "id" : {
+                    "value" : "{__FUNC__.intval}({__DATA__.id})"
+                },
+                "signdate" : {
+                    "value" : "{__FUNC__.timetodatetime}({__DATA__.signdate})"
+                },
+                "recently_connect_date" : {
+                    "value" : "{__FUNC__.timetodatetime}({__DATA__.recently_connect_date})"
+                },
+                "up_date" : {
+                    "value" : "{__FUNC__.timetodatetime}({__DATA__.up_date})"
+                }
+            },
+            "params" : {
+                "columns": "id,signdate,recently_connect_date,up_date,userid,level,name,cellphone,introduce,extract_id",
+                "table"  : "{__TABLES__.member}",
+                "where"  : {
+                    "id" : {
+                        "condition": " = ",
+                        "value"    : "{__FUNC__.intval}({__REQ__.id})",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+
+            "then" : {
+                "upfiles" : {
+                    "query"  : "{__QUERIES__.single_query}",
+                    "query_type": "multiple",
+                    "scheme" : null,
+                    "params" : {
+                        "columns": "id,file_type,directory,sfilename",
+                        "table"  : "{__TABLES__.member_upfiles}",
+                        "where"  : {
+                            "extract_id": {
+                                "condition": " = ",
+                                "value"    : "{__DATA__.info.extract_id}",
+                                "coord"    : "AND"
+                            },
+                            "is_regi": {
+                                "condition": " = ",
+                                "value"    : "1",
+                                "coord"    : "AND"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "user_level": "{__ARRAY__.level}",
+        "msg": "{__DATA__.info.fetch()}"
+    }
+}

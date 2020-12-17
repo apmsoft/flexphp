@@ -1,0 +1,92 @@
+{
+    "validation": {
+        "page": {
+            "title"   : "페이지",
+            "required": true,
+            "filter"  : "chkNumber"
+        },
+        "evtid": {
+            "title"   : "이벤트",
+            "required": true,
+            "filter"  : "chkNumber"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+        "page_limit"        : 50,
+        "page_block_count"  : 5,
+        "page"              : "{__REQ__.page}"
+    },
+
+    "data":{
+        "total_record" : {
+            "query"  : "{__QUERIES__.total_record}",
+            "query_type": "single",
+            "params" : {
+                "columns": "id",
+                "table"  : "{__TABLES__.misson}",
+                "where"  : {
+                    "__FIELD__": "title",
+                    "__Q__": "{__REQ__.q}",
+                    "misson_way" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.category}",
+                        "coord"    : "AND"
+                    },
+                    "evtid" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.evtid}",
+                        "coord"    : "AND"
+                    }
+                }
+            },
+            "outmsg" : null
+        },
+
+        "list" :{
+            "query"  : "{__QUERIES__.loop_query}",
+            "query_type": "multiple",
+            "scheme" : {
+                "signdate" : {
+                    "value" : "{__FUNC__.timetodatetime}({__DATA__.signdate})"
+                }
+            },
+            "params" : {
+                "columns": "id,sortno,msg,description,linkurl,misson_way,signdate",
+                "table"  : "{__TABLES__.misson}",
+                "where"  : {
+                    "__FIELD__": "title",
+                    "__Q__": "{__REQ__.q}",
+                    "misson_way" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.category}",
+                        "coord"    : "AND"
+                    },
+                    "evtid" : {
+                        "condition": " = ",
+                        "value"    : "{__REQ__.evtid}",
+                        "coord"    : "AND"
+                    }
+                },
+                "orderby": "`sortno` ASC",
+                "limit"  : "{__FUNC__.limit}({__DATA__.total_record.count},{__REQ__.page},{__MODEL__.page_limit},{__MODEL__.page_block_count})"
+            },
+            "outmsg" : null,
+            "then" : null
+        }
+    },
+
+    "output": {
+        "result"       : "true",
+        "page"         : "{__REQ__.page}",
+        "total_page"   : "{__MODEL__.totalPage}",
+        "total_record" : "{__DATA__.total_record.count}",
+        "paging"       : "{__MODEL__.paging_relation}",
+        "q"            : "{__REQ__.q}",
+        "category"     : "{__REQ__.category}",
+        "category_navi": "{__ARRAY__.misson_category}",
+        "msg"          : "{__DATA__.list.fetch()}"
+    }
+}

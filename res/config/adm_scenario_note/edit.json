@@ -1,0 +1,63 @@
+{
+    "validation": {
+        "id": {
+            "title"   : "식별번호",
+            "required": true,
+            "filter"  : "chkNumber"
+        },
+        "scenario_id": {
+            "title": "시나리오id",
+            "required": true,
+            "filter": "chkNumber"
+        }
+    },
+
+    "authority" : "{__FUNC__.chk_authority}({_DEFINE._AUTH_SUPERADMIN_LEVEL})",
+
+    "model": {
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.single_query}",
+            "query_type": "single",
+            "scheme" : {
+                "id" : {
+                    "type": "hidden"
+                },
+                "msg" : {
+                    "title" : "학습 메세지 및 태그"
+                }
+            },
+            "params" : {
+                "columns": "id,msg",
+                "table"  : "{__TABLES__.chat_scenario_note}",
+                "where"  : {
+                    "id" : {
+                        "condition": "=",
+                        "value"    : "{__REQ__.id}",
+                        "coord"    : "AND"
+                    },
+                    "scenario_id": {
+                        "condition": " = ",
+                        "value": "{__REQ__.scenario_id}",
+                        "coord": "AND"
+                    }
+                }
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"e_db_unenabled",
+                "msg":"e_db_unenabled"
+            },
+
+            "then" : null
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "scheme":"{__SCHEME__.info}",
+        "msg": "{__DATA__.info.fetch()}"
+    }
+}

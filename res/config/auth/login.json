@@ -1,0 +1,46 @@
+{
+    "validation": {
+        "userid": {
+            "title"   : "아이디(이메일)",
+            "required": true,
+            "filter"  : "chkEmail"
+        },
+        "passwd": {
+            "title"   : "비밀번호",
+            "required": true,
+            "filter"  : "chkPasswd"
+        }
+    },
+
+    "authority" : "0",
+
+    "model": {
+        "superadmin" : false
+    },
+
+    "data":{
+        "info" :{
+            "query"  : "{__QUERIES__.login_query}",
+            "query_type": "single",
+            "scheme" : null,
+            "params" : {
+                "columns": "id,userid,passwd,name,level,extract_id",
+                "table"  : "{__TABLES__.member}",
+                "userid"  :"{__REQ__.userid}",
+                "passwd" : "{__FUNC__.password}({__REQ__.passwd})"
+            },
+            "outmsg" : {
+                "mode":"false",
+                "msg_code":"w_enter_userid_passwd",
+                "msg":"w_enter_userid_passwd"
+            },
+            "then" : null
+        }
+    },
+
+    "output": {
+        "result": "true",
+        "id": "{__DATA__.id}",
+        "msg"   : "{__SYSMSG__.v_login}"
+    }
+}
