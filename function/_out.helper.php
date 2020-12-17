@@ -5,7 +5,7 @@
 # 클래스와 기능이 동일
 # Out.class.php
 ----------------------------------------------------------*/
-use Fus3\Out\Out;
+use Flex\Out\Out;
 
 function out_($str){Out::prints($str);}
 function out_ln($str){ Out::prints_ln($str); }
