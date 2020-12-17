@@ -8,13 +8,6 @@
 			"lv" : 100,
 			"url" : "./?act=member"
 		},
-		{
-	        "id": "chat_scenario",
-	        "title": "챗봇마당",
-	        "icon": "<i class=\"fa fa-window-restore\"></i>",
-			"lv" : 100,
-			"url" : "./?act=chat_scenario"
-		},
 	    {
 	        "id": "popup",
 	        "title": "팝업",

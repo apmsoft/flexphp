@@ -1,14 +1,3 @@
 {
-    "app_name": "코코넛",
-    "app_theme_color": "#e4e4e4",
-    "auth_token": "접속토큰",
-    "app_keywords": "펜씨업소프트,펜씨업,어플리케이션,안드로이드,아이폰,반응형웹,디자인,머티리얼",
-    "app_description": "코코넛,펜씨업3.0",
-    "app_author": "네모",
-    "e_auth_token": "접속 토큰이 일치하지 않습니다.",
-    "copy_biznumber": "594-04-00648",
-    "copy_ceo": "김종관",
-    "copy_address": "울산광역시 남구 대학로 152 대로빌딩 7층 601호",
-    "copy_right": "펜씨업소프트 Corp. All rights resered.",
-    "app_version_str": "0.9Beta"
+    "app_name": "코코넛"
 }
