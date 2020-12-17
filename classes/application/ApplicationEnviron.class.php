@@ -5,7 +5,7 @@
 | @Editor   : Sublime Text
 | @Version  : 1.1.2
 -------------------------------------------------------*/
-namespace Fus3\Application;
+namespace Flex\Application;
 
 use \ArrayAccess;
 
