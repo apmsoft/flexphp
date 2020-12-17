@@ -5,7 +5,7 @@
 # 클래스와 기능이 동일
 # ReqStrChecker.class.php
 ----------------------------------------------------------*/
-use Fus3\Req\ReqStrChecker;
+use Flex\Req\ReqStrChecker;
 
 function _is_null($value){
     $isChceker = new ReqStrChecker($value);

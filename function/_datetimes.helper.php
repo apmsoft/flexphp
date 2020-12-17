@@ -1,5 +1,5 @@
 <?php
-use Fus3\Date\DateTimes;
+use Flex\Date\DateTimes;
 
 # 어떠한 특정날짜에서 일정기간(1일, 3일)기간이 지났는지를 알아보고자 할때
 function _date_wasPassed($datetimes, $days){

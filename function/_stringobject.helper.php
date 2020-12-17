@@ -5,7 +5,7 @@
 # 클래스와 기능이 동일
 # StringObject.class.php
 ----------------------------------------------------------*/
-use Fus3\String\StringObject;
+use Flex\String\StringObject;
 
 # 문자 자르기(UTF-8)
 # 슬래쉬, HTML 태그 제거
