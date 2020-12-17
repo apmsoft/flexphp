@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 2010-03-09
 ----------------------------------------------------------*/
-namespace Fus3\Url;
+namespace Flex\Url;
 
 # ErrorException 활용
 class UrlPageParse

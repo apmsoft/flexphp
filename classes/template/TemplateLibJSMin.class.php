@@ -54,7 +54,7 @@
  * @link http://code.google.com/p/jsmin-php/
  */
 
-namespace Fus3\Template;
+namespace Flex\Template;
 
 class TemplateLibJSMin {
     const ORD_LF            = 10;

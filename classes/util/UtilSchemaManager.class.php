@@ -6,7 +6,7 @@
 | @Editor : sublime text 3
 | @UPDATE : 0.6
 ----------------------------------------------------------*/
-namespace Fus3\Util;
+namespace Flex\Util;
 
 # 디비 스키마 및 insert 데이터 값 배열로 추출
 class UtilSchemaManager extends SplFileObject

@@ -6,7 +6,7 @@
 | @Editor : sublime text 3
 | @UPDATE : 0.8.2
 ----------------------------------------------------------*/
-namespace Fus3\Util;
+namespace Flex\Util;
 
 # purpose : php 코딩시 환경설정에 대한 값들을 관리하기 위함
 class UtilModel{

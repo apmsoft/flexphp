@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @vsesion:0.2
 ----------------------------------------------------------*/
-namespace Fus3\String;
+namespace Flex\String;
 
 # purpose : 랜덤문자 만들기
 class StringRandom {

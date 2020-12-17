@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 2010-02-16
 ----------------------------------------------------------*/
-namespace Fus3\Xml;
+namespace Flex\Xml;
 
 # RSS 2.0 리더기
 class XmlRss2

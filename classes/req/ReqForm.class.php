@@ -6,10 +6,10 @@
 | @Editor   : VSCode
 | @UPDATE   : 1.3
 ----------------------------------------------------------*/
-namespace Fus3\Req;
+namespace Flex\Req;
 
-use Fus3\R\R;
-use Fus3\Out\Out;
+use Flex\R\R;
+use Flex\Out\Out;
 
 # 폼체크
 class ReqForm

@@ -6,7 +6,7 @@
 | @Editor   : SUBLIME
 | @UPDATE   : 0.1
 ----------------------------------------------------------*/
-namespace Fus3\Xml;
+namespace Flex\Xml;
 
 use \SimpleXMLElement;
 

@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 1.0.1
 ----------------------------------------------------------*/
-namespace Fus3\Url;
+namespace Flex\Url;
 
 # 특정 URL 주소 길이를 줄이고 풀경로도 다시 이동 시키는 목적으로 사용한다.
 # 모든 호스팅에 redirect 설정이 되어있는것이 아니라 기본 index.php나 index.html을 기준으로 설정한다.

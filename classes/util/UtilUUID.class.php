@@ -1,5 +1,5 @@
 <?php
-namespace Fus3\Util;
+namespace Flex\Util;
 
 /** ======================================================
 | @Author   : 김종관

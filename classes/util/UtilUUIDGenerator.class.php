@@ -1,5 +1,5 @@
 <?php
-namespace Fus3\Util;
+namespace Flex\Util;
 
 /** ======================================================
 The following class generates VALID RFC 4211 COMPLIANT Universally Unique IDentifiers (UUID) version 3, 4 and 5.

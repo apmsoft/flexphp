@@ -6,7 +6,7 @@
 | @Editor   : Sublime Text 3
 | @UPDATE   : 1.0.1 
 ----------------------------------------------------------*/
-namespace Fus3\Util;
+namespace Flex\Util;
 
 class UtilMenu
 {

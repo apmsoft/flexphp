@@ -7,7 +7,7 @@
 | @version : 1.0.140926
  * DB 데어터 및 동적 데이터를 JSON 및 파일데이터 형태로 저장하고 일정 시간동안 유지 하는 목적을 갖는다
 ----------------------------------------------------------*/
-namespace Fus3\Util;
+namespace Flex\Util;
 
 class UtilCache
 {

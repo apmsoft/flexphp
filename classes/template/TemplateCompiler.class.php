@@ -5,7 +5,7 @@
 | @Editor	: Eclipse(default)
 | version : 1.4.2
 ----------------------------------------------------------*/
-namespace Fus3\Template;
+namespace Flex\Template;
 
 # purpose : MVC 패턴목적, 디자인과 프로그램의 분리
 abstract class TemplateCompiler extends TemplateVariable

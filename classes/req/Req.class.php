@@ -6,7 +6,7 @@
 | @Editor   : VSCode
 | @UPDATE   : 1.1
 ----------------------------------------------------------*/
-namespace Fus3\Req;
+namespace Flex\Req;
 
 # _POST, _GET, _REQUEST 값들을 제어 및 기본작업 수행
 class Req

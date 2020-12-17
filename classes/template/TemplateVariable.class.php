@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 1.0
 ----------------------------------------------------------*/
-namespace Fus3\Template;
+namespace Flex\Template;
 
 use \SplFileInfo;
 

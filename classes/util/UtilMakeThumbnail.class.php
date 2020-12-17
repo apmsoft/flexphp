@@ -6,11 +6,11 @@
 | @Editor   : Sublime Text 3
 | @UPDATE   : 0.1.1
 ----------------------------------------------------------*/
-namespace Fus3\Util;
+namespace Flex\Util;
 
-use Fus3\Dir\DirInfo;
-use Fus3\Image\ImageGDS;
-use Fus3\Out\Out;
+use Flex\Dir\DirInfo;
+use Flex\Image\ImageGDS;
+use Flex\Out\Out;
 
 # 이미지 썸네일 이미지 만들기
 class UtilMakeThumbnail

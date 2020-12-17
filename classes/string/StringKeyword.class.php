@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 1.1.1
 ----------------------------------------------------------*/
-namespace Fus3\String;
+namespace Flex\String;
 
 # purpose : 문자을 변경하거나 더하거나 등 가공하는 역할을 한다.
 class StringKeyword
