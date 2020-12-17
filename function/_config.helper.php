@@ -4,11 +4,11 @@
 # purpose : 출력(output)
 # 클래스와 기능이 동일
 ----------------------------------------------------------*/
-use Fus3\R\R;
+use Flex\R\R;
 
 # password
 function password($passwd){
-	$cipherEncrypt = new Fus3\Cipher\CipherEncrypt($passwd);
+	$cipherEncrypt = new Flex\Cipher\CipherEncrypt($passwd);
 return $cipherEncrypt->_md5_base64();
 }
 

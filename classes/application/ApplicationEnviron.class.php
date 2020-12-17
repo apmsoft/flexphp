@@ -10,19 +10,19 @@ namespace Flex\Application;
 use \ArrayAccess;
 
 # 접속에 따른 디바이스|브라우저등 정보
-final class ApplicationEnviron implements ArrayAccess
+final class App implements ArrayAccess
 {
-    private $platform = 'Unknown';
-    private $browser = 'Unknown';
-    private $is_phone_device = false;
-    private $host;
-    private $lang;
-    private $http_referer =null;
-    private $ip_address = '';
-    private $version = '0.9.13Beta';
-    private $vars = array();
+    public static $platform = 'Unknown';
+    public static $browser = 'Unknown';
+    public static $is_phone_device = false;
+    public static $host;
+    public static $lang;
+    public static $http_referer =null;
+    public static $ip_address = '';
+    public static $version = '0.9.13Beta';
+    public static $vars = array();
 
-    public function __construct()
+    public static function int()
     {
         # 기본 디바이스 인지 확인 하기 위한 체크
         $agent='';
@@ -76,7 +76,7 @@ final class ApplicationEnviron implements ArrayAccess
 
     #@ return string
     # ip 주소 확인
-    private function get_client_ip()
+    public static function get_client_ip()
     {
         $result = '';
         if (isset($_SERVER['HTTP_CLIENT_IP'])) $result = $_SERVER['HTTP_CLIENT_IP'];
@@ -91,13 +91,13 @@ final class ApplicationEnviron implements ArrayAccess
 
     #@ return boolean
     # 애플사 제품인지 확인
-    public function is_apple_device(){
+    public static function is_apple_device(){
         if(preg_match( '/(iPod|iPhone|iPad)/', $this->platform)) return 'true';
         else return 'false';
     }
 
     #@ interface : ArrayAccess
-    public function offsetSet($offset, $value){
+    public static function offsetSet($offset, $value){
         if(is_array($value)){
             if(isset($this->vars[$offset])) $this->vars[$offset] = array_merge($this->vars[$offset],$value);
             else $this->vars[$offset] = $value;
@@ -106,31 +106,31 @@ final class ApplicationEnviron implements ArrayAccess
     }
 
     #@ interface : ArrayAccess
-    public function offsetExists($offset){
+    public static function offsetExists($offset){
         if(isset($this->vars[$offset])) return isset($this->vars[$offset]);
         else return isset($this->vars[$offset]);
     }
 
     #@ interface : ArrayAccess
-    public function offsetUnset($offset){
+    public static function offsetUnset($offset){
         if(self::offsetExist($offset)) unset($this->vars[$offset]);
         else unset($this->vars[$offset]);
     }
 
     #@ interface : ArrayAccess
-    public function offsetGet($offset) {
+    public static function offsetGet($offset) {
         return isset($this->vars[$offset]) ? $this->vars[$offset] : $this->vars[$offset];
     }
 
     #@ void
-    public function __set($name, $value){
+    public static function __set($name, $value){
         if(property_exists(__CLASS__,$name)){
             return $this->{$name} = $value;
         }
     }
 
     #@ return
-    public function __get($name) {
+    public static function __get($name) {
         if(property_exists(__CLASS__,$name)){
             return $this->{$name};
         }

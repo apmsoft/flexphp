@@ -7,8 +7,8 @@
 ----------------------------------------------------------*/
 session_start();
 
-use Fus3\R\R;
-use Fus3\Application\ApplicationEnviron;
+use Flex\R\R;
+use Flex\Application\ApplicationEnviron;
 
 // @ini_set('include_path', './PEAR' . PATH_SEPARATOR .?; ini_get('include_path'));
 // @ini_set('display_error', 'On');
@@ -72,9 +72,9 @@ spl_autoload_register(function($class_name){
 
 # 기본 선언 클래스 /-------------------
 # 어플리케이션 환경
-$app = new ApplicationEnviron();
-define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: $app->lang);       # 다국어중 언어 셋팅
-define('_SITE_HOST_',$app->host);  # HOST URL
+App::init();
+define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: App::lang);       # 다국어중 언어 셋팅
+define('_SITE_HOST_',App::host);  # HOST URL
 
 # resource XML 자동 로드 /---------------
 R::init();
