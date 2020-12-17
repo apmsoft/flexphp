@@ -1,0 +1,145 @@
+<script type="text/template" id="tpl_manifest_listview">
+
+    <div class="container-fluid" style="padding: 10px 0px;">
+        <div class="row">
+            <div class="col-6">
+              <button type="button" id="btn_add" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+            </div>
+            <div class="col-6" style="text-align: right;">
+              <small>* config 파일이 <span class="text-danger">빨간색</span>은 파일이 존재(사용)하지 않거나 생성이 필요한 것을 의미합니다</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive noSwipe">
+      <table class="table table-hover table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col">key</th>
+            <th scope="col">category</th>
+            <th scope="col">title</th>
+            <th scope="col">config</th>
+            <th scope="col">uploadable</th>
+            <th scope="col" colspan="2"> </th>
+          </tr>
+        </thead>
+        <tbody>
+        <%
+        _.each(msg, function(val, key, args)
+        {
+        %>
+          <tr>
+            <th scope="row"><%-key%></th>
+            <td><%-val.category%></td>
+            <td><%-val.title%></td>
+            <td>
+              <%
+              if(!_.isUndefined(val.config)){
+              %>
+              <table class="table table-sm">
+                <thead class="bg-info text-white">
+                  <tr>
+                    <th class="text-center">doc_id</th>
+                    <th class="text-center">filename</th>
+                    <th class="text-center">
+                      <% if(!_.contains(strings_filters, key)){%>
+                      <button type="button" class="btn btn-link text-white p-0 btn-post-config" data-id="<%-key%>">
+                        <i class="fas fa-folder-plus fa-lg"></i>
+                      </button>
+                      <% } %>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%
+                  var config_files = val.config_files;
+                  _.each(val.config, function(cfigv, cfigk){
+                    var file_state = 'text-danger';
+                    var fplus_name = '';
+                    if(config_files[cfigk] =='true'){
+                      file_state = 'text-info';
+                      fplus_name = '.json';
+                    }
+                  %>
+                  <tr>
+                    <th scope="row"><%-cfigk%></th>
+                    <td>
+                      <button type="button" class="btn btn-link <%-file_state%> btn-edit-config" data-id="<%-key%>" data-cfid="<%-cfigv%>">
+                        <%-cfigv%><%-fplus_name%>
+                      </button>
+                    </td>
+                    <td>
+                      <%
+                      if(!_.contains(strings_filters, key)){
+                        if(fplus_name !=''){
+                        %>
+                        <button type="button" class="btn btn-link btn-remove-config" data-id="<%-key%>" data-cfid="<%-cfigv%>">
+                          <i class="fas fa-eraser"></i>
+                        </button>
+                      <%
+                        }
+                      }
+                      %>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <% } %>
+            </td>
+            <td>
+              <%
+              if(!_.isUndefined(val.uploadable) && !_.isNull(val.uploadable)){
+              %>
+              <table class="table table-sm">
+                <thead class="table-dark">
+                  <tr>
+                    <th colspan="2" class="text-center"> 첨부파일 </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%
+                  _.each(val.uploadable, function(ugv, ugk){
+                  %>
+                  <tr>
+                    <th scope="row"><%-ugk%></th>
+                    <td>
+                        <%
+                        if(ugk == 'image_size'){
+                        %>
+                          <table class="table table-sm table-bordered">
+                            <tbody>
+                              <tr>
+                                <th scope="row">thumbnail</th>
+                                <td><%-ugv.thumbnail.width%> x <%-ugv.thumbnail.height%></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">middle</th>
+                                <td><%-ugv.middle.width%> x <%-ugv.middle.height%></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        <% } else { %>
+                          <%-ugv%>
+                        <% } %>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <% } %>
+            </td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-info raw" data-id="<%-key%>">Edit</button>
+            </td>
+            <td>
+              <% if(!_.contains(strings_filters, key)){%>
+              <button type="button" class="btn btn-sm btn-outline-secondary raw-del" data-id="<%-key%>">Del</button>
+              <% } %>
+            </td>
+          </tr>
+        <%});%>
+        </tbody>
+      </table>
+    </div>
+</script>

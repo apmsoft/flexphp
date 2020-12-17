@@ -1,0 +1,24 @@
+<?php
+$strings_filters = array(
+    "total_record",
+    "total_record_distinct",
+    "single_query",
+    "login_adm_query",
+    "loop_query",
+    "recently_query",
+    "inner_join",
+    "left_join",
+    "outter_join",
+    "sub_query_from",
+    "single_update",
+    "group_by",
+    "min_max",
+    "max",
+    "sum",
+    "upfiles_image",
+    "upfiles",
+    "category1",
+    "category2",
+    "category3"
+);
+?>

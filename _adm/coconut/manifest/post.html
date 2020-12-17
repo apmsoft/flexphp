@@ -1,0 +1,456 @@
+<script type="text/template" id="tpl_manifest_post">
+    <div class="text-right">
+        <button class="btn btn-link text-white" onclick="history.go(-1); return false;"><i class="fas fa-times fa-2x"></i></button>
+    </div>
+    <div class="card noSwipe p-3">
+        <div class="card-block pt-3">
+            <form id="theManifestForm" class="form-horizontal">
+                <% 
+                _.each(msg, function(column_value, column_name)
+                {
+                    if(_.isArray(column_value) || _.isObject(column_value)){
+                        return;
+                    }
+
+                    var column_type    = 'text';
+                    var column_title   = '';
+                    var column_default = {};
+                    var column_comment = '';
+                    var column_readonly= '';
+                    if(!_.isNull(scheme))
+                    {
+                        if(!_.isUndefined(scheme[column_name])) 
+                        {
+                            // type
+                            if(!_.isUndefined(scheme[column_name].type)) {
+                                column_type = scheme[column_name].type;
+                            }
+
+                            // title
+                            if(!_.isUndefined(scheme[column_name].title)) {
+                                column_title = scheme[column_name].title;
+                            }
+
+                            // default
+                            if(!_.isUndefined(scheme[column_name].default)) {
+                                column_default = scheme[column_name].default;
+                            }
+
+                            // comment
+                            if(!_.isUndefined(scheme[column_name].comment)) {
+                                column_comment = scheme[column_name].comment;
+                            }
+
+                            // readonly
+                            if(!_.isUndefined(scheme[column_name].readonly)) {
+                                column_readonly = scheme[column_name].readonly;
+                            }
+                        }
+                    }
+                    %>
+
+                    <% if(column_type=='select'){ %>
+                    <div class="form-group row">
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                        <div class="col-sm-10">
+                            <select id="<%-column_name%>" name="<%-column_name%>" class="form-control" style="margin-bottom:5px;">
+                                <option value="">+ <%-column_title%> 선택하세요.</option>
+                                <%_.each(column_default, function(dtitle, dkey)
+                                {
+                                    var selected = (column_value==dkey) ? 'selected="selected"' : '';
+                                %>
+                                <option value="<%-dkey%>" <%=selected%>> 
+                                    <%-dtitle%>
+                                </option>
+                                <%});%>
+                            </select>
+                        </div>
+                    </div>
+                    <%} else if(column_type=='config'){ %>
+                    <div class="form-group row">
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                        <div class="col-sm-10">
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <span class="float-right">
+
+                                        </span>
+                                        <%-column_name%>
+                                    </h5>
+                                    <!-- <table class="table table-sm table-striped">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>실행키</th>
+                                                <th>실행파일(json)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> -->
+                                        <%
+                                        var config_count = _.size(column_default);
+                                        var config_keys = [];
+                                        var config_vals = [];
+                                        if(config_count >0 ){
+                                            config_keys = _.keys(column_default);
+                                            config_vals = _.values(column_default);
+                                        }
+
+                                        for(var cno=0; cno < 10; cno++)
+                                        {
+                                            if (cno <= config_count){
+                                        %>
+                                        <!-- <tr>
+                                            <th scope="row">
+                                                <input type="text" class="form-control" id="config<%-cno%>_key" name="config<%-cno%>_key" value="<%-config_keys[cno]%>" />
+                                            </th>
+                                            <td>
+                                                <input type="text" class="form-control" id="config<%-cno%>_val" name="config<%-cno%>_val" value="<%-config_vals[cno]%>" />
+                                            </td>
+                                        </tr> -->
+                                        <%
+                                            } else {
+                                        %>
+                                        <!-- <tr>
+                                            <th scope="row">
+                                                <input type="text" class="form-control" id="config<%-cno%>_key" name="config<%-cno%>_key" value="" />
+                                            </th>
+                                            <td>
+                                                <input type="text" class="form-control" id="config<%-cno%>_val" name="config<%-cno%>_val" value="" />
+                                            </td>
+                                        </tr> -->
+                                        <%
+                                            }
+                                        }
+                                        %>
+                                        <!-- </tbody>
+                                    </table> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <%} else if(column_type=='uploadable')
+                    {
+                        var uploadable_readonly = (column_value == 'false') ? 'readonly' : '';
+                    %>
+                        <div class="form-group row">
+                            <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                            <div class="col-sm-10">
+                                
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <span class="float-right">
+                                                <input type="checkbox" class="form-check-input uploadable" id="uploadable_enable" name="uploadable_enable" value="false" <%-(column_value=='false') ? 'checked':''%> />
+                                                <label class="form-check-label" for="uploadable_enable">비활성화</label>
+                                            </span>
+                                            <%-column_name%>
+                                        </h5>
+
+                                        <table class="table table-sm table-striped">
+                                            <tbody>
+                                            <%
+                                            _.each(column_default, function(upv, upk){
+                                                if(upk == 'image_size'){
+                                            %>
+                                            <tr>
+                                                <th scope="row"><%-upk%></th>
+                                                <td>
+                                                    <table class="table table-sm table-bordered">
+                                                        <tbody>
+                                                          <tr>
+                                                            <th scope="row">thumbnail</th>
+                                                            <td>width</td>
+                                                            <td>
+                                                                <input type="text" class="form-control uploadable" name="uploadable_thumbnail_width" value="<%-upv.thumbnail.width%>" <%-uploadable_readonly%> />
+                                                            </td>
+                                                            <td>height</td>
+                                                            <td>
+                                                                <input type="text" class="form-control uploadable" name="uploadable_thumbnail_height" value="<%-upv.thumbnail.height%>" <%-uploadable_readonly%> />
+                                                            </td>
+                                                          </tr>
+                                                          <tr>
+                                                            <th scope="row">middle</th>
+                                                            <td>width</td>
+                                                            <td>
+                                                                <input type="text" class="form-control uploadable" name="uploadable_middle_width" value="<%-upv.middle.width%>" <%-uploadable_readonly%> />
+                                                            </td>
+                                                            <td>height</td>
+                                                            <td>
+                                                                <input type="text" class="form-control uploadable" name="uploadable_middle_height" value="<%-upv.middle.height%>" <%-uploadable_readonly%> />
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <% } 
+                                            else if(upk == 'table') 
+                                            {
+                                                var tnames = [];
+                                                var tname = '';
+                                                if(upv !=''){
+                                                    tnames = upv.split('.');
+                                                    tname = tnames[1].replace('}','');
+                                                }
+                                            %>
+                                            <tr>
+                                                <th scope="row"><%-upk%></th>
+                                                <td>
+                                                    <select id="uploadable_<%-upk%>" name="uploadable_<%-upk%>" class="form-control uploadable" style="margin-bottom:5px;" <%-uploadable_readonly%>>
+                                                        <option value="">+ 첨부파일 테이블을 선택하세요.</option>
+                                                        <%_.each(tables, function(tval, tkey)
+                                                        {
+                                                            var selected = (tname==tkey) ? 'selected="selected"' : '';
+                                                        %>
+                                                        <option value="<%-tkey%>" <%=selected%>> 
+                                                            <%-tval%>
+                                                        </option>
+                                                        <%});%>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <% } 
+                                            else if(upk == 'authority') 
+                                            {
+                                            %>
+                                            <tr>
+                                                <th scope="row"><%-upk%></th>
+                                                <td>
+                                                    <select id="uploadable_<%-upk%>" name="uploadable_<%-upk%>" class="form-control uploadable" style="margin-bottom:5px;" <%-uploadable_readonly%>>
+                                                        <option value="">+ <%-column_title%> 선택하세요.</option>
+                                                        <%_.each(level, function(tval, tkey)
+                                                        {
+                                                            var selected = (upv==tkey) ? 'selected="selected"' : '';
+                                                        %>
+                                                        <option value="<%-tkey%>" <%=selected%>> 
+                                                            <%-tval%>
+                                                        </option>
+                                                        <%});%>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <% 
+                                            }  else if(upk == 'number_files_allowed') {
+                                            %>
+                                            <tr>
+                                                <th scope="row"><%-upk%></th>
+                                                <td>
+                                                    <select id="uploadable_<%-upk%>" name="uploadable_<%-upk%>" class="form-control uploadable" style="margin-bottom:5px;" <%-uploadable_readonly%>>
+                                                        <option value="">+ 갯수 선택하세요.</option>
+                                                        <%
+                                                        for (var i=1; i<=10; i++){
+                                                            var selected = (i == upv) ? 'selected="selected"' : '';
+                                                        %>
+                                                        <option value="<%-i%>" <%=selected%>><%-i%></option>
+                                                        <%
+                                                        }
+                                                        %>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                }
+                                                else{
+                                            %>
+                                            <tr>
+                                                <th scope="row"><%-upk%></th>
+                                                <td>
+                                                    <input type="text" class="form-control uploadable" id="uploadable_<%-upk%>" name="uploadable_<%-upk%>" value="<%-upv%>" <%-uploadable_readonly%> />
+                                                </td>
+                                            </tr>
+                                            <%
+                                                }
+                                            }); 
+                                            %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+    
+                            </div>
+                        </div>
+                    <%} else if(column_type=='radio'){ %>
+                    <fieldset class="form-group border-0 px-0">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0"><%-column_title%></legend>
+                            <div class="col-sm-10 pl-3">
+                                <%
+                                var ri = 1;
+                                _.each(column_default, function(rtitle, rkey)
+                                {
+                                    var checked = (column_value==rkey) ? 'checked' : '';
+                                %>
+                                <div class="form-check pl-4">
+                                    <input class="form-check-input" type="radio" name="<%-column_name%>" id="<%-column_name%><%-ri%>" value="<%-rkey%>" <%-checked%>>
+                                    <label class="form-check-label" for="<%-column_name%><%-ri%>">
+                                     <%-rtitle%>
+                                    </label>
+                                </div>
+                                <%
+                                    ri++;
+                                });
+                                %>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <%} else if(column_type=='checkbox'){ %>
+                    <div class="form-group row">
+                        <%
+                        var ci = 1;
+                        _.each(column_default, function(ctitle, ckey)
+                        {
+                            var checked = (column_value==ckey) ? 'checked' : '';
+                        %>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="<%-ckey%>" name="<%-column_name%>" id="<%-column_name%><%-ci%>" required>
+                            <label class="form-check-label" for="<%-column_name%><%-ci%>">
+                            <%-ctitle%>
+                            </label>
+                        </div>
+                        <%
+                            ci++;
+                        });
+                        %>
+                    </div>
+                    <%} else if(column_type=='rolldate'){ %>
+                    <div class="form-group row">
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="<%-column_name%>" name="<%-column_name%>" placeholder="<%-column_comment%>" value="<%-column_value%>" readonly />
+                        </div>
+                        <%
+                        require(['rolldate'],function(Rolldate){
+                            new Rolldate({
+                                el:'#'+column_name,
+                                beginYear : 1935,
+                                format : 'YYYY-MM-DD',
+                                lang : {
+                                    title: column_title,
+                                    cancel: '취소',
+                                    confirm: '확인',
+                                    year: '년',
+                                    month: '월',
+                                    day: '일',
+                                    hour: '시',
+                                    min: '분',
+                                    sec: '초'
+                                }
+                            });
+                        });
+                        %>
+                    </div>
+                    <%} else if(column_type=='daum_postcodemap'){ %>
+                        <div id="map" class="border text-center rounded" style="width:100%;height:200px;"></div>
+
+                        <div class="form-group row">
+                            <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="<%-column_name%>" name="<%-column_name%>" placeholder="<%-column_comment%>" value="<%-column_value%>" readonly />
+                            </div>
+                        </div>
+                        <%
+                        require(['/plugins/daumpostmap/daumpostmap.min.js'],function(DaumPostMap){
+                            DaumPostMap.init({lat:msg.lat,lon: msg.lon});
+                            DaumPostMap.doPostCodeAddress('#postcode', '#address1');
+                        });
+                        %>
+                    <%} else if(column_type=='datepicker'){ %>
+                    <div class="form-group row">
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="<%-column_name%>" name="<%-column_name%>" placeholder="<%-column_comment%>" value="<%-column_value%>" readonly />
+                        </div>
+                        <%
+                        require(['datepicker/datepicker'], function(datepicker) 
+                        {
+                            datepicker.initialize(['#'+column_name],function(context){
+                                app.log(context);
+                            });
+                        });
+                        %>
+                    </div>
+                    <%} else if(column_type=='timepicker'){ %>
+                    <div class="form-group row">
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="<%-column_name%>" name="<%-column_name%>" placeholder="<%-column_comment%>" value="<%-column_value%>" readonly />
+                        </div>
+                        <%
+                        require(['clockpicker', 'css!libs/css/clockpicker.min.css'], function(clockpicker) 
+                        {
+                            // 시작시간
+                            $('#'+column_name).clockpicker({
+                                placement: 'bottom',
+                                align: 'right',
+                                autoclose: true
+                            });
+                        });
+                        %>
+                    </div>
+                    <%} else if(column_type=='wysiwyg'){ %>
+                    <div class="form-group row">
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                        <div class="col-sm-10">
+                            <textarea id="<%-column_name%>" name="<%-column_name%>" class="list-group-item form-control fu-input-text" style="width:100%;" placeholder="<%-column_title%>"><%-column_value%></textarea>
+                        </div>
+                        <%
+                        require(["ckeditor"], function(ckeditor) {
+                            $('#'+column_name).ckeditor({
+                                customConfig : '/plugins/ckeditor/config.js',
+                                skin:'moono-lisa',
+                                autoHeight: true
+                            });
+                        });
+                        %>
+                    </div>
+                    <%} else if(column_type=='textarea'){ %>
+                    <div class="form-group row">
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                        <div class="col-sm-10">
+                            <textarea id="<%-column_name%>" name="<%-column_name%>" class="list-group-item form-control fu-input-text" style="width:100%;" placeholder="<%-column_title%>"><%-column_value%></textarea>
+                        </div>
+                    </div>
+                    <%} else if(column_type=='file'){ %>
+                    <div class="form-group row">
+                        <input type="hidden" class="form-control" id="<%-column_name%>" name="<%-column_name%>" value="<%-column_value%>" />
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%></label>
+                        <div class="col-sm-10">
+                            <div id="uploadfiles_<%-column_name%>"></div>
+                        </div>
+                        <%
+                        console.log(scheme[column_name]);
+                        require(['core/uploadfiles.min'], function(UploadableActivity) {
+                            UploadableActivity.initialize('#uploadfiles_'+column_name, scheme[column_name].doc_id, {
+                                token : column_value,
+                                dragDrop: 'true',
+                                maxFileCount: scheme[column_name].number_files_allowed,
+                                acceptFiles: scheme[column_name].default
+                            });
+                            UploadableActivity.run();
+                        });
+                        %>
+                    </div>
+                    <% } else if(column_type=='hidden') { %>
+                        <input type="hidden" name="<%-column_name%>" value="<%-column_value%>" />
+                    <% } else { %>
+                    <div class="form-group row">
+                        <label for="<%-column_name%>" class="col-sm-2 control-label"><%-column_title%> <small>(<%-column_name%>)</small></label>
+                        <div class="col-sm-10">
+                            <input type="<%-column_type%>" class="form-control" id="<%-column_name%>" name="<%-column_name%>" placeholder="<%-column_comment%>" value="<%-column_value%>" <%-column_readonly%> />
+                        </div>
+                    </div>
+                    <%}%>
+                <%});%>
+        
+                <hr />
+
+                <!--버튼-->
+                <div class="text-center" style="padding: 20px 0px;">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">등록하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>

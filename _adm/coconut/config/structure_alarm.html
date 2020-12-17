@@ -1,0 +1,103 @@
+<script type="text/template" id="tpl_structure_alarm">
+    <h3 id="cf_title">Alarm (알람)</h3>
+    <hr />
+    <form id="theAlarmForm">
+        <div class="form-group">
+            <label for="alarm_field" class="font-weight-bold mt-3">변수 키</label>
+            <input type="text" class="form-control" style="font-weight:bold;background-color:orange !important; color:#fff; font-size:1.4rem;" id="alarm_field" name="alarm_field" aria-describedby="alarm_fieldHelp" placeholder="" value="<%-msg.column_name%>">
+            <small id="alarm_fieldHelp" class="form-text text-muted">사용할 변수</small>
+        </div>
+        <div class="form-group">
+            <label for="alarm_value" class="font-weight-bold mt-3">변수 값</label>
+            <table class="table table-hover table-bordered table-striped" style="background-color: #fff;">
+                <thead class="thead-default">
+                    <tr>
+                        <th>NAME</th>
+                        <th>TYPE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                    if(msg.column_name =='send_option'){
+                    %>
+                    <tr>
+                        <th>*알람 전송 타입</th>
+                        <td>
+                            <select class="form-control" id="alarm_send_option">
+                                <option value="">+사용자 정의 상수</option>
+                                <% 
+                                _.each(alarm_send_option, function(ftitle,fkey){
+                                %>
+                                <option value="<%-fkey%>"><%-ftitle%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <% } %>
+
+                    <%
+                    if(msg.column_name =='msg' || msg.column_name =='params'){
+                    %>
+                    <tr>
+                        <th>함수</th>
+                        <td>
+                            <select class="form-control" id="user_funcs">
+                                <option value="">+사용자 정의 함수</option>
+                                <% 
+                                _.each(funs, function(fv,fkey){
+                                %>
+                                <option value="<%-fkey%>"><%-fv.func_name%> (<%-fv.func_parameter%>)</option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>매직 함수</th>
+                        <td>
+                            <select class="form-control" id="magic_funcs">
+                                <option value="">+펜씨업 정의 매직 함수</option>
+                                <% 
+                                _.each(magic_funs, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>리소스(Res)</th>
+                        <td>
+                            <select class="form-control" id="resources">
+                                <option value="">+리소스(Res) JSON 데이터</option>
+                                <% 
+                                _.each(resources, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>글로벌(Global) 변수</th>
+                        <td>
+                            <select class="form-control" id="globals">
+                                <option value="">+리소스(Res) JSON 데이터</option>
+                                <% 
+                                _.each(globals, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" style="font-size: 1.5rem;background-color: #b3f095;" id="alarm_value" name="alarm_value" aria-describedby="alarm_valueHelp" placeholder="" value="<%-msg.column_value%>">
+            <small id="alarm_valueHelp" class="form-text text-muted">사용할 변수 값</small>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">저장하기</button>
+    </form>
+    </script>

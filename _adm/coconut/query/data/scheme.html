@@ -1,0 +1,135 @@
+<script type="text/template" id="tpl_data_scheme">
+    <div class="text-right">
+        <button class="btn btn-link text-white" onclick="history.go(-1); return false;"><i class="fas fa-times fa-2x"></i></button>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h3><%-table_info.TABLE_COMMENT%></h3>
+            <table class="table table-hover table-bordered table-striped mb-3" style="background-color: #fff;">
+                <tbody>
+                    <tr>
+                        <th>테이블 키</th>
+                        <td><input type="email" class="form-control" value="<%-tname%>"></td>
+                        <th>실 테이블명</th>
+                        <td><%-table_info.TABLE_NAME%></td>
+                    </tr>
+                    <tr>
+                        <th>타이틀</th>
+                        <td><%-table_info.TABLE_COMMENT%></td>
+                        <th>엔진</th>
+                        <td><%-table_info.ENGINE%></td>
+                    </tr>
+                    <tr>
+                        <th>업데이트</th>
+                        <td><%-table_info.UPDATE_TIME%></td>
+                        <th>레코드</th>
+                        <td><%-table_info.TABLE_ROWS%></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div class="row">
+                                <div class="col-9">
+                                  <button type="button" id="btn_create_bytable" class="btn btn-light btn-sm">테이블 복사 만들기</button>
+                                  <button type="button" id="btn_rename_table" class="btn btn-light btn-sm">테이블명 변경</button>
+                                  <button type="button" id="btn_show_table_scheme" class="btn btn-light btn-sm">테이블 스키마 추출하기</button>
+                                  <button type="button" id="btn_show_datalist" class="btn btn-light btn-sm">데이터 목록</button>
+                                </div>
+                                <div class="col-3" style="text-align: right;">
+                                  <button type="button" id="btn_drop_table" class="btn btn-danger btn-sm">테이블 삭제(DROP)</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="container-fluid mt-5">
+                <div class="row">
+                    <div class="col-6 pl-0">
+                        <button type="button" id="btn_column_index" class="btn btn-info">INDEX <i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="col-6 pr-0" style="text-align: right;">
+                        <button type="button" id="btn_column_add_magic" class="btn btn-dark mr-2">매직 퀄럼추가 <i class="fa fa-plus"></i></button>
+                        <button type="button" id="btn_column_add" class="btn btn-primary">퀄럼추가 <i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive noSwipe">
+                <table class="table table-hover table-bordered table-striped" style="background-color: #fff;">
+                    <thead class="thead-default">
+                        <tr>
+                            <th> </th>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>PRI</th>
+                            <th>AUTO</th>
+                            <th>INDEX</th>                        
+                            <th>NULL</th>
+                            <th>DEFAULT</th>
+                            <th>COMMENT</th>
+                            <th colspan="3"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <%
+                    _.each(msg,function(t,no)
+                    {
+                        var is_primary = '';
+                        if(t.column_name == primary_key){
+                            is_primary = 'PRI';
+                        }
+
+                        var pre_column_name = '';
+                        if(no > 1){
+                            var preno = no - 2;
+                            pre_column_name = msg[preno]['column_name'];
+                        }
+                    %>
+                        <tr>
+                            <td>
+                                <% if(is_primary =='' && t.index ==''){%>
+                                    <input type="checkbox" name="chk_column" value="<%-t.column_name%>" />
+                                <% } else if(is_primary =='' && t.index !='') { %>
+                                    <button type="button" class="btn btn-secondary btn-sm btn-rm-indexkey py-0" data-idxkeyname="<%-t.index_key_name%>">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                <% } %>
+                            </td>
+                            <td><%-t.column_name%></td>
+                            <td><%-t.data_type%></td>
+                            <td><%-is_primary%></td>
+                            <td><%-t.auto_increment%></td>
+                            <td><%-t.index%></td>
+                            <td><%-t.is_null%></td>
+                            <td><%-t.default%></td>
+                            <td><%-t.comment%></td>
+                            <td>
+                                <% if(is_primary =='' && no > 1){%>
+                                <button type="button" class="btn btn-sm btn-link p-0 up_ordinal_position" data-id="<%-t.column_name%>" data-afterid="<%-pre_column_name%>" title="순번">
+                                    <i class="fas fa-arrow-circle-up"></i>
+                                </button>
+                                <% } %>
+                            </td>
+                            <td>
+                                <% if(!_.contains(strings_filters, t.column_name)){%>
+                                <button type="button" class="btn btn-sm btn-info btn_column_edit" data-id="<%-t.column_name%>" title="수정">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <%}%>
+                            </td>
+                            <td>
+                                <% if(!_.contains(strings_filters, t.column_name)){%>
+                                <button type="button" class="btn btn-sm btn-warning btn_column_del" data-id="<%-t.column_name%>" title="삭제">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                                <%}%>
+                            </td>
+                        </tr>
+                    <% 
+                    }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</script>

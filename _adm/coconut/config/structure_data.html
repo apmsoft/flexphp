@@ -1,0 +1,399 @@
+<script type="text/template" id="tpl_structure_data">
+    <h3 id="cf_title">Data</h3>
+    <hr />
+    <form id="theDataForm" class="form-horizontal">
+        <div class="form-group">
+            <label for="data_field" class="font-weight-bold">변수 키</label>
+            <input type="text" class="form-control" style="font-weight:bold;background-color:orange !important; color:#fff; font-size:1.4rem;" id="data_field" name="data_field" aria-describedby="data_fieldHelp" placeholder="" value="<%-feature_column%>">
+            <small id="data_fieldHelp" class="form-text text-muted">사용할 변수</small>
+        </div>
+        <% 
+        _.each(msg, function(scheme_params, column_name)
+        {
+            if(_.isArray(column_value) || _.isObject(column_value)){
+                return;
+            }
+
+            var column_value = '';
+
+            var column_type    = 'text';
+            var column_title   = '';
+            var column_default = {};
+            var column_comment = '';
+            var column_readonly= '';
+
+            if(!_.isUndefined(msg[column_name])) 
+            {
+                // type
+                if(!_.isUndefined(msg[column_name].type)) {
+                    column_type = msg[column_name].type;
+                }
+
+                // value
+                if(!_.isUndefined(msg[column_name].value)) {
+                    column_value = msg[column_name].value;
+                }
+
+                // title
+                if(!_.isUndefined(msg[column_name].title)) {
+                    column_title = msg[column_name].title;
+                }
+
+                // default
+                if(!_.isUndefined(msg[column_name].default)) {
+                    column_default = msg[column_name].default;
+                }
+
+                // comment
+                if(!_.isUndefined(msg[column_name].comment)) {
+                    column_comment = msg[column_name].comment;
+                }
+
+                // readonly
+                if(!_.isUndefined(msg[column_name].readonly)) {
+                    column_readonly = msg[column_name].readonly;
+                }
+            }
+            %>
+
+            <% if(column_type=='select'){ %>
+            <div class="form-group row">
+                <label for="<%-column_name%>" class="col-sm-12 mt-3 control-label font-weight-bold"><%-column_title%> (<%-column_name%>)</label>
+                <div class="col-sm-12">
+                    <select id="<%-column_name%>" name="<%-column_name%>" class="form-control" style="margin-bottom:5px;">
+                        <option value="">+ <%-column_title%> 선택하세요.</option>
+                        <%_.each(column_default, function(dtitle, dkey)
+                        {
+                            var selected = (column_value==dkey) ? 'selected="selected"' : '';
+                        %>
+                        <option value="<%-dkey%>" <%=selected%>> 
+                            [<%-dkey%>] --> <%-dtitle%>
+                        </option>
+                        <%});%>
+                    </select>
+                </div>
+            </div>
+            <%} else if(column_type=='radio'){ %>
+            <fieldset class="form-group border-0 px-0">
+                <div class="row">
+                    <legend class="col-form-label col-sm-12 pt-0 mt-3 font-weight-bold"><%-column_title%> (<%-column_name%>)</legend>
+                    <div class="col-sm-12 pl-3">
+                        <%
+                        var ri = 1;
+                        _.each(column_default, function(rtitle, rkey)
+                        {
+                            var checked = (column_value==rkey) ? 'checked' : '';
+                        %>
+                        <div class="form-check pl-4">
+                            <input class="form-check-input" type="radio" name="<%-column_name%>" id="<%-column_name%><%-ri%>" value="<%-rkey%>" <%-checked%>>
+                            <label class="form-check-label" for="<%-column_name%><%-ri%>">
+                                <%-rtitle%>
+                            </label>
+                        </div>
+                        <%
+                            ri++;
+                        });
+                        %>
+                    </div>
+                </div>
+            </fieldset>
+            <%} else if(column_type=='checkbox'){ %>
+            <div class="form-group row">
+                <label for="<%-column_name%>" class="col-sm-12 mt-3 control-label font-weight-bold"><%-column_title%> (<%-column_name%>)</label>
+                <div class="col-sm-12">
+                <%
+                var ci = 1;
+                _.each(column_default, function(ctitle, ckey)
+                {
+                    var checked = (column_value==ckey) ? 'checked' : '';
+                %>
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="<%-ckey%>" name="<%-column_name%>" id="<%-column_name%><%-ci%>" <%-checked%> <%-column_readonly%>>
+                    <label class="form-check-label" for="<%-column_name%><%-ci%>">
+                    <%-ctitle%>
+                    </label>
+                </div>
+                <%
+                    ci++;
+                });
+                %>
+                </div>
+            </div>
+            <%} else if(column_type=='scheme_list'){ %>
+            <div class="form-group row">
+                <label for="<%-column_name%>" class="col-sm-12 mt-3 control-label font-weight-bold">
+                    <span class="float-right">
+                        <button type="button" class="btn btn-info btn-sm cfid_scheme_add"><i class="fa fa-plus"></i></button>
+                    </span>
+                    <%-column_title%> (<%-column_name%>)
+                </label>
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">퀄럼명</th>
+                                <th class="text-center" colspan="2"> 정보 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                            _.each(column_default, function(sc_list, ckey)
+                            {
+                                var sc_type = (!_.isUndefined(sc_list.type)) ? sc_list.type : 'text';
+                                var sc_title = (!_.isUndefined(sc_list.title)) ? sc_list.title : '';
+                                var sc_default = (!_.isUndefined(sc_list.default)) ? sc_list.default : '';
+                                var sc_value = (!_.isUndefined(sc_list.value)) ? sc_list.value : '';
+                                var sc_comment = (!_.isUndefined(sc_list.comment)) ? sc_list.comment : '';
+                                var sc_readonly = (!_.isUndefined(sc_list.readonly)) ? sc_list.readonly : '';
+                            %>
+                            <tr>
+                                <td rowspan="7">
+                                    <input type="text" class="form-control" id="scheme_<%-ckey%>_name" name="scheme_<%-ckey%>" value="<%-ckey%>">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>type</td>
+                                <td class="border-0">
+                                    <select id="scheme_<%-ckey%>_type" name="scheme_<%-ckey%>" class="form-control">
+                                        <option value="">+ <%-column_title%> 선택하세요.</option>
+                                        <%_.each(input_types, function(dtitle, dkey)
+                                        {
+                                            var selected = (sc_type==dkey) ? 'selected="selected"' : '';
+                                        %>
+                                        <option value="<%-dkey%>" <%=selected%>> 
+                                            <%-dtitle%>
+                                        </option>
+                                        <%});%>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>title</td>
+                                <td class="border-0">
+                                    <input type="text" class="form-control" id="scheme_<%-ckey%>_title" name="scheme_<%-ckey%>" value="<%-sc_title%>">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>default</td>
+                                <td class="border-0">
+                                    <select id="scheme_<%-ckey%>_default" name="scheme_<%-ckey%>" class="form-control">
+                                        <option value="">+ <%-column_title%> 선택하세요.</option>
+                                        <%_.each(arrays, function(dargs, dkey)
+                                        {
+                                            var selected = (dargs.key==sc_default) ? 'selected="selected"' : '';
+                                        %>
+                                        <option value="<%-dargs.key%>" <%=selected%>> 
+                                            <%-dargs.value%>
+                                        </option>
+                                        <%});%>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td class="border-0">
+                                    <input type="text" class="form-control" id="scheme_<%-ckey%>_value" name="scheme_<%-ckey%>" value="<%-sc_value%>">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>comment</td>
+                                <td class="border-0">
+                                    <input type="text" class="form-control" id="scheme_<%-ckey%>_comment" name="scheme_<%-ckey%>" value="<%-sc_comment%>">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>readonly</td>
+                                <td class="border-0">
+                                    <input type="checkbox" class="form-control" id="scheme_<%-ckey%>_readonly" name="scheme_<%-ckey%>" <%=(sc_readonly !='') ? 'checked="checked"' : ''%> value="readonly">
+                                </td>
+                            </tr>
+                            <%
+                            });
+                            %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <%} else if(column_type=='outmsg'){ %>
+            <div class="form-group row">
+                <label for="<%-column_name%>" class="col-sm-12 mt-3 control-label font-weight-bold"><%-column_title%> (<%-column_name%>)</label>
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">퀄럼명</th>
+                                <th class="text-center"> 정보 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                            _.each(column_default, function(om_list, ckey)
+                            {
+                                var om_type = (!_.isUndefined(om_list.type)) ? om_list.type : 'text';
+                                var om_title = (!_.isUndefined(om_list.title)) ? om_list.title : '';
+                                var om_default = (!_.isUndefined(om_list.default)) ? om_list.default : '';
+                                var om_value = (!_.isUndefined(om_list.value)) ? om_list.value : '';
+                            %>
+                            <tr>
+                                <td><%-ckey%></td>
+                                <td>
+                                    <select id="outmsg_<%-ckey%>_default" name="outmsg_<%-ckey%>" class="form-control">
+                                        <option value="">+ <%-om_title%> 선택하세요.</option>
+                                        <%_.each(om_default, function(dmsg, dkey)
+                                        {
+                                            var selected = (dkey==om_value) ? 'selected="selected"' : '';
+                                        %>
+                                        <option value="<%-dkey%>" <%=selected%>> 
+                                            [<%-dkey%>] <%-dmsg%>
+                                        </option>
+                                        <%});%>
+                                    </select>
+                                </td>
+                            </tr>
+                            <%
+                            });
+                            %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <%} else if(column_type=='params_list'){ %>
+            <div class="form-group row">
+                <label for="<%-column_name%>" class="col-sm-12 mt-3 control-label font-weight-bold"><%-column_title%> (<%-column_name%>)</label>
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width:87px;">퀄럼명</th>
+                                <th class="text-center"> 정보 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                            _.each(column_default, function(pv, pk)
+                            {
+                                var pr_type = pv.type;
+                                var pr_value = pv.value;
+                            %>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" id="params_<%-pk%>_name" name="params_<%-pk%>" readonly value="<%-pk%>">
+                                </td>
+                                <td>
+                                    <%
+                                    if(pr_type == 'text'){
+                                    %>
+                                    <input type="text" class="form-control" id="params_<%-pk%>_value" name="params_<%-pk%>" value="<%-pr_value%>">
+                                    <% } else { %>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:86px;">key</th>
+                                                    <th>value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                _.each(pr_value, function(plist, pname){
+                                                    var is_object = _.isObject(plist);
+                                                %>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control" id="params_<%-pk%>_<%-pname%>_name" name="params_<%-pk%>_<%-pname%>" value="<%-pname%>">
+                                                    </td>
+                                                    <td>
+                                                        <% 
+                                                        if(is_object){
+                                                        %>
+                                                            <table>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width:86px;"></th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <% 
+                                                                _.each(plist, function(p3v,p3k){
+                                                                %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="params_<%-pk%>_<%-p3k%>_name" name="params_<%-pk%>_<%-p3k%>" value="<%-p3k%>">
+                                                                    </td>
+                                                                    <td>
+                                                                        <% 
+                                                                        if (p3k == 'coord' || p3k == 'condition'){
+                                                                            var p3_title = '';
+                                                                            var p3_default = {};
+                                                                            if(p3k == 'condition'){
+                                                                                p3_title = 'CONDITION';
+                                                                                p3_default = config_condition;
+                                                                            }else if(p3k == 'coord'){
+                                                                                p3_title = 'COORD';
+                                                                                p3_default = config_coord;
+                                                                            }
+                                                                        %>
+                                                                        <select id="params_<%-pk%>_<%-p3k%>_value" name="params_<%-pk%>_<%-p3k%>" class="form-control">
+                                                                            <option value="">+ <%-p3_title%> 선택하세요.</option>
+                                                                            <%_.each(p3_default, function(coordv, coordk)
+                                                                            {
+                                                                                var selected = (coordv==$.trim(p3v)) ? 'selected="selected"' : '';
+                                                                            %>
+                                                                            <option value="<%-coordv%>" <%=selected%>> 
+                                                                                <%-coordv%>
+                                                                            </option>
+                                                                            <% }); %>
+                                                                        </select>
+                                                                        <% } else { %>
+                                                                        <input type="text" class="form-control" id="params_<%-pk%>_<%-p3k%>_value" name="params_<%-pk%>_<%-p3k%>" value="<%-p3v%>">
+                                                                        <% } %>
+                                                                    </td>
+                                                                </tr>
+                                                                <% }); %>
+                                                                </tbody>
+                                                            </table>
+                                                        <%
+                                                        } else { %>
+                                                            <input type="text" class="form-control" id="params_<%-pk%>_<%-pname%>_val" name="params_<%-pk%>_<%-pname%>" value="<%-plist%>">
+                                                        <%
+                                                        }
+                                                        %>
+                                                    </td>
+                                                </tr>
+                                                <%
+                                                });
+                                                %>
+                                            </tbody>
+                                        </table>
+                                    <% } %>
+                                </td>
+                            </tr>
+                            <%
+                            });
+                            %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <% } else { %>
+            <div class="form-group row">
+                <label for="<%-column_name%>" class="col-sm-12 mt-3 control-label font-weight-bold"><%-column_title%> (<%-column_name%>)</label>
+                <div class="col-sm-12">
+                    <input type="<%-column_type%>" class="form-control" id="<%-column_name%>" name="<%-column_name%>" placeholder="<%-column_comment%>" value="<%-column_value%>" <%-column_readonly%> />
+                </div>
+            </div>
+            <%}%>
+        <%});%>
+
+        <hr />
+
+        <!--버튼-->
+        <div class="text-center" style="padding: 20px 0px;">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">저장하기</button>
+        </div>
+    </form>
+</script>

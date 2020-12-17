@@ -1,0 +1,9 @@
+<?php
+define('_FTP_HOST_','');
+define('_FTP_USER_','');
+define('_FTP_PASSWD_','');
+define('_FTP_SSL_',false);
+define('_FTP_PORT_',21);
+define('_FTP_TIME_',10);
+define('_FTP_DIR_','/');
+?>

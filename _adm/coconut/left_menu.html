@@ -1,0 +1,13 @@
+<button id="btn_alarm" type="button" class="btn btn-link text-white" title="알림" style="position: relative;">
+  <span id="alarm_count" class="badge badge-danger position-absolute" style="right:10px;font-size:1.1rem;display:none;">0</span>
+  <i class="far fa-comment fa-2x"></i>
+</button>
+
+<a href="/" target="_blank" role="button" class="btn btn-link text-white" title="웹사이트" style="position: relative;">
+<i class="fas fa-globe-asia fa-2x"></i>
+</a>
+{%if(isset(_SESSION.auth_id) && _SESSION.auth_id):%}
+<a href="/_adm/logout.php" role="button" class="btn btn-link text-white" title="로그아웃" style="position: relative;">
+<i class="fas fa-sign-out-alt fa-2x"></i>
+</a>
+{%:if%}

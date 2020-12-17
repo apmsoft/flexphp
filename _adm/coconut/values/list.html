@@ -1,0 +1,41 @@
+<script type="text/template" id="tpl_values_listview">
+
+    <div class="container-fluid" style="padding: 10px 0px;">
+        <div class="row">
+            <div class="col-6">
+              <button type="button" id="btn_add" class="btn btn-primary button_circle"><i class="fa fa-plus"></i></button>
+            </div>
+            <div class="col-6" style="text-align: right;">
+              
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      <table class="table table-hover table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col">key</th>
+            <th scope="col">values</th>
+            <th scope="col"> </th>
+          </tr>
+        </thead>
+        <tbody>
+        <%
+        _.each(msg, function(val, key, args)
+        {
+        %>
+          <tr>
+            <th scope="row"><%-key%></th>
+            <td><%-val%></td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-info raw" data-id="<%-key%>">Edit</button>
+              <% if(!_.contains(strings_filters, key)){%>
+              <button type="button" class="btn btn-sm btn-outline-secondary raw-del" data-id="<%-key%>">Del</button>
+              <% } %>
+            </td>
+          </tr>
+        <%});%>
+        </tbody>
+      </table>
+    </div>
+</script>

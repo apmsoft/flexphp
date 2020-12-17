@@ -1,0 +1,32 @@
+<script type="text/template" id="tpl_structure_validation">
+<h3 id="cf_title">Validation (__REQ__)</h3>
+<hr />
+<form id="theValidationForm">
+    <div class="form-group">
+        <label for="vali_field" class="font-weight-bold mt-3">데이터 유효성 체크할 전송 키(_GET,_POST,_INPUT)</label>
+        <input type="text" class="form-control" id="vali_field" style="font-weight: bold; background-color: orange !important; color: #fff; font-size: 1.4rem;" name="vali_field" aria-describedby="vali_fieldHelp" placeholder="">
+        <small id="vali_fieldHelp" class="form-text text-muted">사용자에 의해 전송된 값들이 유효한지 또는 전송을 하였는지 등을 체크하는 기능을 제공합니다.</small>
+    </div>
+    <div class="form-group">
+      <label for="vali_title" class="font-weight-bold mt-3">타이틀</label>
+      <input type="text" class="form-control" id="vali_title" name="vali_title" aria-describedby="vali_titleHelp" placeholder="">
+      <small id="vali_titleHelp" class="form-text text-muted">경고 메세지에 보여질 타이틀명</small>
+  </div>
+    <div class="form-group">
+        <label for="vali_filter" class="font-weight-bold mt-3">체크 필터</label>
+        <select class="form-control" id="vali_filter" name="vali_filter">
+          <option value="">+필터를 선택하세요</option>
+          <% 
+          _.each(chkfilters, function(ftitle,fkey){
+          %>
+          <option value="<%-fkey%>"><%-fkey%> (<%-ftitle%>)</option>
+          <% }); %>
+        </select>
+      </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="vali_required" name="vali_required" value="y">
+        <label class="form-check-label" for="exampleCheck1">필수입력</label>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">저장하기</button>
+</form>
+</script>

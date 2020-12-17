@@ -1,0 +1,83 @@
+<script type="text/template" id="tpl_config_init">
+    <div class="text-right">
+        <button class="btn btn-link text-white" onclick="history.go(-1); return false;"><i class="fas fa-times fa-2x"></i></button>
+    </div>
+    <div class="card noSwipe p-3">
+        <div class="card-block pt-3">
+            <h3>
+                <span class="float-right"><small>상태 </small>
+                    <button type="button" class="btn btn-sm btn-outline-info">비활성화</button> 
+                    <button type="button" class="btn btn-sm btn-outline-info active">활성화</button>
+                </span>
+                기본 프로그램 활성화
+            </h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td colspan="3">
+                            <button type="button" class="btn-config-newadd btn btn-block btn-lg btn-outline-info <%-(!_.isUndefined(msg.list)) ? 'active':''%>" data-cfid="list">목록(list)</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <button type="button" class="btn-config-newadd btn btn-block btn-lg btn-outline-info <%-(!_.isUndefined(msg.view)) ? 'active':''%>" data-cfid="view">뷰(view)</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn-config-newadd btn btn-block btn-lg btn-outline-info <%-(!_.isUndefined(msg.post)) ? 'active':''%>" data-cfid="post">글쓰기 화면(post)</button>
+                        </td>
+                        <td class="text-center">
+                            <i class="fas fa-arrow-right"></i>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-config-newadd btn btn-block btn-lg btn-outline-success <%-(!_.isUndefined(msg.insert)) ? 'active':''%>" data-cfid="insert">데이터 등록(insert)</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn-config-newadd btn btn-block btn-lg btn-outline-info <%-(!_.isUndefined(msg.edit)) ? 'active':''%>" data-cfid="edit">수정 화면(edit)</button>
+                        </td>
+                        <td class="text-center">
+                            <i class="fas fa-arrow-right"></i>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-config-newadd btn btn-block btn-lg btn-outline-success <%-(!_.isUndefined(msg.update)) ? 'active':''%>" data-cfid="update">데이터 수정(update)</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn-config-newadd btn btn-block btn-lg btn-outline-info <%-(!_.isUndefined(msg.password)) ? 'active':''%>" data-cfid="password">비밀번호 확인(password)</button>
+                        </td>
+                        <td class="text-center">
+                            <i class="fas fa-arrow-right"></i>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-config-newadd btn btn-block btn-lg btn-outline-success <%-(!_.isUndefined(msg.delete)) ? 'active':''%>" data-cfid="delete">데이터 삭제(delete)</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="mt-5">사용자 확장 프로그램</h3>
+            <table class="table">
+                <tbody>
+                    <%
+                    var strings_filters = ['list','view','post','insert','edit','update','password','delete'];
+                    _.each(msg, function(lv,lk){
+                        if(!_.contains(strings_filters, lk)){
+                    %>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-block btn-lg btn-outline-info <%-(!_.isUndefined(msg.list)) ? 'active':''%>" data-cfid="<%-lk%>"><%-lv%></button>
+                        </td>
+                    </tr>
+                    <% 
+                        }
+                    }); 
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,97 @@
+<script type="text/template" id="template_adm_modify">
+  <div class="text-right">
+    <button class="btn btn-link text-white" onclick="history.go(-1); return false;"><i class="fas fa-times fa-2x"></i></button>
+</div>
+    <%
+    var sel_100 = '';
+    var sel_999 = '';
+    if(msg.level == 999){
+      sel_100 = '';
+      sel_999 = 'selected="selected"';
+    }else{
+      sel_100 = 'selected="selected"';
+      sel_999 = '';
+    }
+    %>
+    <div class="row">
+      <div class="col-12">
+        <div  style="margin-right:2px;margin-bottom: 12px;">
+          <div class="card">
+            <div class="card-body">
+              <form id="theADMForm">
+                <div class="form-group">
+                  <label for="tname">관리자 등급</label>
+                  <select class="form-control" id="level" name="level">
+                    <option value="">+ 관리자 등급 선택</option>
+                    <option value="100" <%=sel_100%>>관리자</option>
+                    <option value="999" <%=sel_999%>>최고관리자</option>
+                  </select>
+                </div>
+                <table class="table table-bordered">
+                  <tr>
+                    <td colspan="2">
+                      <p>모든 IP에서 접속허용(<%-ip%></p>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                          <input class="form-check-input" type="radio" name="allow_ipall" id="allow_ipall1" value="y" <%-(msg.allow_ipall =='y') ? 'checked="checked"' : ''%>> 허용
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                          <input class="form-check-input" type="radio" name="allow_ipall" id="allow_ipall2" value="n" <%-(msg.allow_ipall =='n') ? 'checked="checked"' : ''%>> 제한허용
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>허용IP1</td>
+                    <td>
+                      <input type="text" class="form-control" id="allow_ip1" name="allow_ip1" placeholder="접속허용IP 1(00.00.00.01)" value="<%-msg.allow_ip1%>">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>허용IP2</td>
+                    <td>
+                      <input type="text" class="form-control" id="allow_ip2" name="allow_ip2" placeholder="접속허용IP 2(00.00.00.02)" value="<%-msg.allow_ip2%>">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>허용IP3</td>
+                    <td>
+                      <input type="text" class="form-control" id="allow_ip3" name="allow_ip3" placeholder="접속허용IP 3(00.00.00.03)" value="<%-msg.allow_ip3%>">
+                    </td>
+                  </tr>
+                </table>
+                <div class="form-group row">
+                  <label class="col-sm-4">모바일기기 접속허용</label>
+                  <div class="col-sm-8">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" id="allow_mobile" name="allow_mobile" value="y" <%-(msg.allow_mobile =='y') ? 'checked="checked"' : ''%>> 허용하기
+                      </label>
+                    </div>
+                  </div>
+                </div>
+    
+                <h5>비밀번호 변경</h5>
+                <div class="form-group row">
+                  <label for="passwd" class="col-sm-3 control-label">새 비밀번호</label>
+                  <div class="col-sm-9">
+                    <input type="password" class="form-control" id="passwd" name="passwd" value="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="re_passwd" class="col-sm-3 control-label">새 비밀번호확인</label>
+                  <div class="col-sm-9">
+                    <input type="password" class="form-control" id="re_passwd" name="re_passwd" value="">
+                  </div>
+                </div>
+    
+                <button type="submit" class="btn btn-primary">권한 변경하기</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </script>

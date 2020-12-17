@@ -1,0 +1,131 @@
+<script type="text/template" id="tpl_member_view">
+  <div class="text-right">
+    <button class="btn btn-link text-white" onclick="history.go(-1); return false;"><i class="fas fa-times fa-2x"></i></button>
+</div>
+    <%
+    // 프로필이미지
+    var profile_image = '';
+    if(!_.isUndefined(msg.profile) && _.size(msg.profile)>0){
+      if(msg.profile[0].directory){
+        profile_image = msg.profile[0].directory+'/s/'+msg.profile[0].sfilename;
+      }
+    }
+    
+    // 앱
+    var app_info = {
+      os_type : '',
+      token : '',
+      signdate : ''
+    };
+    if(!_.isUndefined(msg.app) && _.size(msg.app)>0){
+      if(msg.app[0].signdate){
+        app_info = msg.app[0];
+      }
+    }
+    %>
+    <div class="card mt-3">
+      <div class="card-body">
+        <h3 class="card-title"><%-msg.name%></h3>
+        <h6 class="card-subtitle text-muted"><%-msg.signdate%></h6>
+      </div>
+    
+      <div class="member_view_bg">
+        <img class="card-img-top member_button_circle member_view_center" src="<%profile_image%>">
+      </div>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th scope="row">등급</th>
+            <td>
+                <select class="form-control" style="display: inline;width: 80%;" id="user_level" name="user_level" data-id="<%-msg.id%>">
+                <%_.each(user_level, function(mlevel, mlkey){
+                  var _level_selected = (mlkey == msg.level) ? 'selected="selected"' : '';
+                %>
+                  <option value="<%-mlkey%>" <%=_level_selected%>><%-mlevel%></option>
+                <%});%>
+                </select>
+            </td>
+          </tr>
+          <%if(!_.isUndefined(msg.cell) && msg.cell !=''){%>
+          <tr>
+            <th scope="row">전화</th>
+            <td><a href="tel:<%-msg.cell%>"><%-TextUtil.phone_format(msg.cell)%></a></td>
+          </tr>
+          <%}%>
+          <%
+            if (typeof(msg.job) !== "undefined" && msg.job !='') {
+                var _lct_title = category_navi[msg.job].title;
+            %>
+          <tr>
+            <th scope="row">포지션 :</th>
+            <td><%_lct_title%></td>
+          </tr>
+          <%}%>
+          <tr>
+            <th scope="row">이메일(아이디)</th>
+            <td><a href="mailto:<%-msg.userid%>"><%-msg.userid%></a></td>
+          </tr>
+          <%
+          if (typeof(msg.cellphone) !== "undefined" && msg.cellphone !='') {
+          %>
+          <tr>
+            <th scope="row">연락처</th>
+            <td><a href="tel:<%-msg.cellphone%>"><%-msg.cellphone%></a></td>
+          </tr>
+          <%}%>
+          <tr>
+            <th scope="row">자기소개</th>
+            <td><%-msg.introduce%></td>
+          </tr>
+          <tr>
+            <th scope="row">최근접속일</th>
+            <td><%-msg.recently_connect_date%></td>
+          </tr>
+          <tr>
+            <th scope="row">최근정보변경일</th>
+            <td><%-(msg.up_date !='0') ? msg.up_date : msg.signdate%></td>
+          </tr>
+          <%
+            if (app_info.os_type !='') {
+            %>
+          <tr>
+            <th scope="row">모바일(앱) 정보</th>
+            <td>
+                <table class="table table-striped">
+                    <tbody>
+                      <tr>
+                        <th scope="row" style="width:100px;">모바일 OS</th>
+                        <td><%(app_info.os_type =='a') ? '안드로이드' : 'iOS'%></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">메세지 확인</th>
+                        <td><%-msg.alarm_readdate%></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">앱 토큰</th>
+                        <td><input type="text" style="width: 100%;" readonly="readonly" value="<%app_info.pushtoken%>" /></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      
+      <div class="card-footer text-muted">
+        <%if(msg.level > 0){%>
+        <button type="button" id="btn_remove" class="btn btn-sm btn-warning" data-id="<%-msg.id%>"><i class="fa fa-ban"></i> 접속차단</button>
+        <%}else{%>
+        <button type="button" id="btn_reset" class="btn btn-sm btn-warning" data-id="<%-msg.id%>"><i class="fa fa-ban" style="color: red;"></i> 차단해제</button>
+        <%}%>
+      </div>
+    </div>
+
+    <div class="mt-3">
+        <div class="card">
+            <div class="card-body" id="lay_member_form" >
+            </div>
+        </div>
+    </div>
+</script>

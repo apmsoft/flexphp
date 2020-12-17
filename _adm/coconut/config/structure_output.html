@@ -1,0 +1,149 @@
+<script type="text/template" id="tpl_structure_output">
+    <h3 id="cf_title">Output</h3>
+    <hr />
+    <form id="theOutputForm">
+        <div class="form-group">
+            <label for="output_field" class="font-weight-bold mt-3">변수 키</label>
+            <input type="text" class="form-control" style="font-weight: bold; background-color: orange !important; color: #fff; font-size: 1.4rem;" id="output_field" name="output_field" aria-describedby="output_fieldHelp" placeholder="" value="<%-msg.column_name%>">
+            <small id="output_fieldHelp" class="form-text text-muted">사용할 변수</small>
+        </div>
+        <div class="form-group">
+            <label for="output_value" class="font-weight-bold mt-3">변수 값</label>
+            <table class="table table-hover table-bordered table-striped" style="background-color: #fff;">
+                <thead class="thead-default">
+                    <tr>
+                        <th>NAME</th>
+                        <th>TYPE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    if(msg.column_name !='result') {
+                        if(msg.column_name !='scheme'){
+                    %>
+                    <tr>
+                        <th>상수</th>
+                        <td>
+                            <select class="form-control" id="user_defines">
+                                <option value="">+사용자 정의 상수</option>
+                                <% 
+                                _.each(defines, function(ftitle,fkey){
+                                %>
+                                <option value="<%-fkey%>"><%-fkey%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>함수</th>
+                        <td>
+                            <select class="form-control" id="user_funcs">
+                                <option value="">+사용자 정의 함수</option>
+                                <% 
+                                _.each(funs, function(fv,fkey){
+                                %>
+                                <option value="<%-fkey%>"><%-fv.func_name%> (<%-fv.func_parameter%>)</option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>매직 함수</th>
+                        <td>
+                            <select class="form-control" id="magic_funcs">
+                                <option value="">+펜씨업 정의 매직 함수</option>
+                                <% 
+                                _.each(magic_funs, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Model 선언 데이터</th>
+                        <td>
+                            <select class="form-control" id="config_model">
+                                <option value="">+Model에 선언된 변수</option>
+                                <% 
+                                _.each(config_model, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Data</th>
+                        <td>
+                            <select class="form-control" id="config_data">
+                                <option value="">+Data에 선언된 데이터</option>
+                                <% 
+                                _.each(config_data, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                        <% } %>
+                        
+                        <% 
+                        if(msg.column_name =='scheme') {
+                        %>
+                    <tr>
+                        <th>Data 스키마</th>
+                        <td>
+                            <select class="form-control" id="data_scheme">
+                                <option value="">+Data 스키마</option>
+                                <% 
+                                _.each(data_scheme, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                        <% } %>
+
+                        <%
+                        if(msg.column_name !='scheme'){
+                        %>
+                    <tr>
+                        <th>리소스(Res)</th>
+                        <td>
+                            <select class="form-control" id="resources">
+                                <option value="">+리소스(Res) JSON 데이터</option>
+                                <% 
+                                _.each(resources, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>글로벌(Global) 변수</th>
+                        <td>
+                            <select class="form-control" id="globals">
+                                <option value="">+리소스(Res) JSON 데이터</option>
+                                <% 
+                                _.each(globals, function(fv,fkey){
+                                %>
+                                <option value="<%-fv%>"><%-fv%></option>
+                                <% }); %>
+                            </select>
+                        </td>
+                    </tr>
+                        <% } %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" style="font-size: 1.5rem;background-color: #b3f095;" id="output_value" name="output_value" aria-describedby="output_valueHelp" placeholder="" value="<%-msg.column_value%>">
+            <small id="output_valueHelp" class="form-text text-muted">사용할 변수 값</small>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">저장하기</button>
+    </form>
+    </script>

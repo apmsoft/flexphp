@@ -1,0 +1,77 @@
+{%include_once './header.html'%}
+<link rel="stylesheet" href="/_adm/coconut/css/login.min.css">
+<script type="text/javascript">
+{%if(isset(_SESSION.auth_id)):%}
+    history.back();
+{%:if%}
+
+var http_referer = "{%http_referer%}";
+</script>
+</head>
+
+<body>
+    <div id="container">
+        <!--right -->
+        <div id="right">
+        </div>
+        <!--//right -->
+        <!--left-->
+        <div id="left">
+            <div class="mdl-layout mdl-js-layout mdl-layout--no-drawer-button mdl-layout--fixed-header layout-transparent" style="position: relative;">
+                <header class="mdl-layout__header mdl-layout__header--transparent">
+                    <div class="mdl-layout__header-row">
+                        <!--사이드메뉴용 버튼-->
+                        <div class="mdl-layout-icon bg-transparent border-0 text-white" id="left_back_button"><i class="fas fa-arrow-left"></i></div>
+                        <!--//사이드메뉴용 버튼-->
+                        <!-- Title -->
+                        <span id="left_title" class="mdl-layout-title text-white" style="padding-left: 7px; font-size:20px;">{%strings.app_name%}</span>
+                        <div class="mdl-layout-spacer"></div>
+                        <nav class="mdl-navigation">
+                        </nav>
+                    </div>
+                </header>
+                <main class="mdl-layout__content bg-white">
+                    <div class="page-content" id="left_docs_contents">
+                        
+                    </div>
+                </main>
+
+                <div class="lay-login">
+                    <div class="container-sm">
+                        <h3 class="text-white"><i class="fas fa-user-lock"></i> Admin Login</h3>
+                        <p></p>
+                        <div class="card shadow-lg">
+                            <div class="card-body">
+                                <form id="theLoginForm">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty">
+                                        <input class="mdl-textfield__input mb-2" type="email" id="userid" name="userid" value="">
+                                        <label class="mdl-textfield__label" for="userid"><i class="fas fa-at"></i> 아이디(email)</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input class="mdl-textfield__input mb-2" type="password" id="passwd" name="passwd" value="">
+                                        <label class="mdl-textfield__label" for="passwd"><i class="fas fa-key"></i> 비밀번호</label>
+                                    </div>
+                                    <div class="form-group" style="margin-top: 2rem;">
+                                        <button type="submit" class="btn btn-dark btn-lg btn-block"><i class="fas fa-unlock-alt"></i> 로그인</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--//left-->
+        <!--bottom-->
+        <div id="bottom" style="z-index:100;">
+        </div>
+        <!--//bottom-->
+        <!--drawer_menu -->
+        <div id="drawer_menu">
+        </div>
+        <!--//drawer_menu -->
+    </div>
+    <!--//container-->
+</body>
+<script src="/_adm/coconut/js/login.min.js"></script>
+{%include_once './footer.html'%}

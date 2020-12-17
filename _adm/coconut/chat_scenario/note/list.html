@@ -1,0 +1,101 @@
+<script type="text/template" id="tpl_scenario_note_list">
+    <div class="container-fluid" style="padding: 10px 0px;">
+
+      <div class="text-right">
+        <button class="btn btn-link text-white" onclick="history.go(-1); return false;"><i class="fas fa-times fa-2x"></i></button>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row">
+              <div class="col-6">
+                <button type="button" id="btn_add" class="btn btn-primary button_circle"><i class="fa fa-plus"></i></button>
+              </div>
+              <div class="col-6" style="text-align: right;">
+                
+              </div>
+          </div>
+          
+          <!--검색-->
+          <form id="theNoteSearchForm">
+              <div class="input-group">          
+                <input type="search" class="form-control" name="q" id="q" value="<%-q%>" title="검색어" placeholder="타이틀">
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> 검색</button>
+                </span>
+              </div>
+          </form>
+      
+          <!--카테고리-->
+          <%if(typeof(category_navi) !== "undefined") { %>
+            <ul class="nav nav-pills" style="padding:10px 0 0 0;">
+              <li class="nav-item">
+                <a class="nav-link category-link" data-id="" href="javascript://void(0);">전체</a>
+              </li>
+              <% _.each(category_navi, function(category_navi_title, category_key, value) { 
+                var _cate_active = (category == category_key) ? "active" : "";
+              %>
+              <li class="nav-item">
+                <a class="nav-link category-link <%-_cate_active%>" data-id="<%-category_key%>" href="javascript://void(0);"><%-category_navi_title%></a>
+              </li>
+              <%}); %>  
+            </ul>
+            <% } %>
+        </div>
+        <div class="col-xs-9 ml-4"><small>전체 : <%-total_record%> (<%-page%>/<%-total_page%>페이지)</small></div>
+      
+        <div class="row noSwipe">
+          <%
+          _.each(msg, function(list)
+          {
+          %>
+          <div class="col-md-3 col-sm-4 col-xs-6">
+            <div class="card raw-edit" style="cursor:pointer;" data-id="<%-list.id%>">
+              <div class="card-body">
+                <span class="float-right">
+                  <button class="btn btn-link raw-del" data-id="<%-list.id%>">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </span>
+                #<%-list.title%>
+                <p class="card-text"></p>
+                <a href="javascript:void(0);" class="btn btn-outline-dark btn-chat-note" data-id="<%-list.id%>">학습노트</a>
+                <a href="javascript:void(0);" class="btn btn-outline-info btn-chat-scenario" data-id="<%-list.id%>">시나리오</a>
+              </div>
+            </div>
+          </div>
+          <%});%>
+        </div>
+        
+        <!--paging chanel-->
+        <nav aria-label="Page navigation" style="padding:20px 0;">
+          <ul class="pagination justify-content-center">
+            <%if(paging.pre>0){%>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0);" data-page="<%-paging.pre%>" tabindex="-1" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only"><<</span>
+              </a>
+            </li>
+            <%}%>
+            <% _.each(paging.chanel, function(paging){
+                var page_active = (page == paging.num) ? 'active' : '';
+            %>
+            <li class="page-item <%-page_active%>">
+              <a class="page-link" href="javascript:void(0);" data-page="<%-paging.num%>"><%-paging.num%></a>
+            </li>
+            <%});%>
+            <%if(paging.next>0){%>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0);" data-page="<%-paging.next%>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">>></span>
+              </a>
+            </li>
+            <%}%>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    </script>

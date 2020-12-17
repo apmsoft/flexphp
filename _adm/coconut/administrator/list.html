@@ -1,0 +1,48 @@
+<script type="text/template" id="template_adm_list">
+
+    <div class="container" style="padding: 17px 17px 0 17px;">
+      <div class="row">
+        <div class="col-6">
+          <button type="button" id="btn_adm_add" class="btn btn-primary button_circle"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="col-6" style="text-align: right;">
+          
+        </div>
+      </div>
+      <div class="row box_shadow">
+        <div style="padding: 7px;"><small>Total : <%-total_record%></small></div>
+        <table class="table table-hover table-bordered" style="background-color: #fff;">
+          <thead>
+            <tr>
+              <th>성명</th>
+              <th>아이디</th>
+              <th>등급</th>
+              <th>최근접속</th>
+              <th class="hidden-sm-down"> </th>
+            </tr>
+          </thead>
+          <tbody>
+          <%
+          _.each(msg, function(list){
+          %>
+            <tr class="raw" data-id="<%-list.id%>">
+              <td><%-list.name%></td>
+              <td><%-list.userid%></td>
+              <td><%-list.level%></td>
+              <td><%-list.recently_connect_date%></td>
+              <td class="hidden-sm-down">
+                <button type="button" class="btn btn-sm btn-info btn_adm_edit" data-id="<%-list.id%>" title="수정">
+                  Edit
+                </button>&nbsp;
+                <button type="button" class="btn btn-sm btn-warning btn_adm_delete" data-id="<%-list.id%>">
+                  Del
+                </button>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    </script>

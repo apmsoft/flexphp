@@ -1,0 +1,31 @@
+<script type="text/template" id="template_adm_write">
+  <div class="text-right">
+    <button class="btn btn-link text-white" onclick="history.go(-1); return false;"><i class="fas fa-times fa-2x"></i></button>
+</div>
+    <div class="row">
+      <div class="col-12">
+        <div style="margin-right:2px;margin-bottom: 12px;">
+          <div class="card">
+            <div class="card-body">
+              <form id="theADMForm">
+                <div class="form-group">
+                  <label for="tname">회원</label>
+                  <select class="form-control" id="muid" name="muid">
+                    <option value="">+ 관리자로 등록할 회원을 선택하세요.</option>
+                    <%
+                    _.each(msg,function(user){
+                    %>
+                    <option value="<%-user.id%>"><%-user.name%>(<%-user.userid%>)</option>
+                    <%
+                    });
+                    %>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">관리자 등록</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </script>
