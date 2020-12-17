@@ -1,5 +1,5 @@
 <?php
-namespace Fus3\Util;
+namespace Flex\Util;
 
 use \SplFileObject;
 class UtilSchemaMng extends SplFileObject

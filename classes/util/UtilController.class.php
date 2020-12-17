@@ -6,10 +6,10 @@
 | @Editor   : VSCode
 | @version : 10
 ----------------------------------------------------------*/
-namespace Fus3\Util;
+namespace Flex\Util;
 
-use Fus3\R\R;
-use Fus3\Req\ReqForm;
+use Flex\R\R;
+use Flex\Req\ReqForm;
 use \ErrorException;
 
 class UtilController extends UtilConfig

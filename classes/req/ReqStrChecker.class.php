@@ -6,7 +6,7 @@
 | @Editor   : VSCode
 | @UPDATE   : 1.1.1
 ----------------------------------------------------------*/
-namespace Fus3\Req;
+namespace Flex\Req;
 
 # purpose : 문자를 체크(Ascii 문자 코드를 활용하여) 한다 / preg,ereg 정규식 보다 훨 빠름
 class ReqStrChecker{

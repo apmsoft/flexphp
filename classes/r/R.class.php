@@ -6,7 +6,7 @@
 | @Editor   : VSCode
 | @UPDATE   : 1.3.4
 ----------------------------------------------------------*/
-namespace Fus3\R;
+namespace Flex\R;
 
 use \ArrayObject;
 use \ErrorException;

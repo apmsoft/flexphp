@@ -6,7 +6,7 @@
 | @Editor   : Sublime Text 3
 | @version  : 0.4.1
 ----------------------------------------------------------*/ 
-namespace Fus3\Util;
+namespace Flex\Util;
 
 #config.json 컨트롤
 class UtilResMng extends PreferenceInternalStorage

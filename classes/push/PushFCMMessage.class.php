@@ -1,7 +1,7 @@
 <?php
-namespace Fus3\Push;
+namespace Flex\Push;
 
-use Fus3\Out\Out;
+use Flex\Out\Out;
 
 class PushFCMMessage
 {

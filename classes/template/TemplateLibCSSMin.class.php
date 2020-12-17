@@ -19,7 +19,7 @@
  * The copyrights embodied in the content of this file are licensed
  * by Yahoo! Inc. under the BSD (revised) open source license.
  */
-namespace Fus3\Template;
+namespace Flex\Template;
 
 class TemplateLibCSSMin
 {

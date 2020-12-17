@@ -6,7 +6,7 @@
 | @Editor	: Sublime Text 3
 | @UPDATE	: 1.2.1
 ----------------------------------------------------------*/
-namespace Fus3\Paging;
+namespace Flex\Paging;
 
 class PagingRelation
 {

@@ -6,12 +6,12 @@
 | @Editor	: Sublime Text 3
 | @UPDATE	: 1.7.1
 ----------------------------------------------------------*/
-namespace Fus3\Util;
+namespace Flex\Util;
 
-use Fus3\Image\ImageExif;
-use Fus3\Files\FilesUpload;
-use Fus3\Dir\DirInfo;
-use Fus3\Cipher\CipherEncrypt;
+use Flex\Image\ImageExif;
+use Flex\Files\FilesUpload;
+use Flex\Dir\DirInfo;
+use Flex\Cipher\CipherEncrypt;
 
 class UtilFileUpload extends ImageExif
 {	

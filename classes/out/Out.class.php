@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @UPDATE	: 1.5.1
 ----------------------------------------------------------*/
-namespace Fus3\Out;
+namespace Flex\Out;
 
 # define('_CHRSET_', 'utf-8');
 # purpose : 문자를 출력하는데 필요한 불필요한 노가다를 막자

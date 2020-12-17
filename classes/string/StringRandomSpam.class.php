@@ -6,7 +6,7 @@
 | @Editor   : Eclipse(default)
 | @vsesion  : 1.0
 ----------------------------------------------------------*/
-namespace Fus3\String;
+namespace Flex\String;
 
 class StringRandomSpam extends StringRandom
 {

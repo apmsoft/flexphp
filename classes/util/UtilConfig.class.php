@@ -6,7 +6,7 @@
 | @Editor   : VSCode
 | @version : 0.9.4
 ----------------------------------------------------------*/
-namespace Fus3\Util;
+namespace Flex\Util;
 
 use Fus3\Util\UtilModel;
 use Fus3\R\R;

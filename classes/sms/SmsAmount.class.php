@@ -5,7 +5,7 @@
 | @HomePage	: https://fancyupsoft.com
 | @VERSION	: 0.6
 ----------------------------------------------------------*/
-namespace Fus3\Sms;
+namespace Flex\Sms;
 
 # 펜씨업소프트 문자 호스팅 잔여량 확인
 class SmsAmount extends Sms{

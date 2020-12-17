@@ -1,5 +1,5 @@
 <?php
-namespace Fus3\Preference;
+namespace Flex\Preference;
 
 use \SplFileObject;
 

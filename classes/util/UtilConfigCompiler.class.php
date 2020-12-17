@@ -6,12 +6,12 @@
 # @Editor   : VSCode
 # @version : 1.1
 #----------------------------------------------------------
-namespace Fus3\Util;
+namespace Flex\Util;
 
-use Fus3\R\R;
+use Flex\R\R;
 use \ErrorException;
-use Fus3\Db\DbHelperWhere;
-use Fus3\Util\UtilMakeThumbnail;
+use Flex\Db\DbHelperWhere;
+use Flex\Util\UtilMakeThumbnail;
 
 class UtilConfigCompiler 
 {

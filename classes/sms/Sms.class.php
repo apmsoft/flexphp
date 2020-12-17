@@ -5,7 +5,7 @@
 | @HomePage	: https://fancyupsoft.com
 | @VERSION	: 0.5
 ----------------------------------------------------------*/
-namespace Fus3\Sms;
+namespace Flex\Sms;
 
 # 펜씨업소프트 기본 셋팅
 class Sms{

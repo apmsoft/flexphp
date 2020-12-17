@@ -1,5 +1,5 @@
 <?php
-namespace Fus3\Util;
+namespace Flex\Util;
 
 class UtilResFtpHelper {
     public $filename;

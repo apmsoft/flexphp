@@ -7,12 +7,12 @@
 | @Editor	: Sublime Text 3
 | @version  : 1.3.2
 ----------------------------------------------------------*/
-namespace Fus3\Template;
+namespace Flex\Template;
 
 use \ArrayAccess;
 use \ErrorException;
-use Fus3\Dir\DirInfo;
-use Fus3\R\R;
+use Flex\Dir\DirInfo;
+use Flex\R\R;
 
 # purpose : MVC 패턴목적, 디자인과 프로그램의 분리
 class Template extends TemplateCompiler implements ArrayAccess

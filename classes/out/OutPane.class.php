@@ -6,7 +6,7 @@
 | @Editor	: Eclipse(default)
 | @version :1.1
 ----------------------------------------------------------*/
-namespace Fus3\Out;
+namespace Flex\Out;
 
 # purpose : sqlite 함수를 활용해 확장한다
 # @ define('_CHRSET_','utf-8');

@@ -1,5 +1,5 @@
 <?php
-namespace Fus3\Util;
+namespace Flex\Util;
 
 /*
 $utilUpLoadFileSystem = new Fus3\Util\UtilUpLoadFileSystem($model->extract_id);
