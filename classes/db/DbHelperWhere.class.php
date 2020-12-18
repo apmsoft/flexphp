@@ -4,11 +4,11 @@
 | @Email	: apmsoft@gmail.com
 | @HomePage	: https://www.fancyupsoft.com
 | @Editor	: VSCode
-| @UPDATE	: 1.4
+| @UPDATE	: 1.5
 ----------------------------------------------------------*/
-namespace Flex\Db;
+namespace Fus3\Db;
 
-use Flex\String\StringKeyword;
+use Fus3\String\StringKeyword;
 
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class DbHelperWhere extends StringKeyword
@@ -80,9 +80,9 @@ class DbHelperWhere extends StringKeyword
 	# void
 	# 구문어를 만든다.
 	# @where_str : name='홍길동'
-	# @condition : [=,!=,<,>,<=,>=]
+	# @condition : [=,!=,<,>,<=,>=,IN]
 	# @coord : [AND | OR]
-	# @value : NULL | VALUE | %
+	# @value : NULL | VALUE | % | Array
 	# @is_append : 필수 적용
 	public function setBuildWhere($field_name, $condition ,$value, $coord='AND',$is_append=false)
 	{
@@ -96,10 +96,21 @@ class DbHelperWhere extends StringKeyword
 		{
 			$_field_name=''; 
 			$_field_name = (strpos($field_name,'.')!==false) ? $field_name : "`".$field_name."`";
-			if(strcmp($value, strtoupper('NULL'))){
+			if(is_array($value) || strcmp($value, strtoupper('NULL'))){
 				if(strtoupper($condition) == 'LIKE'){
 					$where_str = sprintf("%s LIKE '%s'", $_field_name, $value);
-				}else{
+				} else if(strtoupper($condition) == 'IN'){
+					$in_value = array();
+					if (is_array($value)){
+						$in_value = $value;
+					} else if (strpos($value, ",") !==false){
+						$in_value = explode(',', $value);
+					} else{
+						$in_value[] = $value;
+					}
+					$in_value_str = "'" . implode ( "', '", $in_value ) . "'";
+					$where_str = sprintf("%s IN (%s)", $_field_name, $in_value_str);
+				} else{
 					$where_str = sprintf("%s %s '%s'", $_field_name, trim($condition), $value);
 				}
 			}
