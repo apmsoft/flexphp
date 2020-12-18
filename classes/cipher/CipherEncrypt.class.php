@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @UPDATE	: 1.0.2
-----------------------------------------------------------*/
 namespace Flex\Cipher;
 
 use \ErrorException;
@@ -15,14 +8,13 @@ class CipherEncrypt
 {
 	private $encrypt_str = '';
 
-	public function __construct($str){
+	public function __construct(string $str){
 		$this->encrypt_str = $str;
 	}
 
-	#@ return String
 	# md5
 	# enMd5cbf930bbece24547baec219c9089f2eb
-	public function _md5()
+	public function _md5() : string
 	{
 		$result ='';
 		try{
@@ -34,10 +26,9 @@ class CipherEncrypt
 	return $result;
 	}
 
-	#@ return String
 	# md5+base64_encdoe
 	# y/kwu+ziRUe67CGckIny6w
-	public function _md5_base64(){
+	public function _md5_base64() : string{
 		$result ='';
 		try{
 			$result = preg_replace('/=+$/','',base64_encode(pack('H*',md5($this->encrypt_str))));
@@ -47,10 +38,9 @@ class CipherEncrypt
 	return $result;
 	}
 
-	#@ return String
 	# md5+utf8_encode
 	# cbf930bbece24547baec219c9089f2eb
-	public function _md5_utf8encode(){
+	public function _md5_utf8encode() : string{
 		$result ='';
 		try{
 			$result = md5(utf8_encode($this->encrypt_str));
@@ -60,10 +50,9 @@ class CipherEncrypt
 	return $result;
 	}
 
-	#@ return String
 	# sha512+base64_encode
 	# ZDE4OTkyNjE1ZjRlMjgyZmZlMDNjODQxNWQ2ZTZiZDhjN2JkZWRjNDg5MWE5NWU1NDA0Yjk4OTk0MjdmZTc0MmE5ZjU2ZWNhZmQwOWFlNTBlZjVhODNiNTU2NDBiNjcwNzlhZDBkYzE3NWFkMDA3OTU5YjU1YWI2OWJkMzBjMzg=
-	public function _hash_base64($hash='sha512'){
+	public function _hash_base64($hash='sha512') : string{
 		$result ='';
 		try{
 			$result = base64_encode(hash($hash, $this->encrypt_str));
@@ -73,9 +62,8 @@ class CipherEncrypt
 	return $result;
 	}
 
-	#@ return String
 	# 디코드 가능한 인코딩
-	public function _base64_urlencode(){
+	public function _base64_urlencode() : string{
 		$result = '';
 		try{
 			$result = urlencode(base64_encode($this->encrypt_str));

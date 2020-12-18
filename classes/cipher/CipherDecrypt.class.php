@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @UPDATE	: 1.0
-----------------------------------------------------------*/
 namespace Flex\Cipher;
 
 use \ErrorException;
@@ -15,12 +8,12 @@ class CipherDecrypt
 {
 	private $decrypt_str = '';
 
-	public function __construct($str){
+	public function __construct(string $str){
 		$this->decrypt_str = $str;
 	}
 
 	#@ return String
-	public function _base64_urldecode(){
+	public function _base64_urldecode() : string{
 		$result = '';
 		try{
 			$result = base64_decode(urldecode($this->decrypt_str));
