@@ -28,4 +28,12 @@ out_ln ( $encrypttext );
 # 복호화 테스트
 $cipherDecrypt = new Flex\Cipher\CipherDecrypt($encrypttext);
 out_ln ( '복호화 : '.$cipherDecrypt->_base64_urldecode() );
+
+# 날짜
+$dateTimes = new Flex\Date\DateTimes('now');
+out_ln ( $dateTimes->wasPassed(1) );
+out_ln ( $dateTimes->dateBefore(3) );
+out_ln ( $dateTimes->daysAfterDDay() );
+out_ln ( $dateTimes->timeLeft24H() );
+out_r ( $dateTimes->wkr_args );
 ?>

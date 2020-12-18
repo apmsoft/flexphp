@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @version 	: 1.0.4
-----------------------------------------------------------*/
 namespace Flex\Date;
 
 use \DateTime;
@@ -20,8 +13,8 @@ class DateTimes extends DateTime{
 
 	#@ void
 	# times -> Y-m-d H:i:s || now || ()
-	public function __construct($times=''){
-		if($times =='now' || $times==''){
+	public function __construct(string|null|datetime $times=null){
+		if($times =='now' || is_null($times)){
 			parent::__construct($times);
 			$this->datetimev = parent::format('Y-m-d H:i:s');
 		}else{
@@ -34,9 +27,8 @@ class DateTimes extends DateTime{
 		}
 	}
 
-	#@ void
 	# 날짜가 유효한지 체크한다
-	public function checkdateEx(){
+	public function checkdateEx() : void{
 		# 날짜 입력 체크
 		$ymd_args = explode('-',$this->format('Y-m-d'));
 		if(is_array($ymd_args)){
@@ -47,10 +39,9 @@ class DateTimes extends DateTime{
 		}
 	}
 
-	#@ return boolean
 	# 어떠한 특정날짜에서 일정기간(1일, 3일)기간이 지났는지를 알아보고자 할때
 	# int days
-	public function wasPassed($days)
+	public function wasPassed($days) : bool
 	{
 		$result = false;
 		$timestamp = $this->format('U');
@@ -60,10 +51,9 @@ class DateTimes extends DateTime{
 		return $result;
 	}
 
-	#@ return date (Y-m-d)
 	# 특정날짜를 기준으로 며칠전(1일전, 2일전) 날짜를  알고자 할때
 	# int days
-	public function dateBefore($days){
+	public function dateBefore($days) : string {
 		$datetimez= $this->format('U');
 		$regs= $datetimez - ($days*86400);
 		$result=date('Y-m-d',$regs);
@@ -74,7 +64,7 @@ class DateTimes extends DateTime{
 	#@ return date (Y-m-d)
 	## 어떠한 특정날짜에서로부터 며칠(3일)뒤의 날짜가 언제인지 알아낸다
 	# int days
-	public function dateAfter($days)
+	public function dateAfter($days) : string
 	{
 		$datetimez	= $this->format('U');
 		$regs= $datetimez + ($days*86400);
@@ -83,9 +73,8 @@ class DateTimes extends DateTime{
 		return $result;
 	}
 
-	#@ return int
 	# 오늘 날짜를 기준으로 어떠한 특정날짜에 도달하기 위해 며칠이 남았는지 리턴(1일 남았음, 2일 남았음)
-	public function daysBeforeDDay()
+	public function daysBeforeDDay() : int
 	{
 		$result = 0;
 		$oneday_timenum = 86400;
@@ -98,7 +87,7 @@ class DateTimes extends DateTime{
 
 	#@ return int
 	# 오늘 날자를 기준으로 입력된 날짜가 며칠이나 지났는지 (1일지남, 2일지남)
-	public function daysAfterDDay()
+	public function daysAfterDDay() : int
 	{
 		$result =0;
 		$oneday_timenum = 86400;
@@ -111,7 +100,7 @@ class DateTimes extends DateTime{
 
 	#@ return String
 	## 24시간 이전 값은 시간/분/초 단위로 표기
-	public function timeLeft24H()
+	public function timeLeft24H() : string
 	{
 		$result = '';
 		$datetimez = $this->format('U');
@@ -133,7 +122,7 @@ class DateTimes extends DateTime{
 	}
 
 	# 프라퍼티 값 가져오기
-	public function __get($propertyname){
+	public function __get($propertyname) : mixed{
 		return $this->{$propertyname};
 	}
 }
