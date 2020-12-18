@@ -16,4 +16,16 @@ echo out_ln(App::$version);
 $calendars = new Flex\Calendars\Calendars(date('Y-m-d'));
 $calendars->set_days_of_month();
 out_r($calendars->days_of_month);
+
+# 암호화 테스트
+$cipherEncrypt = new Flex\Cipher\CipherEncrypt('asdfdsdf');
+out_ln ( $cipherEncrypt->_md5() );
+
+out_ln(' 암호화 가능한 복호화 ');
+$encrypttext = $cipherEncrypt->_base64_urlencode();
+out_ln ( $encrypttext );
+
+# 복호화 테스트
+$cipherDecrypt = new Flex\Cipher\CipherDecrypt($encrypttext);
+out_ln ( '복호화 : '.$cipherDecrypt->_base64_urldecode() );
 ?>
