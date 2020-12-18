@@ -31,12 +31,6 @@ class CipherEncrypt
 	# md5+utf8_encode
 	# cbf930bbece24547baec219c9089f2eb
 	public function _md5_utf8encode() : string{
-		// $result ='';
-		// try{
-		// 	$result = md5(utf8_encode($this->encrypt_str));
-		// }catch(Exception $e){
-		// 	throw new ErrorException($e->getMessage(),__LINE__);
-		// }
 		$result = md5(utf8_encode($this->encrypt_str)) ?? throw new ErrorException($e->getMessage(),__LINE__);
 	return $result;
 	}
