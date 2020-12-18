@@ -1,11 +1,5 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @VERSION	: 1.2
-
+/** =====================================================
 <사용법>
 #$memorials[] = array('date'=>'2012-12-25','smtype'=>'s','repeat'=>'y','holiday'=>1,'title'=>'성탄절');
 $calendar = new Calendars($_todate);
@@ -280,7 +274,7 @@ class Calendars extends DateTime
 
 	#@ void
 	#날짜 리셋
-	public function resetTodayDate(){
+	public function resetTodayDate() : void{
 		$ymd_args    = explode('-',$this->format('Y-m-d'));
 		$this->year  = $ymd_args[0];
 		$this->month = $ymd_args[1];
@@ -292,15 +286,16 @@ class Calendars extends DateTime
 
 	#@ void
 	# 오늘날짜에 속한 정보들을 얻는다
-	public function fromJd(){
-		if(function_exists(unixtojd))
+	public function fromJd() :void{
+		if(function_exists('unixtojd'))
 		{
 			$today_mktime =unixtojd(mktime(0,0,0,$this->month,$this->day, $this->year));
 			$today_args =cal_from_jd($today_mktime, CAL_GREGORIAN);
-			if(is_array($today_args)){
+			if(is_array($today_args))
+			{
 				#month
 				$this->monthname      =$today_args['monthname'];
-				$this->shortmonthname =($today_args['abbrevmonthname'])?$today_args['abbrevmonthname'] : substr($today_args['monthname'],0,3);
+				$this->shortmonthname =(isset($today_args['abbrevmonthname'])) ? $today_args['abbrevmonthname'] : substr($today_args['monthname'],0,3);
 
 				#day
 				$this->daydow         =$today_args['dow'];
@@ -331,7 +326,7 @@ class Calendars extends DateTime
 		'title'        =>신정							#제목
 	)
 	*/
-	public function set_memorials($memorials=array())
+	public function set_memorials(Array $memorials=array()) : void
 	{
 		$count=count($memorials);
 		for($i=0; $i<$count; $i++)
@@ -375,7 +370,7 @@ class Calendars extends DateTime
 
 	#@ void
 	# 기념일 데이타를 입력
-	private function set_memorials_holiday($int_date, $holiday, $holiday_title,$holiday_plus){
+	private function set_memorials_holiday($int_date, $holiday, $holiday_title,$holiday_plus) : void{
 		$this->memorial_arg[$int_date] =array('holiday'=>$holiday,'title'=>$holiday_title);
 		if($holiday_plus==1){
 			$this->memorial_arg[$int_date-1] =array('holiday'=>$holiday,'title'=>'');
@@ -383,14 +378,13 @@ class Calendars extends DateTime
 		}
 	}
 
-	#@ return
 	#현재달력 구하기
-	public function set_days_of_month()
+	public function set_days_of_month() : void
 	{
 		$x=0;
 
 		# 이전달
-		if(function_exists(cal_days_in_month)){
+		if(function_exists('cal_days_in_month')){
 			$pre_lastday =cal_days_in_month(CAL_GREGORIAN, $this->pre_month, $this->pre_year);
 		}else{
 			$pre_lastday =date("t",mktime(0,0,1,$this->pre_month,1,$this->pre_year));
@@ -425,9 +419,9 @@ class Calendars extends DateTime
 			# 기념일 및 휴일
 			$holiday='';
 			$event_title='';
-			if($this->memorial_arg[$int_date]){
-				if($this->memorial_arg[$int_date]['holiday']==1) $holiday=1;
-				$event_title =$this->memorial_arg[$int_date]['title'];
+			if(isset($this->memorial_arg[$int_date])){
+				if(isset($this->memorial_arg[$int_date]['holiday']) && $this->memorial_arg[$int_date]['holiday']==1) $holiday = 1;
+				$event_title = (isset($this->memorial_arg[$int_date]['title'])) ?? '';
 			}
 
 			# 달력
@@ -460,9 +454,8 @@ class Calendars extends DateTime
 		}
 	}
 
-	#@ void
 	# 이전 년월, 다음 년월 구하기
-	public function set_pre_next_date()
+	public function set_pre_next_date() : void
 	{
 		$prev_year=$this->year-1;
 		$next_year=$this->year+1;
@@ -488,30 +481,26 @@ class Calendars extends DateTime
 		}
 	}
 
-	#@ void
 	# 날짜수정 DAY
-	public function modifyDay($day){
+	public function modifyDay(int|string $day) : void{
 		$this->modify($day." day");
 		self::resetTodayDate();
 	}
 
-	#@ void
 	# 날짜수정 WEEK
-	public function modifyWeek($week){
+	public function modifyWeek(int|string $week) : void{
 		$this->modify($week." week");
 		self::resetTodayDate();
 	}
 
-	#@ void
 	# 날짜수정 MONTH
-	public function modifyMonth($month){
+	public function modifyMonth(int|string $month) : void{
 		$this->modify($month." month");
 		self::resetTodayDate();
 	}
 
-	#@ return date yyyy-MM-dd
 	#이전주에 해당하는 마지막일을 가지고 온다
-	public function get_pre_week_last_date(){
+	public function get_pre_week_last_date() : date{
 		$args = array();
 		$pre_date = '';
 		if(isset($this->days_of_month[$this->daytoweek])){
@@ -526,9 +515,8 @@ class Calendars extends DateTime
 	return $pre_date;
 	}
 
-	#@ return date yyyy-MM-dd
 	#다음주에 해당하는 첫일을 가지고 온다
-	public function get_next_week_first_date(){
+	public function get_next_week_first_date() : date{
 		$args = array();
 		$nxt_date = '';
 		if(isset($this->days_of_month[$this->daytoweek])){
@@ -543,17 +531,15 @@ class Calendars extends DateTime
 	return $nxt_date;
 	}
 
-	#@ return
 	# 해당해의 띠
-	public function get_zodiac_sign(){
+	public function get_zodiac_sign() : string{
 		$zodiac_sign_args = array('원숭이','닭','개','돼지','쥐','소','범','토끼','용','뱀','말','양');
 		$ddikey = intval($this->year % 12);
 	return $zodiac_sign_args[$ddikey];
 	}
 
-	#@ return
 	# 육십갑자
-	public function get_sexagenary_cycle(){
+	public function get_sexagenary_cycle() : string{
 		$tengan =array('경','신','임','계','갑','을','병','정','무','기');
 		$tenji	=array('신','유','술','해','자','축','인','묘','진','사','오','미');
 
@@ -566,19 +552,17 @@ class Calendars extends DateTime
 	#@ return
 	# 양력->음력
 	# intdate : 20101020
-	public function get_sun2moon($intdate){
+	public function get_sun2moon($intdate) : int{
 		return self::date_binary_search($this->sunargs,$this->moonargs,$intdate);
 	}
 
-	#@ return
 	# 음력->양력
-	public function get_moon2sun($intdate){
+	public function get_moon2sun($intdate) : int{
 		return self::date_binary_search($this->moonargs,$this->sunargs,$intdate);
 	}
 
-	#@ return
 	# 음<->양 계산메소드
-	public function date_binary_search(&$haystack,&$haystack2, &$needle)
+	public function date_binary_search(&$haystack,&$haystack2, &$needle) : mixed
 	{
 		$high = count($haystack);
 		$low = 0;
@@ -602,6 +586,8 @@ class Calendars extends DateTime
 
 	#@ return
 	# 프라퍼티 값 가져오기
-	public function __get($propertyname){ return $this->{$propertyname}; }
+	public function __get($propertyname) : mixed{ 
+		return $this->{$propertyname}; 
+	}
 }
 ?>

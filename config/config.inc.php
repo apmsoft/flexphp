@@ -3,12 +3,12 @@
 | @Author   : 김종관
 | @Email    : apmsoft@gmail.com
 | @Editor   : VSCode
-| @UPDATE   : 1.3.1
+| @UPDATE   : 4.0
 ----------------------------------------------------------*/
 session_start();
 
 use Flex\R\R;
-use Flex\Application\ApplicationEnviron;
+use Flex\App\App;
 
 // @ini_set('include_path', './PEAR' . PATH_SEPARATOR .?; ini_get('include_path'));
 // @ini_set('display_error', 'On');
@@ -73,8 +73,8 @@ spl_autoload_register(function($class_name){
 # 기본 선언 클래스 /-------------------
 # 어플리케이션 환경
 App::init();
-define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: App::lang);       # 다국어중 언어 셋팅
-define('_SITE_HOST_',App::host);  # HOST URL
+define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: App::$lang);       # 다국어중 언어 셋팅
+define('_SITE_HOST_',App::$host);  # HOST URL
 
 # resource XML 자동 로드 /---------------
 R::init();

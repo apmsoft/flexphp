@@ -1,16 +1,8 @@
 <?php
-/** ===========================
-| @Author   : 김종관
-| @Email    : apmsoft@gmail.com
-| @Editor   : Sublime Text
-| @Version  : 1.1.2
--------------------------------------------------------*/
-namespace Flex\Application;
-
-use \ArrayAccess;
+namespace Flex\App;
 
 # 접속에 따른 디바이스|브라우저등 정보
-final class App implements ArrayAccess
+final class App
 {
     public static $platform = 'Unknown';
     public static $browser = 'Unknown';
@@ -20,9 +12,8 @@ final class App implements ArrayAccess
     public static $http_referer =null;
     public static $ip_address = '';
     public static $version = '0.9.13Beta';
-    public static $vars = array();
 
-    public static function int()
+    public static function init() : void
     {
         # 기본 디바이스 인지 확인 하기 위한 체크
         $agent='';
@@ -30,55 +21,63 @@ final class App implements ArrayAccess
 
         # platform
         if (preg_match('/(Linux|Android|Macintosh|Mac os x|Windows|Win32|iPod|iPhone|Windows Phone|lgtelecom|Windows CE)/i', $agent)) {
-            if(stristr($agent,'Linux')) $this->platform='Linux';
-            else if(stristr($agent,'iPod')) $this->platform='iPod';
-            else if(stristr($agent,'iPhone')) $this->platform='iPhone';
-            else if(stristr($agent,'iPad')) $this->platform='iPad';
-            else if(stristr($agent,'Windows Phone')) $this->platform='Windows Phone';
-            else if(stristr($agent,'Windows CE')) $this->platform='Windows CE';
-            else if(stristr($agent,'lgtelecom')) $this->platform='lgtelecom';
-            else if(stristr($agent,'Android')) $this->platform='Android';
-            else if(stristr($agent,'Macintosh')) $this->platform='Mac';
-            else if(stristr($agent,'mac os x')) $this->platform='Mac';
-            else if(stristr($agent,'Windows')) $this->platform='Windows';
-            else if(stristr($agent,'Win32')) $this->platform='Windows';
+            if(stristr($agent,'Linux')) self::$platform='Linux';
+            else if(stristr($agent,'iPod')) self::$platform='iPod';
+            else if(stristr($agent,'iPhone')) self::$platform='iPhone';
+            else if(stristr($agent,'iPad')) self::$platform='iPad';
+            else if(stristr($agent,'Windows Phone')) self::$platform='Windows Phone';
+            else if(stristr($agent,'Windows CE')) self::$platform='Windows CE';
+            else if(stristr($agent,'lgtelecom')) self::$platform='lgtelecom';
+            else if(stristr($agent,'Android')) self::$platform='Android';
+            else if(stristr($agent,'Macintosh')) self::$platform='Mac';
+            else if(stristr($agent,'mac os x')) self::$platform='Mac';
+            else if(stristr($agent,'Windows')) self::$platform='Windows';
+            else if(stristr($agent,'Win32')) self::$platform='Windows';
         }
 
         # 디바이스 인지 체크
         if(preg_match( '/(Android|iPod|iPhone|Windows Phone|lgtelecom|Windows CE)/i', $agent)){
-            $this->is_phone_device = true;
+            self::$is_phone_device = true;
         }
 
         #브라우저
         if (preg_match('/(MSIE|Opera|Firefox|Chrome|Safari|Opera|Netscape)/i', $agent)) {
-            if(stristr($agent,'MSIE') && !stristr($agent,'Opera')) $this->browser='Explorer';
-            else if(stristr($agent,'Firefox')) $this->browser='Firefox';
-            else if(stristr($agent,'Chrome')) $this->browser='Chrome';
-            else if(stristr($agent,'Safari')) $this->browser='Safari';
-            else if(stristr($agent,'Opera')) $this->browser='Opera';
-            else if(stristr($agent,'Netscape')) $this->browser='Netscape';
+            if(stristr($agent,'MSIE') && !stristr($agent,'Opera')) self::$browser='Explorer';
+            else if(stristr($agent,'Firefox')) self::$browser='Firefox';
+            else if(stristr($agent,'Chrome')) self::$browser='Chrome';
+            else if(stristr($agent,'Safari')) self::$browser='Safari';
+            else if(stristr($agent,'Opera')) self::$browser='Opera';
+            else if(stristr($agent,'Netscape')) self::$browser='Netscape';
         }
 
         # 이전 접속경로
         if(isset($_SERVER['HTTP_REFERER']) && !is_null($_SERVER['HTTP_REFERER'])){
-            $this->http_referer = $_SERVER['HTTP_REFERER'];
+            self::$http_referer = $_SERVER['HTTP_REFERER'];
         }
 
         # 언어
-        $this->lang = (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2) : 'ko';
+        self::$lang = (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2) : 'ko';
 
         # host url
-        $this->host = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? 'https://'.$_SERVER['SERVER_NAME'] : 'http://'.$_SERVER['SERVER_NAME'];
+        self::$host = '';
+        if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on"){
+            if(isset($_SERVER['SERVER_NAME'])){
+                self::$host = 'https://'.$_SERVER['SERVER_NAME'];
+            }else {
+                self::$host = 'http://'.$_SERVER['SERVER_NAME'];
+            }
+        }
 
         # ip address
-        $this->ip_address = self::get_client_ip();
+        self::$ip_address = self::get_client_ip();
     }
 
     #@ return string
     # ip 주소 확인
-    public static function get_client_ip()
+    public static function get_client_ip() : string
     {
         $result = '';
+        
         if (isset($_SERVER['HTTP_CLIENT_IP'])) $result = $_SERVER['HTTP_CLIENT_IP'];
         else if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $result = $_SERVER['HTTP_X_FORWARDED_FOR'];
         else if(isset($_SERVER['HTTP_X_FORWARDED'])) $result = $_SERVER['HTTP_X_FORWARDED'];
@@ -89,51 +88,10 @@ final class App implements ArrayAccess
     return $result;
     }
 
-    #@ return boolean
     # 애플사 제품인지 확인
-    public static function is_apple_device(){
-        if(preg_match( '/(iPod|iPhone|iPad)/', $this->platform)) return 'true';
+    public static function is_apple_device() : string{
+        if(preg_match( '/(iPod|iPhone|iPad)/', self::$platform)) return 'true';
         else return 'false';
-    }
-
-    #@ interface : ArrayAccess
-    public static function offsetSet($offset, $value){
-        if(is_array($value)){
-            if(isset($this->vars[$offset])) $this->vars[$offset] = array_merge($this->vars[$offset],$value);
-            else $this->vars[$offset] = $value;
-        }
-        else{ $this->vars[$offset] = $value; }
-    }
-
-    #@ interface : ArrayAccess
-    public static function offsetExists($offset){
-        if(isset($this->vars[$offset])) return isset($this->vars[$offset]);
-        else return isset($this->vars[$offset]);
-    }
-
-    #@ interface : ArrayAccess
-    public static function offsetUnset($offset){
-        if(self::offsetExist($offset)) unset($this->vars[$offset]);
-        else unset($this->vars[$offset]);
-    }
-
-    #@ interface : ArrayAccess
-    public static function offsetGet($offset) {
-        return isset($this->vars[$offset]) ? $this->vars[$offset] : $this->vars[$offset];
-    }
-
-    #@ void
-    public static function __set($name, $value){
-        if(property_exists(__CLASS__,$name)){
-            return $this->{$name} = $value;
-        }
-    }
-
-    #@ return
-    public static function __get($name) {
-        if(property_exists(__CLASS__,$name)){
-            return $this->{$name};
-        }
     }
 }
 ?>

@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author   : 김종관
-| @Email    : apmsoft@gmail.com
-| @HomePage : apmsoft.tistory.com
-| @Editor   : Sublime Text 3
-| @UPDATE   : 1.2.1
-----------------------------------------------------------*/
 namespace Flex\Auth;
 
 # _AUTH_MODE_
@@ -20,32 +13,33 @@ class AuthSession
     private $authinfo = array();
 
     # run
-    public function __construct($args=array()){
-        if(is_array($args) && count($args)>0){
-            $this->auth_args = $args;
+    public function __construct(?Array $args){
+        if (!is_null($args)){
+            if(is_array($args) && count($args)>0){
+                $this->auth_args = $args;
+            }
         }
     }
 
-    # void
-    public function __set($k, $v){
+    public function __set($k, $v) : void{
         $this->authinfo[$k] = $v;
     }
 
     # return data
-    public function __get($k){
+    public function __get($k) : mixed{
         if(array_key_exists($k, $this->authinfo))
             return $this->authinfo[$k];
     }
 
     #@ void
     # 세션스타트 및 배열에 담기
-    public function sessionStart()
+    public function sessionStart() : void
     {
         if(is_array($_SESSION)){
             foreach($this->auth_args as $k=>$v){
                 //echo $k.' '.$v."\n";
                 if(isset($_SESSION[$v])){
-                    $this->authinfo[$k]=$_SESSION[$v];
+                    $this->authinfo[$k] = $_SESSION[$v];
                 }
             }
         }
@@ -53,9 +47,10 @@ class AuthSession
 
     #@ void
     # 세션등록
-    public function regiAuth($data_args)
+    public function regiAuth($data_args) : void
     {
-        if(is_array($data_args)){
+        if(is_array($data_args))
+        {
             @session_start();
             foreach($this->auth_args as $k=>$v){
                 if(isset($data_args[$v]) && $data_args[$v]!=''){
@@ -69,7 +64,7 @@ class AuthSession
 
     #void
     # 세션비우기
-    public function unregiAuth(){
+    public function unregiAuth() : void{
         foreach($this->auth_args as $k=>$v){
             if(isset($_SESSION[$v])){
                 unset($_SESSION[$v]);
