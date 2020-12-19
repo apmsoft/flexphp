@@ -22,7 +22,7 @@ $calendars->set_days_of_month();
 $m5encrypt_text = (new Flex\Cipher\CipherEncrypt('asdfdsdf'))->_md5();
 out_ln ( $m5encrypt_text );
 
-out_ln(' 암호화 가능한 복호화 ');
+out_ln(' 복호화 가능한 암호화');
 $encrypttext = (new Flex\Cipher\CipherEncrypt('asdfdsdf'))->_base64_urlencode();
 out_ln ( $encrypttext );
 
@@ -53,7 +53,7 @@ $dbHelperWhere->setBuildWhere('price_month', '>=' , 7, 'OR', true);
 $dbHelperWhere->endWhereGroup();
 
 $dbHelperWhere->beginWhereGroup('groupc', 'OR');
-$dbHelperWhere->setBuildWhere('title', 'LIKE' , ['이순신','대통령'], 'OR', true);
+$dbHelperWhere->setBuildWhere('title', 'LIKE' , ['이순신','대통령'], 'OR', false);
 // $dbHelperWhere->setBuildWhere('title', 'LIKE-L' , ['이순신','대통령'], 'OR', true);
 // $dbHelperWhere->setBuildWhere('title', 'LIKE-R' , ['이순신','대통령'], 'OR', true);
 $dbHelperWhere->endWhereGroup();
