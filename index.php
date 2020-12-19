@@ -10,7 +10,6 @@ $auth = new Flex\Auth\AuthSession($app['auth']);
 $auth->sessionStart();
 
 # out 테스트
-echo (isset($_SERVER['HTTP_USER_AGENT']))?? 'nun';
 out_ln(App::$version);
 out_ln(App::$platform);
 
@@ -51,6 +50,12 @@ $dbHelperWhere->endWhereGroup();
 $dbHelperWhere->beginWhereGroup('groupb', 'OR');
 $dbHelperWhere->setBuildWhere('price', 'IN' , [1,2,3,4,5,6], 'OR', true);
 $dbHelperWhere->setBuildWhere('price_month', '>=' , 7, 'OR', true);
+$dbHelperWhere->endWhereGroup();
+
+$dbHelperWhere->beginWhereGroup('groupc', 'OR');
+$dbHelperWhere->setBuildWhere('title', 'LIKE' , ['이순신','대통령'], 'OR', true);
+// $dbHelperWhere->setBuildWhere('title', 'LIKE-L' , ['이순신','대통령'], 'OR', true);
+// $dbHelperWhere->setBuildWhere('title', 'LIKE-R' , ['이순신','대통령'], 'OR', true);
 $dbHelperWhere->endWhereGroup();
 
 out_ln ($dbHelperWhere->where);
