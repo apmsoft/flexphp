@@ -16,8 +16,7 @@ final class App
     public static function init() : void
     {
         # 기본 디바이스 인지 확인 하기 위한 체크
-        $agent='';
-        $agent=(isset($_SERVER['HTTP_USER_AGENT']))? $_SERVER[ 'HTTP_USER_AGENT'] : '';
+        $agent= (isset($_SERVER['HTTP_USER_AGENT'])) ?? '';
 
         # platform
         if (preg_match('/(Linux|Android|Macintosh|Mac os x|Windows|Win32|iPod|iPhone|Windows Phone|lgtelecom|Windows CE)/i', $agent)) {
@@ -90,8 +89,7 @@ final class App
 
     # 애플사 제품인지 확인
     public static function is_apple_device() : string{
-        if(preg_match( '/(iPod|iPhone|iPad)/', self::$platform)) return 'true';
-        else return 'false';
+        return (preg_match( '/(iPod|iPhone|iPad)/', self::$platform)) ? 'true' : 'false';
     }
 }
 ?>

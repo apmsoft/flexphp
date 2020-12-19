@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관 | 010-4023-7046
-| @Email	: apmsoft@gmail.com
-| @HomePage	: http://www.apmsoftax.com
-| @Editor	: Eclipse(default)
-| @UPDATE	: 1.1.1
-----------------------------------------------------------*/
 namespace Flex\String;
 
 # purpose : 문자을 변경하거나 더하거나 등 가공하는 역할을 한다.
@@ -37,10 +30,11 @@ class StringKeyword
 		preg_match_all('/([\xEA-\xED][\x80-\xBF]{2}|[a-zA-Z0-9])+/', $keywords, $match);
 		$keywords = $match[0];
 		if(is_array($keywords)){
-			foreach($keywords as $n => $w){
+			foreach($keywords as $n => $w)
+			{
 				# 영어만 추출
 				preg_match_all("|(?<eng>[A-Za-z]+)|su", $w, $out);
-				$eng = $out['eng'][0];
+				$eng = (isset($out['eng'][0])) ?? '';
 				if($eng){
 					// echo $eng;
 					# 발견된 단어에서 영어만 삭제
