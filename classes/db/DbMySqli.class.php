@@ -173,14 +173,10 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	}
 
 	# @ interface : DBSwitch
-	public function query($query) : mixed{
-		$result = parent::query($query);
+	public function query(string $query, int $result_mode = MYSQLI_STORE_RESULT) : mixed{
+		$result = parent::query($query, $result_mode);
 		if(!$result){
-			if(PHP_VERSION_ID>50300){
-				throw new ErrorException(mysqli_error($this).' '.$query,mysqli_errno($this));
-			}else{
-				#throw new ErrorException(mysqli_error(&$this).' '.$query,mysqli_errno(&$this));
-			}
+			throw new ErrorException(mysqli_error($this).' '.$query,mysqli_errno($this));
 		}
 	return $result;
 	}
