@@ -17,7 +17,7 @@ class XmlSimpleXMLElementPlus extends SimpleXMLElement
      * CData 추가
      * @param [type] $cdata_text [description]
      */
-    public function addCData($elementName, $contents)
+    public function addCData($elementName, $contents) : void
     {
         if(self::isNullChild($elementName)){
             $this->addChild($elementName);
@@ -35,7 +35,7 @@ class XmlSimpleXMLElementPlus extends SimpleXMLElement
      * @param [type] $elementName [description]
      * @param [type] $contents    [description]
      */
-    public function addChildPlus($elementName, $contents){
+    public function addChildPlus($elementName, $contents) : string{
         if(self::isNullChild($elementName)) {
             $this->addChild($elementName);
         }
@@ -51,7 +51,7 @@ class XmlSimpleXMLElementPlus extends SimpleXMLElement
      * @param  [type]  $elementName [description]
      * @return boolean              [description]
      */
-    public function isNullChild($elementName){
+    public function isNullChild($elementName) : bool{
         $result = false;
         if(is_null($this->{$elementName}[0]))
             $result = true;
