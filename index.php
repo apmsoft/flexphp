@@ -63,4 +63,11 @@ out_ln ($dbHelperWhere->where);
 # DbMySqli
 $db = new Flex\Db\DbMySqli();
 
+
+# dir
+$dirObject = new Flex\Dir\DirObject(_ROOT_PATH_.'/res');
+out_ln('===< 파일 목록만 > =====');
+out_r($dirObject->findFiles());
+out_ln('===< 폴더안의 파일 목록 만 > =====');
+out_r($dirObject->findFolders());
 ?>

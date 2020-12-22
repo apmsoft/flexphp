@@ -131,7 +131,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	#@ return int
 	# 총게시물 갯수 추출
-	public function get_total_record($table, $where="") : int{
+	public function get_total_record(string $table, string $where="") : int{
 		$wh = ($where) ? " WHERE ".$where : '';
 		if($result = parent::query("SELECT count(*) FROM `".$table."`".$wh)){
 			$row = $result->fetch_row();
@@ -142,7 +142,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	#@ return int
 	# 총게시물 쿼리문에 의한 갯수 추출
-	public function get_total_query($qry) : int{
+	public function get_total_query(string $qry) : int{
 		if($result = parent::query($qry)){
 			$row = $result->fetch_row();
 			return $row[0];
@@ -152,7 +152,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	# return boolean | array
 	# 하나의 레코드 값을 완성된 쿼리문을 받아 가져오기
-	public function get_record_assoc($qry) : bool|Array{
+	public function get_record_assoc(string $qry) : bool|Array{
 		if($result = $this->query($qry)){
 			$row = $result->fetch_assoc();
 			return $row;
@@ -162,7 +162,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	# return boolean | array
 	# 하나의 레코드 값을 가져오기
-	public function get_record($field, $table, $where) : bool|Array{
+	public function get_record(string $field, string $table, string $where) : bool|Array{
 		$where = ($where) ? " WHERE ".$where : '';
 		$qry = "SELECT ".$field." FROM `".$table."` ".$where;
 		if($result = $this->query($qry)){
