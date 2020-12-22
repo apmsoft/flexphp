@@ -59,4 +59,8 @@ $dbHelperWhere->setBuildWhere('title', 'LIKE' , ['이순신','대통령'], 'OR',
 $dbHelperWhere->endWhereGroup();
 
 out_ln ($dbHelperWhere->where);
+
+# DbMySqli
+$db = new Flex\Db\DbMySqli();
+
 ?>

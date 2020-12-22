@@ -27,7 +27,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	private $params = array();
 
 	# dsn : host:dbname = localhost:dbname
-	public function __construct($dsn='',$user='',$passwd='',$chrset='utf8')
+	public function __construct(string $dsn='',string $user='',string $passwd='',string $chrset='utf8')
 	{
 		# 데이타베이스 접속
 		if(!empty($dsn)){
@@ -71,7 +71,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	}
 
 	#@ void
-	public function set_encryption_mode(){
+	public function set_encryption_mode() : void{
 			# 서버 버전
 		$mysql_version = $this->server_version;
 		if($mysql_version < 50700){
@@ -92,18 +92,18 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	#@ void
 	# 암호화/복호화 쿼리 활성화
-	public function begin_encrypt(){
+	public function begin_encrypt() : void{
 		$this->encryption_enable = true;
 	}
 
 	#@ void
 	# 암호화/복호화 쿼리 비활성
-	public function end_encrypt(){
+	public function end_encrypt() : void{
 		$this->encryption_enable = false;
 	}
 
 	#@ string
-	private function aes_encrypt($v){
+	private function aes_encrypt($v) : string{
 		$result = '';
 		if($v && $v !=''){
 			$result = sprintf("(HEX( AES_ENCRYPT( '%s',  SHA2('%s',512), RANDOM_BYTES(%d)) ))",
@@ -113,7 +113,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 		return $result;
 	}
 
-	private function aes_decrypt($column_name, $is_as=true){
+	private function aes_decrypt($column_name, $is_as=true) : string{
 		$result = '';
 		if($column_name && $column_name !=''){
 			if($is_as){
@@ -131,7 +131,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	#@ return int
 	# 총게시물 갯수 추출
-	public function get_total_record($table, $where=""){
+	public function get_total_record($table, $where="") : int{
 		$wh = ($where) ? " WHERE ".$where : '';
 		if($result = parent::query("SELECT count(*) FROM `".$table."`".$wh)){
 			$row = $result->fetch_row();
@@ -142,7 +142,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	#@ return int
 	# 총게시물 쿼리문에 의한 갯수 추출
-	public function get_total_query($qry){
+	public function get_total_query($qry) : int{
 		if($result = parent::query($qry)){
 			$row = $result->fetch_row();
 			return $row[0];
@@ -152,7 +152,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	# return boolean | array
 	# 하나의 레코드 값을 완성된 쿼리문을 받아 가져오기
-	public function get_record_assoc($qry){
+	public function get_record_assoc($qry) : bool|Array{
 		if($result = $this->query($qry)){
 			$row = $result->fetch_assoc();
 			return $row;
@@ -162,7 +162,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 
 	# return boolean | array
 	# 하나의 레코드 값을 가져오기
-	public function get_record($field, $table, $where){
+	public function get_record($field, $table, $where) : bool|Array{
 		$where = ($where) ? " WHERE ".$where : '';
 		$qry = "SELECT ".$field." FROM `".$table."` ".$where;
 		if($result = $this->query($qry)){
@@ -173,7 +173,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	}
 
 	# @ interface : DBSwitch
-	public function query($query){
+	public function query($query) : mixed{
 		$result = parent::query($query);
 		if(!$result){
 			if(PHP_VERSION_ID>50300){
@@ -188,10 +188,12 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	# @ interface : DBSwitch
 	# args = array(key => value)
 	# args['name'] = 1, args['age'] = 2;
-	public function insert($table){
+	public function insert($table) : bool{
+		$result = false;
 		$fieldk = '';
 		$datav	= '';
-		if(count($this->params)<1) return false;
+		if(count($this->params)<1) return $result;
+
 		foreach($this->params as $k => $v){
 			$fieldk .= sprintf("`%s`,",$k);			
 			if($this->encryption_enable){
@@ -205,20 +207,25 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 				$datav .= sprintf("'%s',", parent::real_escape_string($v));
 			}
 		}
+
 		$fieldk	= substr($fieldk,0,-1);
 		$datav	= substr($datav,0,-1);
 		$this->params = array(); #변수값 초기화
 
 		$query= sprintf("INSERT INTO `%s` (%s) VALUES (%s)",$table,$fieldk,$datav);
-		$this->query($query);
+		if($this->query($query)){
+			$result = true;
+		}
+	return $result;
 	}
 
 	# @ interface : DBSwitch
-	public function update($table,$where)
+	public function update($table,$where) : bool
 	{
+		$result = false;
 		$fieldkv = '';
 
-		if(count($this->params)<1) return false;
+		if(count($this->params)<1) return $result;
 		
 		foreach($this->params as $k => $v){
 			$datav = '';
@@ -238,19 +245,26 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 		$this->params = array(); #변수값 초기화
 
 		$query= sprintf("UPDATE `%s` SET %s WHERE %s",$table,$fieldkv,$where);
-		$this->query($query);
+		if($this->query($query)){
+			$result = true;
+		}
+	return $result;
 	}
 
 	# @ interface : DBSwitch
-	public function delete($table,$where){
+	public function delete($table,$where) : bool{
+		$result = false;
 		$query = sprintf("DELETE FROM `%s` WHERE %s",$table,$where);
-		$this->query($query);
+		if($this->query($query)){
+			$result = true;
+		}
+	return $result;
 	}
 
 	#@ array
 	#테이블에 속한 필드 명=>필드 type
 	#http://dev.mysql.com/doc/refman/5.0/en/columns-table.html
-	public function show_columns($table){
+	public function show_columns($table) : Array{
 		$columns = array();
 		$rlt = $this->query(sprintf("SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name ='%s'", $table));
 		while($row = $rlt->fetch_row()){
@@ -261,7 +275,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	return $columns;
 	}
 
-	public function __call($method, $args){
+	public function __call($method, $args) : mixed{
 		if(method_exists($this, $method)){
 			if($method == 'aes_decrypt' || $method == 'aes_encrypt'){
             	return call_user_func_array(array($this, $method),$args);
@@ -270,7 +284,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	}
 
 	# 상속한 부모 프라퍼티 값 포함한 가져오기
-	public function __get($propertyName){
+	public function __get($propertyName) : mixed{
 		if(property_exists(__CLASS__,$propertyName)){
 			return $this->{$propertyName};
 		}
