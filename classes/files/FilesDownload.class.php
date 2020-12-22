@@ -17,7 +17,7 @@ class FilesDownload
 {
 	private $filename;
 
-	public function __construct($dirs, $filenamez){
+	public function __construct(string $dirs, $filenamez){
 		if(!$filenamez)
 			Out::prints(R::$sysmsg['e_filenotfound']);
 
