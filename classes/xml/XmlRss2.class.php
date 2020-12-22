@@ -19,7 +19,7 @@ class XmlRss2
 	private $channel=array();
 
 	private $items	= array();
-	private $item		= array();
+	private $item	= array();
 
 	private $images	= array();
 	private $image	= array();
@@ -36,7 +36,7 @@ class XmlRss2
     }
 
 	// 데이타로 추출
-	private function getData($data) : void{
+	private function getData(string $data) : void{
 		# encoding /--
 		if (!$this->encoding)
 		{
@@ -52,13 +52,14 @@ class XmlRss2
 	}
 
 	// 파일 주소로 데이타 추출
-	private function getUrlData($url) : void{
+	private function getUrlData(string $url) : void{
 		$fp = @fopen($url,'r');
 		if (!$fp) throw new ErrorException(__CLASS__.' fopen error ', __LINE__);
 
+		$data = '';
 		while (!@feof ($fp))
 		{
-			$data .= @fgets($fp, 4096)?? '';
+			$data .= @fgets($fp, 4096);
 			
 			# encoding /--
 			if (!$this->encoding)
@@ -79,13 +80,13 @@ class XmlRss2
 	private function _xml_create() : void
 	{
 		$this->parser = @xml_parser_create();
-		if (is_resource($this->parser))
-		{
+		// if (is_resource($this->parser))
+		// {
 			xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false);
 			xml_set_object($this->parser, $this);
 			xml_set_element_handler($this->parser, 'startElement', 'endElement');
 			xml_set_character_data_handler($this->parser, 'characterData');
-        }
+        // }
     }
 
 	private function _xml_parse($data) : void{
@@ -101,7 +102,7 @@ class XmlRss2
 		}
 	}
 
-	private function startElement($parser, $name, $attr) : void
+	private function startElement($parser, $name, $attr)
 	{
 		switch ($name)
 		{
@@ -139,29 +140,54 @@ class XmlRss2
     private function characterData($parser, $data) : void
 	{
 		$tagName= $this->sTag;
-		$field		= $this->eTag;
+		$field	= $this->eTag;
 		
 		if (trim($data)){
 			if(!empty($tagName)){
-				$this->{$tagName}[$field].= $data;
-				$this->point = $this->{$tagName};
+				if(property_exists(__CLASS__,$tagName)){
+					// if(!isset($this->{$tagName}[$field])){
+					// 	$this->{$tagName}[$field] = '';
+					// }
+					if($field != 'description'){
+						//out_ln($tagName.' > '.$field. ' == '.$data);
+					}
+					if($tagName == 'item'){
+						// out_r($this->item);
+					}
+					switch($tagName){
+						case 'channel' :
+							if(!isset($this->channel[$field])){
+								$this->channel[$field] = '';
+							}
+							$this->channel[$field] = $data;
+						break;
+						case 'item' :
+							if(!isset($this->item[$field])){
+								$this->item = array($field => '');
+							}
+							$this->item[$field] = $data;
+						break;
+					}
+					// $this->{$tagName}[$field].= $data;
+					// $this->point = $this->{$tagName};
+				}
 			}
 		}
 	}
 
-	public function __get($propertyname) : string {
+	public function __get($propertyname) : mixed {
 		return $this->{$propertyname};
 	}
 
-    public function getChannel() : mixed{
+    public function getChannel() : Array{
         return $this->channel;
     }
 
-    public function getItems():mixed{
+    public function getItems(): Array{
         return $this->items;
     }
 
-    public function getImages() : string|null{
+    public function getImages() : Array{
         return $this->images;
     }
 

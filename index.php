@@ -71,4 +71,12 @@ out_r($dirObject->findFiles());
 out_ln('===< 폴더 목록만 > =====');
 out_r($dirObject->findFolders());
 
+# xml rss 2.0 reader
+try{
+    $xmlRss2 = new Flex\Xml\XmlRss2('https://rss.donga.com/politics.xml');
+    print_r($xmlRss2->items);
+}
+catch(Exception $e){
+    print_r($e);
+}
 ?>
