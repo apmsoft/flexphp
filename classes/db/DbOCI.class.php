@@ -73,7 +73,7 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 
     #@ return int
 	# 총게시물 갯수 추출
-	public function get_total_record($table, $where=""){
+	public function get_total_record(string $table, string $where="") : int{
 		$wh = ($where) ? " WHERE ".$where : '';
 		if($result = $this->query("SELECT count(*) FROM ".$table." ".$wh)){
 			$row = $result->fetch_row();
@@ -84,7 +84,7 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 
 	#@ return int
 	# 총게시물 쿼리문에 의한 갯수 추출
-	public function get_total_query($qry){
+	public function get_total_query(string $qry) : int{
 		if($result =$this->query($qry)){
 			$row = $result->fetch_row();
 			return $row[0];
@@ -94,7 +94,7 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 
 	# return boolean | array
 	# 하나의 레코드 값을 가져오기
-	public function get_record($field, $table, $where){
+	public function get_record(string $field, string $table, string $where) : bool|Array{
 		$where = ($where) ? " WHERE ".$where : '';
 		$qry = "SELECT ".$field." FROM ".$table." ".$where;
 		if($result = $this->query($qry)){
@@ -105,7 +105,7 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 	}
 
     # @ interface : DBSwitch
-	public function query($query){
+	public function query(string $query, int $result_mode = NULL) : mixed{
 		$result = oci_parse($this->handle,$query);
         if( !$result ){
         	$e = oci_error();
@@ -125,7 +125,7 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 	# @ interface : DBSwitch
 	# args = array(key => value)
 	# args['name'] = 1, args['age'] = 2;
-	public function insert($table){
+	public function insert($table) : bool{
 		$fieldk = '';
 		$datav	= '';
 

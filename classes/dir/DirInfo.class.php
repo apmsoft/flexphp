@@ -14,12 +14,13 @@ class DirInfo
 	protected $dirpath;
 	const permission	= 0707;
 
-	public function __construct($dir){
+	public function __construct(string $dir)
+	{
 		$this->dirpath = $dir;
 	}
 
 	# 복수 폴더 만들기
-	public function makesDir()
+	public function makesDir() : void
 	{
 		if(strpos($this->dirpath, '/') !==false)
 		{
@@ -37,7 +38,7 @@ class DirInfo
 
 	#@ return boolean
 	# 폴더 만들기
-	public function makeDirectory($dir)
+	public function makeDirectory(string $dir) : bool
 	{
 		$result = true;
 		# compile_dirname 폴더 이전 경로 생성
@@ -50,7 +51,7 @@ class DirInfo
 	}
 
 	# 디렉토리인지 확인
-	public function isDir($dir){
+	public function isDir(string $dir) : bool{
 		if(!is_dir($dir)) return false;
 	return true;
 	}
