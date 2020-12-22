@@ -25,7 +25,7 @@ class XmlRss2
 	private $image	= array();
 	
 	#@ url : 주소
-	public function __construct($url="", $data="")
+	public function __construct(string $url="", string $data="")
 	{
 		if(!empty($url))
 			$this->getUrlData($url);
@@ -36,7 +36,7 @@ class XmlRss2
     }
 
 	// 데이타로 추출
-	private function getData($data){
+	private function getData($data) : void{
 		# encoding /--
 		if (!$this->encoding)
 		{
@@ -52,13 +52,13 @@ class XmlRss2
 	}
 
 	// 파일 주소로 데이타 추출
-	private function getUrlData($url){
+	private function getUrlData($url) : void{
 		$fp = @fopen($url,'r');
 		if (!$fp) throw new ErrorException(__CLASS__.' fopen error ', __LINE__);
 
 		while (!@feof ($fp))
 		{
-			$data .= @fgets($fp, 4096);
+			$data .= @fgets($fp, 4096)?? '';
 			
 			# encoding /--
 			if (!$this->encoding)
@@ -76,7 +76,7 @@ class XmlRss2
 		$this->_xml_parse($data);
 	}
 
-	private function _xml_create()
+	private function _xml_create() : void
 	{
 		$this->parser = @xml_parser_create();
 		if (is_resource($this->parser))
@@ -88,12 +88,12 @@ class XmlRss2
         }
     }
 
-	private function _xml_parse($data){
+	private function _xml_parse($data) : void{
 		@xml_parse($this->parser,$data);
 	}
 
 	// 메모리 비우기
-	private function _xml_free()
+	private function _xml_free() : void
 	{
 		if (is_resource($this->parser)){
 			xml_parser_free($this->parser);
@@ -101,7 +101,7 @@ class XmlRss2
 		}
 	}
 
-	private function startElement($parser, $name, $attr)
+	private function startElement($parser, $name, $attr) : void
 	{
 		switch ($name)
 		{
@@ -116,7 +116,7 @@ class XmlRss2
 		}
 	}
 
-    private function endElement($parser, $name)
+    private function endElement($parser, $name) : void
 	{		
 		if ($name == $this->sTag){
             $this->sTag = '';
@@ -136,7 +136,7 @@ class XmlRss2
     }
 
 
-    private function characterData($parser, $data)
+    private function characterData($parser, $data) : void
 	{
 		$tagName= $this->sTag;
 		$field		= $this->eTag;
@@ -149,19 +149,19 @@ class XmlRss2
 		}
 	}
 
-	public function __get($propertyname){
+	public function __get($propertyname) : string {
 		return $this->{$propertyname};
 	}
 
-    public function getChannel(){
+    public function getChannel() : mixed{
         return $this->channel;
     }
 
-    public function getItems(){
+    public function getItems():mixed{
         return $this->items;
     }
 
-    public function getImages(){
+    public function getImages() : string|null{
         return $this->images;
     }
 
