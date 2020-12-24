@@ -162,8 +162,12 @@ class XmlRss2
 							$this->channel[$field] = $data;
 						break;
 						case 'item' :
+							if(is_array($this->item)){
+								$this->item = array();
+							}
+							out_r($this->item);
 							if(!isset($this->item[$field])){
-								$this->item = array($field => '');
+								$this->item[$field] = '';
 							}
 							$this->item[$field] = $data;
 						break;

@@ -17,7 +17,7 @@ class FilesDownload
 {
 	private $filename;
 
-	public function __construct(string $dirs, $filenamez){
+	public function __construct(string $dirs, string $filenamez){
 		if(!$filenamez)
 			Out::prints(R::$sysmsg['e_filenotfound']);
 
@@ -40,7 +40,7 @@ class FilesDownload
 	}
 
 	# header
-	public function download($title){
+	public function download($title) : void{
 		header("Content-type:application/octet-stream");
         header("Cache-control: private");
         header("Content-Disposition:attachment;filename=\"".$title."\"");

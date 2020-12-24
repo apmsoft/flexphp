@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @UPDATE	: 1.0.1
-----------------------------------------------------------*/
 namespace Flex\Files;
 
 # 파일 용량을 알아보기 쉽도록 변환
@@ -17,9 +10,9 @@ class FilesSizeConvert
 
 	#@ void
 	# 파일전체 경로
-	public function __construct($filenamez=''){
-		if(!$filenamez) return false;
-		if(!file_exists($filenamez)) return false;
+	public function __construct(string $filenamez=''){
+		if(!$filenamez) throw new ErrorException(R::$sysmsg['e_filenotfound']);
+		if(!file_exists($filenamez)) throw new ErrorException(R::$sysmsg['e_filenotfound']);
 
 		$this->filename = $filenamez;
 		$this->filesize_bytes = filesize($this->filename);
@@ -27,18 +20,18 @@ class FilesSizeConvert
 
 	#@ void
 	#  bytes : int
-	public function setFileSizeBytes($bytes){
+	public function setFileSizeBytes($bytes) : void{
 		if(!empty($bytes))
 			$this->filesize_bytes = $bytes;
 	}
 
 	#@ return int
-	public function getFileSizeBytes(){
+	public function getFileSizeBytes() : int{
 		return $this->filesize_bytes;
 	}
 
 	#@ return String
-	public function getFileSizeConvert(){
+	public function getFileSizeConvert() : string{
 		$result = "0";
 		if(!empty($this->filesize_bytes)){
 	        $e = floor(log($this->filesize_bytes)/log(1024));

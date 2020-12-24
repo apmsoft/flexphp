@@ -21,7 +21,7 @@ class FilesUpload
 
 	# 정상적인 업로드 파일인지 체크
 	# _FILES['파일명']['tmp_name']
-	public function __construct($tmpfile, $filename, $upfiles_size, $errornum){
+	public function __construct(string $tmpfile, string $filename, int $upfiles_size, int $errornum){
 		if(!empty($filename))
 		{
 			if($errornum > 0) 
@@ -47,7 +47,7 @@ class FilesUpload
 	# 방법1 : gif,jpeg,txt,png
 	# 방법2 : gif|jpeg|txt|png
 	# 방법3 : gif
-	public function setFileExtention($ext){
+	public function setFileExtention(Array|string $ext):void{
 		if(!empty($ext)){
 			$ext = str_replace('|',',',$ext);
 			if(strpos($ext, ',') !==false){
@@ -62,13 +62,13 @@ class FilesUpload
 	#@ void
 	# 최대 업로드 전송 허용 사이즈
 	# 8(M),12(M),100(M)
-	public function setMaxFilesize($maxsize){
+	public function setMaxFilesize(string|int $maxsize):void{
 		$this->upfilemaxsize = (int)(1024 * 1024 * $maxsize);
 	}
 
 	#@ return boolean
 	// 허용된 업로드 파일인지 체크
-	public function isFileExtention(){
+	public function isFileExtention():bool{
 		$ext = implode('|',$this->ext_args);
 		if(!preg_match("/(?:{$ext})$/i", basename($this->_files['filename']))) return false;
 	return true;
@@ -76,28 +76,28 @@ class FilesUpload
 
 	#@ return boolean
 	# 설정한 용량값을 넘어쓴지 체크
-	public function isMaxFilesize(){
+	public function isMaxFilesize():bool{
 		if($this->_files['size'] >= $this->upfilemaxsize) return false;
 	return true;
 	}
 
 	#@ return boolean
 	# 업로드된 파일인지 체크
-	private function is_upload_files($tmpfile){
+	private function is_upload_files(string $tmpfile):bool{
 		if(!is_uploaded_file($tmpfile)) return false;
 	return true;
 	}
 
 	#@ return String boolean
 	# 업로드 파일 복사하기
-	public function move_upload_files($tmpfile, $sfilename){
+	public function move_upload_files(string $tmpfile, string $sfilename):string|bool{
 		if(!move_uploaded_file($tmpfile, $sfilename)) return false;
 	return $sfilename;
 	}
 
 	#@ return String boolean
 	# 파일 복사하기
-	public function copy_upload_files($savefilename){
+	public function copy_upload_files(string $savefilename):string|bool{
 		$sfilename = false;
 		if(is_array($this->_files))
 		{
@@ -117,7 +117,7 @@ class FilesUpload
 
 	#@ return String
 	# 파일 확장자 추출
-	public function getExtName(){
+	public function getExtName():string{
 		$tmpfile = basename($this->_files['filename']);
 		$count= strrpos($tmpfile,'.');
 		$file_extension= strtolower(substr($tmpfile, $count+1));
@@ -126,7 +126,7 @@ class FilesUpload
 
 	#@ return String
 	# 에러메세지 가져오기
-	public function getUpfileErrorMsg(){
+	public function getUpfileErrorMsg():string{
 		$msg = '';
 		switch($this->_upload_error_number){
 			case 1:
