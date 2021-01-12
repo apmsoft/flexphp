@@ -1,5 +1,6 @@
 <?php
 use Flex\App\App;
+use Flex\R\R;
 
 # config
 $path = str_replace($_SERVER['PHP_SELF'],'',__FILE__);
@@ -71,12 +72,18 @@ out_r($dirObject->findFiles());
 out_ln('===< 폴더 목록만 > =====');
 out_r($dirObject->findFolders());
 
+
+# r
+R::parserResourceDefinedID('tables');
+out_r(R::$tables);
+
+
 # xml rss 2.0 reader
-try{
-    $xmlRss2 = new Flex\Xml\XmlRss2('https://rss.donga.com/politics.xml');
-    print_r($xmlRss2->items);
-}
-catch(Exception $e){
-    print_r($e);
-}
+// try{
+//     $xmlRss2 = new Flex\Xml\XmlRss2('https://rss.donga.com/politics.xml');
+//     print_r($xmlRss2->items);
+// }
+// catch(Exception $e){
+//     print_r($e);
+// }
 ?>

@@ -27,16 +27,13 @@ final class R
 
     public static $tables   =array();
     public static $queries  =array();
-    public static $manifest =array();
     public static $config   =array();
 
     public static $r;
 
     # 배열값 추가 등록
     public static function init($nation=''){
-        if($nation){
-            self::$nation = $nation;
-        }
+        self::$nation = $nation ?? _LANG_;
 
         # resource 객체화 시키기
         self::$r = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
@@ -45,7 +42,7 @@ final class R
     #@ void
     #res/[strings | integers ]
     # values  = array('strings', 'integers');
-    public static function __autoload_resource($resources){
+    public static function __autoload_resource($resources) : void{
         if(is_array($resources)){
             foreach($resources as $resource_path => $resouces_args){
                 foreach($resouces_args as $resource_name){
@@ -57,7 +54,7 @@ final class R
         }
     }
 
-    public static function parserResourceArray($resource_name, $res_array){
+    public static function parserResourceArray($resource_name, $res_array) : void{
         switch($resource_name){
             case 'sysmsg':  self::$sysmsg   =$res_array; break;
             case 'strings': self::$strings  =$res_array; break;
@@ -68,22 +65,14 @@ final class R
             case 'layout':  self::$layout   =$res_array; break;
             case 'tables':  self::$tables   =$res_array; break;
             case 'queries': self::$queries  =$res_array; break;
-            case 'manifest':
-                case 'manifest_adm':
-                self::$manifest =$res_array; break;
             case 'config':  self::$config   =$res_array; break;
         }
     }
 
     #@ return boolen | void
-    ## XML 데이터를 ID로 빠르게 호출하여 사용
-    public static function parserResourceDefinedID($query){
-
-        if($query == 'manifest_adm'){
-        }else if(!property_exists(__CLASS__,$query)){
-            throw new ErrorException(__LINE__.' : '.R::$sysmsg['e_filenotfound']);
-        }
-
+    ## JSON 데이터를 ID로 빠르게 호출하여 사용
+    public static function parserResourceDefinedID($query) : void
+    {
         $resources = array();
 
         switch($query){
@@ -101,10 +90,6 @@ final class R
             case 'layout':
                 self::parserResource(self::findLanguageFile(_ROOT_PATH_.DIRECTORY_SEPARATOR._LAYOUT_.DIRECTORY_SEPARATOR.$query.'.json'), $query);
             break;
-            case 'manifest':
-            case 'manifest_adm':
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.DIRECTORY_SEPARATOR._RES_.DIRECTORY_SEPARATOR.$query.'.json'), $query);
-            break;
             case 'config':
                 self::parserResource(self::findLanguageFile(_ROOT_PATH_.DIRECTORY_SEPARATOR._CONFIG_.DIRECTORY_SEPARATOR.$query.'.json'), $query);
             break;
@@ -114,7 +99,7 @@ final class R
     #@ void
     # R::parserResource(_ROOT_PATH_.DIRECTORY_SEPARATOR._QUERY_.'/queries.json', 'queries');
     # out_r(R::$queries);
-    public static function parserResource($filename, $query)
+    public static function parserResource($filename, $query) : void
     {
         if(!$query) throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
         $real_filename = self::findLanguageFile($filename);
@@ -132,9 +117,10 @@ final class R
                 throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$real_filename.' / '.$e_msg);
             }
 
-            if($query == 'manifest_adm'){
-                self::parserResourceArray('manifest', $data);
-            }else if(property_exists(__CLASS__,$query)){
+            // if($query == 'manifest_adm'){
+            //     self::parserResourceArray('manifest', $data);
+            // }else 
+            if(property_exists(__CLASS__,$query)){
                 self::parserResourceArray($query, $data);
             }else{
                 self::$r->{$query} =&$data;
@@ -143,7 +129,7 @@ final class R
     }
 
     # 버전별 AND CLEAN
-    public static function cleanJSON($json, $assoc = false, $depth = 512, $options = 0){
+    public static function cleanJSON($json, $assoc = false, $depth = 512, $options = 0) : Array {
         # // 주석제거
         $json=preg_replace('/(?<!\S)\/\/\s*[^\r\n]*/', '', $json);
         $json = strtr($json,array("\n"=>'',"\t"=>'',"\r"=>'')); 
@@ -166,7 +152,7 @@ final class R
 
     #@ return String
     # XML 파일이 해당언어에 해당하는 파일이 있는지 체크
-    public static function findLanguageFile($filename){
+    public static function findLanguageFile($filename) : String{
         $real_filename = $filename;
 
         $path_parts = pathinfo($real_filename);
@@ -191,7 +177,6 @@ final class R
 
         unset(self::$tables);
         unset(self::$queries);
-        unset(self::$manifest);
         unset(self::$config);
         unset(self::$r);
     }
