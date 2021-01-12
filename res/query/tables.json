@@ -1,3 +1,5 @@
 {
-    "uploadfiles": "fu3_uploadfiles"
+    "uploadfiles": "fu3_uploadfiles",
+    "member": "fu3_member",
+    "member_upfiles": "fu3_member_files"
 }
