@@ -87,12 +87,8 @@ if($strcmpstr != $model->decrypt_str){
 	history_go('인증문자가 일치하지 않습니다.');
 }
 
-# CipherEncrypt
-$cipherEncrypt = new CipherEncrypt($userinfo['authemailkey']);
-$encrypt_passwd = $cipherEncrypt->_md5_base64();
-
 # 정보 업데이트
-$db['passwd']                = $encrypt_passwd;
+$db['passwd']                = password($userinfo['authemailkey']);
 $db['recently_connect_date'] = time();
 $db['up_date']               = time();
 $db['authemailkey']          = '';

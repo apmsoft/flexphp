@@ -40,7 +40,7 @@ $db = new Fus3\Db\DbMySqli();
 
 # 이미 등록된 아이디 체크
 $userinfo = $db->get_record('id,userid,passwd,name,level,extract_id', R::$tables['member'], sprintf("`userid`='%s'", $req->userid));
-if(isset($userinfo['id'])){
+if(!isset($userinfo['id'])){
     out_json( array('result'=>'false', 'msg_code'=>'w_enter_userid_passwd', 'msg'=>R::$sysmsg['w_enter_userid_passwd']) );
 }
 
