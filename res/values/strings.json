@@ -1,3 +1,16 @@
 {
-    "app_name": "코코넛"
+    "app_name": "플렉스PHP",
+    "app_theme_color": "#e4e4e4",
+    "auth_token": "접속토큰",
+    "app_keywords": "flexphp",
+    "app_description": "flexphp",
+    "app_author": "flexphp",
+    "e_auth_token": "접속 토큰이 일치하지 않습니다.",
+    "copy_biznumber": "100-04-00111",
+    "copy_ceo": "대표",
+    "copy_address": "주소",
+    "copy_right": "flexphp Corp. All rights resered.",
+    "app_version_str": "0.9Beta",
+    "adm_email":"master@domain.com",
+    "findpwd" : "비밀번호찾기"
 }

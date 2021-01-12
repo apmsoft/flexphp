@@ -8,5 +8,35 @@
         "image_width": "200",
         "image_height": "200",
         "manifid": ""
+    },
+    "login": {
+        "filename": "v1\/login.html",
+        "title": "로그인",
+        "description": "로그인",
+        "url": "http:\/\/coconut.fancyupsoft.com\/?act=login",
+        "image": "",
+        "image_width": "200",
+        "image_height": "200",
+        "manifid": ""
+    },
+    "join": {
+        "filename": "v1\/join.html",
+        "title": "",
+        "url": "",
+        "description": "",
+        "image": "",
+        "image_width": "200",
+        "image_height": "200",
+        "manifid": ""
+    },
+    "fpwd": {
+        "filename": "v1\/findpwd.html",
+        "title": "",
+        "url": "",
+        "description": "",
+        "image": "",
+        "image_width": "200",
+        "image_height": "200",
+        "manifid": ""
     }
 }
