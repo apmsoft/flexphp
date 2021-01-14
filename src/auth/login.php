@@ -58,7 +58,7 @@ if($userinfo['passwd'] != password($req->passwd)){
 $auth_arg =array();
 if(is_array($app['auth'])){
 	foreach($app['auth'] as $mk=>$mv){
-		$auth_arg[$mv] = $controller->data['info'][$mk];
+		$auth_arg[$mv] = $userinfo[$mk];
 	}
 }
 $auth->regiAuth($auth_arg);
