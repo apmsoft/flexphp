@@ -26,7 +26,7 @@ class AuthSession
     }
 
     # return data
-    public function __get($k) : mixed{
+    public function __get($k){
         if(array_key_exists($k, $this->authinfo))
             return $this->authinfo[$k];
     }
