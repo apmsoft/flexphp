@@ -4,6 +4,7 @@ namespace Flex\Cipher;
 use \ErrorException;
 
 # 문자 암호화하기
+# _hash함수추가
 class CipherEncrypt
 {
 	private $encrypt_str = '';
@@ -35,7 +36,13 @@ class CipherEncrypt
 	return $result;
 	}
 
-	# sha512+base64_encode
+	# sha512 || sha256
+	public function _hash($hash='sha512') : string{
+		$result = hash($hash, $this->encrypt_str) ?? throw new ErrorException($e->getMessage(),__LINE__);
+	return $result;
+	}
+
+	# sha512+base64_encode || sha256+base64_encode
 	# ZDE4OTkyNjE1ZjRlMjgyZmZlMDNjODQxNWQ2ZTZiZDhjN2JkZWRjNDg5MWE5NWU1NDA0Yjk4OTk0MjdmZTc0MmE5ZjU2ZWNhZmQwOWFlNTBlZjVhODNiNTU2NDBiNjcwNzlhZDBkYzE3NWFkMDA3OTU5YjU1YWI2OWJkMzBjMzg=
 	public function _hash_base64($hash='sha512') : string{
 		$result = base64_encode(hash($hash, $this->encrypt_str)) ?? throw new ErrorException($e->getMessage(),__LINE__);
