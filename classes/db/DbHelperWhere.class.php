@@ -2,6 +2,7 @@
 namespace Flex\Db;
 
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
+# version : 1.1
 class DbHelperWhere
 {
 	private $where = '';
@@ -24,7 +25,8 @@ class DbHelperWhere
 	# @condition : [=,!=,<,>,<=,>=,IN,LIKE-R=dd%,LIKE-L=%dd,LIKE=%dd%]
 	# @value : NULL | VALUE | % | Array
 	# @is_append : 필수 적용
-	public function setBuildWhere(string $field_name, string $condition ,int|string|Array|NULL $value ,bool $is_append=false) : void
+	# @is_qutawrap : `` 퀄럼명 안전 특수문자 추가 여부
+	public function setBuildWhere(string $field_name, string $condition ,mixed $value ,bool $is_append=false, bool $is_qutawrap = true) : void
 	{
 		if(!$is_append){
 			if($value && $value !=''){
@@ -36,7 +38,7 @@ class DbHelperWhere
 		if($is_append)
 		{
 			$_field_name=''; 
-			$_field_name = (strpos($field_name,'.')!==false) ? $field_name : "`".$field_name."`";
+			$_field_name = (strpos($field_name,'.')!==false || !$is_qutawrap) ? $field_name : "`".$field_name."`";
 			if(is_array($value) || strcmp($value, strtoupper('NULL')))
 			{
 				$in_value = array();
@@ -52,7 +54,8 @@ class DbHelperWhere
 				if($_uppper_condition == 'LIKE' || $_uppper_condition == 'LIKE-R' || $_uppper_condition == 'LIKE-L'){
 					foreach($in_value as $n => $word)
 					{
-						$_word = preg_replace("/[#\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",' ',$word);
+						// $_word = preg_replace("/[#\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",' ',$word);
+						$_word = preg_replace("/[#\&\+\-%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i",' ',$word);
 
 						// append
 						$this->where_group[$this->current_group][] = match($_uppper_condition) {
@@ -67,6 +70,12 @@ class DbHelperWhere
 
 					// append
 					$this->where_group[$this->current_group][] = sprintf("%s IN (%s)", $_field_name, $in_value_str);
+				} 
+				else if($_uppper_condition == 'JSON_CONTAINS'){
+					$in_value_str = json_encode($in_value, JSON_UNESCAPED_UNICODE);
+
+					// append
+					$this->where_group[$this->current_group][] = sprintf("JSON_CONTAINS(%s, '%s')", $_field_name, $in_value_str);
 				} 
 				else{
 					// set
