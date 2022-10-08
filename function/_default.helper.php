@@ -8,7 +8,7 @@ use Flex\R\R;
 
 # password
 function password($passwd){
-	$cipherEncrypt = new Flex\Cipher\CipherEncrypt($passwd);
+	$cipherEncrypt = new \Flex\Cipher\CipherEncrypt($passwd);
 return $cipherEncrypt->_md5_base64();
 }
 
@@ -22,14 +22,28 @@ function createUserID($device_uuid,$device_model,$glue_str){
 return $result;
 }
 
-# 업로드토큰생성
-function create_upload_token($str){
+# 토큰생성
+function createToken($str){
 	$result = $str;
 	#echo $str."\r\n";
 	if(trim($str)){
-		$result = $str.'_'.strtr(microtime(), array(' '=>'','.'=>'','_'=>'_'));
+		$result = $str.'_'.strtr(microtime(), [' '=>'','.'=>'','_'=>'_']);
 	}
 return $result;
 }
 
+function htmlXssChars($contents){
+	$htmlXssChars = new \Flex\Html\HtmlXssChars($contents);
+	return $htmlXssChars->getContext('TEXT');
+}
+
+# microtime 2 datetime
+function convert2MTDT($duration){
+	$result = '';
+	$hours = (int)($duration/60/60);
+	$minutes = (int)($duration/60)-$hours*60;
+	$seconds = (int)$duration-$hours*60*60-$minutes*60;
+
+return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+}
 ?>
