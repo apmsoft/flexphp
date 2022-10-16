@@ -2,9 +2,9 @@
 namespace Flex\Db;
 
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
-# version : 1.1
 class DbHelperWhere
 {
+	private $version = '1.5';
 	private $where = '';
 	private $where_group = [];
 	private $current_group = '';
@@ -39,48 +39,50 @@ class DbHelperWhere
 		{
 			$_field_name=''; 
 			$_field_name = (strpos($field_name,'.')!==false || !$is_qutawrap) ? $field_name : "`".$field_name."`";
-			if(is_array($value) || strcmp($value, strtoupper('NULL')))
-			{
-				$in_value = array();
-				if (is_array($value)){ // array
-					$in_value = $value;
-				} else if (strpos($value, ",") !==false){
-					$in_value = explode(',', $value);
-				} else{
-					$in_value[] = $value;
-				}
 
-				$_uppper_condition = strtoupper($condition);
-				if($_uppper_condition == 'LIKE' || $_uppper_condition == 'LIKE-R' || $_uppper_condition == 'LIKE-L'){
-					foreach($in_value as $n => $word)
-					{
-						// $_word = preg_replace("/[#\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",' ',$word);
-						$_word = preg_replace("/[#\&\+\-%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i",' ',$word);
+			$in_value = array();
+			if (is_array($value)){ // array
+				$in_value = $value;
+			} else if (strpos($value, ",") !==false){
+				$in_value = explode(',', $value);
+			} else{
+				$in_value[] = $value;
+			}
 
-						// append
-						$this->where_group[$this->current_group][] = match($_uppper_condition) {
-							'LIKE' => sprintf("%s LIKE '%%%s%%'", $_field_name, $_word),
-							'LIKE-R' => sprintf("%s LIKE '%s%%'", $_field_name, $_word),
-							'LIKE-L' => sprintf("%s LIKE '%%%s'", $_field_name, $_word),
-						}; 
-					}
-				} 
-				else if($_uppper_condition == 'IN'){
-					$in_value_str = "'" . implode ( "', '", $in_value ) . "'";
+			$_uppper_condition = strtoupper($condition);
+			if($_uppper_condition == 'LIKE' || $_uppper_condition == 'LIKE-R' || $_uppper_condition == 'LIKE-L'){
+				foreach($in_value as $n => $word)
+				{
+					// $_word = preg_replace("/[#\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",' ',$word);
+					$_word = preg_replace("/[#\&\+\-%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i",' ',$word);
 
 					// append
-					$this->where_group[$this->current_group][] = sprintf("%s IN (%s)", $_field_name, $in_value_str);
-				} 
-				else if($_uppper_condition == 'JSON_CONTAINS'){
-					$in_value_str = json_encode($in_value, JSON_UNESCAPED_UNICODE);
-
-					// append
-					$this->where_group[$this->current_group][] = sprintf("JSON_CONTAINS(%s, '%s')", $_field_name, $in_value_str);
-				} 
-				else{
-					// set
-					$this->where_group[$this->current_group][] = sprintf("%s %s '%s'", $_field_name, $condition, $in_value[0]);
+					$this->where_group[$this->current_group][] = match($_uppper_condition) {
+						'LIKE' => sprintf("%s LIKE '%%%s%%'", $_field_name, $_word),
+						'LIKE-R' => sprintf("%s LIKE '%s%%'", $_field_name, $_word),
+						'LIKE-L' => sprintf("%s LIKE '%%%s'", $_field_name, $_word),
+					};
 				}
+			} 
+			else if($_uppper_condition == 'IN'){
+				$in_value_str = "'" . implode ( "', '", $in_value ) . "'";
+
+				// append
+				$this->where_group[$this->current_group][] = sprintf("%s IN (%s)", $_field_name, $in_value_str);
+			}
+			else if($_uppper_condition == 'JSON_CONTAINS'){
+				$in_value_str = json_encode($in_value, JSON_UNESCAPED_UNICODE);
+
+				// append
+				$this->where_group[$this->current_group][] = sprintf("JSON_CONTAINS(%s, '%s')", $_field_name, $in_value_str);
+			}
+			else if($value == 'NULL'){
+				// append
+				$this->where_group[$this->current_group][] = sprintf("%s %s %s", $_field_name, $condition, $value);
+			}
+			else{
+				// set
+				$this->where_group[$this->current_group][] = sprintf("%s %s '%s'", $_field_name, $condition, $in_value[0]);
 			}
 		}
 	}
