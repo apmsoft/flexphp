@@ -19,8 +19,8 @@ $loop = React\EventLoop\Loop::get();
 define('_LOGFILE_','log.txt');
 
 # Log setting
-Log::init(3,_LOGFILE_);
-Log::i($_SERVER['REMOTE_ADDR']);
+Log::init();
+Log::i($_SERVER['REMOTE_ADDR'], $_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/users', function($params){

@@ -3,6 +3,7 @@ namespace Flex\Log;
 
 final class Log
 {
+    const VERSEION = '0.1';
     const MESSAGE_FILE = 3;
     #const MESSAGE_EMAIL= 2;
     const MESSAGE_ECHO = 0;
@@ -19,31 +20,36 @@ final class Log
     }
 
     # debug
-    public static function d (string $message, ... $message2) : void{
+    public static function d (string $message, ... $message2) : void
+    {
         $output = $message.' | '.implode(' | ',$message2);
         self::print_('D', $output);
     }
 
     # success
-    public static function v (string $message, ... $message2) : void{
+    public static function v (string $message, ... $message2) : void
+    {
         $output = $message.' | '.implode(' | ',$message2);
         self::print_('V', $output);
     }
 
     # info
-    public static function i (string $message, ... $message2) : void{
+    public static function i (string $message, ... $message2) : void
+    {
         $output = $message.' | '.implode(' | ',$message2);
         self::print_('I', $output);
     }
 
     # warning
-    public static function w (string $message, ... $message2) : void{
+    public static function w (string $message, ... $message2) : void
+    {
         $output = $message.' | '.implode(' | ',$message2);
         self::print_('W', $output);
     }
 
     # error
-    public static function e (string $message, ... $message2) : void{
+    public static function e (string $message, ... $message2) : void
+    {
         $output = $message.' | '.implode(' | ',$message2);
         self::print_('E', $output);
     }
