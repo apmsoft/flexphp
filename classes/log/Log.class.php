@@ -1,8 +1,5 @@
 <?php
-namespace Flex\R;
-
-use \ArrayObject;
-use \ErrorException;
+namespace Flex\Log;
 
 final class Log
 {
