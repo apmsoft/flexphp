@@ -20,8 +20,9 @@ $loop = React\EventLoop\Loop::get();
 
 # Log setting
 Log::init();
-Log::i($_SERVER['REMOTE_ADDR'], $_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+Log::setDebugs('i','d','v','e');
 
+# Routers
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/users', function($params){
         parse_str($params, $url_queries);
@@ -46,11 +47,11 @@ React\Async\waterfall(
     {
         return new Promise(function ($resolve)
         {
-            // Fetch method and URI from somewhere
-            $httpMethod = $_SERVER['REQUEST_METHOD'];
+            # 기본정보
             $uri = $_SERVER['REQUEST_URI'];
-            Log::d($uri);
+            Log::i($_SERVER['REMOTE_ADDR'], $_SERVER['REQUEST_METHOD'], $uri);
 
+            # url parsing
             $url_parse = parse_url($uri);
 
             # resolve
