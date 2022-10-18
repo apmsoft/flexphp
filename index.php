@@ -16,7 +16,7 @@ require $path. '/config/config.inc.php';
 $loop = React\EventLoop\Loop::get();
 
 # DEFINE
-define('_LOGFILE_','log.txt');
+#define('_LOGFILE_','log.txt');
 
 # Log setting
 Log::init();
