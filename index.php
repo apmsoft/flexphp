@@ -1,89 +1,102 @@
 <?php
-use Flex\App\App;
+use React\EventLoop\Loop;
+use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
+use React\Http\Message\Response;
+use Psr\Http\Message\ServerRequestInterface;
+use React\Promise\Promise;
+
 use Flex\R\R;
+use Flex\Log\Log;
 
-# config
-$path = str_replace($_SERVER['PHP_SELF'],'',__FILE__);
-include_once $path.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.inc.php';
+$path = __DIR__;
+require $path. '/vendor/autoload.php';
+require $path. '/config/config.inc.php';
 
-# session
-$auth = new Flex\Auth\AuthSession($app['auth']);
-$auth->sessionStart();
+$loop = React\EventLoop\Loop::get();
 
-# out 테스트
-out_ln(App::$version);
-out_ln(App::$platform);
+# DEFINE
+define('_LOGFILE_','log.txt');
 
-# 캘린더 테스트
-$calendars = new Flex\Calendars\Calendars(date('Y-m-d'));
-$calendars->set_days_of_month();
-// out_r($calendars->days_of_month);
+# Log setting
+Log::init(3,_LOGFILE_);
+Log::i($_SERVER['REMOTE_ADDR']);
 
-# 암호화 테스트
-$m5encrypt_text = (new Flex\Cipher\CipherEncrypt('asdfdsdf'))->_md5();
-out_ln ( $m5encrypt_text );
+$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+    $r->addRoute('GET', '/users', function($params){
+        parse_str($params, $url_queries);
+        Log::d("/users -> params -> ".json_encode($url_queries));
+        return ['result'=>'true', 'msg'=>'ok'];
+    });
 
-out_ln(' 복호화 가능한 암호화');
-$encrypttext = (new Flex\Cipher\CipherEncrypt('asdfdsdf'))->_base64_urlencode();
-out_ln ( $encrypttext );
+    // {id} must be a number (\d+)
+    $r->addRoute('GET', '/user/{id:\d+}', function($params){
+        parse_str($params, $url_queries);
+        Log::d('<<< /user/id:+ >> params : '.json_encode($params));
 
-# 복호화 테스트
-$decrypttext = (new Flex\Cipher\CipherDecrypt($encrypttext))->_base64_urldecode();
-// out_ln ( '복호화 : '.$cipherDecrypt->_base64_urldecode() );
-out_ln ( '복호화 : '.$decrypttext );
-
-# 날짜
-$dateTimes = new Flex\Date\DateTimes('now');
-out_ln ( $dateTimes->wasPassed(1) );
-out_ln ( $dateTimes->dateBefore(3) );
-out_ln ( $dateTimes->daysAfterDDay() );
-out_ln ( $dateTimes->timeLeft24H() );
-out_r ( $dateTimes->wkr_args );
-
-# db where 구문 만들기
-$dbHelperWhere = new Flex\Db\DbHelperWhere();
-$dbHelperWhere->beginWhereGroup('groupa', 'AND');
-$dbHelperWhere->setBuildWhere('name', 'IN' , '홍길동,유관순', true);
-$dbHelperWhere->setBuildWhere('age', '>=' , 10, true);
-$dbHelperWhere->setBuildWhere('job', 'IN' , ['공무원','프로그래머','경영인','디자이너'], true);
-$dbHelperWhere->endWhereGroup();
-
-$dbHelperWhere->beginWhereGroup('groupb', 'OR');
-$dbHelperWhere->setBuildWhere('price', 'IN' , [1,2,3,4,5,6], 'OR', true);
-$dbHelperWhere->setBuildWhere('price_month', '>=' , 7, 'OR', true);
-$dbHelperWhere->endWhereGroup();
-
-$dbHelperWhere->beginWhereGroup('groupc', 'OR');
-$dbHelperWhere->setBuildWhere('title', 'LIKE' , ['이순신','대통령'], 'OR', false);
-// $dbHelperWhere->setBuildWhere('title', 'LIKE-L' , ['이순신','대통령'], 'OR', true);
-// $dbHelperWhere->setBuildWhere('title', 'LIKE-R' , ['이순신','대통령'], 'OR', true);
-$dbHelperWhere->endWhereGroup();
-
-out_ln ($dbHelperWhere->where);
-
-# DbMySqli
-#$db = new Flex\Db\DbMySqli();
+        return ['result'=>'true','msg'=>'id'];
+    });
+});
 
 
-# dir
-$dirObject = new Flex\Dir\DirObject(_ROOT_PATH_.'/res');
-out_ln('===< 파일 목록만 > =====');
-out_r($dirObject->findFiles());
-out_ln('===< 폴더 목록만 > =====');
-out_r($dirObject->findFolders());
+React\Async\waterfall(
+[
+    # 접속정보
+    function ($params =[])
+    {
+        return new Promise(function ($resolve)
+        {
+            // Fetch method and URI from somewhere
+            $httpMethod = $_SERVER['REQUEST_METHOD'];
+            $uri = $_SERVER['REQUEST_URI'];
+            Log::d($uri);
 
+            $url_parse = parse_url($uri);
 
-# r
-R::parserResourceDefinedID('tables');
-out_r(R::$tables);
+            # resolve
+            $resolve($url_parse);
+        });
+    },
 
+    # Router
+    function ($params) use ($dispatcher)
+    {
+        $path   = $params['path'];
+        $params = $params['query'];
+        $method = $_SERVER['REQUEST_METHOD'];
+        $router_path= strtr($path,['/index.php'=>'']);
 
-# xml rss 2.0 reader
-// try{
-//     $xmlRss2 = new Flex\Xml\XmlRss2('https://rss.donga.com/politics.xml');
-//     print_r($xmlRss2->items);
-// }
-// catch(Exception $e){
-//     print_r($e);
-// }
+        Log::d($router_path);
+        
+        return new Promise(function ($resolve) use ($dispatcher, $router_path,$params,$method)
+        {
+            $routeInfo = $dispatcher->dispatch($method, $router_path);
+            switch ($routeInfo[0])
+            {
+                case FastRoute\Dispatcher::NOT_FOUND:
+                    Log::e("404 Not Found");
+                    break;
+                case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+                    $allowedMethods = $routeInfo[1];
+                    Log::e($allowedMethods." >> 405 Method Not Allowed");
+                    break;
+                case FastRoute\Dispatcher::FOUND:
+                    $handler = $routeInfo[1];
+
+                    $data = json_encode($handler($params));
+                    $resolve($data);
+                    break;
+            }
+        });
+    }
+])
+->then(function ($message){
+    Log::v($message);
+    header('Content-Type: application/json; charset=utf-8');
+    echo $message;
+}, function (Exception $e) {
+    echo '// ['.__LINE__.']'.$e->getMessage().' //'.PHP_EOL;
+});
+
+$loop->run();
 ?>

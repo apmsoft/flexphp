@@ -15,13 +15,19 @@ final class Log
     # init
     public static function init(int $message_type = -1, string $logfile = null){
         self::$message_type = ($message_type > -1) ? $message_type : self::MESSAGE_FILE;
-        self::$logfile = $logfile ?? 'log.txt'
+        self::$logfile = $logfile ?? 'log.txt';
     }
 
     # debug
     public static function d (string $message, ... $message2) : void{
         $output = $message.' | '.implode(' | ',$message2);
         self::print_('D', $output);
+    }
+
+    # success
+    public static function v (string $message, ... $message2) : void{
+        $output = $message.' | '.implode(' | ',$message2);
+        self::print_('V', $output);
     }
 
     # info
@@ -45,7 +51,7 @@ final class Log
     private static function print_ (string $debug_type, string $message) : void
     {
         $logfile = (self::$message_type == self::MESSAGE_FILE ) ? self::$logfile : null;
-        error_log (sprintf("%s >> %s : %s", date('Y-m-d H:i:s'),$debug_type,$message), self::$message_type, $logfile);
+        error_log (sprintf("%s >> %s : %s %s", date('Y-m-d H:i:s'),$debug_type,$message,PHP_EOL), self::$message_type, $logfile);
     }
 }
 ?>
