@@ -19,8 +19,15 @@ $loop = React\EventLoop\Loop::get();
 #define('_LOGFILE_','log.txt');
 
 # Log setting
+# 메세지출력 방법 : echo [Log::MESSAGE_ECHO], file [Log::MESSAGE_FILE]
+# default 값: Log::MESSAGE_FILE, filename : log.txt
 Log::init();
 Log::setDebugs('i','d','v','e');
+Log::options([
+    'datetime'   => true,
+    'debug_type' => true,
+    'newline'    => true
+]);
 
 # Routers
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
