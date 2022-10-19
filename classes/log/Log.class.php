@@ -3,10 +3,10 @@ namespace Flex\Log;
 
 final class Log
 {
-    const VERSEION = '0.3';
-    const MESSAGE_FILE = 3;
-    #const MESSAGE_EMAIL= 2;
-    const MESSAGE_ECHO = 0;
+    const VERSEION = '0.4';
+    const MESSAGE_FILE   = 3; # 사용자 지정 파일에 저장
+    const MESSAGE_ECHO   = 2; # 화면에만 출력
+    const MESSAGE_SYSTEM = 0; # syslog 시스템 로그파일에 저장
 
     public static $message_type = 3;
     public static $logfile = 'log.txt';
@@ -100,11 +100,15 @@ final class Log
         $out_debug_type = (self::$options['debug_type']) ? '>> '.$debug_type.' : ' : '';
         $out_newline    = (self::$options['newline']) ? PHP_EOL : '';
 
-        error_log (
-            sprintf("%s%s%s%s", $out_datetime, $out_debug_type, $message, $out_newline), 
-                self::$message_type, 
-                    $logfile
-        );
+        if(self::$message_type == self::MESSAGE_ECHO){
+            echo sprintf("%s%s%s%s", $out_datetime, $out_debug_type, addslashes($message), $out_newline);
+        }else{
+            error_log (
+                sprintf("%s%s%s%s", $out_datetime, $out_debug_type, addslashes($message), $out_newline), 
+                    self::$message_type, 
+                        $logfile
+            );
+        }
     }
 }
 ?>
