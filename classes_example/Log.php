@@ -13,14 +13,19 @@ require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;
 Log::init();
+
+# 화면에만 출력
 # Log::init(Log::MESSAGE_ECHO);
+
+# 내가 지정하는 파일에 출력
 # Log::init(Log::MESSAGE_FILE, 'log.txt');
 
 # 출력하고자 하는 디버그 타입 설정
 # default 값 : 'i','d','v','w','e'
-Log::setDebugs('i','v','e');
+# Log::setDebugs('i','v','e');
 
 # 메세지 추가 옵션 출력 여부 설정
+# 메세지 타입 : 정보 i, 디버그 d, 성공 v, 경고 w, 에러 e
 # 기본값 전체 true
 /*
     Log::options([
@@ -41,5 +46,9 @@ Log::i($_SERVER['REMOTE_ADDR'], $_SERVER['REQUEST_METHOD'], $uri);
 /** 
  * 2022-10-18 16:46:28 >> I : 192.168.0.1 | GET | /index.php/user/2 
  */
-
+Log::i('정보 메세지');
+Log::d('디버그 메세지');
+Log::v('성공 메세지');
+Log::w('경고 메세지');
+Log::e('에러 메세지');
 ?>
