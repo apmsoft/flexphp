@@ -3,7 +3,7 @@ namespace Flex\Log;
 
 final class Log
 {
-    const VERSEION = '0.4';
+    const VERSEION = '0.4.1';
     const MESSAGE_FILE   = 3; # 사용자 지정 파일에 저장
     const MESSAGE_ECHO   = 2; # 화면에만 출력
     const MESSAGE_SYSTEM = 0; # syslog 시스템 로그파일에 저장
@@ -11,7 +11,6 @@ final class Log
     public static $message_type = 3;
     public static $logfile = 'log.txt';
 
-    public static $logstyles = [];
     public static $debugs = ['d','v','i','w','e'];
     public static $options = [
         'datetime'   => true,   # 날짜 시간 출력
