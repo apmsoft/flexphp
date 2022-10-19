@@ -1,15 +1,13 @@
 <?php
+use Flex\App\App;
 use Flex\R\R;
 use Flex\Log\Log;
 
-$path = __DIR__;
+$path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
-# DEFINE
-#define('_LOGFILE_','log.txt');
-
 # Log setting
-# 메세지출력 방법 : echo [Log::MESSAGE_ECHO], file [Log::MESSAGE_FILE]
+# 메세지출력 방법 : 화면출력 [Log::MESSAGE_ECHO], 파일에출력 [Log::MESSAGE_FILE]
 # default 값: Log::MESSAGE_FILE, filename : log.txt
 Log::init();
 # Log::init(Log::MESSAGE_ECHO);
