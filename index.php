@@ -15,9 +15,6 @@ require $path. '/config/config.inc.php';
 
 $loop = React\EventLoop\Loop::get();
 
-# DEFINE
-#define('_LOGFILE_','log.txt');
-
 # Log setting
 # 메세지출력 방법 : echo [Log::MESSAGE_ECHO], file [Log::MESSAGE_FILE]
 # default 값: Log::MESSAGE_FILE, filename : log.txt
