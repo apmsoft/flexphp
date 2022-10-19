@@ -21,11 +21,11 @@ Log::init();
 # Log::init(Log::MESSAGE_FILE, 'log.txt');
 
 # 출력하고자 하는 디버그 타입 설정
+# 메세지 타입 : 정보 i, 디버그 d, 성공 v, 경고 w, 에러 e
 # default 값 : 'i','d','v','w','e'
 # Log::setDebugs('i','v','e');
 
 # 메세지 추가 옵션 출력 여부 설정
-# 메세지 타입 : 정보 i, 디버그 d, 성공 v, 경고 w, 에러 e
 # 기본값 전체 true
 /*
     Log::options([
