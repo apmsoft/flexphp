@@ -12,6 +12,9 @@ $dbHelperWhere->beginWhereGroup('groupa', 'AND');
     $dbHelperWhere->setBuildWhere('name', 'IN' , '홍길동,유관순', true);
     $dbHelperWhere->setBuildWhere('age', '>=' , 10, true);
     $dbHelperWhere->setBuildWhere('job', 'IN' , ['공무원','프로그래머','경영인','디자이너'], true);
+    $dbHelperWhere->setBuildWhere("JSON_UNQUOTE(detail_info->'$.deli.dome.type')", 'LIKE-R', $where_delifee_type ,true,false);
+    $dbHelperWhere->setBuildWhere("signdate", 'is not', 'NULL' ,true,false);
+    $dbHelperWhere->setBuildWhere('price', '>', '0',true);
 $dbHelperWhere->endWhereGroup();
 
 $dbHelperWhere->beginWhereGroup('groupb', 'OR');
