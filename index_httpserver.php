@@ -28,6 +28,10 @@ Log::options([
 
 # Routers
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+    $r->addRoute('GET', '/', function($params){
+        return ['result'=>'true', 'msg'=>'Hello'];
+    });
+    
     $r->addRoute('GET', '/users', function($params){
         parse_str($params, $url_queries);
         Log::d("/users -> params -> ".json_encode($url_queries));
@@ -103,7 +107,10 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
     ])
     ->then(function ($message){
         Log::v($message);
+        // header('Content-Type: application/json; charset=utf-8');
+        // echo $message;
         return new React\Http\Message\Response(React\Http\Message\Response::STATUS_OK, ['Content-Type' => 'application/json'],$message);
+
     }, function (Exception $e) {
         echo '// ['.__LINE__.']'.$e->getMessage().' //'.PHP_EOL;
     });
