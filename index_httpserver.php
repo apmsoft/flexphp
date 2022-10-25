@@ -27,7 +27,8 @@ Log::options([
 ]);
 
 # Routers
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) 
+{
     $r->addRoute('GET', '/', function($params){
         return ['result'=>'true', 'msg'=>'Hello'];
     });
