@@ -27,8 +27,7 @@ Log::options([
 ]);
 
 # Routers
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) 
-{
+$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', function($params){
         return ['result'=>'true', 'msg'=>'Hello'];
     });
@@ -108,9 +107,13 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
     ])
     ->then(function ($message){
         Log::v($message);
-        // header('Content-Type: application/json; charset=utf-8');
-        // echo $message;
-        return new React\Http\Message\Response(React\Http\Message\Response::STATUS_OK, ['Content-Type' => 'application/json'],$message);
+
+        return new React\Http\Message\Response(React\Http\Message\Response::STATUS_OK, [
+            'Content-Type' => 'application/json',
+            'Access-Control-Allow-Origin'=>'*',
+            'Access-Control-Allow-Headers'=>'*',
+            'Access-Control-Allow-Methods'=>'*'
+        ],$message);
 
     }, function (Exception $e) {
         echo '// ['.__LINE__.']'.$e->getMessage().' //'.PHP_EOL;
