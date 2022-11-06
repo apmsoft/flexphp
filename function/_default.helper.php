@@ -26,9 +26,8 @@ return $result;
 # 토큰생성
 function createToken($str){
 	$result = '';
-	$hash = $str ?? time();
+	$hash = $str ?? UtilUUID::create_uniqid();
 	$result = UtilUUID::make($hash);
-	$result = preg_replace("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",'',$result);
 return $result;
 }
 
