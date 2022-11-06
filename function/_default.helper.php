@@ -24,10 +24,12 @@ return $result;
 
 # 토큰생성
 function createToken($str){
-	$result = $str;
-	#echo $str."\r\n";
+	$result = '';
+	$result = $utilUUID->create();
+	$result = preg_replace("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",'',$result);
 	if(trim($str)){
-		$result = $str.'_'.strtr(microtime(), [' '=>'','.'=>'','_'=>'_']);
+		$utilUUID = new \Flex\Util\UtilUUID();
+		$result = $str.'.'.$result;
 	}
 return $result;
 }
