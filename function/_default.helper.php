@@ -5,7 +5,6 @@
 # 클래스와 기능이 동일
 ----------------------------------------------------------*/
 use Flex\R\R;
-use Flex\Util\UtilUUID;
 
 # password
 function password($passwd){
@@ -24,10 +23,10 @@ return $result;
 }
 
 # 토큰생성
-function createToken($str){
+function createToken(){
 	$result = '';
-	$hash = $str ?? UtilUUID::create_uniqid();
-	$result = UtilUUID::make($hash);
+	$uuidGenerator = new Flex\Uuid\UuidGenerator();
+	$result = $uuidGenerator->v4();
 return $result;
 }
 
