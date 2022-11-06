@@ -1,13 +1,7 @@
 <?php
 namespace Flex\Util;
 
-/** ======================================================
-| @Author   : 김종관
-| @Email    : apmsoft@gmail.com
-| @HomePage : http://apmsoft.tistory.com
-| @Editor   : Sublime Text 3
-| @UPDATE   : 0.5
-----------------------------------------------------------*/
+use Flex\Util\UtilUUIDGenerator;
 # create
 # $uuid = UtilUUID::create();
 

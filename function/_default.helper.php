@@ -5,6 +5,7 @@
 # 클래스와 기능이 동일
 ----------------------------------------------------------*/
 use Flex\R\R;
+use Flex\Util\UtilUUID;
 
 # password
 function password($passwd){
@@ -23,15 +24,11 @@ return $result;
 }
 
 # 토큰생성
-function createToken($str=''){
+function createToken($str){
 	$result = '';
-
-	$utilUUID = new \Flex\Util\UtilUUID();
-	$result = $utilUUID->create();
+	$hash = $str ?? time();
+	$result = UtilUUID::make($hash);
 	$result = preg_replace("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",'',$result);
-	if(trim($str)){
-		$result = $str.'.'.$result;
-	}
 return $result;
 }
 
