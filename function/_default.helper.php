@@ -23,12 +23,13 @@ return $result;
 }
 
 # 토큰생성
-function createToken($str){
+function createToken($str=''){
 	$result = '';
+
+	$utilUUID = new \Flex\Util\UtilUUID();
 	$result = $utilUUID->create();
 	$result = preg_replace("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",'',$result);
 	if(trim($str)){
-		$utilUUID = new \Flex\Util\UtilUUID();
 		$result = $str.'.'.$result;
 	}
 return $result;
