@@ -23,12 +23,12 @@ class FilesDownload
 
 		#디렉토리에 특수문자 체크
 		if (!preg_match("/[^a-z0-9_-]/i",$dirs)){
-		   Out::prints(R::$sysmsg['e_directory_symbol']);
+			Out::prints(R::$sysmsg['e_directory_symbol']);
         }
 
 		# 특수문자 체크
         if (preg_match("/[^\xA1-\xFEa-z0-9._-]|\.\./i",urldecode($filenamez))){
-        	Out::prints(R::$sysmsg['e_filename_symbol']);
+			Out::prints(R::$sysmsg['e_filename_symbol']);
         }
 
 		# 서버에 파일 존애 여부 체크
