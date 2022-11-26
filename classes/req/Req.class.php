@@ -65,7 +65,7 @@ class Req
     }
 
 	#@ String
-	public function __get($key) : mixed{
+	public function __get($key){
 		if(isset($this->params[$key])){
 			return $this->params[$key];
 		}
