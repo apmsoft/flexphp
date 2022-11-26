@@ -26,19 +26,19 @@ class Req
 
 	#@ void
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
-	public function useGET($is_trim = true){
+	public function useGET(bool $is_trim = true) : void{
 		self::trimParams($_GET,$is_trim);
 	}
 
 	#@ void
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
-	public function useREQUEST($is_trim = true){
+	public function useREQUEST(bool $is_trim = true) : void{
 		self::trimParams($_REQUEST,$is_trim);
 	}
 
 	#@ void
 	# trim 함수로 앞뒤공백 비우기
-	public function trimParams($arg, $is_trim){
+	public function trimParams(array $arg, bool $is_trim) : void{
 		if(is_array($arg)){
 			foreach($arg as $k=>$v){
 				if($is_trim){
@@ -60,12 +60,12 @@ class Req
     }
 
     #@ array
-    public function fetch(){
+    public function fetch() : array{
 		return $this->params;
     }
 
 	#@ String
-	public function __get($key){
+	public function __get($key) : mixed{
 		if(isset($this->params[$key])){
 			return $this->params[$key];
 		}
