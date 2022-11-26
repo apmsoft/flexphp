@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author   : 김종관 | 010-4023-7046
-| @Email    : apmsoft@gmail.com
-| @HomePage : http://www.apmsoftax.com
-| @Editor   : Eclipse(default)
-| @version  : 0.9
-----------------------------------------------------------*/
 namespace Flex\Ftp;
 
 final class Ftp extends FtpObject
