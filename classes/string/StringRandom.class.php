@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관 | 010-4023-7046
-| @Email	: apmsoft@gmail.com
-| @HomePage	: http://www.apmsoftax.com
-| @Editor	: Eclipse(default)
-| @vsesion:0.2
-----------------------------------------------------------*/
 namespace Flex\String;
 
 # purpose : 랜덤문자 만들기
