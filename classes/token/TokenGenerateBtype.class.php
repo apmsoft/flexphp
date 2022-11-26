@@ -34,7 +34,7 @@ class TokenGenerateBtype extends TokenSwitch
     # 6e262cc52963a523985f368d1f141e6df34125f1dc03fe28fc9abae8db1f185c3b3f0a81f2e271853f9be4c21a0f35c0cdbb5c9d8486168e14dd60a4337df88f
     public function generateToken(string $hash_token) : string {
         $cipherEncrypt = new CipherEncrypt($hash_token);
-        return $cipherEncrypt->sha512('sha512');
+        return $cipherEncrypt->_hash('sha512');
     }
 }
 ?>
