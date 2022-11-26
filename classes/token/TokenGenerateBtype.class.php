@@ -7,7 +7,7 @@ use Flex\Log\Log;
 
 /** ex)
  *$tokenGenerateBtype = new \Flex\Token\TokenGenerateBtype(null,10);
- *$hsahkey = $tokenGenerateBtype->generateHashKey($tokenGenerateBtype);
+ *$hsahkey = $tokenGenerateBtype->generateHashKey($tokenGenerateBtype->generate_string);
  *$tokenGenerateBtype->generateToken($hsahkey);
  */
 class TokenGenerateBtype extends TokenSwitch
@@ -15,12 +15,14 @@ class TokenGenerateBtype extends TokenSwitch
     const TAG = 'TokenGenerateBtype::';
     public string $generate_string = '';
 
+    # 랜덤 : AE68A9MPVZ
     public function __construct(string|null $generate_string, int $length=50){
         $this->generate_string = $generate_string ?? parent::generateString($length);
         #Log::d($this->generate_string);
     }
 
     # @abstract 해시키 : _md5_base64
+    # 5jF4rq3N9V3RLHEBW2RKg
     public function generateHashKey(string $generate_string) : string
     {
         $cipherEncrypt  = new CipherEncrypt($generate_string);
