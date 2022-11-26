@@ -1,0 +1,10 @@
+{
+    "title"     : "이미지첨부",
+    "columns" : {
+        "extract_id": "첨부파일토큰"
+    },
+    "fileupload" : {
+        "file_extension": "jpg,jpeg,png",
+        "file_maxsize": 10
+    }
+}

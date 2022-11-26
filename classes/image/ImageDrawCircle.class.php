@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관 | 010-4023-7046
-| @Email	: apmsoft@gmail.com
-| @HomePage	: http://www.apmsoftax.com
-| @Editor	: Eclipse(default)
-| @UPDATE	: 2010-02-16
-----------------------------------------------------------*/
 namespace Flex\Image;
 
 # purpose : 이미지 효과주기
@@ -34,9 +27,9 @@ class ImageDrawCircle extends ImageGDS
 		
 		// make the 3D effect
 		for ($i = 60; $i > 50; $i--){
-		   imagefilledarc($this->im, 50, $i, 100, 50, 0, 45, $darknavy, IMG_ARC_PIE);
-		   imagefilledarc($this->im, 50, $i, 100, 50, 45, 75 , $darkgray, IMG_ARC_PIE);
-		   imagefilledarc($this->im, 50, $i, 100, 50, 75, 360 , $darkred, IMG_ARC_PIE);
+			imagefilledarc($this->im, 50, $i, 100, 50, 0, 45, $darknavy, IMG_ARC_PIE);
+			imagefilledarc($this->im, 50, $i, 100, 50, 45, 75 , $darkgray, IMG_ARC_PIE);
+			imagefilledarc($this->im, 50, $i, 100, 50, 75, 360 , $darkred, IMG_ARC_PIE);
 		}
 		
 		imagefilledarc($this->im, 50, 50, 100, 50, 0, 45, $navy, IMG_ARC_PIE);

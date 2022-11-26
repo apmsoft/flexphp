@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: http://www.apmsoftax.com
-| @Editor	: Eclipse(default)
-| @UPDATE	: 1.0.3
-----------------------------------------------------------*/
 namespace Flex\Image;
 
 # purpose : 카메라 촬영 정보

@@ -19,12 +19,14 @@ class ImageGDS
 	private $fontsrc,$fontangle=0,$fontcolor = array(0,0,0),$fontsize = 20,$x=5,$y=5;
 
 	# 시작
-	public function __construct($filename=null){
+	public function __construct(string|null $filename=null){
 		if(!file_exists($filename) && $filename) {
-			throw new Exception(__METHOD__.' '.$filename,__LINE__);
+			throw new \Exception(__METHOD__.' '.$filename,__LINE__);
 		}
 
-		$this->filename = $filename;
+		if(!is_null($filename)){
+			$this->filename = $filename;
+		}
 	}
 
 	# void 퀄리티 설정
@@ -118,7 +120,7 @@ class ImageGDS
 		$fontcolor = self::setColorallocate($this->im,$this->fontcolor[0],$this->fontcolor[1],$this->fontcolor[2]);
 
 		$filename = ($filename) ? $filename : $this->filename;
-		if(!$filename) throw new Exception(__CLASS__,':'.__METHOD__.':'.__LINE__);
+		if(!$filename) throw new \Exception(__CLASS__,':'.__METHOD__.':'.__LINE__);
 		$image = self::readImage($filename);
 		self::copy($this->im,$image,0,0,0,0,$width,$height);
 		self::setTTFText($this->im,$this->fontsize,$this->x,$this->y,$fontcolor,$text);
@@ -127,7 +129,7 @@ class ImageGDS
 	# margin_r : 오른쪽 여백, margin_b : 아래여백
 	public function filterWatermarks($marksfilename,$margin_r=10,$margin_b=10){
 		if(!file_exists($marksfilename))
-			throw new Exception(__CLASS__.':'.__METHOD__.':'.$marksfilename);
+			throw new \Exception(__CLASS__.':'.__METHOD__.':'.$marksfilename);
 
 		$this->im = self::readImage($this->filename);
 		self::setAntialias($this->im,true);
@@ -146,7 +148,7 @@ class ImageGDS
 		$this->im = self::createTrueImage($width,$height);
 		$image = self::readImage($this->filename);
 		if(self::copy($this->im,$image,0,0,$x,$y,$width,$height) === false)
-			throw new Exception(__METHOD__,__LINE__);
+			throw new \Exception(__METHOD__,__LINE__);
 	}
 
 	# void 이미지 자르기 (center) int width,height
@@ -166,19 +168,19 @@ class ImageGDS
 		$w_height = $width/2;
 
 		if($imgsize->width > $imgsize->height){
-	        $width = $imgsize->width / $hm;
-	        $half_width = $width / 2;
-	        $im_x = -($half_width - $w_height);
+			$width = $imgsize->width / $hm;
+			$half_width = $width / 2;
+			$im_x = -($half_width - $w_height);
 		}else if(($imgsize->width <$imgsize->height) || ($imgsize->wdith == $imgsize->height)){
-	        $height = $imgsize->height / $wm;
-	        $half_height = $height / 2;
-	        $im_y = $half_height - $h_height;
-	    }
+			$height = $imgsize->height / $wm;
+			$half_height = $height / 2;
+			$im_y = $half_height - $h_height;
+		}
 
 		$this->im = self::createTrueImage($width,$height);
 		$image = self::readImage($this->filename);
 		if(self::copyResampled($this->im,$image,$im_x,$im_y,$image_x,$image_y,$width,$height,$imgsize->width,$imgsize->height) === false)
-			throw new Exception(__METHOD__,__LINE__);
+			throw new \Exception(__METHOD__,__LINE__);
 
 	return true;
 	}
@@ -198,7 +200,7 @@ class ImageGDS
 		$this->im = self::createTrueImage($width,$height);
 		$image = self::readImage($this->filename);
 		if(self::copyResampled($this->im, $image, 0,0,0,0,$width,$height,$imgsize->width,$imgsize->height) ===false)
-			throw new Exception(__METHOD__,__LINE__);
+			throw new \Exception(__METHOD__,__LINE__);
 	return true;
 	}
 
@@ -235,17 +237,9 @@ class ImageGDS
 				case 'png': $image = @imagecreatefrompng($filename); break;
 				case 'jpeg':
 				case 'jpg':	$image = imagecreatefromjpeg($filename); break;
-				default : throw new Exception('i can\'t the image format');
 			}
-		}catch(Exception $e){
-			switch($extention){
-				case 'gif': $image = imagecreatefromgif($filename); break;
-				case 'png':
-				#$image = @imagecreatefrompng($filename); break;
-				case 'jpeg':
-				case 'jpg':	$image = imagecreatefromjpeg($filename); break;
-				default : throw new Exception('i can\'t the image format');
-			}
+		}catch(\Exception $e){
+			throw new \Exception($e->getMessage());
 		}
 	return $image;
 	}
@@ -257,20 +251,13 @@ class ImageGDS
 		try{
 			switch($extention){
 				case 'gif': imagegif($this->im,$filename); return true; break;
-				case 'png':  imagepng($this->im,$filename,($this->quality/10)-1); return true; break;
+				case 'png': imagepng($this->im,$filename,($this->quality/10)-1); return true; break;
 				case 'jpg':
 				case 'jpeg': imagejpeg($this->im,$filename,$this->quality); return true; break;
 				default : return false;
 			}
-		}catch(Exception $e){
-			switch($extention){
-				case 'gif': imagegif($this->im,$filename); return true; break;
-				case 'png':
-				#imagepng($this->im,$filename,($this->quality/10)-1); return true; break;
-				case 'jpg':
-				case 'jpeg': imagejpeg($this->im,$filename,$this->quality); return true; break;
-				default : return false;
-			}
+		}catch(\Exception $e){
+			throw new \Exception($e->getMessage());
 		}
 
 	}
@@ -297,7 +284,7 @@ class ImageGDS
 	}
 
 	public function __destruct(){
-    	self::destroy();
+		self::destroy();
     }
 }
 ?>
