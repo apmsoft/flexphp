@@ -34,9 +34,9 @@ class FilesSizeConvert
 	public function getFileSizeConvert() : string{
 		$result = "0";
 		if(!empty($this->filesize_bytes)){
-	        $e = floor(log($this->filesize_bytes)/log(1024));
-	        $result = sprintf('%.2f '.$this->convert_type[$e], ($this->filesize_bytes/pow(1024, floor($e))));
-	    }
+			$e = floor(log($this->filesize_bytes)/log(1024));
+			$result = sprintf('%.2f '.$this->convert_type[$e], ($this->filesize_bytes/pow(1024, floor($e))));
+		}
 	return $result;
 	}
 }
