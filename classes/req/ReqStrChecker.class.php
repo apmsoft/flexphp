@@ -1,15 +1,10 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor   : VSCode
-| @UPDATE   : 1.1.1
-----------------------------------------------------------*/
 namespace Flex\Req;
 
 # purpose : 문자를 체크(Ascii 문자 코드를 활용하여) 한다 / preg,ereg 정규식 보다 훨 빠름
-class ReqStrChecker{
+class ReqStrChecker
+{
+	const VERSEION = '2.0';
 	private $str;
 	private $len = 0;
 
@@ -50,7 +45,7 @@ class ReqStrChecker{
 	# 연속적으로 똑같은 문자는 입력할 수 없다  [ 반복문자 max 이상이면 : false / 아니면 : true ]
 	# ex : 010-111-1111,010-222-1111 형태제한
 	# max = 3; // 반복문자 3개 "초과" 입력제한
-	public function isSameRepeatString($max=3): bool{
+	public function isSameRepeatString(int $max=3): bool{
 		$result = true;
 		$sameCount = 0;
 		$preAsciiNumber = 0;
@@ -144,7 +139,7 @@ class ReqStrChecker{
 	# 특수문자 입력여부 체크 [ 특수문자 찾으면 : false / 못찾으면 : true ]
 	# allow = "-,_"; 허용시킬
 	# space 공백은 자동 제외
-	public function isEtcString($allow): bool
+	public function isEtcString(string $allow): bool
 	{
 		# 허용된 특수문자 키
 		$allowArgs = array();
@@ -185,8 +180,10 @@ class ReqStrChecker{
 	#@ return boolean
 	# 문자길이 체크 한글/영문/숫자/특수문자/공백 전부포함
 	# min : 최소길이 / max : 최대길이 utf-8
-	public function isStringLength($min,$max): bool{
+	public function isStringLength(...$arguments): bool{
 		$strCount = 0;
+		$min = $arguments[0];
+		$max = $arguments[1];
 		for($i=0;$i<$this->len;$i++){
 			$asciiNumber = Ord($this->str[$i]);
 			if($asciiNumber<=127 && $asciiNumber>=0){ $strCount++; }
@@ -236,7 +233,7 @@ class ReqStrChecker{
 	# 뒤에 날짜가 앞에 날짜보다 작으면 안됨
 	# 두 날짜 데이타 타입(2012-01-12/2012-01-11)
 	public function chkDatePeriod(): bool{
-		$date = explode('/', $this->str);
+		$date = explode(',', $this->str);
 		$s = explode('-', $date[0]);
 		$e = explode('-', $date[1]);
 
@@ -255,13 +252,11 @@ class ReqStrChecker{
 
 	#@ return boolean
 	# 두 문자나 값이 서로 같은지 비교
-	public function equals($s): bool{
+	public function equals(): bool{
 		$result = true;
-		if(is_string($s)){ # 문자인지 체크
-			if(strcmp($this->str, $s)) $result= false;
-		}else{ # 문자외 체크
-			if($this->str != $s ) $result = false;
-		}
+		$str = explode(',', $this->str);
+
+		if($str[0] != $str[1] ) $result = false;
 	return $result;
 	}
 }

@@ -68,7 +68,7 @@ class Req
 
     #@ array
     public function fetch(){
-    		return $this->params;
+		return $this->params;
     }
 
 	#@ String
