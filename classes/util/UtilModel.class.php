@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author : 김종관
-| @Email  : apmsoft@gmail.com
-| @HomePage : http://apmsoft.tistory.com
-| @Editor : sublime text 3
-| @UPDATE : 0.8.2
-----------------------------------------------------------*/
 namespace Flex\Util;
 
 # purpose : php 코딩시 환경설정에 대한 값들을 관리하기 위함
