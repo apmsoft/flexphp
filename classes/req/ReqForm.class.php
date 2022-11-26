@@ -29,8 +29,7 @@ class ReqForm
     public function chkUserid(string $field, string $title, mixed $value, bool $required, array $filters=[
 		'isSpace'        => [],
 		'isStringLength' => [4,16],
-		'isKorean'       => [],
-		'isEtcString'    = >[]
+		'isKorean'       => []
 	]) : void 
 	{
 		if($required){
@@ -100,8 +99,9 @@ class ReqForm
 
 	# 전화번호
 	public function chkPhone(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'  => [],
-		'isNumber' => []
+		'isSpace'  		=> [],
+		'isNumber' 		=> [],
+		'isEtcString' 	=> ['-']
 	]) : void 
 	{
 		if($required){
@@ -109,8 +109,6 @@ class ReqForm
         }
 
 		if($value){
-			$value = strtr($value,['-'=>'','.'=>'']);
-
 			foreach ($filters as $methodName => $arguments) {
 				self::chkValidation($field, $title, $value, $methodName, $arguments);
 			}
@@ -148,8 +146,9 @@ class ReqForm
 				self::chkValidation($field, $title, $value, $methodName, $arguments);
 			}
 
-			if(!is_float(floatval($value)))
+			if(!is_float(floatval($value))){
 				$this->error_report($field, 'e_float', sprintf("%s %s", $title,R::$sysmsg['e_float']));
+			}
 		}
 	}
 
@@ -269,27 +268,22 @@ class ReqForm
     # $field_args = array('sdate','edate')
     # $value_args= array($_REQUEST['sdate'],$_REQUEST'edate'])
     # $required = true | false
-    public function chkDatePeriod(array $field_args,array $title_args, array $value_args, bool $required, array $filters=[]) : void 
+    public function chkDatePeriod(string $field,string $title,array $value_args, bool $required, array $filters=[]) : void 
 	{
-        // 배열인지 체크
-        if(!is_array($field_args) || !is_array($value_args)){
-            $this->error_report($field, 'e_date_period_array',R::$sysmsg['e_date_period_array']);
+		$value = implode('', $value_args);
+
+		if($required){
+			self::chkValidation($field, $title, $value 'isNull');
         }
 
-        if($required)
+        if($value)
         {
-            // 데이터 형식 체크
-            foreach($field_args as $index => $field){
-                self::chkDateFormat($field_args[$index],$title_args[$index],$value_args[$index],$required);
-            }
-
             // 기간체크
-			self::chkValidation($field_args[0], $title_args[0], implode(',', $value_args), 'chkDatePeriod');
+			self::chkValidation($field, title, implode(',', $value_args), 'chkDatePeriod');
 
 			// 추가 필터
-			$value = implode('', $value_args);
 			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field_args[0], $title_args[0], $value, $methodName, $arguments);
+				self::chkValidation($field, title, $value, $methodName, $arguments);
 			}
 		}
     }
