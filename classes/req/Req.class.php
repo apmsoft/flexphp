@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author   : 김종관
-| @Email    : apmsoft@gmail.com
-| @HomePage : http://apmsoft.tistory.com
-| @Editor   : VSCode
-| @UPDATE   : 1.1
-----------------------------------------------------------*/
 namespace Flex\Req;
 
 # _POST, _GET, _REQUEST 값들을 제어 및 기본작업 수행
