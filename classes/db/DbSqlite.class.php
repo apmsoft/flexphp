@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @UPDATE	: 1.1.1
-----------------------------------------------------------*/
 namespace Flex\Db;
 
 use \ArrayAccess;
@@ -27,7 +20,7 @@ class DbSqlite extends DbSqliteResult implements DbSwitch,ArrayAccess
 
         $this->handle = sqlite_open($dsn_args[0].'/'.$dsn_args[1]);
         if($errno_num = sqlite_last_error($this->handle)){
-        	throw new ErrorException(sqlite_error_string($errno_num),$errno_num);
+			throw new ErrorException(sqlite_error_string($errno_num),$errno_num);
         }
 
 		# 문자셋
@@ -66,8 +59,8 @@ class DbSqlite extends DbSqliteResult implements DbSwitch,ArrayAccess
 	public function query($query){
 		$result = sqlite_query($this->handle,$query);
         if( !$result ){
-        	$errno_num = sqlite_last_error($this->handle);
-        	throw new ErrorException(sqlite_error_string($errno_num),$errno_num);
+			$errno_num = sqlite_last_error($this->handle);
+			throw new ErrorException(sqlite_error_string($errno_num),$errno_num);
         }
         $this->num_rows = sqlite_num_rows($result);
         $this->resultHandle = $result;
@@ -111,16 +104,16 @@ class DbSqlite extends DbSqliteResult implements DbSwitch,ArrayAccess
 
 	# @ interface : DBSwitch
     public function delete($table,$where){
-    	$query = sprintf("DELETE FROM %s WHERE %s",$table,$where);
-    	$this->exec($query);
+		$query = sprintf("DELETE FROM %s WHERE %s",$table,$where);
+		$this->exec($query);
     }
 
 	# 디비 선택
     public function select_db($dbname){
-    	$this->handle = sqlite_factory($this->host.'/'.$dbname);
+		$this->handle = sqlite_factory($this->host.'/'.$dbname);
 
-    	if($errno_num = sqlite_last_error($this->handle)){
-    		throw new ErrorException(sqlite_error_string($errno_num),$errno_num);
+		if($errno_num = sqlite_last_error($this->handle)){
+			throw new ErrorException(sqlite_error_string($errno_num),$errno_num);
         }
 
         $this->dbname= $dbname;
@@ -133,22 +126,22 @@ class DbSqlite extends DbSqliteResult implements DbSwitch,ArrayAccess
 
     # insert,update,delete 에 사용
 	public function exec($query){
-    	$result = sqlite_exec($this->handle,$query,$error);
-    	if(!$result){
-    		throw new ErrorException("Error in query: '.$error.'");
-    	}else{
-    		$this->changes_rows = sqlite_changes($this->handle);
-    	}
+		$result = sqlite_exec($this->handle,$query,$error);
+		if(!$result){
+			throw new ErrorException("Error in query: '.$error.'");
+		}else{
+			$this->changes_rows = sqlite_changes($this->handle);
+		}
     }
 
     # 저장한 마지막 primary_key 값
     public function insert_id(){
-    	return sqlite_last_insert_rowid($this->handle);
+		return sqlite_last_insert_rowid($this->handle);
     }
 
     # 버전정보
     public function server_info(){
-    	return sqlite_libversion();
+		return sqlite_libversion();
     }
 
     # 문자셋 정보
@@ -158,7 +151,7 @@ class DbSqlite extends DbSqliteResult implements DbSwitch,ArrayAccess
 
     # db close
     public function __destruct(){
-    	sqlite_close($this->handle);
+		sqlite_close($this->handle);
     }
 }
 ?>

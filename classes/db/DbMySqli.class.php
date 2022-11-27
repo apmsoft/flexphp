@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @UPDATE	: 1.4.3
-----------------------------------------------------------*/
 namespace Flex\Db;
 
 use Flex\R\R;

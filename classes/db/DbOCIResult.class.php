@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @UPDATE	: 2010-02-04
-----------------------------------------------------------*/
 namespace Flex\Db;
 
 # purpose : oci 함수를 활용해 확장한다

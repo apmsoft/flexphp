@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: apmsoft.tistory.com
-| @Editor	: Sublime Text3
-| @Version	: 1
-----------------------------------------------------------*/
 namespace Flex\Db;
 
 use \ArrayAccess;
@@ -25,18 +18,18 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 	# dsn : host:dbname = localhost:dbname
     public function __construct($dsn='',$user='',$passwd='',$chrset='utf8'){
         if(!empty($dsn)){
-        	$dsn_args = explode(':',$dsn);
-        	$this->handle = oci_connect($user,$passwd,$dsn);
+			$dsn_args = explode(':',$dsn);
+			$this->handle = oci_connect($user,$passwd,$dsn);
         }else{//config.inc.php > config.db.php
-        	$dsn_args[] = _DB_HOST_;
-        	$dsn_args[] = _DB_NAME_;
-        	$dsn = (_DB_HOST_) ? _DB_HOST_._DB_NAME_ : _DB_NAME_;
+			$dsn_args[] = _DB_HOST_;
+			$dsn_args[] = _DB_NAME_;
+			$dsn = (_DB_HOST_) ? _DB_HOST_._DB_NAME_ : _DB_NAME_;
 			$this->handle = oci_connect(_DB_USER_,_DB_PASSWD_,$dsn);
 		}
 
         if (!$this->handle) {
-		    $e = oci_error();
-		    throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
+			$e = oci_error();
+			throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
 		}
 
 		# 문자셋
@@ -108,13 +101,13 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 	public function query(string $query, int $result_mode = NULL) : mixed{
 		$result = oci_parse($this->handle,$query);
         if( !$result ){
-        	$e = oci_error();
-		    throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
+			$e = oci_error();
+			throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
         }
 
         if(!oci_execute($result)){  
-		  $e = oci_error($result);  
-		  throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
+			$e = oci_error($result);  
+			throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
 		}
 
         $this->num_rows = oci_num_rows($result);
@@ -159,8 +152,8 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 
 	# @ interface : DBSwitch
     public function delete($table,$where){
-    	$query = sprintf("DELETE FROM %s WHERE %s",$table,$where);
-    	$this->exec($query);
+		$query = sprintf("DELETE FROM %s WHERE %s",$table,$where);
+		$this->exec($query);
     }
 
 	# 프라퍼티 값 가져오기
@@ -172,10 +165,10 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
 
     # insert,update,delete 에 사용
 	public function exec($query){
-    	$result = oci_parse($this->handle,$query);
-        if( !$result ){
-        	$e = oci_error();
-		    throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
+		$result = oci_parse($this->handle,$query);
+		if( !$result ){
+			$e = oci_error();
+			throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
         }
 
         if(!oci_execute($result, $this->oci_autocommit)){  
@@ -193,30 +186,30 @@ class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
     # set autocommit
     # @flag : true | false
     function autocommit($flag){
-    	$this->oci_autocommit = ($flag) ? OCI_COMMIT_ON_SUCCESS : OCI_NO_AUTO_COMMIT;
+		$this->oci_autocommit = ($flag) ? OCI_COMMIT_ON_SUCCESS : OCI_NO_AUTO_COMMIT;
     }
 
     # commit
     function commit(){
-    	$result = oci_commit($this->handle);
+		$result = oci_commit($this->handle);
 		if (!$result) {
-		    $e = oci_error($this->handle);
-		    throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
+			$e = oci_error($this->handle);
+			throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
 		}
     }
 
     function oci_escape_string($string) {
-	  return str_replace(array('"', "'", '\\'), array('\\"', '\\\'', '\\\\'), $string);
+		return str_replace(array('"', "'", '\\'), array('\\"', '\\\'', '\\\\'), $string);
 	}
 
     # 버전정보
     public function server_info(){
-    	return oci_server_version($this->handle);
+		return oci_server_version($this->handle);
     }
 
     # db close
     public function __destruct(){
-    	oci_close($this->handle);
+		oci_close($this->handle);
     }
 }
 ?>

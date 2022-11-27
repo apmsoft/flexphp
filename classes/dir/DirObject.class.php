@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author   : 김종관
-| @Email    : apmsoft@gmail.com
-| @HomePage : apmsoft.tistory.com
-| @Editor   : Sublime Text3
-| @UPDATE   : 2011-07-11
-----------------------------------------------------------*/
 namespace Flex\Dir;
 
 use Flex\Dir\DirInfo;
