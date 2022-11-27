@@ -4,10 +4,12 @@ namespace Flex\Files;
 use Flex\R\R;
 use Flex\Log\Log;
 use Flex\Req\Req;
+use Flex\Files\FilesUpload;
 
-class FilesUploadProcess
+class FilesUploadProcess extends FilesUpload
 {
     private $request;
+    const _UP_FILENAME_ = 'filepond';
 
     public function __construct(Req $request){
         $this->request = $request;
@@ -27,11 +29,7 @@ class FilesUploadProcess
             return json_decode($e->getMessage(),true);
         }
 
-        # Model
-        $model = new \Flex\Util\UtilModel($config['fileupload']);
-        $model->upfilename = 'filepond';
-        $_UPFILES = $_FILES[$model->upfilename];
-        
+        $_UPFILES = $_FILES[self::_UP_FILENAME_];
         Log::d('client filename : '.    $_UPFILES['name']);
         Log::d('client mediaType : '.   $_UPFILES['type']);
         Log::d('client size : '.        $_UPFILES['size']);
@@ -50,26 +48,24 @@ class FilesUploadProcess
 
         # 필터 및 복사
         try{
-            $utilFileUpload = new \Flex\Util\UtilFileUpload([
-                'file_extension' => $config['fileupload']['file_extension'],
-                'file_maxsize'   => $config['fileupload']['file_maxsize'],
-                'extract_id'     => $req->extract_id
-            ],[
-                'filename'  => $_UPFILES['name'],
-                'mediaType' => $_UPFILES['type'],
-                'size'      => $_UPFILES['size'],
-                'error'     => $_UPFILES['error']
-            ]);
-            $savefilename = $utilFileUpload->filter();
+            parent::__construct(
+                [
+                    'file_extension' => $config['fileupload']['file_extension'],
+                    'file_maxsize'   => $config['fileupload']['file_maxsize'],
+                    'extract_id'     => $req->extract_id
+                ],[
+                    'filename'  => $_UPFILES['name'],
+                    'mediaType' => $_UPFILES['type'],
+                    'size'      => $_UPFILES['size'],
+                    'error'     => $_UPFILES['error']
+                ]
+            );
+            $savefilename = parent::filter();
 
             // 복사하기
-			if(!self::move_upload_files($_UPFILES['tmp_name'],$utilFileUpload->upload_dir.'/'.$savefilename)){
-                Log::e('파일복사 실패');
+			if(!self::move_upload_files($_UPFILES['tmp_name'],parent::$upload_dir.'/'.$savefilename)){
                 return ['result'=>'false','msg_code'=>'e_not_uploaded_file','msg'=>R::$sysmsg['e_not_uploaded_file']];
             }
-
-            # 각도조정
-            #$utilFileUpload->chkOrientation();
 
             # return
             return [
@@ -77,10 +73,10 @@ class FilesUploadProcess
                 'msg'   => [
                     'sfilename' => $savefilename,
                     'filesize'  => $_UPFILES['size'],
-                    'file_type' => (preg_match('/(gif|jpeg|jpg|png)/',$utilFileUpload->getExtName()))?'image/'.$utilFileUpload->getExtName():'application/'.$utilFileUpload->getExtName(),
-                    'ofilename' => $utilFileUpload->cleansEtcWords($_UPFILES['name'])
+                    'file_type' => (preg_match('/(gif|jpeg|jpg|png)/',parent::getExtName())) ? 'image/'.parent::getExtName() : 'application/'.parent::getExtName(),
+                    'ofilename' => parent::cleansEtcWords($_UPFILES['name'])
                 ]
-            ];            
+            ];
         }catch(\Exception $e){
             Log::d($e->getMessage());
             throw new \Exception($e->getMessage());

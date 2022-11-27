@@ -1,20 +1,21 @@
 <?php
-namespace Flex\Util;
+namespace Flex\Files;
 
 use Flex\R\R;
 use Flex\Image\ImageExif;
 use Flex\Dir\DirInfo;
 use Flex\Cipher\CipherEncrypt;
+use Flex\Log\Log;
 
-class UtilFileUpload extends ImageExif
+class FilesUpload extends ImageExif
 {	
 	# 업로드 경로
 	public $upload_dir;
 	public $upload_date_dir;
-	private $config = array();
-	private $ext_args = array();
+	private $config        = [];
+	private $ext_args      = [];
 	private $upfilemaxsize = 1048576; // 1M (1024 * 1024)
-	private $_files = array('filename'=>'','mediaType'=>'','size'=>0,'error'=>0);
+	private $_files        = ['filename'=>'','mediaType'=>'','size'=>0,'error'=>0];
 
 	#@ void /=================================================================
 	# 파일 업로드 기본 초기화 작업
@@ -23,7 +24,7 @@ class UtilFileUpload extends ImageExif
 		$this->config = $config;
 		// print_r($config);
 		
-		# 추가 파일명
+		# 저장 경로
 		$this->upload_dir = _ROOT_PATH_.'/'._UPLOAD_.'/'.$this->config['extract_id'];
 
 		# 업로드된 파일 정보
@@ -36,7 +37,7 @@ class UtilFileUpload extends ImageExif
 	{
 		# 게시판 환경 설정 데이타 확인
 		$file_extention = $this->config['file_extension'];
-		$file_max_size = $this->config['file_maxsize'];
+		$file_max_size  = $this->config['file_maxsize'];
 
 		# 기본 셋팅
 		$this->ext_args = explode(',',$file_extention); #파일 확장자 등록
@@ -57,21 +58,21 @@ class UtilFileUpload extends ImageExif
 		$dirObj->makesDir();
 
 		#저장할파일명
-		$fileplusname = str_replace(array('.',' '),array('_','_'),microtime());
-		$sfilename = $this->config['extract_id'].'_'.$fileplusname;
+		$fileplusname  = str_replace(array('.',' '),array('_','_'),microtime());
+		$sfilename     = $this->config['extract_id'].'_'.$fileplusname;
 		$cipherEncrypt = new CipherEncrypt($sfilename);
-		$sfilename = $cipherEncrypt->_md5_utf8encode().'.'.$this->getExtName();
+		$sfilename     = $cipherEncrypt->_md5_utf8encode().'.'.$this->getExtName();
 
 	return $sfilename;
 	}
 
-	public function chkOrientation(){
+	public function chkOrientation() : void{
 		// exif
 		if( preg_match('/(jpeg|jpg)/',$this->getExtName()) )
 		{
 			parent::__construct($this->upload_dir.DIRECTORY_SEPARATOR.$sfilename);
 			$ifdo = $this->getIfdo();
-			// print_r($ifdo);
+			Log::d(json_encode($ifdo));
 			if(isset($ifdo['Orientation']) && !empty($ifdo['Orientation'])){
 				$file = imagecreatefromjpeg($this->upload_dir.DIRECTORY_SEPARATOR.$sfilename);
 				switch($ifdo['Orientation']) {
@@ -129,7 +130,7 @@ class UtilFileUpload extends ImageExif
 
 	# string
 	# 첨부 실파일명 특수문자 제거
-	public function cleansEtcWords($ofilename){
+	public function cleansEtcWords($ofilename) : string{
 		if($ofilename ==''){
 			return '';
 		}
@@ -139,7 +140,7 @@ class UtilFileUpload extends ImageExif
 	}
 
 	# void
-	public function fileRemove($filename){
+	public function fileRemove($filename) : void{
 		@unlink($filename);
 	}
 
