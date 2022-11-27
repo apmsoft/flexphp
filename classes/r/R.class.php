@@ -1,11 +1,4 @@
 <?php
-/** ================================
-| @Author   : 김종관
-| @Email    : apmsoft@gmail.com
-| @HomePage : https://www.fancyupsoft.com
-| @Editor   : VSCode
-| @UPDATE   : 1.3.4
-----------------------------------------------------------*/
 namespace Flex\R;
 
 use \ArrayObject;
@@ -16,18 +9,18 @@ final class R
     public static $nation = _LANG_; // 국가코드
 
     # resource 값
-    public static $sysmsg   =array();
-    public static $strings  =array();
-    public static $integers =array();
-    public static $floats   =array();
-    public static $doubles  =array();
+    public static $sysmsg   =[];
+    public static $strings  =[];
+    public static $integers =[];
+    public static $floats   =[];
+    public static $doubles  =[];
     
-    public static $columns  =array();
-    public static $layout   =array();
+    public static $columns  =[];
+    public static $layout   =[];
 
-    public static $tables   =array();
-    public static $queries  =array();
-    public static $config   =array();
+    public static $tables   =[];
+    public static $queries  =[];
+    public static $config   =[];
 
     public static $r;
 
@@ -42,19 +35,20 @@ final class R
     #@ void
     #res/[strings | integers ]
     # values  = array('strings', 'integers');
-    public static function __autoload_resource($resources) : void{
+    public static function __autoload_resource(array $resources) : void
+    {
         if(is_array($resources)){
             foreach($resources as $resource_path => $resouces_args){
                 foreach($resouces_args as $resource_name){
                     if(property_exists(__CLASS__,$resource_name)){
-                        self::parserResource(self::findLanguageFile(_ROOT_PATH_.DIRECTORY_SEPARATOR.$resource_path.DIRECTORY_SEPARATOR.$resource_name.'.json'), $resource_name);
+                        self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'.$resource_path.'/'.$resource_name.'.json'), $resource_name);
                     }
                 }
             }
         }
     }
 
-    public static function parserResourceArray($resource_name, $res_array) : void{
+    public static function parserResourceArray(string $resource_name, array $res_array) : void{
         switch($resource_name){
             case 'sysmsg':  self::$sysmsg   =$res_array; break;
             case 'strings': self::$strings  =$res_array; break;
@@ -71,7 +65,7 @@ final class R
 
     #@ return boolen | void
     ## JSON 데이터를 ID로 빠르게 호출하여 사용
-    public static function parserResourceDefinedID($query) : void
+    public static function parserResourceDefinedID(string $query) : void
     {
         $resources = array();
 
@@ -81,33 +75,36 @@ final class R
             case 'integers':
             case 'floats':
             case 'doubles': 
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.DIRECTORY_SEPARATOR._VALUES_.DIRECTORY_SEPARATOR.$query.'.json'), $query);
+                self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'._VALUES_.'/'.$query.'.json'), $query);
             break;
             case 'tables':
             case 'queries':
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.DIRECTORY_SEPARATOR._QUERY_.DIRECTORY_SEPARATOR.$query.'.json'), $query);
+                self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'._QUERY_.'/'.$query.'.json'), $query);
             break;
             case 'layout':
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.DIRECTORY_SEPARATOR._LAYOUT_.DIRECTORY_SEPARATOR.$query.'.json'), $query);
+                self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'._LAYOUT_.'/'.$query.'.json'), $query);
             break;
             case 'config':
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.DIRECTORY_SEPARATOR._CONFIG_.DIRECTORY_SEPARATOR.$query.'.json'), $query);
+                self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'._CONFIG_.'/'.$query.'.json'), $query);
             break;
         }
     }
 
     #@ void
-    # R::parserResource(_ROOT_PATH_.DIRECTORY_SEPARATOR._QUERY_.'/queries.json', 'queries');
+    # R::parserResource(_ROOT_PATH_.'/'._QUERY_.'/queries.json', 'queries');
     # out_r(R::$queries);
-    public static function parserResource($filename, $query) : void
+    public static function parserResource(string $filename, string $query) : void
     {
         if(!$query) throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
+        
         $real_filename = self::findLanguageFile($filename);
         $storage_data = '';
         $storage_data = file_get_contents($real_filename);
-        if($storage_data){
+        if($storage_data)
+        {
             $data = self::cleanJSON($storage_data,true);
-            if(!is_array($data)){
+            if(!is_array($data))
+            {
                 $e_msg = '';
                 switch($data){
                     case JSON_ERROR_DEPTH: $e_msg = 'Maximum stack depth exceeded';break;
@@ -117,9 +114,6 @@ final class R
                 throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$real_filename.' / '.$e_msg);
             }
 
-            // if($query == 'manifest_adm'){
-            //     self::parserResourceArray('manifest', $data);
-            // }else 
             if(property_exists(__CLASS__,$query)){
                 self::parserResourceArray($query, $data);
             }else{
@@ -136,7 +130,7 @@ final class R
         $json = preg_replace('/([{,]+)(\s*)([^"]+?)\s*:/','$1"$3":',$json);
         if(version_compare(phpversion(), '5.4.0', '>=')) {
             $json = json_decode($json, $assoc, $depth, $options);
-        } 
+        }
         else if(version_compare(phpversion(), '5.3.0', '>=')) {
             $json = json_decode($json, $assoc, $depth);
         } 
@@ -152,15 +146,13 @@ final class R
 
     #@ return String
     # XML 파일이 해당언어에 해당하는 파일이 있는지 체크
-    public static function findLanguageFile($filename) : String{
-        $real_filename = $filename;
-
-        $path_parts = pathinfo($real_filename);
-        $nation_filename = $path_parts['dirname'].DIRECTORY_SEPARATOR.$path_parts['filename'].'_'.self::$nation.'.'.$path_parts['extension'];
+    public static function findLanguageFile(string $filename) : String{
+        $real_filename   = $filename;
+        $path_parts      = pathinfo($real_filename);
+        $nation_filename = $path_parts['dirname'].'/'.$path_parts['filename'].'_'.self::$nation.'.'.$path_parts['extension'];
         if(file_exists($nation_filename)){
             $real_filename = $nation_filename;
         }
-        
     return $real_filename;
     }
 
