@@ -25,7 +25,7 @@ final class R
     public static $r;
 
     # 배열값 추가 등록
-    public static function init($nation=''){
+    public static function init(string $nation=''){
         self::$nation = $nation ?? _LANG_;
 
         # resource 객체화 시키기
