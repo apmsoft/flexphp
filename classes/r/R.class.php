@@ -50,16 +50,16 @@ final class R
 
     public static function parserResourceArray(string $resource_name, array $res_array) : void{
         switch($resource_name){
-            case 'sysmsg':  self::$sysmsg   =$res_array; break;
-            case 'strings': self::$strings  =$res_array; break;
-            case 'integers':self::$integers =$res_array; break;
-            case 'floats':  self::$floats   =$res_array; break;
-            case 'doubles': self::$doubles  =$res_array; break;
-            case 'columns': self::$columns  =$res_array; break;
-            case 'layout':  self::$layout   =$res_array; break;
-            case 'tables':  self::$tables   =$res_array; break;
-            case 'queries': self::$queries  =$res_array; break;
-            case 'config':  self::$config   =$res_array; break;
+            case 'sysmsg'  : self::$sysmsg   = $res_array; break;
+            case 'strings' : self::$strings  = $res_array; break;
+            case 'integers': self::$integers = $res_array; break;
+            case 'floats'  : self::$floats   = $res_array; break;
+            case 'doubles' : self::$doubles  = $res_array; break;
+            case 'columns' : self::$columns  = $res_array; break;
+            case 'layout'  : self::$layout   = $res_array; break;
+            case 'tables'  : self::$tables   = $res_array; break;
+            case 'queries' : self::$queries  = $res_array; break;
+            case 'config'  : self::$config   = $res_array; break;
         }
     }
 
@@ -98,8 +98,8 @@ final class R
         if(!$query) throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
         
         $real_filename = self::findLanguageFile($filename);
-        $storage_data = '';
-        $storage_data = file_get_contents($real_filename);
+        $storage_data  = '';
+        $storage_data  = file_get_contents($real_filename);
         if($storage_data)
         {
             $data = self::cleanJSON($storage_data,true);
