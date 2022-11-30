@@ -29,16 +29,11 @@ class ReqStrChecker
 	#@ return boolean
 	# 문자와 문자사이 공백이 있는지 체크 [ 공백 있으면 : false / 없으면 : true ]
 	public function isSpace(): bool{
-		$result = true;
 		$str_split	= count(preg_split("/ /", $this->str)); //split("[[:space:]]+",$this->str);
-		$count = (is_array($str_split)) ? count($str_split) : 0;
-		for($i=0; $i<$count; $i++){
-			if($i>0){
-				$result = false;
-				break;
-			}
+		if($str_split > 1){
+			return false;
 		}
-	return $result;
+	return true;
 	}
 
 	#@ return boolean
@@ -180,7 +175,7 @@ class ReqStrChecker
 	#@ return boolean
 	# 문자길이 체크 한글/영문/숫자/특수문자/공백 전부포함
 	# min : 최소길이 / max : 최대길이 utf-8
-	public function isStringLength(...$arguments): bool{
+	public function isStringLength(array $arguments): bool{
 		$strCount = 0;
 		$min = $arguments[0];
 		$max = $arguments[1];
@@ -200,8 +195,8 @@ class ReqStrChecker
 	#@ return boolean
 	# 날짜가 정확한 날짜인지 체크
 	# 날짜 데이타 타입 (2012-01-12)
-	public function chkDate(){
-		if(strpos($this->str,'-') ===false): bool{
+	public function chkDate() : bool{
+		if(strpos($this->str,'-') ===false){
 			return false;
 		}
 		$ymd_args = explode('-',$this->str);
@@ -232,7 +227,7 @@ class ReqStrChecker
 	# 두 날짜(2012-01-12 ~ 2012-01-13)가 정확한 기간인지 체크
 	# 뒤에 날짜가 앞에 날짜보다 작으면 안됨
 	# 두 날짜 데이타 타입(2012-01-12/2012-01-11)
-	public function chkDatePeriod(): bool{
+	public function chkDatePeriod_(): bool{
 		$date = explode(',', $this->str);
 		$s = explode('-', $date[0]);
 		$e = explode('-', $date[1]);

@@ -2,9 +2,10 @@
 namespace Flex\Req;
 
 use Flex\R\R;
+use Flex\Req\ReqStrChecker;
 
 # 폼체크
-class ReqForm
+class ReqForm extends ReqStrChecker
 {
 	const VERSEION = '2.0';
 
@@ -99,9 +100,9 @@ class ReqForm
 
 	# 전화번호
 	public function chkPhone(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'  		=> [],
-		'isNumber' 		=> [],
-		'isEtcString' 	=> ['-']
+		'isSpace'  	  => [],
+		'isNumber'    => [],
+		'isEtcString' => ['-']
 	]) : void 
 	{
 		if($required){
@@ -109,6 +110,13 @@ class ReqForm
         }
 
 		if($value){
+			# 허용된 특수문자를 제거 한다.
+			if(isset($filters['isEtcString'])){
+				foreach($filters['isEtcString'] as $etcstr){
+					$value = str_replace($etcstr,'', $value);
+				}
+			}
+
 			foreach ($filters as $methodName => $arguments) {
 				self::chkValidation($field, $title, $value, $methodName, $arguments);
 			}
@@ -116,7 +124,7 @@ class ReqForm
 	}
 
 	# 숫자만 int
-	public function chkNumber($string $field, string $title, mixed $value, bool $required, array $filters=[
+	public function chkNumber(string $field, string $title, mixed $value, bool $required, array $filters=[
 		'isSpace'  => [],
 		'isNumber' => []
 	]) : void 
@@ -134,14 +142,24 @@ class ReqForm
 
 	# 더블 double
 	public function chkFloat(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace' => []
+		'isSpace'     => [],
+		'isNumber'    => [],
+		'isEtcString' => ['.']
 	]) : void 
 	{
 		if($required){
 			self::chkValidation($field, $title, $value, 'isNull');
         }
 
-		if($value){
+		if($value)
+		{
+			# 허용된 특수문자를 제거 한다.
+			if(isset($filters['isEtcString'])){
+				foreach($filters['isEtcString'] as $etcstr){
+					$value = str_replace($etcstr,'', $value);
+				}
+			}
+
 			foreach ($filters as $methodName => $arguments) {
 				self::chkValidation($field, $title, $value, $methodName, $arguments);
 			}
@@ -224,7 +242,7 @@ class ReqForm
 
 		if($value){
 			if(!filter_var($value, FILTER_VALIDATE_URL)){
-				$this->error_report($field, 'e_formality', sprintf("%s %s", $title,R::$sysmsg['e_formality']));
+				$this->error_report($field, 'e_link_url', sprintf("%s %s", $title,R::$sysmsg['e_link_url']));
 			}
 		}
 	}
@@ -273,13 +291,13 @@ class ReqForm
 		$value = implode('', $value_args);
 
 		if($required){
-			self::chkValidation($field, $title, $value 'isNull');
+			self::chkValidation($field, $title, $value,'isNull');
         }
 
         if($value)
         {
             // 기간체크
-			self::chkValidation($field, title, implode(',', $value_args), 'chkDatePeriod');
+			self::chkValidation($field, $title, implode(',', $value_args), 'chkDatePeriod');
 
 			// 추가 필터
 			foreach ($filters as $methodName => $arguments) {
@@ -296,7 +314,7 @@ class ReqForm
 		$value = implode('', $value_args);
 
 		if($required){
-			self::chkValidation($field, $title, $value 'isNull');
+			self::chkValidation($field, $title, $value, 'isNull');
         }
 
 		if($value){
@@ -313,60 +331,88 @@ class ReqForm
 	# 메소드에 따른 체크 기능
 	private function chkValidation(string $field, string $title, mixed $value, string $methodName, array $arguments=[]) : void
 	{
-		$isChceker = new \Flex\Req\ReqStrChecker($value);
+		parent::__construct($value);
 		switch($methodName){
 			case 'isNull' :
-				if($isChceker->isNull()) {
+				if(parent::isNull()) {
 					$this->error_report($field, 'e_null', sprintf("%s %s", $title,R::$sysmsg['e_null']));
 				}
 				break;
 			case 'isSpace':
-				if(!$isChceker->isSpace()){
+				if(!parent::isSpace()){
 					$this->error_report($field, 'e_spaces', sprintf("%s %s", $title,R::$sysmsg['e_spaces']));
 				}
 				break;
 			case 'isStringLength':
-				if(!$isChceker->isStringLength($arguments)){
-					$this->error_report($field, 'e_userid_length', sprintf("%s %s", $title,R::$sysmsg['e_userid_length']));
+				if(!parent::isStringLength($arguments)){
+					$this->error_report($field, 'e_string_length', sprintf("%s %s", $title,R::$sysmsg['e_string_length']));
 				}
 				break;
 			case 'isKorean':
-				if($isChceker->isKorean()){
+				if(parent::isKorean()){
 					$this->error_report($field, 'e_korean', sprintf("%s %s", $title,R::$sysmsg['e_korean']));
 				}
 				break;
 			case 'isEtcString':
-				if(!$isChceker->isEtcString(implode(',',$arguments))){
-					$this->error_report($field, 'e_symbol', sprintf("%s %s", $title,R::$sysmsg['e_symbol']));
+				if(!parent::isEtcString(implode(',',$arguments))){
+					$etc_msg = (count($arguments)) ? '['.implode(',',$arguments).']' : '';
+					$err_msg = sprintf(R::$sysmsg['e_etc_string'],$etc_msg);
+					$this->error_report($field, 'e_etc_string', sprintf("%s %s", $title,$err_msg));
+				}
+				break;
+			case 'isSameRepeatString':
+				if(!parent::isSameRepeatString($arguments)){
+					$err_msg = sprintf(R::$sysmsg['e_same_repeat_string'], implode(',',$arguments));
+					$this->error_report($field, 'e_same_repeat_string', sprintf("%s %s", $title,$err_msg));
 				}
 				break;
 			case 'isNumber':
-				if(!$isChceker->isNumber()){
-					$this->error_report($field, 'e_phone_symbol', sprintf("%s %s", $title,R::$sysmsg['e_phone_symbol']));
+				if(!parent::isNumber()){
+					$this->error_report($field, 'e_number', sprintf("%s %s", $title,R::$sysmsg['e_number']));
 				}
 				break;
 			case 'isAlphabet':
-				if(!$isChceker->isAlphabet()){
+				if(!parent::isAlphabet()){
 					$this->error_report($field, 'e_alphabet', sprintf("%s %s", $title,R::$sysmsg['e_alphabet']));
 				}
 				break;
+			case 'isUpAlphabet':
+				if(!parent::isUpAlphabet()){
+					$this->error_report($field, 'e_up_alphabet', sprintf("%s %s", $title,R::$sysmsg['e_up_alphabet']));
+				}
+				break;
+			case 'isLowAlphabet':
+				if(!parent::isLowAlphabet()){
+					$this->error_report($field, 'e_low_alphabet', sprintf("%s %s", $title,R::$sysmsg['e_low_alphabet']));
+				}
+				break;
+			case 'isFirstAlphabet':
+				if(!parent::isFirstAlphabet()){
+					$this->error_report($field, 'e_first_alphabet', sprintf("%s %s", $title,R::$sysmsg['e_first_alphabet']));
+				}
+				break;
+			case 'isJSON':
+				if(!parent::isJSON()){
+					$this->error_report($field, 'e_json', sprintf("%s %s", $title,R::$sysmsg['e_json']));
+				}
+				break;
 			case 'chkDate':
-				if(!$isChceker->chkDate()){
-					$this->error_report($field,'e_date_symbol', sprintf("%s %s", $title,R::$sysmsg['e_date_symbol']));
+				if(!parent::chkDate()){
+					$this->error_report($field,'e_date', sprintf("%s %s", $title,R::$sysmsg['e_date']));
 				}
 				break;
 			case 'chkTime':
-				if(!$isChceker->chkTime()){
-					$this->error_report($field,'e_time_symbol', sprintf("%s %s", $title,R::$sysmsg['e_time_symbol']));
+				if(!parent::chkTime()){
+					$this->error_report($field,'e_time', sprintf("%s %s", $title,R::$sysmsg['e_time']));
 				}
 				break;
 			case 'chkDatePeriod':
-				if(!$isChceker->chkDatePeriod()){
+				if(!parent::chkDatePeriod_()){
 					$this->error_report($field, 'e_date_period',sprintf("%s %s", $title,R::$sysmsg['e_date_period']));
 				}
 				break;
 			case 'equals':
-				if(!$isChceker->equals($value)){
+				if(!parent::equals($value)){
 					$this->error_report($field, 'e_isnot_match', sprintf("%s %s", $title,R::$sysmsg['e_isnot_match']));
 				}
 				break;
