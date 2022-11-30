@@ -14,7 +14,7 @@ abstract class TokenSwitch
     # 길이만큼랜덤으로 문자를 조합
     public function generateString(int $length) : string
     {
-        $stringRandom = new \Flex\String\StringRandom(null);
+        $stringRandom = new \Flex\String\StringRandom([]);
         return $stringRandom->arrayRand($length);
     }
 
