@@ -15,7 +15,7 @@ require $path. '/config/config.inc.php';
 Log::init();
 
 # 화면에만 출력
-# Log::init(Log::MESSAGE_ECHO);
+Log::init(Log::MESSAGE_ECHO);
 
 # 내가 지정하는 파일에 출력
 # Log::init(Log::MESSAGE_FILE, 'log.txt');
@@ -36,13 +36,13 @@ Log::init();
 */
 
 # 메시지 단일 출력
-Log::i($_SERVER['REMOTE_ADDR']);
+Log::i('LOG');
 /** 
  *  2022-10-18 16:46:28 >> I : 192.168.0.1 | 
  */
 
 # 멀티 메시지 출력
-Log::i($_SERVER['REMOTE_ADDR'], $_SERVER['REQUEST_METHOD'], $uri);
+Log::i("1", "2", "3");
 /** 
  * 2022-10-18 16:46:28 >> I : 192.168.0.1 | GET | /index.php/user/2 
  */
@@ -51,4 +51,5 @@ Log::d('디버그 메세지');
 Log::v('성공 메세지');
 Log::w('경고 메세지');
 Log::e('에러 메세지');
+Log::d('array -> json',json_encode(['result'=>'true','msg'=>'ARRAY -> json_encode']));
 ?>
