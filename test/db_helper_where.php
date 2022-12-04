@@ -35,8 +35,7 @@ $dbHelperWhere->beginWhereGroup('groupc', 'OR');
 // $dbHelperWhere->setBuildWhere('title', 'LIKE-R' , ['이순신','대통령'], true);
 $dbHelperWhere->endWhereGroup();
 
-Log::d('groups data');
-print_r($dbHelperWhere->fetch());
+Log::d('groups data',$dbHelperWhere->fetch());
 
 Log::d( $dbHelperWhere->where);
 ?>

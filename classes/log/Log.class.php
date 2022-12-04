@@ -3,7 +3,7 @@ namespace Flex\Log;
 
 final class Log
 {
-    const VERSEION = '0.4.1';
+    const VERSEION = '1.0';
     const MESSAGE_FILE   = 3; # 사용자 지정 파일에 저장
     const MESSAGE_ECHO   = 2; # 화면에만 출력
     const MESSAGE_SYSTEM = 0; # syslog 시스템 로그파일에 저장
@@ -33,7 +33,7 @@ final class Log
     }
 
     # 출력하고자 하는 옵션 선택
-    public static function setDebugs(string $m1, ...$mores): void 
+    public static function setDebugs(string|array $m1, ...$mores): void 
     {
         $debug_modes = [];
         $debug_modes[] = $m1;
@@ -47,48 +47,57 @@ final class Log
     }
 
     # debug
-    public static function d (string $message, ... $message2) : void
+    public static function d (string|array $message, ... $message2) : void
     {
         if(in_array('d', self::$debugs)){
-            $output = $message.' | '.implode(' | ',$message2);
+            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
             self::print_('D', $output);
         }
     }
 
     # success
-    public static function v (string $message, ... $message2) : void
+    public static function v (string|array $message, ... $message2) : void
     {
         if(in_array('v', self::$debugs)){
-            $output = $message.' | '.implode(' | ',$message2);
+            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
             self::print_('V', $output);
         }
     }
 
     # info
-    public static function i (string $message, ... $message2) : void
+    public static function i (string|array $message, ... $message2) : void
     {
         if(in_array('i', self::$debugs)){
-            $output = $message.' | '.implode(' | ',$message2);
+            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
             self::print_('I', $output);
         }
     }
 
     # warning
-    public static function w (string $message, ... $message2) : void
+    public static function w (string|array $message, ... $message2) : void
     {
         if(in_array('w', self::$debugs)){
-            $output = $message.' | '.implode(' | ',$message2);
+            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
             self::print_('W', $output);
         }
     }
 
     # error
-    public static function e (string $message, ... $message2) : void
+    public static function e (string|array $message, ... $message2) : void
     {
         if(in_array('e', self::$debugs)){
-            $output = $message.' | '.implode(' | ',$message2);
+            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
             self::print_('E', $output);
         }
+    }
+
+    private static function filterMessage ( string|array $message) : string
+    {
+        $result = $message;
+        if(is_array($message)){
+            $result = print_r($message,true);
+        }
+    return $result;
     }
 
     # print
