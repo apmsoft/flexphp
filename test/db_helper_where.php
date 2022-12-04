@@ -31,11 +31,11 @@ $dbHelperWhere->endWhereGroup();
 
 $dbHelperWhere->beginWhereGroup('groupc', 'OR');
     $dbHelperWhere->setBuildWhere('title', 'LIKE' , ['이순신','대통령'], false);
-// $dbHelperWhere->setBuildWhere('title', 'LIKE-L' , ['이순신','대통령'], true);
-// $dbHelperWhere->setBuildWhere('title', 'LIKE-R' , ['이순신','대통령'], true);
 $dbHelperWhere->endWhereGroup();
 
+# string, array 출력하기
 Log::d('groups data',$dbHelperWhere->fetch());
 
+# where 문 출력
 Log::d( $dbHelperWhere->where);
 ?>
