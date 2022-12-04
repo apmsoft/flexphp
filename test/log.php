@@ -52,4 +52,8 @@ Log::v('성공 메세지');
 Log::w('경고 메세지');
 Log::e('에러 메세지');
 Log::d('array -> json',json_encode(['result'=>'true','msg'=>'ARRAY -> json_encode']));
+
+# string, array 출력하기
+Log::d('< string','array >');
+Log::d('문자', ['result'=>'true','msg'=>'이건배열']);
 ?>
