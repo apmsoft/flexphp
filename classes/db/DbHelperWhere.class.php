@@ -100,6 +100,11 @@ class DbHelperWhere
 		}
 	}
 
+	public function fetch() : array
+	{
+		return $this->where_group;
+	}
+
 	# where 그룹묶기 시작
 	public function beginWhereGroup(string $groupname, string $coord) : void{
 		if ( !isset( $this->where_group[$groupname] ) ){

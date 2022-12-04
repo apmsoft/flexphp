@@ -1,18 +1,25 @@
 <?php
 use Flex\App\App;
 use Flex\R\R;
+use Flex\Log\Log;
 
 # config
 $path = dirname(__DIR__);
-include_once $path.'/config/config.inc.php';
+require $path.'/config/config.inc.php';
+
+# 기본값 MESSAGE_FILE, log.txt;
+Log::init();
+
+# 화면에만 출력
+Log::init(Log::MESSAGE_ECHO);
 
 # db where 구문 만들기
-$dbHelperWhere = new Flex\Db\DbHelperWhere();
+$dbHelperWhere = new \Flex\Db\DbHelperWhere();
 $dbHelperWhere->beginWhereGroup('groupa', 'AND');
     $dbHelperWhere->setBuildWhere('name', 'IN' , '홍길동,유관순', true);
     $dbHelperWhere->setBuildWhere('age', '>=' , 10, true);
     $dbHelperWhere->setBuildWhere('job', 'IN' , ['공무원','프로그래머','경영인','디자이너'], true);
-    $dbHelperWhere->setBuildWhere("JSON_UNQUOTE(detail_info->'$.deli.dome.type')", 'LIKE-R', $where_delifee_type ,true,false);
+    $dbHelperWhere->setBuildWhere("JSON_UNQUOTE(detail_info->'$.deli.dome.type')", 'LIKE-R', "d" ,true,false);
     $dbHelperWhere->setBuildWhere("signdate", 'is not', 'NULL' ,true,false);
     $dbHelperWhere->setBuildWhere('price', '>', '0',true);
 $dbHelperWhere->endWhereGroup();
@@ -23,10 +30,13 @@ $dbHelperWhere->beginWhereGroup('groupb', 'OR');
 $dbHelperWhere->endWhereGroup();
 
 $dbHelperWhere->beginWhereGroup('groupc', 'OR');
-    bHelperWhere->setBuildWhere('title', 'LIKE' , ['이순신','대통령'], false);
+    $dbHelperWhere->setBuildWhere('title', 'LIKE' , ['이순신','대통령'], false);
 // $dbHelperWhere->setBuildWhere('title', 'LIKE-L' , ['이순신','대통령'], true);
 // $dbHelperWhere->setBuildWhere('title', 'LIKE-R' , ['이순신','대통령'], true);
 $dbHelperWhere->endWhereGroup();
 
-out_ln ($dbHelperWhere->where);
+Log::d('groups data');
+print_r($dbHelperWhere->fetch());
+
+Log::d( $dbHelperWhere->where);
 ?>
