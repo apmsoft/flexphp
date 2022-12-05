@@ -4,7 +4,7 @@ namespace Flex\Req;
 # _POST, _GET, _REQUEST 값들을 제어 및 기본작업 수행
 class Req
 {
-	private $params = array();
+	private $params = [];
 
 	#@ void
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
@@ -73,9 +73,7 @@ class Req
 
 	#@ void
 	public function __set($key, $value){
-		//if(isset($this->params[$key])){
 		$this->params[$key] = $value;
-		//}
 	}
 
 	#@ boolean
