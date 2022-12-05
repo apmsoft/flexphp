@@ -4,19 +4,19 @@ namespace Flex\App;
 # 접속에 따른 디바이스|브라우저등 정보
 final class App
 {
-    public static $platform = 'Unknown';
-    public static $browser = 'Unknown';
-    public static $is_phone_device = false;
+    public static $platform     = 'Nan';
+    public static $browser      = 'Nan';
     public static $host;
     public static $lang;
-    public static $http_referer =null;
-    public static $ip_address = '';
-    public static $version = '0.9.13Beta';
+    public static $http_referer = null;
+    public static $ip_address   = '';
+    public static $protocol     = 'Nan';
+    public static $version      = '1.0';
 
     public static function init() : void
     {
         # 기본 디바이스 인지 확인 하기 위한 체크
-        $agent= (isset($_SERVER['HTTP_USER_AGENT'])) ?? '';
+        $agent= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
         # platform
         if (preg_match('/(Linux|Android|Macintosh|Mac os x|Windows|Win32|iPod|iPhone|Windows Phone|lgtelecom|Windows CE)/i', $agent)) {
@@ -32,11 +32,6 @@ final class App
             else if(stristr($agent,'mac os x')) self::$platform='Mac';
             else if(stristr($agent,'Windows')) self::$platform='Windows';
             else if(stristr($agent,'Win32')) self::$platform='Windows';
-        }
-
-        # 디바이스 인지 체크
-        if(preg_match( '/(Android|iPod|iPhone|Windows Phone|lgtelecom|Windows CE)/i', $agent)){
-            self::$is_phone_device = true;
         }
 
         #브라우저
@@ -57,17 +52,19 @@ final class App
         # 언어
         self::$lang = (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2) : 'ko';
 
-        # host url
-        self::$host = '';
+        # http | https
+        $https = (isset($_SERVER['REQUEST_SCHEME'])) ? $_SERVER['REQUEST_SCHEME'] : 'http';
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on"){
-            if(isset($_SERVER['SERVER_NAME'])){
-                self::$host = 'https://'.$_SERVER['SERVER_NAME'];
-            }else {
-                self::$host = 'http://'.$_SERVER['SERVER_NAME'];
-            }
+            $https = 'https';
         }
 
-        # ip address
+        # host
+        self::$host = '';
+        if(isset($_SERVER['HTTP_HOST'])){
+            self::$host = sprintf("%s://%s",$https,$_SERVER['HTTP_HOST']);
+        }
+
+        # request METHOD
         self::$ip_address = self::get_client_ip();
     }
 
@@ -85,11 +82,6 @@ final class App
         else if(isset($_SERVER['REMOTE_ADDR'])) $result = $_SERVER['REMOTE_ADDR'];
 
     return $result;
-    }
-
-    # 애플사 제품인지 확인
-    public static function is_apple_device() : string{
-        return (preg_match( '/(iPod|iPhone|iPad)/', self::$platform)) ? 'true' : 'false';
     }
 }
 ?>
