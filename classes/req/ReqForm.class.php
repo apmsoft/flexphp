@@ -345,7 +345,7 @@ class ReqForm extends ReqStrChecker
 				break;
 			case 'isStringLength':
 				if(!parent::isStringLength($arguments)){
-					$this->error_report($field, 'e_string_length', sprintf("%s %s", $title,R::$sysmsg['e_string_length']));
+					$this->error_report($field, 'e_string_length', sprintf("%s %s", $title,sprintf(R::$sysmsg['e_string_length'],$arguments[0],$arguments[1])));
 				}
 				break;
 			case 'isKorean':

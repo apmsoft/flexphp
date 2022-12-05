@@ -28,7 +28,7 @@ try{
     $form = new \Flex\Req\ReqForm();
     # ( 퀄럼명 , 퀄럼타이틀 , Request 값 , [true : 필수 입력, false : 옵션], [필터옵션 => '필터인자'] )
     $form->chkNull('addr', '주소',$req->addr, true,[
-		'isStringLength' => [4,160],
+		'isStringLength' => [4,10],
 		'isEtcString'       => ['-','/']
 	]);
     $form->chkUserid('userid', '아이디',$req->userid, true);
