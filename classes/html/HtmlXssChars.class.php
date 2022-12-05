@@ -104,9 +104,9 @@ class HtmlXssChars
 
 	#@ return String
 	public function getXHtmlHighlight() {
-	    $str = highlight_string($this->description, true);
-	    $str = preg_replace('#<font color="([^\']*)">([^\']*)</font>#', '<span style="color: \\1">\\2</span>', $str);
-	    return preg_replace('#<font color="([^\']*)">([^\']*)</font>#U', '<span style="color: \\1">\\2</span>', $str);
+		$str = highlight_string($this->description, true);
+		$str = preg_replace('#<font color="([^\']*)">([^\']*)</font>#', '<span style="color: \\1">\\2</span>', $str);
+		return preg_replace('#<font color="([^\']*)">([^\']*)</font>#U', '<span style="color: \\1">\\2</span>', $str);
 	}
 
 	#@ return String
