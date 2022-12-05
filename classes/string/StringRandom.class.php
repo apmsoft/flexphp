@@ -20,7 +20,7 @@ class StringRandom {
 	# 숫자로 정해진 범위의 숫자로 난수를 만드어 낸다
 	# min : 시작범위, max : 끝범위
 	# 리턴 길이 1
-	public function numberRand($min=0,$max=9)
+	public function numberRand(int $min=0,int $max=9)
 	{
 		mt_srand((double) microtime()*1000000);
 		$result = mt_rand($min,$max);
@@ -28,7 +28,7 @@ class StringRandom {
 	}
 
 	# 배열중에서 갯수 만큼 추출해 내기
-	public function arrayRand($length=1){
+	public function arrayRand(int $length=1){
 		$result = '';
 		srand((double) microtime()*1000000);
 		$array_keys = array_rand($this->regs,$length);
