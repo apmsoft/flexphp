@@ -26,6 +26,9 @@ $model->csv_contents = ['애국자',date('Y-m-d H:i:s'),'유관순'];
 
 Log::d($model->fetch());
 
+# SplFileObject 상속합니다
+# https://www.php.net/manual/en/class.splfileobject.php 
+
 # 파일 쓰기 1
 $filesStorage1 = new \Flex\Files\FilesStorage($model->filename, 'w');
 $filesStorage1->write($model->contents);
