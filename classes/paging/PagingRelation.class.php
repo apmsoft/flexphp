@@ -1,18 +1,11 @@
 <?php
-/* ======================================================
-| @Author	: 김종관
-| @Email	: apmsoft@gmail.com
-| @HomePage	: http://apmsoft.tistory.com
-| @Editor	: Sublime Text 3
-| @UPDATE	: 1.2.1
-----------------------------------------------------------*/
 namespace Flex\Paging;
+
+use Flex\Log\Log;
 
 class PagingRelation
 {
-	private $url;						# 이동주소
-	private $urlQuery;					# 주소쿼리
-	private $urlQueryArray;				# 배열
+	public $version         = '2.0';
 	private $page           = 1;		# 현제 페이지
 	private $totalPage      = 0;		# 총페이지
 	private $qLimitStart    = 0;		# query LIMIT [0],[]
@@ -26,28 +19,26 @@ class PagingRelation
 	private $totalRecord    = 0;		# 총레코드 수
 	
 	private $relation = array(
-		'link'    =>'',
-		'first'   =>0,
-		'pre'     =>0,
-		'next'    =>0,
-		'last'    =>0
+		'first' => 0,
+		'pre'   => 0,
+		'next'  => 0,
+		'last'  => 0
 	);
 	private $relation_current = array();
 
 	/**1
 	 * 필요한 기본값 등록
-	 * @param $url			: 기본경로(./list.php || list.php?a=1&b=2)
 	 * @param $totalRecord	: 총 레코드 갯수
 	 * @param $page			: 요청 페이지
 	 */
-	public function __construct($url, $totalRecord, $page){
-		$this->url = $url;
+	public function __construct(int $totalRecord, int $page){
 		$this->totalRecord	= $totalRecord;
 		$this->page			= (!empty($page)) ? $page : 1;
 	}
 
 	# 2 한페이지에 출력할 레코드 갯수
-	public function setQueryCount($pagecount=10, $blockLimit=10){
+	public function setQueryCount(int $pagecount=10, int $blockLimit=10)
+	{
 		$this->blockLimit =$blockLimit;
 		$this->totalPage  =@ceil($this->totalRecord/$pagecount);
 
@@ -59,56 +50,27 @@ class PagingRelation
 			$this->qLimitEnd   =$pagecount;
 		}
 
-		$this->totalBlock     =ceil($this->totalPage/$this->blockLimit);
-		$this->blockCount     =ceil($this->page/$this->blockLimit); // 현재속해 있는 block count
-		$this->blockStartPage =($this->blockCount-1) * $this->blockLimit;
-		$this->blockEndPage   =$this->blockCount*$this->blockLimit;
+		$this->totalBlock     = ceil($this->totalPage/$this->blockLimit);
+		$this->blockCount     = ceil($this->page/$this->blockLimit); // 현재속해 있는 block count
+		$this->blockStartPage = ($this->blockCount-1) * $this->blockLimit;
+		$this->blockEndPage   = $this->blockCount*$this->blockLimit;
 
 		if($this->totalBlock <=$this->blockCount) {
 			$this->blockEndPage = $this->totalPage;
 		}
-// Out::prints_ln('totalBlock : '.$this->totalBlock);
-// Out::prints_ln('blockCount : '.$this->blockCount);
-// Out::prints_ln('blockStartPage : '.$this->blockStartPage);
-// Out::prints_ln('blockEndPage : '.$this->blockEndPage);
+		
 		$this->pageLimit = $pagecount;
 	}
 
-	/** 3
-	 * @void
-	 * url 뒤에 붙일 http query 값
-	 * @param $params
-	 * @param $numeric_prefix
-	 */
-	public function setBuildQuery($params='',$numeric_prefix='')
-	{
-		# 배열
-		if(is_array($params) && count($params)>0){
-			foreach($params as $pk=>$pv){
-				if(!$pv){
-					unset($params[$pk]);
-				}else{
-					$this->urlQueryArray[$pk]=$pv;
-				}
-			}
-
-			$this->urlQuery = (count($this->urlQueryArray)>0) ? http_build_query($this->urlQueryArray, $numeric_prefix) : '';
-		}
-
-		if(strpos($this->url,'?') !==false) $this->url.= $this->urlQuery;
-		else $this->url.= '?'.$this->urlQuery;
-	}
-
-	#@ 4 void
+	#@ 3
 	# 출력
-	public function buildPageRelation()
+	public function buildPageRelation() : void
 	{
-		$this->relation['link'] = str_replace('page='.$this->page,'',$this->url);
-		self::rewindPage();
-		self::prevPage();
-		self::currentPage();
-		self::nextPage();
-		self::lastPage();
+		$this->rewindPage();
+		$this->prevPage();
+		$this->currentPage();
+		$this->nextPage();
+		$this->lastPage();
 	}
 
 	#@void 현재페이지 출력
@@ -117,40 +79,37 @@ class PagingRelation
 		$s_page =$this->blockStartPage + 1;
 		for($i = $s_page; $i<=$this->blockEndPage; $i++)
 		{
-			$this->relation_current[] = array(
-				'link'=>$this->relation['link'].'&page='.$i,
-				'num'=>$i
-			);
+			$this->relation_current[] = $i;
 		}
 	}
 
-	#@void  이전페이지
-	public function prevPage(){
-		if($this->blockCount > 1){
-			$this->relation['pre'] = $this->blockStartPage;
+	#이전페이지
+	public function prevPage() : void{
+		if($this->page > 1 && $this->page <= $this->totalPage){
+			$this->relation['pre'] = $this->page -1;
 		}
 	}
 
-	#@void  다음페이지
-	public function nextPage(){
-		if($this->blockCount< $this->totalBlock){
-			$this->relation['next'] = $this->blockEndPage + 1;
+	#다음페이지
+	public function nextPage() : void{
+		if($this->page >0 && $this->page < $this->totalPage){
+			$this->relation['next'] = $this->page + 1;
 		}
 	}
 
-	#@void  처음페이지
-	public function rewindPage(){
-		if($this->page > 1 && $this->blockCount>1){
+	#처음페이지
+	public function rewindPage() : void{
+		if($this->page > 1 && $this->page <= $this->totalPage){
 			$this->relation['first'] = 1;
 		}
 	}
 
-	#@void 마지막페이지
-	public function lastPage(){
-		if($this->totalBlock == $this->blockCount){
-			$this->relation['last'] = 0;
-		}else{
+	#마지막페이지
+	public function lastPage() : void{
+		if($this->page > 0 && $this->page <= ($this->totalPage-1)){
 			$this->relation['last'] = $this->totalPage;
+		}else{
+			$this->relation['last'] = 0;
 		}
 	}
 
@@ -158,7 +117,7 @@ class PagingRelation
 	public function __get($propertyName){
 		if(property_exists(__CLASS__,$propertyName)){
 			$result = $this->{$propertyName};
-			if($propertyName=='totalPage'){
+			if($propertyName =='totalPage'){
 				if($result==0){
 					$result = 1;
 				}
@@ -175,21 +134,14 @@ class PagingRelation
 	}
 
 	#@ array
-	#[link] => ?
-    #[first] => 0
-    #[pre] => 0
-    #[next] => 3
-    #[last] => 5
-    #[chanel] => Array(
-    #    [0] => Array(
-    #            [link] => ?&page=1
-    #            [num] => 1
-    #    )
-    #)
+    #first : 0
+    #pre : 0
+    #next : 3
+    #last : 5
+    #chanel : [1,2,3]
     #페이징 채널 배열 출력
-	public function printRelation(){
+	public function printRelation() : array{
 		$result = array_merge($this->relation,array('chanel'=>$this->relation_current));
-		// Out::prints_r($result);
 	return $result;
 	}
 }
