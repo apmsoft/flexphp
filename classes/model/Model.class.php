@@ -21,7 +21,7 @@ class Model{
 
     public function __set(string $propertyName, $value)
     {
-        # 키가 없을 경우
+        # 키가 있을 경우
         if(array_key_exists($propertyName, $this->args)){
             $this->args[$propertyName] = $value;
         }else{
