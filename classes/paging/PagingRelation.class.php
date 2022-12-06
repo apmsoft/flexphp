@@ -18,13 +18,8 @@ class PagingRelation
 	private $pageLimit      = 0;
 	private $totalRecord    = 0;		# 총레코드 수
 	
-	private $relation = array(
-		'first' => 0,
-		'pre'   => 0,
-		'next'  => 0,
-		'last'  => 0
-	);
-	private $relation_current = array();
+	private $relation = ['first'=> 0,'pre'=> 0,'next'=> 0,'last'=> 0];
+	private $relation_current = [];
 
 	/**1
 	 * 필요한 기본값 등록
