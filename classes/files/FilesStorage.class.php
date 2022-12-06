@@ -1,10 +1,10 @@
 <?php
-namespace Flex\Preference;
+namespace Flex\Files;
 
 use \SplFileObject;
 
 # 파일을 이용한 스토리지 데이타 관리
-class PreferenceInternalStorage extends SplFileObject
+class FilesStorage extends SplFileObject
 {
     protected $file_name = '';
     private $open_mode;
@@ -18,8 +18,8 @@ class PreferenceInternalStorage extends SplFileObject
         }
     }
 
-    #@ return int
-    public function writeInternalStorage($context){
+    #@ 파일쓰기
+    public function write(string $context) : int|bool{
         $written=0;
         if(parent::isWritable()){
             $written = parent::fwrite($context);
@@ -27,30 +27,55 @@ class PreferenceInternalStorage extends SplFileObject
     return $written;
     }
 
-    #@ return String
-    public function readInternalStorage(){
-        $contents='';
-        if(parent::isFile() && parent::isReadable()){
+    #@ 파일 읽기
+    public function read() : string|false{
+        $contents = '';
+        if(parent::isFile() && parent::isReadable())
+        {
             if(PHP_VERSION_ID>=505011){
                 $contents = parent::fread(parent::getSize());
             }else{
                 while (!parent::eof()) {
-                    $contents.=parent::fgets();
+                    $contents .=parent::fgets();
                 }
             }
         }
     return $contents;
     }
 
-    #@ void
+    #@ 파일쓰기
+    public function put(string $context) : int|bool{
+        $written=0;
+        if(parent::isWritable()){
+            if(function_exists('file_put_contents')){
+                $written = file_put_contents($this->file_name, $context);
+            }
+        }
+    return $written;
+    }
+
+    #@ 파일 읽기
+    public function get() : string|false{
+        $contents = '';
+        if(parent::isFile() && parent::isReadable())
+        {
+            if(function_exists('file_get_contents')){
+                $contents = file_get_contents($this->file_name);
+            }
+        }
+    return $contents;
+    }
+
+    #@ 쓰기 CSV
     /*
      * $list = array (
             array('aaa', 'bbb', 'ccc', 'dddd'),
             array('123', '456', '789')
         );
     */
-    public function writeInternalStorageCSV($args){
-        if(is_array($args)){
+    public function write_csv(array $args) : void {
+        if(is_array($args))
+        {
             if(PHP_VERSION_ID>=50400){
                 foreach ($args as $fields) {
                     parent::fputcsv($fields);
@@ -67,13 +92,13 @@ class PreferenceInternalStorage extends SplFileObject
         }
     }
 
-    #@ array
-    public function readInternalStorageCSV(){
-        $args = array();
+    #@ 읽기 CSV
+    public function read_csv() : array{
+        $args = [];
         while (!parent::eof()) {
-            $args[] = parent::fgetcsv();
+            $args[] = array_filter(parent::fgetcsv());
         }
-    return $args;
+    return array_filter($args);
     }
 }
 

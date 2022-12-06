@@ -29,21 +29,13 @@ class Model{
             {
                 if(is_array($value))
                 {
-                    if(count($this->args[$propertyName]) && !isset($this->args[$propertyName][0]))
-                    {
+                    if(count($value)){
                         $pre_array = $this->args[$propertyName];
                         $this->args[$propertyName] = [];
-                        $this->args[$propertyName][] = $pre_array;
+                        $this->args[$propertyName] = $pre_array;
                         $this->args[$propertyName][] = $value;
                     }
-                    else if(count($this->args[$propertyName])>1){
-                        $this->args[$propertyName][] = $value;
-                    }
-                    else{
-                        $this->args[$propertyName] = $value;
-                    }
-                }
-                else{
+                }else{
                     $this->args[$propertyName] = array_merge($this->args[$propertyName], (array)$value);
                 }
             }else{

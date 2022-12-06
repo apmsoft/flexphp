@@ -24,7 +24,7 @@ Log::d( $model->fetch() );
 $model->name = '홍길동';
 
 # iseet
-if(isset($model->namne)){
+if(isset($model->name)){
     Log::d( 'model name  : true' );
 }
 
