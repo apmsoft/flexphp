@@ -21,7 +21,9 @@ class DirObject extends DirInfo{
             foreach($files as $filename){
                 if (is_file($filename)){
                     $short_filename = basename($filename);
-                    if(!in_array($short_filename, $nothing)) $result[] = $short_filename;
+                    $count= strrpos($short_filename,'.');
+                    $file_extension= strtolower(substr($short_filename, $count+1));
+                    if(!in_array($file_extension, $nothing)) $result[] = $short_filename;
                 }
             }
         }

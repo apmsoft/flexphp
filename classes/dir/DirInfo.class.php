@@ -22,8 +22,9 @@ class DirInfo
 			if(is_array($dir_args)){
 				foreach($dir_args as $folder){
 					$current_dir = $current_dir.'/'.$folder;
-					if(!$this->makeDirectory($current_dir))
+					if(!$this->makeDirectory($current_dir)){
 						throw new ErrorException(R::$sysmsg['e_filenotfound']);
+					}
 				}
 			}
 		}
