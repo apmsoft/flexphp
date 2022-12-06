@@ -25,7 +25,7 @@ class Model{
         if(array_key_exists($propertyName, $this->args)){
             $this->args[$propertyName] = $value;
         }else{
-            # 기존 값이 배열 일때
+            # + : 배열 index 하나씩 증가
             if(substr($propertyName,-1) == '+')
             {
                 $re_propertyname = strtr($propertyName,['+'=>'']);
@@ -40,6 +40,7 @@ class Model{
                 }
                 $this->args[$re_propertyname][] = $value;
             }
+            # - : 배열 뒤 하나씩 빼기
             else if(substr($propertyName,-1) == '-')
             {
                 $re_propertyname = strtr($propertyName,['-'=>'']);
@@ -49,6 +50,7 @@ class Model{
                     array_pop($this->args[$re_propertyname]);
                 }
             }
+            # -{}{} : 배열 자르기
             else if(strpos($propertyName,'-{') !==false){
                 preg_match_all("/({+)(.*?)(})/", $propertyName, $matches);
                 $sno = strpos($propertyName,'-');
@@ -64,6 +66,7 @@ class Model{
                     }
                 }
             }
+            # {} 배열 값 업데이트
             else if(strpos($propertyName,'{') !==false){
                 preg_match_all("/({+)(.*?)(})/", $propertyName, $matches);
                 $sno = strpos($propertyName,'{');
@@ -75,6 +78,7 @@ class Model{
                 }
                 $pre_array = $value;
             }
+            # 일반 키 => 값
             else{
                 $this->args[$propertyName] = $value;
             }
