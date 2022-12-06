@@ -32,8 +32,10 @@ if(isset($model->name)){
 # unset
 unset($model->name);
 if(!isset($model->namne)){
-    Log::d( 'model name  : unset');
+    Log::d( 'model name  : unset ------>');
 }
+
+Log::d( $model->fetch() );
 Log::d("===============");
 
 # 배열 예제1 
