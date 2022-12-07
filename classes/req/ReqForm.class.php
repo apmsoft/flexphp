@@ -7,7 +7,7 @@ use Flex\Req\ReqStrChecker;
 # 폼체크
 class ReqForm extends ReqStrChecker
 {
-	const VERSEION = '2.0';
+	const VERSEION = '2.0.1';
 
 	public function __construct(){
 	}
@@ -26,7 +26,7 @@ class ReqForm extends ReqStrChecker
 
     # 아이디체크
     public function chkUserid(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace','isStringLength' => [4,16],'isKorean'
+		'isSpace','isStringLength'=>[4,16],'isKorean'
 	]) : void 
 	{
 		if($required){
@@ -304,7 +304,7 @@ class ReqForm extends ReqStrChecker
 				$_methodName = $methodName;
 				$_arguments  = $arguments;
 			}
-			self::chkValidation($field, $title, $value, $_methodName, $_arguments);
+			self::chkValidation($field, $title, trim($value), $_methodName, $_arguments);
 		}
 	}
 

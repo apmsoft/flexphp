@@ -137,7 +137,7 @@ class ReqStrChecker
 	public function isEtcString(string $allow): bool
 	{
 		# 허용된 특수문자 키
-		$allowArgs = array();
+		$allowArgs = [];
 		if(!empty($allow))
 		{
 			$tmpArgs =  (strpos($allow,',') !==false ) ? explode(',',$allow) : $tmpArgs=array($allow);
