@@ -44,7 +44,6 @@ include_once _ROOT_PATH_.'/config/config.db.php';
 # 클래스 자동 인클루드 /--------------
 spl_autoload_register(function($class_name){
     $tmp_args=explode('\\',preg_replace('/([a-z0-9])([A-Z.])/',"$1$2",$class_name));
-    #print_r($tmp_args);
     $class_path_name= (count($tmp_args)>1) ? 
         strtolower($tmp_args[1]). '/'. $tmp_args[2] :
             strtolower($tmp_args[0]). '/'. $tmp_args[0];
@@ -53,7 +52,6 @@ spl_autoload_register(function($class_name){
     {
         # classes 폴더
         if(file_exists(_ROOT_PATH_.'/classes/'.$class_path_name.'.class.php')!==false){
-            #echo _ROOT_PATH_.'/classes/'.$class_path_name.'.class.php'."\r\n";
             include_once _ROOT_PATH_.'/classes/'.$class_path_name.'.class.php';
         }
     }
@@ -87,19 +85,19 @@ if(is_array($__autoload_helper_funs)){
 }
 
 # 세션값 설정
-# 키값 중 id는 변경하지 마세요 | 키는 데이터베이스 필드명과 같아야 합니다.
-# 웹사용자 세션 
-$app['service'] = [
-    'id'         =>'auth_id',
-    'userid'     =>'auth_userid',
-    'level'      =>'auth_level',
-    'name'       =>'auth_name'
+# 웹 세션 
+$auth_type['service'] = [
+    'id'     => 'auth_id',
+    'userid' => 'auth_userid',
+    'level'  => 'auth_level',
+    'name'   => 'auth_name'
 ];
 
-$app['topadm'] = [
-    'id'         =>'adm_id',
-    'userid'     =>'adm_userid',
-    'level'      =>'adm_level',
-    'name'       =>'adm_name'
+# 관리자 세션
+$auth_type['topadm'] = [
+    'id'     => 'topadm_id',
+    'userid' => 'topadm_userid',
+    'level'  => 'topadm_level',
+    'name'   => 'topadm_name'
 ];
 ?>

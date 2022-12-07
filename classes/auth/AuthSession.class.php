@@ -6,10 +6,8 @@ use Flex\Log\Log;
 # _AUTH_MODE_
 final class AuthSession
 {
-    # 웹용 세션 항목
+    # 세션 항목
     private $auth_args = [];
-
-    # 로그인 체크 값
     private $authinfo = [];
 
     # run
