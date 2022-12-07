@@ -39,6 +39,7 @@
     "e_json":"데이터를 JSON 형태로 입력 하세요",
     "e_float": "숫자와 소수형 숫자만 입력하세요",
     "e_link_url": "URL 주소 정확하게 입력 하세요",
+    "e_password_secure_symbol": "특수문자(_,$,#,!,^,*,-,@,&,(,),+)를 최소 한자 이상 입력하세요.",
 
     "e_filenotfound": "파일을 찾을 수 없습니다",
     "e_upload_max_filesize": "업로드한 파일이 최대 업로드 사이즈를 초과합니다",
@@ -53,7 +54,7 @@
     "e_usernotfound": "사용자 정보를 찾을 수 없습니다.",
     "e_table_name": "I can not find the table name.",   
     
-    "e_not_found_symbol": "특수문자(!,@,#,$,%,*,(,),=,+,^,~,?)를 최소 한자 이상 입력하세요.",
+    
     "e_phone_symbol": "숫자 외에는 사용할 수 없습니다",
     "e_email_symbol": "(@,-,_)외에는 특수문자를 입력할 수 없습니다",
     "e_directory_symbol": "디렉토리에 특수문자를 사용할 수 없습니다",

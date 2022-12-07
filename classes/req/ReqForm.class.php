@@ -20,17 +20,13 @@ class ReqForm extends ReqStrChecker
         }
 
 		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 		}
 	}
 
     # 아이디체크
     public function chkUserid(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'        => [],
-		'isStringLength' => [4,16],
-		'isKorean'       => []
+		'isSpace','isStringLength' => [4,16],'isKorean'
 	]) : void 
 	{
 		if($required){
@@ -38,17 +34,13 @@ class ReqForm extends ReqStrChecker
         }
 
         if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
         }
     }
 
 	# 비밀번호
 	public function chkPasswd(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'        => [],
-		'isStringLength' => [4,160],
-		'isKorean'       => []
+		'isSpace','isStringLength'=>[4,160],'isKorean'
 	]) : void 
 	{
 		if($required){
@@ -56,18 +48,13 @@ class ReqForm extends ReqStrChecker
         }
 
 		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 		}
 	}
 
 	# 비밀번호 보안강화(최소8자 및 특수문자 한글자 포함)
 	public function chkPasswdSecure(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'        => [],
-		'isStringLength' => [8,160],
-		'isKorean'       => [],
-		'isEtcString'    => ['_','$','#','!','^','*','-','@','&','(',')','+']
+		'isSpace','isStringLength'=>[8,160],'isKorean','isEtcString'=> ['_','$','#','!','^','*','-','@','&','(',')','+']
 	]) : void 
 	{
 		if($required){
@@ -75,16 +62,27 @@ class ReqForm extends ReqStrChecker
         }
 
 		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
+			self::callMethod($field,$title,$value, $filters);
+		}
+
+		# 특수문자가최소 1개 이상 있는지 체크
+		if(isset($filters['isEtcString'])){
+			$find_cnt = 0;
+			foreach($filters['isEtcString'] as $estr){
+				if(strpos($value,$estr) !==false){
+					$find_cnt++;
+				}
+			}
+			echo $find_cnt.PHP_EOL;
+			if($find_cnt < 1){
+				$this->error_report($field, 'e_password_secure_symbol', sprintf("%s %s", $title,R::$sysmsg['e_password_secure_symbol']));
 			}
 		}
 	}
 
 	# 이름
 	public function chkName(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'        => [],
-		'isEtcString'    => []
+		'isSpace','isEtcString'
 	]) : void 
 	{
 		if($required){
@@ -92,17 +90,13 @@ class ReqForm extends ReqStrChecker
         }
 
 		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 		}
 	}
 
 	# 전화번호
 	public function chkPhone(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'  	  => [],
-		'isNumber'    => [],
-		'isEtcString' => ['-']
+		'isSpace','isNumber' ,'isEtcString'=>['-']
 	]) : void 
 	{
 		if($required){
@@ -117,16 +111,13 @@ class ReqForm extends ReqStrChecker
 				}
 			}
 
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 		}
 	}
 
 	# 숫자만 int
 	public function chkNumber(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'  => [],
-		'isNumber' => []
+		'isSpace','isNumber'
 	]) : void 
 	{
 		if($required){
@@ -134,17 +125,13 @@ class ReqForm extends ReqStrChecker
         }
 
 		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 		}
 	}
 
 	# 더블 double
 	public function chkFloat(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'     => [],
-		'isNumber'    => [],
-		'isEtcString' => ['.']
+		'isSpace' ,'isNumber','isEtcString'=> ['.']
 	]) : void 
 	{
 		if($required){
@@ -160,9 +147,7 @@ class ReqForm extends ReqStrChecker
 				}
 			}
 
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 
 			if(!is_float(floatval($value))){
 				$this->error_report($field, 'e_float', sprintf("%s %s", $title,R::$sysmsg['e_float']));
@@ -172,8 +157,7 @@ class ReqForm extends ReqStrChecker
 
 	# 영문만 english
 	public function chkAlphabet(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'    => [],
-		'isAlphabet' => []
+		'isSpace','isAlphabet'
 	]) : void 
 	{
 		if($required){
@@ -181,17 +165,13 @@ class ReqForm extends ReqStrChecker
         }
 
 		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 		}
 	}
 
 	# 이메일 sed_-23@apmsoftax.com
 	public function chkEmail(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'        => [],
-		'isKorean'       => [],
-		'isEtcString'    => ['@','-','_']
+		'isSpace','isKorean' ,'isEtcString'=> ['@','-','_']
 	]) : void 
 	{
 		$value = filter_var($value,FILTER_SANITIZE_EMAIL);
@@ -201,9 +181,7 @@ class ReqForm extends ReqStrChecker
         }
 
 		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 
 			if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
 				$this->error_report($field, 'e_formality', sprintf("%s %s", $title,R::$sysmsg['e_formality']));
@@ -213,9 +191,7 @@ class ReqForm extends ReqStrChecker
 
 	# 일반 영어/숫자/언더라인 만 허용
 	public function chkEngNumUnderline(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace'     => [],
-		'isKorean'    => [],
-		'isEtcString' => ['_']
+		'isSpace','isKorean','isEtcString' => ['_']
 	]) : void 
 	{
 		if($required){
@@ -223,15 +199,20 @@ class ReqForm extends ReqStrChecker
         }
 
 		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
+			# 허용된 특수문자를 제거 한다.
+			if(isset($filters['isEtcString'])){
+				foreach($filters['isEtcString'] as $etcstr){
+					$value = str_replace($etcstr,'', $value);
+				}
 			}
+
+			self::callMethod($field,$title,$value, $filters);
 		}
 	}
 
 	# 링크주소
 	public function chkLinkurl(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace' => [],
+		'isSpace'
 	]) : void 
 	{
 		$value =filter_var($value,FILTER_SANITIZE_URL);
@@ -239,6 +220,8 @@ class ReqForm extends ReqStrChecker
 		if($required){
 			self::chkValidation($field, $title, $value, 'isNull');
         }
+
+		self::callMethod($field,$title,$value, $filters);
 
 		if($value){
 			if(!filter_var($value, FILTER_VALIDATE_URL)){
@@ -249,8 +232,7 @@ class ReqForm extends ReqStrChecker
 
     # 날짜
     public function chkDateFormat(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace' => [],
-		'chkDate' => []
+		'isSpace','chkDate'
 	]) : void 
 	{
         if($required){
@@ -258,16 +240,13 @@ class ReqForm extends ReqStrChecker
         }
 
         if($value){
-            foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+            self::callMethod($field,$title,$value, $filters);
         }
 	}
 	
 	# 시간
 	public function chkTimeFormat(string $field, string $title, mixed $value, bool $required, array $filters=[
-		'isSpace' => [],
-		'chkTime' => []
+		'isSpace','chkTime'
 	]) : void 
 	{
         if($required){
@@ -275,9 +254,7 @@ class ReqForm extends ReqStrChecker
         }
 
         if($value){
-            foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+            self::callMethod($field,$title,$value, $filters);
         }
 	}
 
@@ -286,9 +263,9 @@ class ReqForm extends ReqStrChecker
     # $field_args = array('sdate','edate')
     # $value_args= array($_REQUEST['sdate'],$_REQUEST'edate'])
     # $required = true | false
-    public function chkDatePeriod(string $field,string $title,array $value_args, bool $required, array $filters=[]) : void 
+    public function chkDatePeriod(string $field,string $title,array $value_args, bool $required, array $filters=['chkDatePeriod']) : void 
 	{
-		$value = implode('', $value_args);
+		$value = implode(',', $value_args);
 
 		if($required){
 			self::chkValidation($field, $title, $value,'isNull');
@@ -296,37 +273,41 @@ class ReqForm extends ReqStrChecker
 
         if($value)
         {
-            // 기간체크
-			self::chkValidation($field, $title, implode(',', $value_args), 'chkDatePeriod');
-
 			// 추가 필터
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 		}
     }
 
     #@void
     #$argsv = array($req->v, 비교값);
 	# $value_args = ['문자1','문자2'];
-    public function chkEquals(string $field,string $title,array $value_args,bool $required, array $filters=[]) : void 
+    public function chkEquals(string $field,string $title,array $value_args,bool $required, array $filters=['equals']) : void 
 	{
-		$value = implode('', $value_args);
+		$value = implode(',', $value_args);
 
 		if($required){
 			self::chkValidation($field, $title, $value, 'isNull');
         }
 
 		if($value){
-			self::chkValidation($field, $title, implode(',', $value_args), 'equals');
-        }
-
-		if($value){
-			foreach ($filters as $methodName => $arguments) {
-				self::chkValidation($field, $title, $value, $methodName, $arguments);
-			}
+			self::callMethod($field,$title,$value, $filters);
 		}
     }
+
+	private function callMethod(string $field,string $title,mixed $value, array $filters) : void {
+		foreach ($filters as $methodName => $arguments) 
+		{
+			$_methodName = '';
+			$_arguments  = [];
+			if(is_numeric($methodName)){
+				$_methodName = $arguments;
+			}else{
+				$_methodName = $methodName;
+				$_arguments  = $arguments;
+			}
+			self::chkValidation($field, $title, $value, $_methodName, $_arguments);
+		}
+	}
 
 	# 메소드에 따른 체크 기능
 	private function chkValidation(string $field, string $title, mixed $value, string $methodName, array $arguments=[]) : void
@@ -345,7 +326,8 @@ class ReqForm extends ReqStrChecker
 				break;
 			case 'isStringLength':
 				if(!parent::isStringLength($arguments)){
-					$this->error_report($field, 'e_string_length', sprintf("%s %s", $title,sprintf(R::$sysmsg['e_string_length'],$arguments[0],$arguments[1])));
+					$err_msg =sprintf(R::$sysmsg['e_string_length'],$arguments[0],$arguments[1]);
+					$this->error_report($field, 'e_string_length', sprintf("%s %s", $title,$err_msg));
 				}
 				break;
 			case 'isKorean':
@@ -413,7 +395,7 @@ class ReqForm extends ReqStrChecker
 				break;
 			case 'equals':
 				if(!parent::equals($value)){
-					$this->error_report($field, 'e_isnot_match', sprintf("%s %s", $title,R::$sysmsg['e_isnot_match']));
+					$this->error_report($field, 'e_equals', sprintf("%s %s", $title,R::$sysmsg['e_equals']));
 				}
 				break;
 		}
