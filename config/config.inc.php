@@ -75,7 +75,7 @@ R::__autoload_resource(array(
 # function 디렉토리에 있어야 하며 클래스를 지원하는 함수들
 # 파일명 규칙 (_[*].helper.php)
 $__autoload_helper_funs = array(
-    '_reqstrchecker','_datetimes','_out','_stringobject','_outpane','_default'
+    '_datetimes','_stringobject','_outpane','_default'
 );
 if(is_array($__autoload_helper_funs)){
     foreach($__autoload_helper_funs as $fun_name){
