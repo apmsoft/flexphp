@@ -1,16 +1,16 @@
 <?php
 namespace Flex\Auth;
 
-# _AUTH_MODE_
-class AuthSession
-{
-    private $authType = ''; # 관리자, 웹 세션 활용 모드
+use Flex\Log\Log;
 
+# _AUTH_MODE_
+final class AuthSession
+{
     # 웹용 세션 항목
-    private $auth_args = array();
+    private $auth_args = [];
 
     # 로그인 체크 값
-    private $authinfo = array();
+    private $authinfo = [];
 
     # run
     public function __construct(?Array $args){
@@ -21,42 +21,48 @@ class AuthSession
         }
     }
 
-    public function __set($k, $v) : void{
+    # 세션 키와 값 생성
+    public function __set(string $k, mixed $v) : void{
         $this->authinfo[$k] = $v;
+        if(!isset($_SESSION[$k]) && $v){
+            $_SESSION[$k] = $v;
+        }
     }
 
-    # return data
-    public function __get($k){
+    # 세션 키값
+    public function __get(string $k){
         if(array_key_exists($k, $this->authinfo))
             return $this->authinfo[$k];
     }
 
-    #@ void
-    # 세션스타트 및 배열에 담기
-    public function sessionStart() : void
+    # 세션생성된 전체 값
+    public function fetch(): array 
     {
-        if(is_array($_SESSION)){
-            foreach($this->auth_args as $k=>$v){
-                //echo $k.' '.$v."\n";
-                if(isset($_SESSION[$v])){
-                    $this->authinfo[$k] = $_SESSION[$v];
+        return $this->authinfo;
+    }
+
+    # 세션등록
+    public function regiAuth(array $data_args) : void
+    {
+        if(is_array($data_args))
+        {
+            @session_start();
+            foreach($this->auth_args as $k => $session_key){
+                if(isset($data_args[$k]) && $data_args[$k]!=''){
+                    #Log::d($session_key, $data_args[$k]);
+                    $_SESSION[$session_key] = $data_args[$k];
                 }
             }
         }
     }
 
-    #@ void
-    # 세션등록
-    public function regiAuth($data_args) : void
+    # 세션스타트 및 배열에 담기
+    public function sessionStart() : void
     {
-        if(is_array($data_args))
-        {
-            @session_start();
+        if(is_array($_SESSION)){
             foreach($this->auth_args as $k=>$v){
-                if(isset($data_args[$v]) && $data_args[$v]!=''){
-                    //session_register($v);
-                    // echo '-----'.$v.' '.$data_args[$v];
-                    $_SESSION[$v]=$data_args[$v];
+                if(isset($_SESSION[$v])){
+                    $this->authinfo[$k] = $_SESSION[$v];
                 }
             }
         }
@@ -65,7 +71,9 @@ class AuthSession
     #void
     # 세션비우기
     public function unregiAuth() : void{
-        foreach($this->auth_args as $k=>$v){
+        foreach($this->auth_args as $k=>$v)
+        {
+            $this->authinfo = [];
             if(isset($_SESSION[$v])){
                 unset($_SESSION[$v]);
             }

@@ -89,7 +89,7 @@ if(is_array($__autoload_helper_funs)){
 # 세션값 설정
 # 키값 중 id는 변경하지 마세요 | 키는 데이터베이스 필드명과 같아야 합니다.
 # 웹사용자 세션 
-$app['auth'] =array(
+$app['auth'] = array(
     'id'         =>'auth_id',
     'userid'     =>'auth_userid',
     'level'      =>'auth_level',
