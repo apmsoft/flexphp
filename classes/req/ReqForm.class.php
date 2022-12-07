@@ -73,7 +73,6 @@ class ReqForm extends ReqStrChecker
 					$find_cnt++;
 				}
 			}
-			echo $find_cnt.PHP_EOL;
 			if($find_cnt < 1){
 				$this->error_report($field, 'e_password_secure_symbol', sprintf("%s %s", $title,R::$sysmsg['e_password_secure_symbol']));
 			}
