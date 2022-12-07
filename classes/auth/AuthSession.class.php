@@ -60,9 +60,9 @@ final class AuthSession
     public function sessionStart() : void
     {
         if(is_array($_SESSION)){
-            foreach($this->auth_args as $k=>$v){
-                if(isset($_SESSION[$v])){
-                    $this->authinfo[$k] = $_SESSION[$v];
+            foreach($this->auth_args as $k => $session_key){
+                if(isset($_SESSION[$session_key])){
+                    $this->authinfo[$session_key] = $_SESSION[$session_key];
                 }
             }
         }

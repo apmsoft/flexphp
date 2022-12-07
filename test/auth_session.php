@@ -10,11 +10,14 @@ require $path. '/config/config.inc.php';
 Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
-# auth
-$authSession = new \Flex\Auth\AuthSession([
+# 세션에 등록할 키와 세션키 설정
+$session_types = [
     'id'         =>'adm_id',
     'userid'     =>'adm_userid'
-]);
+];
+
+# auth
+$authSession = new \Flex\Auth\AuthSession( $session_types );
 
 # 세션에 추가할 키와 값
 $authSession->regiAuth([
@@ -27,11 +30,11 @@ $authSession->regiAuth([
 $authSession->sessionStart();
 
 Log::d('세션값 : ',$_SESSION);
-Log::d('세션값이 등록된 값 : ',$authSession->fetch());
+Log::d('Auth 클래스 값 : ',$authSession->fetch());
 
 # AuthSession 세션값과 _SESSION 세션값 비교 및 체크
-Log::d( 'Auth 세션 ID : ',$authSession->id );
-Log::d( 'Auth 세션 USERID : ',$authSession->userid );
+Log::d( 'Auth 세션 ID : ',$authSession->adm_id );
+Log::d( 'Auth 세션 USERID : ',$authSession->adm_userid );
 Log::d( '_SESSION 세션 ID : ',$_SESSION['adm_id'] );
 Log::d( '_SESSION 세션 USERID : ',$_SESSION['adm_userid'] );
 
