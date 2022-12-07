@@ -3,7 +3,6 @@ namespace Flex\Auth;
 
 use Flex\Log\Log;
 
-# _AUTH_MODE_
 final class AuthSession
 {
     # 세션 항목
