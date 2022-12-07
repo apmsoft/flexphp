@@ -114,6 +114,7 @@ Log::d('배열 index 번호 2부터 끝까지 : input-{2}');
 $model->{"input-{2}"} = '';
 Log::d( $model->input );
 
+
 # 뒤에서부터 3개만
 Log::d('뒤에서부터 -3개만 : input-{-3}');
 $model->{"input-{-3}"} = '';
