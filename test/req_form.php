@@ -54,7 +54,7 @@ $req->useGET();
   */
 
 # set
-$req->addr       = '주소 달 서구 대박동 120-4 번지 / 대충빌딩';
+$req->addr       = '주소 달 서구 대박동 120-4 번지 / 대충빌딩 (2층) ';
 $req->userid     = 'useriddsfd';
 $req->passwd     = 'passwd';
 $req->secure_passwd = 'dsl123safdsa';
@@ -75,7 +75,7 @@ $req->linkurl    = 'http://flexvue.fancyupsoft.com';
 try{
     $form = new \Flex\Req\ReqForm();
     # ( 퀄럼명 , 퀄럼타이틀 , Request 값 , [true : 필수 입력, false : 옵션], [필터옵션 => '필터인자'] )
-    $form->chkNull('addr', '주소',$req->addr, true,['isStringLength'=>[4,160],'isEtcString'=> ['-','/']]);
+    $form->chkNull('addr', '주소',$req->addr, true,['isStringLength'=>[4,160],'isEtcString'=> ['-','/','(',')']]);
     $form->chkUserid('userid', '아이디',$req->userid, true,['isSpace','isStringLength'=>[4,16],'isKorean']);
     $form->chkPasswd('passwd', '비밀번호',$req->passwd, true);
     $form->chkPasswdSecure('secure_passwd', '암호화특수문자 허용범위 ',$req->secure_passwd, true);
