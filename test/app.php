@@ -16,7 +16,7 @@ Log::init(Log::MESSAGE_ECHO);
 Log::d('platform',App::$platform);
 Log::d('browser',App::$browser);
 Log::d('host',App::$host);
-Log::d('lang',App::$lang);
+Log::d('language',App::$language);
 Log::d('http_referer',App::$http_referer ?? '');
 Log::d('ip_address',App::$ip_address);
 ?>

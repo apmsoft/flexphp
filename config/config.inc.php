@@ -60,7 +60,7 @@ spl_autoload_register(function($class_name){
 # 기본 선언 클래스 /-------------------
 # 어플리케이션 환경
 App::init();
-define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: App::$lang);       # 다국어중 언어 셋팅
+define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: App::$language);       # 다국어중 언어 셋팅
 define('_SITE_HOST_',App::$host);  # HOST URL
 
 # resource XML 자동 로드 /---------------

@@ -17,9 +17,6 @@ Log::options([
     'newline'    => true  # 개행문자 출력여부
 ]);
 
-# # 지원언어 설정
-# define('__LANG__','ko');
-
 // strings.json        - 기본(언어별 파일이 없을 경우)
 // strings_ko.json     - 한국어
 // strings_en.json     - 영어
@@ -27,11 +24,19 @@ Log::options([
 
 # 기본언어 설정
 R::init( App::$lang );
-Log::d('R :: language ', R::$nation);
+Log::d('R :: language ', R::$language);
+
+# res/string 기본 호출
+R::strings();
+Log::d(R::$strings[R::$language]);
+
+# res/string 배열값 추가 하기
+R::strings(['cus_fax' => '02-2235-2323', 'admin_email'=>'test@dddd.com']);
+Log::d('[ cus_fax, admin_email ] 추가 >>>',R::$strings[R::$language]);
 
 # 기본언어 영어로 바꾸기 /==================
 R::init( 'en' );
-Log::d('R :: language >> ', R::$nation);
+Log::d('R :: language >> ', R::$language);
 
 # res/config : 영어 파일이 있음
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/imageviewer.json', 'imageviewer2');
@@ -94,5 +99,11 @@ Log::d('sysmsg',R::$sysmsg);
 
 # 예외 상황 체크 : 이미 선언된 Defined 리소스 ID 외의 것을 호출할 경우
 R::ddd();
-Log::d('ddd',R::$ddd);
+// Log::d('ddd',R::$ddd);
+
+# tables : 배열값 추가 하기
+R::tables(['a'=>'flex_a','b'=>'flex_b']);
+Log::d('tables',R::$tables);
+
+Log::d(R::$tables[R::$language]);
 ?>

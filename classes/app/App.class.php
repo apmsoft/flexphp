@@ -7,7 +7,7 @@ final class App
     public static $platform     = 'Nan';
     public static $browser      = 'Nan';
     public static $host;
-    public static $lang;
+    public static $language;
     public static $http_referer = null;
     public static $ip_address   = '';
     public static $protocol     = 'Nan';
@@ -50,7 +50,7 @@ final class App
         }
 
         # 언어
-        self::$lang = (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2) : 'ko';
+        self::$language = (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2) : 'ko';
 
         # http | https
         $https = (isset($_SERVER['REQUEST_SCHEME'])) ? $_SERVER['REQUEST_SCHEME'] : 'http';
