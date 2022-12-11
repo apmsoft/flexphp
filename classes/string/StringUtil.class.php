@@ -49,20 +49,32 @@ class StringUtil{
 	{
 		$result = '';
 		$str =&$this->str;
-		$len = strlen($str);
 
 		# 예외태그 허용
 		if(trim($strip_tags)) {
-			$result = strip_tags($str, $strip_tags);
+			$str = strip_tags($str, $strip_tags);
 		}
+
+		# 허용된 태그와 문자 분리
+		preg_match_all("|<[^>]+>(.*)</[^>]+>|U", $str, $match);
+		$match_str = (count($match[1])) ? implode(' ',$match[1]) : $str;
 		
+		# 태그를 제외한 문자 길이만 체크
+		$len = strlen($match_str);
 		if($len > $length)
 		{
 			for($i=0;$i<$length;$i++){
-				if((Ord($str[$i])<=127)&&(Ord($str[$i])>=0)){$result .=$str[$i];}
-				else if((Ord($str[$i])<=223)&&(Ord($str[$i])>=194)){$result .=$str[$i].$str[$i+1];$i+1;}
-				else if((Ord($str[$i])<=239)&&(Ord($str[$i])>=224)){$result .=$str[$i].$str[$i+1].$str[$i+2];$i+2;}
-				else if((Ord($str[$i])<=244)&&(Ord($str[$i])>=240)){$result .=$str[$i].$str[$i+1].$str[$i+2].$str[$i+3];$i+3;}
+				if((Ord($match_str[$i])<=127)&&(Ord($match_str[$i])>=0)){$result .=$match_str[$i];}
+				else if((Ord($match_str[$i])<=223)&&(Ord($match_str[$i])>=194)){$result .=$match_str[$i].$match_str[$i+1];$i+1;}
+				else if((Ord($match_str[$i])<=239)&&(Ord($match_str[$i])>=224)){$result .=$match_str[$i].$match_str[$i+1].$match_str[$i+2];$i+2;}
+				else if((Ord($match_str[$i])<=244)&&(Ord($match_str[$i])>=240)){$result .=$match_str[$i].$match_str[$i+1].$match_str[$i+2].$match_str[$i+3];$i+3;}
+			}
+
+			# 최종 길이에서 허용 태그 적용
+			if(count($match[1])){
+				foreach($match[1] as $idx => $match_val){
+					$result = str_replace($match_val, $match[0][$idx], $result);
+				}
 			}
 
 			# 끝에 줄임문자 붙이기

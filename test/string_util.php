@@ -44,7 +44,7 @@ Log::d( $stringUtil3->str );
 
 # 글자 자르기3 특정태그 허용
 $stringUtil4 = new \Flex\String\StringUtil( '<b>대만민국</b> 국제 <font color="red">올림픽</font> 대화에서' );
-$stringUtil4->cut(80, true, '<b><strong><strike>');
+$stringUtil4->cut(10, true, '<b><strong><font><strike>');
 Log::d( $stringUtil4->str );
 
 # 숫자 자동 포멧화 하기1 [길이 3 ~ 16], 길이 11
