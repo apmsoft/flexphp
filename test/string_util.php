@@ -47,7 +47,7 @@ $stringUtil4 = new \Flex\String\StringUtil( '<b>대만민국</b> 국제 <font co
 $stringUtil4->cut(80, true, '<font><strong><b><strike>');
 Log::d( $stringUtil4->str );
 
-# 숫자 자동 포멧화 하기1 [길이 7 ~ 16], 길이 11
+# 숫자 자동 포멧화 하기1 [길이 3 ~ 16], 길이 11
 $stringUtil6 = new \Flex\String\StringUtil( '01012345678' );
 $stringUtil6->formatNumberPrintf( '-');
 Log::d( $stringUtil6->str );
@@ -58,21 +58,39 @@ $stringUtil61 = new \Flex\String\StringUtil( $stringUtil6->str );
 $stringUtil61->replace(4, 4, '*');
 Log::d( $stringUtil61->str );
 
-# 숫자 자동 포멧화 하기1 [길이 7 ~ 16] , 길이 8
+# 숫자 자동 포멧화 하기1 [길이 4 ~ 16] , 길이 8
 $stringUtil7 = new \Flex\String\StringUtil( '15881234' );
 $stringUtil7->formatNumberPrintf( '-');
 Log::d( $stringUtil7->str );
 
 
-# 숫자 자동 포멧화 하기3 [길이 7 ~ 16], 길이 16
+# 숫자 자동 포멧화 하기3 [길이 4 ~ 16], 길이 16
 $stringUtil8 = new \Flex\String\StringUtil( '1234567812345678' );
 $stringUtil8->formatNumberPrintf( '-');
 Log::d( $stringUtil8->str );
 
-# 숫자 자동 포멧화 하기3 [길이 7 ~ 16], 길이 15
+# 숫자 자동 포멧화 하기3 [길이 4 ~ 16], 길이 15
 $stringUtil9 = new \Flex\String\StringUtil( '012345678123456' );
 $stringUtil9->formatNumberPrintf( '-');
 Log::d( $stringUtil9->str );
 
+# 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 4
+$stringUtil10 = new \Flex\String\StringUtil( '1000' );
+$stringUtil10->formatNumberPrintf( ',');
+Log::d( $stringUtil10->str );
 
+# 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 3 숫자 범위 벗어 났을 경우 테스트
+$stringUtil11 = new \Flex\String\StringUtil( '100' );
+$stringUtil11->formatNumberPrintf( ',');
+Log::d( $stringUtil11->str );
+
+# 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 5
+$stringUtil11 = new \Flex\String\StringUtil( '15000' );
+$stringUtil11->formatNumberPrintf( ',');
+Log::d( $stringUtil11->str );
+
+# 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 6
+$stringUtil12 = new \Flex\String\StringUtil( '153000' );
+$stringUtil12->formatNumberPrintf( ',');
+Log::d( $stringUtil12->str );
 ?>
