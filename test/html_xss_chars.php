@@ -136,7 +136,7 @@ Log::d( $htmlXssChars->getContext('XHTML') );
 
 # 본문을 XSS 로만 출력 : 허용태그
 $htmlXssChars = new \Flex\Html\HtmlXssChars( $model->contents );
-Log::d('XSS : 허용태그');
+Log::d('XSS : 이벤트 허용 태그');
 $htmlXssChars->setAllowTags('<a>');
 $htmlXssChars->setAllowTags('<frameset>');
 Log::d( $htmlXssChars->getContext('XSS') );

@@ -62,7 +62,6 @@ class HtmlXssChars
 		);
 
 		// 허용 태그 확인
-		print_r($this->allow_tags);
 		if(is_array($this->allow_tags)){
 			$this->allow_tags = explode(',',strtr(implode(',',$this->allow_tags),['<'=>'','>'=>'']));
 			$tmp_eventag= str_replace($this->allow_tags,'',implode('|',$event_tags));
