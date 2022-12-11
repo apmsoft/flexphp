@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관 | 010-4023-7046
-| @Email	: apmsoft@gmail.com
-| @HomePage	: http://www.apmsoftax.com
-| @Editor	: Eclipse(default)
-| @update	: 1.0.1
-----------------------------------------------------------*/
 namespace Flex\Html;
 
 # purpose : xss 방지 및
@@ -14,13 +7,13 @@ class HtmlXssChars
 	private $description;
 	private $allow_tags = array();
 
-	public function __construct($description){
+	public function __construct(string $description){
 		$this->description = $description;
 	}
 
 	#@ void
 	# 허용 태그 설정
-	public function setAllowTags($value){
+	public function setAllowTags(string $value){
 		if(is_array($value)) $this->allow_tags = array_merge($this->allow_tags,$value);
 		else $this->allow_tags[] = $value;
 	}
@@ -28,7 +21,7 @@ class HtmlXssChars
 	#@ return String
 	# strip_tags
 	public function cleanTags(){
-		return strip_tags($this->description,implode('', $this->allow_tags));
+		return strip_tags(htmlspecialchars_decode($this->description),implode('', $this->allow_tags));
 	}
 
 	#@ return String
@@ -69,7 +62,9 @@ class HtmlXssChars
 		);
 
 		// 허용 태그 확인
+		print_r($this->allow_tags);
 		if(is_array($this->allow_tags)){
+			$this->allow_tags = explode(',',strtr(implode(',',$this->allow_tags),['<'=>'','>'=>'']));
 			$tmp_eventag= str_replace($this->allow_tags,'',implode('|',$event_tags));
 			$event_tags = explode('|',$tmp_eventag);
 		}
@@ -110,28 +105,28 @@ class HtmlXssChars
 	}
 
 	#@ return String
-	public function getContext($mode='XSS')
+	public function getContext(string $mode='XSS')
 	{
 		$this->description =stripslashes($this->description);
 		switch(strtoupper($mode)){
 			case 'TEXT':
-				$this->description = str_replace("&nbsp;",' ',$this->description);
-				$this->description = str_replace("\r\n","\n",$this->description);
-				$this->description = str_replace("<br>","\n",$this->description);
+				$this->description = strtr($this->description, ["&nbsp;"=>' ']);
+				$this->description = strtr($this->description,["\r\n"=>"\n"]);
 				$this->description = self::setAutoLink($this->description);
-				$this->description = htmlspecialchars(stripslashes(strip_tags($this->description,'<br>')));
-				$this->description = str_replace("\n","<br />",$this->description);
+				$this->allow_tags  = ['<a>'];
+				$this->description = $this->cleanTags();
 				break;
 			case 'XSS':
-				$this->description = str_replace("\r\n","\n",$this->description);
-				$this->description = str_replace("\n","<br />",$this->description);
-				$this->description = str_replace("<br /><br />","<br />",$this->description);
+				$this->description = strtr($this->description,["\r\n"=>"\n"]);
+				$this->description = strtr($this->description,["\n"=>"<br>"]);
+				$this->description = strtr($this->description,["<br/>"=>"<br>"]);
+				$this->description = strtr($this->description,["<br><br>"=>"<br>"]);
 				$this->description = self::setAutoLink();
 				$this->description = self::cleanXssTags();
 				break;
 			case 'HTML':
-				$this->description = str_replace("\r\n","\n",$this->description);
-				$this->description = str_replace("\n","<br />",$this->description);
+				$this->description = strtr($this->description,["\r\n"=>"\n"]);
+				$this->description = strtr($this->description,["\n"=>"<br>"]);
 				$this->description = self::setAutoLink($this->description);
 				$this->description = htmlspecialchars($this->description);
 				break;
