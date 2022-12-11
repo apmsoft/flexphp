@@ -28,8 +28,8 @@ Log::d( $stringUtil->str );
 
 # 문자를 지정된길이부터 특정 문자로 변경하기
 # 010-0000-7046 => 010-****-7046
-# startNumber : 시작위치, endNumber : 종료위치, chgString : 변형될 문자
-$stringUtil->replace(3, 5, '*');
+# startNumber : 시작위치(0~), endNumber : 길이, chgString : 변형될 문자
+$stringUtil->replace(7, 3, '*');
 Log::d( $stringUtil->str );
 
 # 글자 자르기
@@ -52,6 +52,12 @@ $stringUtil6 = new \Flex\String\StringUtil( '01012345678' );
 $stringUtil6->formatNumberPrintf( '-');
 Log::d( $stringUtil6->str );
 
+# 특정 숫자 가리기 
+$stringUtil61 = new \Flex\String\StringUtil( $stringUtil6->str );
+# 시작 index, 길이만큼, 대체할문자
+$stringUtil61->replace(4, 4, '*');
+Log::d( $stringUtil61->str );
+
 # 숫자 자동 포멧화 하기1 [길이 7 ~ 16] , 길이 8
 $stringUtil7 = new \Flex\String\StringUtil( '15881234' );
 $stringUtil7->formatNumberPrintf( '-');
@@ -67,4 +73,6 @@ Log::d( $stringUtil8->str );
 $stringUtil9 = new \Flex\String\StringUtil( '012345678123456' );
 $stringUtil9->formatNumberPrintf( '-');
 Log::d( $stringUtil9->str );
+
+
 ?>

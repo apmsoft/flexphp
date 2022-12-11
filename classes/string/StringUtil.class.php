@@ -24,19 +24,23 @@ class StringUtil{
 	# @ return String
 	# 문자를 지정된길이부터 특정 문자로 변경하기
 	# 010-4023-7046 => 010-****-7046
-	# startNumber : 시작위치, endNumber : 종료위치, chgString : 변형될 문자
+	# startNumber : 시작위치(index), endNumber : 길이만큼, chgString : 변형될 문자
 	public function replace(int $startNumber, int $endNumber,string $chgString) : void
 	{
-		$s = array();
+		$result = '';
+		$s = [];
 		$sLength = strlen($this->str);
-		$endNumber2 = ($sLength < $endNumber) ? $sLength-$startNumber : $endNumber-$startNumber;
-		$s[0] = substr($this->str,0,$startNumber);
-		$s[1] = substr($this->str,$startNumber,$endNumber2);
-		$s[2] = substr($this->str,$endNumber);
+		$str =&$this->str;
+		$cnt=0;
+		$endNumber2 = $startNumber+$endNumber;
+		for($i=0; $i<$sLength; $i++){
+			if((Ord($str[$i])<=127)&&(Ord($str[$i])>=0)){$result .= ($cnt>=$startNumber && $cnt<=$endNumber2) ? $chgString : $str[$i]; $cnt++;}
+			else if((Ord($str[$i])<=223)&&(Ord($str[$i])>=194)){$result .=($cnt>=$startNumber && $cnt<=$endNumber2) ? $chgString : $str[$i].$str[$i+1];$i+1; $cnt++;}
+			else if((Ord($str[$i])<=239)&&(Ord($str[$i])>=224)){$result .=($cnt>=$startNumber && $cnt<=$endNumber2) ? $chgString : $str[$i].$str[$i+1].$str[$i+2];$i+2; $cnt++;}
+			else if((Ord($str[$i])<=244)&&(Ord($str[$i])>=240)){$result .=($cnt>=$startNumber && $cnt<=$endNumber2) ? $chgString : $str[$i].$str[$i+1].$str[$i+2].$str[$i+3];$i+3; $cnt++;}
+		}
 
-		# 바꿀문자로 체인징
-		$chgReString = str_repeat($chgString, $endNumber2);
-		$this->str = $s[0].$chgReString.$s[2];
+		$this->str = $result;
 	}
 
 	# 문자 자르기
