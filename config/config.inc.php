@@ -66,7 +66,7 @@ define('_SITE_HOST_',App::$host);  # HOST URL
 # resource XML 자동 로드 /---------------
 R::init();
 R::__autoload_resource(array(
-    _VALUES_  => array('sysmsg','strings','integers')
+    _VALUES_  => ['sysmsg','strings','integers']
 ));
 
 # 함수 자동 인클루드 /----------------

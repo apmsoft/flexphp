@@ -16,12 +16,6 @@ Log::options([
     'newline'    => true  # 개행문자 출력여부
 ]);
 
-# 세션에 등록할 키와 세션키 설정
-$session_types = [
-    'id'         =>'adm_id',
-    'userid'     =>'adm_userid'
-];
-
 # model
 $model = new \Flex\Model\Model();
 $model->description = <<<EOF

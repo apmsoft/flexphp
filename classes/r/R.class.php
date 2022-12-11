@@ -6,27 +6,28 @@ use \ErrorException;
 
 final class R
 {
-    public static $nation = _LANG_; // 국가코드
+    public static $nation = ''; // 국가코드
 
     # resource 값
-    public static $sysmsg   =[];
-    public static $strings  =[];
-    public static $integers =[];
-    public static $floats   =[];
-    public static $doubles  =[];
-    
-    public static $columns  =[];
-    public static $layout   =[];
-
-    public static $tables   =[];
-    public static $queries  =[];
-    public static $config   =[];
+    public static $sysmsg   = [];
+    public static $strings  = [];
+    public static $integers = [];
+    public static $floats   = [];
+    public static $doubles  = [];
+    public static $array    = [];
+    public static $tables   = [];
 
     public static $r;
 
     # 배열값 추가 등록
-    public static function init(string $nation=''){
-        self::$nation = $nation ?? _LANG_;
+    public static function init(string $nation='', array $support_langs=[])
+    {
+        $language = (trim($nation)) ? $nation : '';
+        if(!$language){
+            $language = (defined('_LANG_')) ? _LANG_ : 'ko';
+        }
+
+        self::$nation = $language;
 
         # resource 객체화 시키기
         self::$r = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
@@ -41,31 +42,32 @@ final class R
             foreach($resources as $resource_path => $resouces_args){
                 foreach($resouces_args as $resource_name){
                     if(property_exists(__CLASS__,$resource_name)){
-                        self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'.$resource_path.'/'.$resource_name.'.json'), $resource_name);
+                        self::parser(self::findLanguageFile(_ROOT_PATH_.'/'.$resource_path.'/'.$resource_name.'.json'), $resource_name);
                     }
                 }
             }
         }
     }
 
-    public static function parserResourceArray(string $resource_name, array $res_array) : void{
+    public static function parserArray(string $resource_name, array $res_array) : void{
         switch($resource_name){
             case 'sysmsg'  : self::$sysmsg   = $res_array; break;
             case 'strings' : self::$strings  = $res_array; break;
             case 'integers': self::$integers = $res_array; break;
             case 'floats'  : self::$floats   = $res_array; break;
             case 'doubles' : self::$doubles  = $res_array; break;
-            case 'columns' : self::$columns  = $res_array; break;
-            case 'layout'  : self::$layout   = $res_array; break;
             case 'tables'  : self::$tables   = $res_array; break;
-            case 'queries' : self::$queries  = $res_array; break;
-            case 'config'  : self::$config   = $res_array; break;
+            case 'array'   : self::$array    = $res_array; break;
         }
+    }
+
+    public static function __callStatic(string $method, array $args=[]){
+        self::id($method);
     }
 
     #@ return boolen | void
     ## JSON 데이터를 ID로 빠르게 호출하여 사용
-    public static function parserResourceDefinedID(string $query) : void
+    private static function id(string $query) : void
     {
         $resources = array();
 
@@ -75,25 +77,19 @@ final class R
             case 'integers':
             case 'floats':
             case 'doubles': 
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'._VALUES_.'/'.$query.'.json'), $query);
+            case 'array': 
+                self::parser(self::findLanguageFile(_ROOT_PATH_.'/'._VALUES_.'/'.$query.'.json'), $query);
             break;
             case 'tables':
-            case 'queries':
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'._QUERY_.'/'.$query.'.json'), $query);
-            break;
-            case 'layout':
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'._LAYOUT_.'/'.$query.'.json'), $query);
-            break;
-            case 'config':
-                self::parserResource(self::findLanguageFile(_ROOT_PATH_.'/'._CONFIG_.'/'.$query.'.json'), $query);
+                self::parser(self::findLanguageFile(_ROOT_PATH_.'/'._QUERY_.'/'.$query.'.json'), $query);
             break;
         }
     }
 
     #@ void
-    # R::parserResource(_ROOT_PATH_.'/'._QUERY_.'/queries.json', 'queries');
+    # R::parser(_ROOT_PATH_.'/'._QUERY_.'/queries.json', 'queries');
     # out_r(R::$queries);
-    public static function parserResource(string $filename, string $query) : void
+    public static function parser(string $filename, string $query) : void
     {
         if(!$query) throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
         
@@ -115,7 +111,7 @@ final class R
             }
 
             if(property_exists(__CLASS__,$query)){
-                self::parserResourceArray($query, $data);
+                self::parserArray($query, $data);
             }else{
                 self::$r->{$query} =&$data;
             }
@@ -163,13 +159,7 @@ final class R
         unset(self::$integers);
         unset(self::$floats);
         unset(self::$doubles);
-
-        unset(self::$columns);
-        unset(self::$layout);
-
         unset(self::$tables);
-        unset(self::$queries);
-        unset(self::$config);
         unset(self::$r);
     }
 }
