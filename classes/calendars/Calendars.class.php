@@ -32,31 +32,30 @@ class Calendars extends DateTime
 	# @ dow : (일=0,월=1,화=2,수=3,목=4,금=5,토=6)
 	# @ dayname : Saturday
 	# @ shortdayname : Sat
-	# @ kordayname : 월
-	# @ daytoweek : 오늘 날짜가 속한주(2)째주
+	# @ cur_week : 오늘 날짜가 속한주(2)째주
 	private $day = 0;
-	private $daydow, $dayname, $shortdayname, $kordayname;
-	private $daytoweek;
+	private $daydow, $dayname, $shortdayname;
+	private $cur_week;
 
 	# 이전 년월
 	private $pre_year;
 	private $pre_month;
-	private $pre_toweek;
+	private $pre_week;
 
 	# 다음 년월
 	private $next_year;
 	private $next_month;
-	private $next_toweek;
+	private $next_week;
 
 	# 총 달력 데이타
 	/**
 	days_of_month[0] =array(1,2,3,4,5,6,7);
 	days_of_month[1] =array(8,9,10,11,12,13,14);
 	*/
-	private $days_of_month=array();
+	private $days_of_month = [];
 
 	# 기념일 및 휴일설정
-	private $memorial_arg=array();
+	private $memorial_arg = [];
 
 	# 음력 관련
 	private $sunargs= array(20000101,20000107,20000201,20000205,20000301,20000306,20000401,20000405,
@@ -294,22 +293,22 @@ class Calendars extends DateTime
 			if(is_array($today_args))
 			{
 				#month
-				$this->monthname      =$today_args['monthname'];
-				$this->shortmonthname =(isset($today_args['abbrevmonthname'])) ? $today_args['abbrevmonthname'] : substr($today_args['monthname'],0,3);
+				$this->monthname      = $today_args['monthname'];
+				$this->shortmonthname = (isset($today_args['abbrevmonthname'])) ? $today_args['abbrevmonthname'] : substr($today_args['monthname'],0,3);
 
 				#day
-				$this->daydow         =$today_args['dow'];
-				$this->dayname        =$today_args['dayname'];
-				$this->shortdayname   =$today_args['abbrevdayname'];
-				$this->firstdaydow    =date('w',mktime(0,0,0,$this->month,1,$this->year));
+				$this->daydow       = $today_args['dow'];
+				$this->dayname      = $today_args['dayname'];
+				$this->shortdayname = $today_args['abbrevdayname'];
+				$this->firstdaydow  = date('w',mktime(0,0,0,$this->month,1,$this->year));
 			}
-			$this->lastday    =cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
-			$this->lastdaydow =date('w',mktime(0,0,0,$this->month,$this->lastday,$this->year));
+			$this->lastday    = cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
+			$this->lastdaydow = date('w',mktime(0,0,0,$this->month,$this->lastday,$this->year));
 		}else{
-			$this->daydow		=date('w',mktime(0,0,0,$this->month,$this->day,$this->year));
-			$this->firstdaydow	=date('w',mktime(0,0,0,$this->month,1,$this->year));
-			$this->lastday		=date("t",mktime(0,0,1,$this->month,1,$this->year));
-			$this->lastdaydow	=date('w',mktime(0,0,0,$this->month,$this->lastday,$this->year));
+			$this->daydow		 = date('w',mktime(0,0,0,$this->month,$this->day,$this->year));
+			$this->firstdaydow   = date('w',mktime(0,0,0,$this->month,1,$this->year));
+			$this->lastday		 = date("t",mktime(0,0,1,$this->month,1,$this->year));
+			$this->lastdaydow	 = date('w',mktime(0,0,0,$this->month,$this->lastday,$this->year));
 		}
 	}
 
@@ -331,38 +330,40 @@ class Calendars extends DateTime
 		$count=count($memorials);
 		for($i=0; $i<$count; $i++)
 		{
-			$m=&$memorials[$i];
-			$date_args = explode('-',$m['date']);
-			$this_int_date =$this->year.$date_args[1].$date_args[2];
-			$int_date = $date_args[0].$date_args[1].$date_args[2];
-			$holiday_plus =$m['holiday_plus'];
-			// Out::prints_ln('date : '.$m['date'].'/'.'smtype : '.$m['smtype'].'/'.'int_date : '.$int_date);
+			if(isset($memorials[$i]))
+			{
+				$m             =&$memorials[$i];
+				$date_args     = explode('-',$m['date']);
+				$this_int_date = $this->year.$date_args[1].$date_args[2];
+				$int_date      = $date_args[0].$date_args[1].$date_args[2];
+				$holiday_plus  = $m['holiday_plus'];
 
-			# 반복아닌기념일
-			# y : 년, m : 월, n : 반복없음
-			if($m['smtype']=='m'){ # 음력
-				switch($m['repeat']){
-					case 'y' :
-						self::set_memorials_holiday(self::get_moon2sun($this_int_date), $m['holiday'], $m['title'],$holiday_plus);
-						break;
-					case 'm':
-						for($si=1; $si<13; $si++)
-							self::set_memorials_holiday(self::get_moon2sun($date_args[0].sprintf("%02d",$si).$date_args[2]), $m['holiday'], $m['title'],$holiday_plus);
-						break;
-					default :
-						self::set_memorials_holiday(self::get_moon2sun($int_date), $m['holiday'], $m['title'],$holiday_plus);
-				}
-			}else{ # 양력
-				switch($m['repeat']){
-					case 'y' :
-						self::set_memorials_holiday($this_int_date, $m['holiday'], $m['title'],$holiday_plus);
-						break;
-					case 'm':
-						for($si=1; $si<13; $si++)
-							self::set_memorials_holiday($this->year.sprintf("%02d",$si).$date_args[2], $m['holiday'], $m['title'],$holiday_plus);
-						break;
-					default:
-						self::set_memorials_holiday($this_int_date, $m['holiday'], $m['title'],$holiday_plus);
+				# 반복아닌기념일
+				# y : 년, m : 월, n : 반복없음
+				if($m['smtype']=='m'){ # 음력
+					switch($m['repeat']){
+						case 'y' :
+							self::set_memorials_holiday(self::get_moon2sun($this_int_date), $m['holiday'], $m['title'], $holiday_plus);
+							break;
+						case 'm':
+							for($si=1; $si<13; $si++)
+								self::set_memorials_holiday(self::get_moon2sun($date_args[0].sprintf("%02d",$si).$date_args[2]), $m['holiday'], $m['title'],$holiday_plus);
+							break;
+						default :
+							self::set_memorials_holiday(self::get_moon2sun($int_date), $m['holiday'], $m['title'],$holiday_plus);
+					}
+				}else{ # 양력
+					switch($m['repeat']){
+						case 'y' :
+							self::set_memorials_holiday($this_int_date, $m['holiday'], $m['title'], $holiday_plus);
+							break;
+						case 'm':
+							for($si=1; $si<13; $si++)
+								self::set_memorials_holiday($this->year.sprintf("%02d",$si).$date_args[2], $m['holiday'], $m['title'],$holiday_plus);
+							break;
+						default:
+							self::set_memorials_holiday($this_int_date, $m['holiday'], $m['title'],$holiday_plus);
+					}
 				}
 			}
 		}
@@ -371,10 +372,10 @@ class Calendars extends DateTime
 	#@ void
 	# 기념일 데이타를 입력
 	private function set_memorials_holiday($int_date, $holiday, $holiday_title,$holiday_plus) : void{
-		$this->memorial_arg[$int_date] =array('holiday'=>$holiday,'title'=>$holiday_title);
+		$this->memorial_arg[$int_date] = ['holiday'=>$holiday,'title'=>$holiday_title];
 		if($holiday_plus==1){
-			$this->memorial_arg[$int_date-1] =array('holiday'=>$holiday,'title'=>'');
-			$this->memorial_arg[$int_date+1] =array('holiday'=>$holiday,'title'=>'');
+			$this->memorial_arg[$int_date-1] = ['holiday'=>$holiday,'title'=>''];
+			$this->memorial_arg[$int_date+1] = ['holiday'=>$holiday,'title'=>''];
 		}
 	}
 
@@ -385,18 +386,25 @@ class Calendars extends DateTime
 
 		# 이전달
 		if(function_exists('cal_days_in_month')){
-			$pre_lastday =cal_days_in_month(CAL_GREGORIAN, $this->pre_month, $this->pre_year);
+			$pre_lastday = cal_days_in_month(CAL_GREGORIAN, $this->pre_month, $this->pre_year);
 		}else{
-			$pre_lastday =date("t",mktime(0,0,1,$this->pre_month,1,$this->pre_year));
+			$pre_lastday = date("t",mktime(0,0,1,$this->pre_month,1,$this->pre_year));
 		}
+
 		if($this->firstdaydow==0) $s_pre_day=$pre_lastday-6;
 		else $s_pre_day=$pre_lastday-($this->firstdaydow-1);
+
 		for($i=$s_pre_day; $i<=$pre_lastday; $i++)
 		{
-			$tmp_date =sprintf("%04d-%02d-%02d", $this->pre_year,$this->pre_month,$i);
-			$int_date =intval(str_replace('-','',$tmp_date));
+			$tmp_date = sprintf("%04d-%02d-%02d", $this->pre_year,$this->pre_month,$i);
+			$int_date = intval(str_replace('-','',$tmp_date));
 			$this->days_of_month[$x][] =array(
-				'date'=>$tmp_date, 'day'=>$i, 'moon'=>'','holiday'=>'','event_title'=>'','this_month'=>''
+				'date'        => $tmp_date, 
+				'day'         => $i, 
+				'moon'        => '',
+				'holiday'     => '',
+				'event_title' => '',
+				'this_month'  => ''
 			);
 			$num=date('w',mktime(0,0,0,$this->pre_month,$i,$this->pre_year));
 			if($num== 6) $x++;
@@ -405,15 +413,15 @@ class Calendars extends DateTime
 		# 현재달
 		for($j=1; $j<=$this->lastday; $j++)
 		{
-			$tmp_date =sprintf("%04d-%02d-%02d", $this->year,$this->month,$j);
-			$int_date =intval(str_replace('-','',$tmp_date));
-			$int_day  =intval($this->day);
+			$tmp_date = sprintf("%04d-%02d-%02d", $this->year,$this->month,$j);
+			$int_date = intval(str_replace('-','',$tmp_date));
+			$int_day  = intval($this->day);
 
 			#10일에 한번씩 [음력날짜] 계산 및 표기
 			$moon_date='';
 			if($j%10==0){
-				$moon_date=self::get_sun2moon($int_date);
-				$moon_date=substr($moon_date,4,2).'.'.substr($moon_date,-2);
+				$moon_date = self::get_sun2moon($int_date);
+				$moon_date = substr($moon_date,4,2).'.'.substr($moon_date,-2);
 			}
 
 			# 기념일 및 휴일
@@ -421,19 +429,23 @@ class Calendars extends DateTime
 			$event_title='';
 			if(isset($this->memorial_arg[$int_date])){
 				if(isset($this->memorial_arg[$int_date]['holiday']) && $this->memorial_arg[$int_date]['holiday']==1) $holiday = 1;
-				$event_title = (isset($this->memorial_arg[$int_date]['title'])) ?? '';
+				$event_title = (isset($this->memorial_arg[$int_date]['title'])) ? $this->memorial_arg[$int_date]['title'] : '';
 			}
 
 			# 달력
-			$this->days_of_month[$x][] =array(
-				'date'=>$tmp_date, 'day'=>$j, 'moon'=>$moon_date,
-				'holiday'=>$holiday,'event_title'=>$event_title,'this_month'=>1
-			);
+			$this->days_of_month[$x][] =[
+				'date'        => $tmp_date, 
+				'day'         => $j, 
+				'moon'        => $moon_date,
+				'holiday'     => $holiday,
+				'event_title' => $event_title,
+				'this_month'  => 1
+			];
 			$num=date('w',mktime(0,0,0,$this->month,$j,$this->year));
 			if($j==$int_day){
-				$this->pre_toweek=$x-1;
-				$this->daytoweek=$x;
-				$this->next_toweek=$x+1;
+				$this->pre_week  = $x-1;
+				$this->cur_week  = $x;
+				$this->next_week = $x+1;
 			}
 			if($num== 6) $x++;
 		}
@@ -445,9 +457,13 @@ class Calendars extends DateTime
 		{
 			$tmp_date=sprintf("%04d-%02d-%02d", $this->next_year,$this->next_month,$nk);
 			$int_date =intval(str_replace('-','',$tmp_date));
-			$this->days_of_month[$x][] =array(
-				'date'=>$tmp_date, 'day'=>$nk, 'moon'=>'','holiday'=>'','event_title'=>'','this_month'=>''
-			);
+			$this->days_of_month[$x][] =[
+				'date'        => $tmp_date, 
+				'day'         => $nk, 
+				'moon'        => '','holiday'=>'',
+				'event_title' => '',
+				'this_month'  => ''
+			];
 			$num=date('w',mktime(0,0,0,$this->next_month,$nk,$this->next_year));
 			$nk++;
 			if($num== 6) $x++;
@@ -457,27 +473,27 @@ class Calendars extends DateTime
 	# 이전 년월, 다음 년월 구하기
 	public function set_pre_next_date() : void
 	{
-		$prev_year=$this->year-1;
-		$next_year=$this->year+1;
-		$month = intval($this->month);
+		$prev_year = $this->year-1;
+		$next_year = $this->year+1;
+		$month     = intval($this->month);
 		if($month==1){
-			$this->pre_year   =$prev_year;
-			$this->next_year  =$this->year;
-			$this->pre_month  =12;
-			$this->next_month =sprintf("%02d",$month+1);
+			$this->pre_year   = $prev_year;
+			$this->next_year  = $this->year;
+			$this->pre_month  = 12;
+			$this->next_month = sprintf("%02d",$month+1);
 		}
 		else if($month==12){
-			$this->pre_year   =$this->year;
-			$this->next_year  =$next_year;
-			$this->pre_month  =sprintf("%02d",$month-1);
-			$this->next_month =1;
+			$this->pre_year   = $this->year;
+			$this->next_year  = $next_year;
+			$this->pre_month  = sprintf("%02d",$month-1);
+			$this->next_month = 1;
 		}
 		else if($month !=1 && $month !=12)
 		{
-			$this->pre_year   =$this->year;
-			$this->next_year  =$this->year;
-			$this->pre_month  =sprintf("%02d",$month-1);
-			$this->next_month =sprintf("%02d",$month+1);
+			$this->pre_year   = $this->year;
+			$this->next_year  = $this->year;
+			$this->pre_month  = sprintf("%02d",$month-1);
+			$this->next_month = sprintf("%02d",$month+1);
 		}
 	}
 
@@ -501,10 +517,10 @@ class Calendars extends DateTime
 
 	#이전주에 해당하는 마지막일을 가지고 온다
 	public function get_pre_week_last_date() : date{
-		$args = array();
+		$args = [];
 		$pre_date = '';
-		if(isset($this->days_of_month[$this->daytoweek])){
-			$args = $this->days_of_month[$this->daytoweek];
+		if(isset($this->days_of_month[$this->cur_week])){
+			$args = $this->days_of_month[$this->cur_week];
 		}
 
 		if(isset($args[0]) && isset($args[0]['date'])){
@@ -517,10 +533,10 @@ class Calendars extends DateTime
 
 	#다음주에 해당하는 첫일을 가지고 온다
 	public function get_next_week_first_date() : date{
-		$args = array();
+		$args = [];
 		$nxt_date = '';
-		if(isset($this->days_of_month[$this->daytoweek])){
-			$args = $this->days_of_month[$this->daytoweek];
+		if(isset($this->days_of_month[$this->cur_week])){
+			$args = $this->days_of_month[$this->cur_week];
 		}
 
 		if(isset($args[6]) && isset($args[6]['date'])){
@@ -533,20 +549,20 @@ class Calendars extends DateTime
 
 	# 해당해의 띠
 	public function get_zodiac_sign() : string{
-		$zodiac_sign_args = array('원숭이','닭','개','돼지','쥐','소','범','토끼','용','뱀','말','양');
+		$zodiac_sign_args = ['원숭이','닭','개','돼지','쥐','소','범','토끼','용','뱀','말','양'];
 		$ddikey = intval($this->year % 12);
 	return $zodiac_sign_args[$ddikey];
 	}
 
 	# 육십갑자
 	public function get_sexagenary_cycle() : string{
-		$tengan =array('경','신','임','계','갑','을','병','정','무','기');
-		$tenji	=array('신','유','술','해','자','축','인','묘','진','사','오','미');
+		$tengan = ['경','신','임','계','갑','을','병','정','무','기'];
+		$tenji	= ['신','유','술','해','자','축','인','묘','진','사','오','미'];
 
-		$n1 =substr($this->year, -1);
-		$n2 =intval($year % 12);
+		$n1 = substr($this->year, -1);
+		$n2 = intval($this->year % 12);
 
-	return $tengan[$n1].$this->tenji[$n2];
+	return $tengan[$n1].$tenji[$n2];
 	}
 
 	#@ return

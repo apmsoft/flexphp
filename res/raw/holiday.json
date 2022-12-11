@@ -1,19 +1,19 @@
 [
 	{
-		"date"        : "2013-01-01",
+		"date"        : "2022-12-25",
 		"smtype"      : "s",
 		"repeat"      : "y",
 		"holiday"     : 1,
 		"holiday_plus": 0,
-		"title"       : "신정"
+		"title"       : "성탄절"
 	},
 	{
 		"date"        : "2013-01-01",
-		"smtype"      : "m",
+		"smtype"      : "y",
 		"repeat"      : "y",
 		"holiday"     : 1,
 		"holiday_plus": 1,
-		"title"       : "설날"
+		"title"       : "신정"
 	},
 	{
 		"date"        : "2012-03-01",

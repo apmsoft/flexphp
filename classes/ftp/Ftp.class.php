@@ -8,7 +8,7 @@ final class Ftp extends FtpObject
         'inc','ini','asp','aspx','jsp','css','js'
     );
 
-    public function __construct($ftp_url='',$ftp_user='', $ftp_passwd=''){
+    public function __construct(string $ftp_url='',string $ftp_user='', string $ftp_passwd=''){
         $_ftp_host   = ($ftp_url)   ? $ftp_url      : _FTP_HOST_;
         $_ftp_user   = ($ftp_user)  ? $ftp_user     : _FTP_USER_;
         $_ftp_passwd = ($ftp_passwd)? $ftp_passwd   : _FTP_PASSWD_;
@@ -17,9 +17,8 @@ final class Ftp extends FtpObject
         $this->ftp_login($_ftp_user, $_ftp_passwd);
     }
 
-    #@ return boolean | string
     # 파일 내용 읽어 오기
-    public function open_file_read($tmpfile, $remote_file)
+    public function open_file_read(string $tmpfile, string $remote_file) : string
     {
         if(!$this->ftp_get($tmpfile, $remote_file, self::chk_open_mode($remote_file)))
             return false;
@@ -31,9 +30,7 @@ final class Ftp extends FtpObject
     return $contents;
     }
 
-    #@ return boolean
-    #
-    public function open_file_write($tmpfile, $remote_file, $contents)
+    public function open_file_write(string $tmpfile, string $remote_file, string $contents) : bool
     {
         if(!self::isExists($tmpfile)){
             return false;
@@ -52,9 +49,8 @@ final class Ftp extends FtpObject
     return true;
     }
 
-    #@ void
     # 파일삭제
-    public function delete_file($dir, $del_filename){
+    public function delete_file(string $dir, string $del_filename) : void{
         $files = $this->ftp_nlist($dir);
         if(is_array($files)){
             foreach ($files as $file){
@@ -67,15 +63,14 @@ final class Ftp extends FtpObject
         }
     }
 
-    #@ return boolean
     # 로컬 파일인지 체크
-    private function isExists($filename){
+    private function isExists(string $filename) : bool{
         if(!file_exists($filename)) return false;
     return true;
     }
 
     #@ return int
-    private function chk_open_mode($filename)
+    private function chk_open_mode(string $filename) : int
     {
         $extention = strtolower(self::getExtention($filename));
 
@@ -83,9 +78,8 @@ final class Ftp extends FtpObject
         else return FTP_BINARY;
     }
 
-    #@ return String
     # 파일 확장자 추출
-    private function getExtention($filename){
+    private function getExtention(string $filename) : string{
         $tmpfile = basename($filename);
         $count= strrpos($tmpfile,'.');
         $extention= strtolower(substr($tmpfile, $count+1));
