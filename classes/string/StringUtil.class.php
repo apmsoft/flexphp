@@ -32,7 +32,7 @@ class StringUtil{
 		$sLength = strlen($this->str);
 		$str =&$this->str;
 		$cnt=0;
-		$endNumber2 = $startNumber+$endNumber;
+		$endNumber2 = ($startNumber-1)+$endNumber;
 		for($i=0; $i<$sLength; $i++){
 			if((Ord($str[$i])<=127)&&(Ord($str[$i])>=0)){$result .= ($cnt>=$startNumber && $cnt<=$endNumber2) ? $chgString : $str[$i]; $cnt++;}
 			else if((Ord($str[$i])<=223)&&(Ord($str[$i])>=194)){$result .=($cnt>=$startNumber && $cnt<=$endNumber2) ? $chgString : $str[$i].$str[$i+1];$i+1; $cnt++;}
