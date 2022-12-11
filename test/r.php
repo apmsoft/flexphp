@@ -23,7 +23,7 @@ Log::options([
 // strings_jp.json     - 일본어
 
 # 기본언어 설정
-R::init( App::$lang );
+R::init( App::$language );
 Log::d('R :: language ', R::$language);
 
 # res/string 기본 호출
