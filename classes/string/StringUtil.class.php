@@ -50,6 +50,12 @@ class StringUtil{
 		$result = '';
 		$str =&$this->str;
 		$len = strlen($str);
+
+		# 예외태그 허용
+		if(trim($strip_tags)) {
+			$result = strip_tags($str, $strip_tags);
+		}
+		
 		if($len > $length)
 		{
 			for($i=0;$i<$length;$i++){
@@ -57,11 +63,6 @@ class StringUtil{
 				else if((Ord($str[$i])<=223)&&(Ord($str[$i])>=194)){$result .=$str[$i].$str[$i+1];$i+1;}
 				else if((Ord($str[$i])<=239)&&(Ord($str[$i])>=224)){$result .=$str[$i].$str[$i+1].$str[$i+2];$i+2;}
 				else if((Ord($str[$i])<=244)&&(Ord($str[$i])>=240)){$result .=$str[$i].$str[$i+1].$str[$i+2].$str[$i+3];$i+3;}
-			}
-
-			# 예외태그 허용
-			if(!is_null($strip_tags) && trim($strip_tags)) {
-				$result = strip_tags($result, $strip_tags);
 			}
 
 			# 끝에 줄임문자 붙이기
