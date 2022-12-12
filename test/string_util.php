@@ -29,7 +29,7 @@ Log::d( $stringUtil->str );
 # 문자를 지정된길이부터 특정 문자로 변경하기
 # 010-0000-7046 => 010-****-7046
 # startNumber : 시작위치(0~), endNumber : 길이, chgString : 변형될 문자
-$stringUtil->replace(7, 3, '*');
+$stringUtil->replace(7, strlen($stringUtil->str), '*');
 Log::d( $stringUtil->str );
 
 # 글자 자르기
@@ -44,7 +44,7 @@ Log::d( $stringUtil3->str );
 
 # 글자 자르기3 특정태그 허용
 $stringUtil4 = new \Flex\String\StringUtil( '<b>대만민국</b> 국제 <font color="red">올림픽</font> 대화에서' );
-$stringUtil4->cut(10, true, '<b><strong><font><strike>');
+$stringUtil4->cut(10, true, '<b><strong><strike>');
 Log::d( $stringUtil4->str );
 
 # 숫자 자동 포멧화 하기1 [길이 3 ~ 16], 길이 11
