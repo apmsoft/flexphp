@@ -57,18 +57,15 @@ final class ImageViewer extends ImageGDS
 					{
 						$sizes = explode('x', $size);
 						if(isset($sizes[0]) && isset($sizes[1])){
-							if(parent::thumbnailImage($sizes[0], $sizes[1])){
-								if(parent::write($this->upload_dir.'/'.$thumb_filename)){
-									$fullname = $this->upload_dir.'/'.$thumb_filename;
-								}
-							}
+							parent::thumbnailImage($sizes[0], $sizes[1]);
+							parent::write($this->upload_dir.'/'.$thumb_filename);
+							$fullname = $this->upload_dir.'/'.$thumb_filename;
 						}
 					}
 
 					# 압축
-					if(parent::write($this->upload_dir.'/'.$thumb_filename)){
-						$fullname = $this->upload_dir.'/'.$thumb_filename;
-					}
+					parent::write($this->upload_dir.'/'.$thumb_filename);
+					$fullname = $this->upload_dir.'/'.$thumb_filename;
 				}catch(\Exception $e){
                     Log::e($e->getMessage());
 				}

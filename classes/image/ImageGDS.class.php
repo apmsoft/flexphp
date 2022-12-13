@@ -54,7 +54,7 @@ class ImageGDS
 		imagesavealpha($image, $boolean);
 	}
 
-	public function setFttext(mixed $image,array $fontcolor, string $text){
+	public function setFttext(mixed $image, int $fontcolor, string $text){
 		imagefttext($image,$this->fontsize,$this->fontangle,$this->x,$this->y,$fontcolor,$this->fontsrc,$text);
 	}
 
@@ -77,7 +77,7 @@ class ImageGDS
 	public function setXY(int $x, int $y) : void { $this->x = $x; $this->y = $y; }
 
 	# 텍스트 이미지 만들기
-	public function writeTextImage(int $width, int $height, string $text){
+	public function writeTextImage(int $width, int $height, string $text) : void{
 		$this->im = self::createTrueImage($width,$height);
 		self::setAlphablending($this->im);
 		self::setFilledrectangle($this->im,0,0,$width,$height,$this->bgcolor);
@@ -113,7 +113,7 @@ class ImageGDS
 	}
 
 	# 이미지 위에 텍스트 쓰기
-	public function combineImageText(int $width, int $height,string $text, string|null $filename=null){
+	public function combineImageText(int $width, int $height, string $text, string|null $filename=null) : void{
 		$this->im = self::createTrueImage($width,$height);
 		self::setAntialias($this->im,true);
 		$fontcolor = self::setColorallocate($this->im,$this->fontcolor[0],$this->fontcolor[1],$this->fontcolor[2]);
@@ -127,7 +127,8 @@ class ImageGDS
 	}
 
 	# margin_r : 오른쪽 여백, margin_b : 아래여백
-	public function filterWatermarks($marksfilename,$margin_r=10,$margin_b=10){
+	public function filterWatermarks(string $marksfilename,int $margin_r=10,int $margin_b=10): void
+	{
 		if(!file_exists($marksfilename))
 			throw new \Exception(__CLASS__.':'.__METHOD__.':'.$marksfilename);
 
@@ -137,14 +138,14 @@ class ImageGDS
 
 		$width  = imagesx($image);
 		$height = imagesy($image);
-		$im_x   = imagesx($this->im) - $width - $marge_r;
-		$im_y   = imagesy($this->im) - $height - $marge_b;
+		$im_x   = imagesx($this->im) - $width - $margin_r;
+		$im_y   = imagesy($this->im) - $height - $margin_b;
 
 		self::copy($this->im,$image,$im_x,$im_y,0,0,$width,$height);
 	}
 
 	# void 이미지 자르기 int width,height,x,y
-	public function cropImage(int $width,int $height, int $x, int $y){
+	public function cropImage(int $width,int $height, int $x, int $y) : void{
 		$this->im = self::createTrueImage($width,$height);
 		$image = self::readImage($this->filename);
 		if(self::copy($this->im,$image,0,0,$x,$y,$width,$height) === false)
@@ -152,7 +153,7 @@ class ImageGDS
 	}
 
 	# void 이미지 자르기 (center) int width,height
-	public function cropThumbnailImage(int $width, int $height) : bool
+	public function cropThumbnailImage(int $width, int $height) : void
 	{
 		$imgsize = self::getImageSize($this->filename);
 
@@ -171,7 +172,7 @@ class ImageGDS
 			$width      = $imgsize->width / $hm;
 			$half_width = $width / 2;
 			$im_x       = -($half_width - $w_height);
-		}else if(($imgsize->width <$imgsize->height) || ($imgsize->wdith == $imgsize->height)){
+		}else if(($imgsize->width < $imgsize->height) || ($imgsize->wdith == $imgsize->height)){
 			$height      = $imgsize->height / $wm;
 			$half_height = $height / 2;
 			$im_y        = $half_height - $h_height;
@@ -181,12 +182,10 @@ class ImageGDS
 		$image = self::readImage($this->filename);
 		if(self::copyResampled($this->im,$image,$im_x,$im_y,$image_x,$image_y,$width,$height,$imgsize->width,$imgsize->height) === false)
 			throw new \Exception(__METHOD__,__LINE__);
-
-	return true;
 	}
 
 	# 썸네일 이미지 만들기 int width, height
-	public function thumbnailImage(int $width, int $height) : bool
+	public function thumbnailImage(int $width, int $height) : void
 	{
 		$imgsize = self::getImageSize($this->filename);
 
@@ -202,7 +201,6 @@ class ImageGDS
 		$image = self::readImage($this->filename);
 		if(self::copyResampled($this->im, $image, 0,0,0,0,$width,$height,$imgsize->width,$imgsize->height) ===false)
 			throw new \Exception(__METHOD__,__LINE__);
-	return true;
 	}
 
 	# imagecopy
@@ -249,30 +247,29 @@ class ImageGDS
 	}
 
 	# string filename
-	public function write(string $filename){
+	public function write(string $filename) : void
+	{
 		$count	= strrpos($filename,'.');
 		$extention = strtolower(substr($filename, $count+1));
 		try{
 			switch($extention){
-				case 'gif': imagegif($this->im,$filename); return true; break;
-				case 'png': imagepng($this->im,$filename,($this->quality/10)-1); return true; break;
+				case 'gif': imagegif($this->im,$filename); break;
+				case 'png': imagepng($this->im,$filename,($this->quality/10)-1); break;
 				case 'jpg':
-				case 'jpeg': imagejpeg($this->im,$filename,$this->quality); return true; break;
-				default : return false;
+				case 'jpeg': imagejpeg($this->im,$filename,$this->quality); break;
 			}
 		}catch(\Exception $e){
 			throw new \Exception($e->getMessage());
 		}
-
 	}
 
 	# @ void : GD 버전
-	public function getVersion(){
+	public function getVersion() : float{
 		if(function_exists('gd_info')){
 			$info = gd_info();
-			return preg_replace('/bundled \((.*) compatible\)/','\\1', $info['GD Version']);
+			return floatval(preg_replace('/bundled \((.*) compatible\)/','\\1', $info['GD Version']));
 		}
-	return false;
+	return 0.0;
 	}
 
 	# 이미지 사이즈
