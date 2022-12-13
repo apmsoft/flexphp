@@ -1,11 +1,4 @@
 <?php
-/** ======================================================
-| @Author	: 김종관 | 010-4023-7046
-| @Email	: apmsoft@gmail.com
-| @HomePage	: http://www.apmsoftax.com
-| @Editor	: Eclipse(default)
-| @UPDATE	: 2010-02-16
-----------------------------------------------------------*/
 namespace Flex\Image;
 
 # purpose : 이미지 효과주기

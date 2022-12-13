@@ -1,17 +1,17 @@
 <?php
 namespace Flex\Image;
 
-use Flex\R\R;
+use Flex\Image\ImageGDS;
 use Flex\Log\Log;
 
-# purpose : 이미지를(비율에 맞춰) 출력하기 위해
-final class ImageViewer
+# 이미지 뷰어
+final class ImageViewer extends ImageGDS
 {
+	# 이미지 경로
 	private $upload_dir;
 
-	final public function __construct(string $extract_id){
-		$this->upload_dir = _ROOT_PATH_.'/'._UPLOAD_.'/'.$extract_id;
-
+	final public function __construct(string $dir){
+		$this->upload_dir = $dir;
 	}
 
 	#@ return String
@@ -22,13 +22,19 @@ final class ImageViewer
 	return $file_extension;
 	} 
 
-	public function doView (string $filename, int $compression, string $size) : array
+	/**
+	 * @ filename : 파일명
+	 * @ compression : 압축률
+	 * @ size : 이미지 사이즈
+	 * @ file_extension : ['jpg','jpeg','png'] 허용파일 확장자
+	 */
+	public function doView (string $filename, int $compression, string $size, array $file_extension) : array
 	{
 		$fullname = $this->upload_dir.'/'.$filename;
 
 		$file_type = 'application';
 		$exe       = $this->getExtName($filename);
-		$ext_args  = explode(',',R::$config['file_extension']);
+		$ext_args  = $file_extension;
 		if(in_array($exe,$ext_args)){
 			$file_type = 'image';
 		}
@@ -43,16 +49,16 @@ final class ImageViewer
 			}else{
 				try{
 					// $image_size = @getimagesize($fullname);
-					$imageGDS = new \Flex\Image\ImageGDS( $this->upload_dir.'/'.$filename );
-					$imageGDS->setCompressionQuality($compression);
+					parent::__construct( $this->upload_dir.'/'.$filename );
+					parent::setCompressionQuality($compression);
 
 					# resize
 					if(strpos($size,'x') !==false)
 					{
 						$sizes = explode('x', $size);
 						if(isset($sizes[0]) && isset($sizes[1])){
-							if($imageGDS->thumbnailImage($sizes[0], $sizes[1])){
-								if($imageGDS->write($this->upload_dir.'/'.$thumb_filename)){
+							if(parent::thumbnailImage($sizes[0], $sizes[1])){
+								if(parent::write($this->upload_dir.'/'.$thumb_filename)){
 									$fullname = $this->upload_dir.'/'.$thumb_filename;
 								}
 							}
@@ -60,7 +66,7 @@ final class ImageViewer
 					}
 
 					# 압축
-					if($imageGDS->write($this->upload_dir.'/'.$thumb_filename)){
+					if(parent::write($this->upload_dir.'/'.$thumb_filename)){
 						$fullname = $this->upload_dir.'/'.$thumb_filename;
 					}
 				}catch(\Exception $e){
