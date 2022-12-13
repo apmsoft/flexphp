@@ -30,7 +30,7 @@ $upload_dir = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe';
 # 기본정보
 $filename    = 'j.jpeg';           # 파일명
 $compression = $ivConfig->c9;      # 품질(압축)
-$sizes       = $ivConfig->sm;      # 이미지사이즈
+$sizes       = $ivConfig->xs;      # 이미지사이즈
 
 # .................................허용 파일 확장자
 $allowed_file_extension = $ivConfig->file_extension;
