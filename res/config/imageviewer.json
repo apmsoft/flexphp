@@ -4,7 +4,7 @@
         "extract_id": "첨부파일토큰",
         "filename": "파일명"
     },
-    "file_extension": "gif,jpg,jpeg,png",
+    "file_extension": ["gif","jpg","jpeg","png"],
     "c9" : 90,
     "c8" : 80,
     "c7" : 70,

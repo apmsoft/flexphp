@@ -19,20 +19,21 @@ Log::options([
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/imageviewer.json', 'imageviewer');
 Log::d(R::$r->imageviewer[R::$language]);
 
-# model
-$model = new \Flex\Model\Model( R::$r->imageviewer[R::$language] );
+# image viewer config :: model
+$ivConfig = new \Flex\Model\Model( R::$r->imageviewer[R::$language] );
 
+#=============================
 # image_view.php?ef=imageadfesdfe/filename@c=9&s=sm
 # 파일경로
 $upload_dir = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe';
 
 # 기본정보
-$filename    = 'j.jpeg';        # 파일명
-$compression = $model->c9;      # 품질(압축)
-$sizes       = $model->sm;      # 이미지사이즈
+$filename    = 'j.jpeg';           # 파일명
+$compression = $ivConfig->c9;      # 품질(압축)
+$sizes       = $ivConfig->sm;      # 이미지사이즈
 
-# 허용 파일 확장자
-$allowed_file_extension = explode(',',$model->file_extension);
+# .................................허용 파일 확장자
+$allowed_file_extension = $ivConfig->file_extension;
 
 # Image Viewer
 $imageViewer = new \Flex\Image\ImageViewer( $upload_dir );

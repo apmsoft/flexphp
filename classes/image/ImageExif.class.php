@@ -18,55 +18,35 @@ class ImageExif
 		'makenote'	=> array('FirmwareVersion','UndefinedTag:0x0095')
 	);
 	
-	# 사진 풀경로
-	public function __construct($picture){
+	# 사진 전체 경로
+	public function __construct(string $picture){
 		# 로컬 파인인지 체크
 		if(!file_exists($picture))
 			throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.strval($picture).' not found');
 
 		# 함수 enable 체크
-		if(function_exists(exif_read_data)){
+		if(function_exists('exif_read_data')){
 			$this->exifargs = @exif_read_data($picture,0,true);
 			if($this->exifargs ===false)
 				throw new ErrorException(__CLASS__.' :: '.__LINE__.' exif_read_data functions are not available');
 		}
 	}
 	
-	# 파일 계산
-	public function calcuSize($size)
-	{
-		$result = '';
-		if(!empty($size)){
-			$result = sprintf("%0.1f KB", ($size/1024));
-			if($r>1024){
-				$result = sprintf("%0.1f MB", ($r/1024)); //수점 이하가 0.5 는 1로 반올림한다.
-			}
-		}
-	return $result;
-	}
-	
 	# FILE
-	public function getFile()
+	public function getFile() : array
 	{
-		$result = array();
-		if($this->exifargs['FILE']){
-			$args =& $this->exifargs['FILE'];
-			foreach($args as $k => $v){
-				switch($k){
-					case 'FileDateTime': $result[$k] = __date($v,"Y-m-d H:i:s"); break;
-					case 'FileSize' : $result[$k] = self::calcuSize($v); break;
-					default : $result[$k]= $v;
-				}
-			}
+		$result = [];
+		if(isset($this->exifargs['FILE'])){
+			$result = $this->exifargs['FILE'];
 		}
 	return $result;
 	}
 	
 	# COMPUTED
-	public function getComputed()
+	public function getComputed() : array
 	{
-		$result = array();
-		if($this->exifargs['COMPUTED']){
+		$result = [];
+		if(isset($this->exifargs['COMPUTED'])){
 			$args =& $this->exifargs['COMPUTED'];
 			foreach($args as $k => $v){
 				switch($k){
@@ -89,10 +69,10 @@ class ImageExif
 	}
 	
 	# IFDO
-	public function getIfdo()
+	public function getIfdo() : array
 	{
-		$result = array();
-		if($this->exifargs['IFD0']){
+		$result = [];
+		if(isset($this->exifargs['IFD0'])){
 			$args =& $this->exifargs['IFD0'];
 			foreach($args as $k => $v){
 				switch($k){
@@ -108,10 +88,10 @@ class ImageExif
 	}
 	
 	# EXIF
-	public function getExif()
+	public function getExif() : array
 	{
-		$result = array();
-		if($this->exifargs['EXIF']){
+		$result = [];
+		if(isset($this->exifargs['EXIF'])){
 			$args =& $this->exifargs['EXIF'];
 			foreach($args as $k => $v){
 				switch($k){
@@ -140,20 +120,20 @@ class ImageExif
 	}
 
 	# GPS
-	public function getGPS()
+	public function getGPS() : array
 	{
-		$result = array();
-		if($this->exifargs['GPS']){
+		$result = [];
+		if(isset($this->exifargs['GPS'])){
 			$result = $this->exifargs['GPS'];
 		}
 	return $result;
 	}
 	
 	# MAKENOTE
-	public function getMakenote()
+	public function getMakenote() : array
 	{
-		$result = array();
-		if($this->exifargs['MAKENOTE']){
+		$result = [];
+		if(isset($this->exifargs['MAKENOTE'])){
 			$args =& $this->exifargs['MAKENOTE'];
 			foreach($this->setkey_args['makenote'] as $k => $v){
 				$result[$k] = $v;
@@ -163,8 +143,9 @@ class ImageExif
 	}
 	
 	# 한번에 추출하기
-	public function getAvailable(){
-		$args = array();
+	public function fetch() : array
+	{
+		$args = [];
 		if(count($this->exifargs)>0){
 			foreach($this->setkey_args as $k => $v){
 				$methodName = 'get'.ucwords($k);
