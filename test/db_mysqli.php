@@ -15,6 +15,14 @@ Log::options([
     'newline'    => true  # 개행문자 출력여부
 ]);
 
+/**
+ * define('_DB_HOST_','127.0.0.1');
+ * define('_DB_HOST_','test2');
+ * define('_DB_PASSWD_','d1004');
+ * define('_DB_NAME_','test_db2');
+ * define('_DB_PORT_',33060);
+ */
 # db
-$db = new \Flex\Db\DbMySqli();
+// $db = new \Flex\Db\DbMySqli();
+$db = new \Flex\Db\DbMySqli(_DB_HOST_, _DB_HOST_, _DB_PASSWD_, _DB_NAME_, _DB_PORT_);
 ?>

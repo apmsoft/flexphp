@@ -20,14 +20,14 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	private $params = array();
 
 	# dsn : host:dbname = localhost:dbname
-	public function __construct(string $dsn='',string $user='',string $passwd='',string $chrset='utf8')
+	public function __construct(string $dsn='',string $user='',string $passwd='', int $port=3306, string $chrset='utf8')
 	{
 		# 데이타베이스 접속
 		if(!empty($dsn)){
 			$dsn_args = explode(':',$dsn);
-			parent::__construct($dsn_args[0],$user,$passwd,$dsn_args[1]);
+			parent::__construct($dsn_args[0],$user,$passwd,$dsn_args[1],$port);
 		}else{//config.inc.php > config.db.php
-			parent::__construct(_DB_HOST_,_DB_USER_,_DB_PASSWD_,_DB_NAME_);
+			parent::__construct(_DB_HOST_,_DB_USER_,_DB_PASSWD_,_DB_NAME_, _DB_PORT_);
 		}
 
 		if (mysqli_connect_error()){
