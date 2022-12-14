@@ -24,5 +24,5 @@ Log::options([
  */
 # db
 // $db = new \Flex\Db\DbMySqli();
-$db = new \Flex\Db\DbMySqli(_DB_HOST_, _DB_HOST_, _DB_PASSWD_, _DB_NAME_, _DB_PORT_);
+$db = new \Flex\Db\DbMySqli(_DB_HOST_.':'._DB_NAME_, _DB_HOST_, _DB_PASSWD_, _DB_PORT_);
 ?>
