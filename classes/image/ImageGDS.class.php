@@ -126,8 +126,9 @@ class ImageGDS
 		self::setTTFText($this->im,$this->fontsize,$this->x,$this->y,$fontcolor,$text);
 	}
 
-	# margin_r : 오른쪽 여백, margin_b : 아래여백
-	public function filterWatermarks(string $marksfilename,int $margin_r=10,int $margin_b=10): void
+	# margin_x : 가로 여백, margin_y : 세로 여백
+	# RB : 오른쪽 아래 기분, LB : 왼쪽 아래 기분, LT : 왼쪽 위 기준, RT : 오른쪽 위 기준
+	public function filterWatermarks(string $marksfilename,int $margin_x=10,int $margin_y=10, string $position='RB'): void
 	{
 		if(!file_exists($marksfilename))
 			throw new \Exception(__CLASS__.':'.__METHOD__.':'.$marksfilename);
@@ -138,8 +139,28 @@ class ImageGDS
 
 		$width  = imagesx($image);
 		$height = imagesy($image);
-		$im_x   = imagesx($this->im) - $width - $margin_r;
-		$im_y   = imagesy($this->im) - $height - $margin_b;
+
+		# switch
+		$im_x   = $margin_x;
+		$im_y   = $margin_y;
+		switch ($position){
+			case 'RB' :
+				$im_x   = imagesx($this->im) - $width - $margin_x;
+				$im_y   = imagesy($this->im) - $height - $margin_y;
+				break;
+			case 'LB' :
+				$im_x   = $margin_x;
+				$im_y   = imagesy($this->im) - $height - $margin_y;
+				break;
+			case 'LT' :
+				$im_x   = $margin_x;
+				$im_y   = $margin_y;
+				break;
+			case 'RT' :
+				$im_x   = imagesx($this->im) - $width - $margin_x;
+				$im_y   = $margin_y;
+				break;
+		}
 
 		self::copy($this->im,$image,$im_x,$im_y,0,0,$width,$height);
 	}

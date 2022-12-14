@@ -48,9 +48,13 @@ try{
     Log::d($model->dir.'/gd_cropthumb_120x100.jpg');
 
     # 필터 워터마크 찍기
+    # RB : 오른쪽 아래 기분, LB : 왼쪽 아래 기분, LT : 왼쪽 위 기준, RT : 오른쪽 위 기준
     Log::d('필터 워터마크 찍기');
     $imageGDS = new \Flex\Image\ImageGDS($model->dir.'/gd_crop_500x150_x150_y100.jpg');
-    $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5);
+    // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'RB');
+    // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'LB');
+    // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'LT');
+    $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'RT');
     $imageGDS->write($model->dir.'/gd_watermarks.jpg');
     Log::d($model->dir.'/gd_watermarks.jpg');
 
