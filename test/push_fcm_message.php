@@ -29,9 +29,10 @@ Log::init(Log::MESSAGE_ECHO);
 
 # define
 define('_FCM_SERVICE_ACCOUT_KEY_', '/home/flexphp/public_html/firebase-adminsdk-mnazt-e2d8795ac6.json');
+define('_FCM_PROJECT_ID_', 'smartds-5ca46');
 
 # class
-$pushFCMMessage = new \Flex\Push\PushFCMMessage( 'smartds-5ca46');
+$pushFCMMessage = new \Flex\Push\PushFCMMessage( _FCM_PROJECT_ID_ );
 
 # 전송 메세지
 $push_send_params = [
