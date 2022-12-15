@@ -42,10 +42,12 @@ $push_send_params = [
 Log::d('push_send_params ', $push_send_params);
 
 # 푸시토큰
-if($pushFCMMessage->getGoogleAccessToken( _FCM_SERVICE_ACCOUT_KEY_ )){
-    $pushFCMMessage->setDeivce('토큰1');
-    $pushFCMMessage->setDeivce('토큰2');
-    #$pushFCMMessage->setDeivces(['토큰1','토큰2']);
-    $pushFCMMessage->send($push_send_params);
+try{
+    if($pushFCMMessage->getGoogleAccessToken( _FCM_SERVICE_ACCOUT_KEY_ )){
+        $pushFCMMessage->setDeivce('토큰1');
+        $pushFCMMessage->send($push_send_params);
+    }
+}catch(\Exception $e){
+    Log::e($e->getMessage());
 }
 ?>

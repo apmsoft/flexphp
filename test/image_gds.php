@@ -90,7 +90,7 @@ try{
     $imageGDS->write($model->dir.'/gd_shadowtext.png');
     Log::d($model->dir.'/gd_shadowtext.png');
 
-}catch(Exception $e){
+}catch(\Exception $e){
     Log::e($e->getMessage());
 }
 

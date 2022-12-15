@@ -13,6 +13,9 @@ class PushFCMMessage
 	private $sendGoogleAccessToken = '';
 
 	public function __construct(string $project_id){
+		if(!$project_id)
+			throw new \Exception('project_id is empty!!');
+
 		$this->url = sprintf("https://fcm.googleapis.com/v1/projects/%s/messages:send", $project_id);
 	}
 
@@ -52,42 +55,33 @@ class PushFCMMessage
 		return $this->sendGoogleAccessToken;
 	}
 
-	#@ void
-	#배열값 한번에 넣기
-	public function setDevices($deviceIds){
-		if(is_array($deviceIds)){
-			$this->devices = $deviceIds;
-		}
-	}
-
-	#@ void
 	# 하나씩 넣기
-	public function setDeivce($deviceId){
-		// if(is_array($deviceId)){
-			$this->devices[] = $deviceId;
-		// }
+	public function setDeivce(string $deviceId) : void
+	{
+		if(!$deviceId)
+			throw new \Exception('deviceId is empty!!');
+		
+		$this->devices[] = $deviceId;
 	}
 
-	#@ void
 	#전송
-	public function send($argv)
+	public function send(array $argv) : void
 	{
 		if(!is_array($this->devices) || count($this->devices) == 0){
 			$this->error("No devices set");
 		}
 
 		if(strlen($this->sendGoogleAccessToken) < 8){
-			$this->error("Server API Key not set");
+			throw new \Exception('GoogleAccessToken is empty!!');
 		}
 
 		$fields = [
 			"message" => [
-				"token" => $this->devices[0],
+				"token"        => $this->devices[0],
 				"notification" => $argv
 			]
 		];
 		Log::d($fields);
-		Log::d(json_encode($fields));
 
 		$headers = array(
 			'Authorization: ' . $this->sendGoogleAccessToken,
@@ -108,6 +102,10 @@ class PushFCMMessage
 
 		// Execute post
 		$result = curl_exec($ch);
+		if (curl_errno($ch)) {
+			throw new \Exception(curl_getinfo($ch, CURLINFO_HTTP_CODE).' '.curl_getinfo($ch, CURLINFO_EFFECTIVE_URL));
+		}
+
 		Log::d($result);
 
 		// Close connection
