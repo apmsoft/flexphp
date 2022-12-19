@@ -109,7 +109,7 @@ Log::d( $htmlXssChars->getXHtmlHighlight() );
 $model->contents = '<script>alert(1);</script> <span style="color:#000;"> 스판</span><p>한줄</p> <frameset>frameset</frameset><a href="www.naver.com">네이버</a><br /><?php echo "dddd"; ?>';
 
 # 본문을 TEXT 로만 출력
-$htmlXssChars = new \Flex\Html\HtmlXssChars( $model->contents );
+$htmlXssChars = new \Flex\Html\HtmlXssChars( (string)$model->contents );
 Log::d('TEXT');
 Log::d( $htmlXssChars->getContext('TEXT') );
 
