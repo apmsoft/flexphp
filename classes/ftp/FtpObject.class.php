@@ -1,18 +1,19 @@
 <?php
 namespace Flex\Ftp;
 
+
 class FtpObject
 {
     public $conn;
 
-    public function __construct(string $ftp_url){
-        if(_FTP_SSL_){
-            if(false === ($this->conn = @ftp_ssl_connect($ftp_url, _FTP_PORT_, _FTP_TIME_))){
-                exit("ftp ssl connect fail!!!");
+    public function __construct(string $ftp_url, int $port, bool $is_ssl, int $time){
+        if($is_ssl){
+            if(false === ($this->conn = @ftp_ssl_connect($ftp_url, $port, $time))){
+                throw new \Exception("ftp ssl connect fail!!!!");
             }
         } else {
-            if (false === ($this->conn = @ftp_connect($ftp_url, _FTP_PORT_, _FTP_TIME_))) {
-                exit("ftp connect fail!!!!");
+            if (false === ($this->conn = @ftp_connect($ftp_url, $port, $time))) {
+                throw new \Exception("ftp connect fail!!!!");
             }
         }
     }

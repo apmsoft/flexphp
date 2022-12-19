@@ -3,18 +3,14 @@ namespace Flex\Ftp;
 
 final class Ftp extends FtpObject
 {
-    private $ascii_type = array(
+    private $ascii_type = [
         'txt','htm','html','phtml','php','php3','php4',
         'inc','ini','asp','aspx','jsp','css','js'
-    );
+    ];
 
-    public function __construct(string $ftp_url='',string $ftp_user='', string $ftp_passwd=''){
-        $_ftp_host   = ($ftp_url)   ? $ftp_url      : _FTP_HOST_;
-        $_ftp_user   = ($ftp_user)  ? $ftp_user     : _FTP_USER_;
-        $_ftp_passwd = ($ftp_passwd)? $ftp_passwd   : _FTP_PASSWD_;
-
-        parent::__construct($_ftp_host);
-        $this->ftp_login($_ftp_user, $_ftp_passwd);
+    public function __construct(string $host,string $user, string $passwd, int $port,bool $is_ssl=false, int $time=60){
+        parent::__construct($host, $port, $is_ssl, $time);
+        $this->ftp_login($user, $passwd);
     }
 
     # 파일 내용 읽어 오기
