@@ -13,20 +13,26 @@ class HtmlXssChars
 
 	#@ void
 	# 허용 태그 설정
-	public function setAllowTags(string $value){
+	public function setAllowTags(string $value) : void{
 		if(is_array($value)) $this->allow_tags = array_merge($this->allow_tags,$value);
 		else $this->allow_tags[] = $value;
 	}
 
-	#@ return String
 	# strip_tags
-	public function cleanTags(){
+	public function cleanTags() : string{
 		return strip_tags(htmlspecialchars_decode($this->description),implode('', $this->allow_tags));
+	}
+
+	# clean html
+	public function cleanHTML() : string 
+	{
+		return preg_replace("/\s{2,}/","",$this->description);
 	}
 
 	#@ return String
 	# Xss 태그 처리
-	public function cleanXssTags(){
+	public function cleanXssTags() : string
+	{
 		$xss_tags = array(
 			'@<script[^>]*?>.*?</script>@si',
 			'@<style[^>]*?>.*?</style>@siU',
@@ -71,9 +77,8 @@ class HtmlXssChars
 		return preg_replace($xss_tags, '', str_ireplace($event_tags,'_badtags',$this->description));
 	}
 
-	#@ return String
 	# 자동 링크 걸기
-	public function setAutoLink()
+	public function setAutoLink() : string
 	{
 		$homepage_pattern = "/([^\"\'\=])(mms|market|http|https|HTTP|ftp|FTP|telnet|TELNET)\:\/\/(.[^ \n\<\"\']+)/";
 		$this->description = preg_replace($homepage_pattern,"\\1<a href='\\2://\\3' target='_blank'>\\2://\\3</a>",' '.$this->description);
@@ -83,9 +88,8 @@ class HtmlXssChars
 		return preg_replace($email_pattern,"\\1<a href='mailto:\\2@\\3>\\2@\\3'</a>", " ".$this->description);
 	}
 
-	#@ return String
 	# url 링크에 http가 있는지 확인후 붙여서 리턴해 주기
-	public function setHttpUrl()
+	public function setHttpUrl() : string
 	{
 		if($this->description) 
 			$this->description = trim($this->description);
@@ -96,19 +100,26 @@ class HtmlXssChars
 	return $this->description;
 	}
 
-	#@ return String
-	public function getXHtmlHighlight() {
+	# code html highlight
+	public function getXHtmlHighlight() : string 
+	{
 		$str = highlight_string($this->description, true);
 		$str = preg_replace('#<font color="([^\']*)">([^\']*)</font>#', '<span style="color: \\1">\\2</span>', $str);
 		return preg_replace('#<font color="([^\']*)">([^\']*)</font>#U', '<span style="color: \\1">\\2</span>', $str);
 	}
 
-	#@ return String
-	public function getContext(string $mode='XSS')
+	# 여러형태의 모양
+	public function getContext(string $mode='XSS') : string
 	{
 		$this->description =stripslashes($this->description);
 		switch(strtoupper($mode)){
+			$this->description
 			case 'TEXT':
+				$this->description = strtr($this->description, ["&nbsp;"=>' ']);
+				$this->description = strtr($this->description,["\r\n"=>"\n"]);
+				$this->description = self::cleanHTML();
+				break;
+			case 'TAGTEXT':
 				$this->description = strtr($this->description, ["&nbsp;"=>' ']);
 				$this->description = strtr($this->description,["\r\n"=>"\n"]);
 				$this->description = self::setAutoLink($this->description);
