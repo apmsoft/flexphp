@@ -4,9 +4,9 @@ namespace Flex\Image;
 # purpose : 이미지 효과주기
 class ImageGDS
 {
-	private $filename;
+	public $filename;
 
-	private $im;
+	public $im;
 	private $quality = 100;
 	private $bgcolor = 0x7fffffff;
 	private $fontsrc, $fontangle=0, $fontcolor = [0,0,0], $fontsize = 20, $x=5, $y=5;
