@@ -18,9 +18,9 @@ Log::options([
 # ftp
 try{
     $ftp = new \Flex\Ftp\Ftp(
-        'jcmsys.com',
-        "jcm",
-        "jcm&*()sys",
+        'dddd.com',
+        "sdfsa",
+        "dddd&*d",
         21,
         false
     );
