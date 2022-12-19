@@ -23,12 +23,6 @@ class HtmlXssChars
 		return strip_tags(htmlspecialchars_decode($this->description),implode('', $this->allow_tags));
 	}
 
-	# clean html
-	public function cleanHTML() : string 
-	{
-		return preg_replace("/\s{2,}/","",$this->description);
-	}
-
 	#@ return String
 	# Xss 태그 처리
 	public function cleanXssTags() : string
@@ -113,13 +107,7 @@ class HtmlXssChars
 	{
 		$this->description =stripslashes($this->description);
 		switch(strtoupper($mode)){
-			$this->description
 			case 'TEXT':
-				$this->description = strtr($this->description, ["&nbsp;"=>' ']);
-				$this->description = strtr($this->description,["\r\n"=>"\n"]);
-				$this->description = self::cleanHTML();
-				break;
-			case 'TAGTEXT':
 				$this->description = strtr($this->description, ["&nbsp;"=>' ']);
 				$this->description = strtr($this->description,["\r\n"=>"\n"]);
 				$this->description = self::setAutoLink($this->description);

@@ -113,11 +113,6 @@ $htmlXssChars = new \Flex\Html\HtmlXssChars( $model->contents );
 Log::d('TEXT');
 Log::d( $htmlXssChars->getContext('TEXT') );
 
-# 본문을 TAGTEXT 로만 출력
-$htmlXssChars = new \Flex\Html\HtmlXssChars( $model->contents );
-Log::d('TAGTEXT');
-Log::d( $htmlXssChars->getContext('TAGTEXT') );
-
 # 본문을 XSS 로만 출력
 $htmlXssChars = new \Flex\Html\HtmlXssChars( $model->contents );
 Log::d('XSS');
