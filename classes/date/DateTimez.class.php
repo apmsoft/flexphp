@@ -3,6 +3,7 @@ namespace Flex\Date;
 
 use \DateTime;
 use \DateTimeZone;
+use \DateInterval;
 use \ErrorException;
 use Flex\Log\Log;
 
@@ -32,6 +33,18 @@ class DateTimez extends DateTime
 			$_times = '@'.$times;
 		}
 	return $_times;
+	}
+
+	public function formatter(string $formatter) : DateTimez
+    {
+		if(strpos($formatter,'-P') !==false){
+			parent::sub(new DateInterval( str_replace('-','',$formatter) ));
+		}else if(substr($formatter,0,1) == 'P'){
+			parent::add(new DateInterval($formatter));
+		}else{
+			parent::modify($formatter);
+		}
+	return $this;
 	}
 }
 ?>
