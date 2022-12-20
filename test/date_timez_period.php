@@ -76,7 +76,7 @@ $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"
 Log::d('Total 월-일 시:분:초', $period);
 
 Log::d ('=======================','=======================');
-$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'relative']);
+$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'top']);
 
 $snsf = explode(' ', $period);
 $snsformat = match($snsf[1]) {
@@ -85,7 +85,7 @@ $snsformat = match($snsf[1]) {
     'hour','hours'     => sprintf("약%d 시간전",$snsf[0]),
     'day','days'       => sprintf("약%d 일전",$snsf[0]),
     'month','months'   => sprintf("약%d 개월전",$snsf[0]),
-    defalut            => $model->start_date,
+    default            => $model->start_date
 };
 Log::d('SNS 시간 포멧', $period,'--->',$snsformat);
 Log::d ('=======================','=======================');
