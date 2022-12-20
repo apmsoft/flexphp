@@ -18,6 +18,8 @@ class DateTimezPeriod
 
     /**
      * 특정 날짜와 타켓 날짜사이 시간차
+     * format : 시간차 포멧
+     * nf : 소수점 자리
      */
     public function diff(string|int $start_date, string|int $end_date, array $formatter = ["format"=>'default','nf'=>'2']) : mixed 
     {
