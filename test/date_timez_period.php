@@ -31,9 +31,9 @@ $model->end_date   = '';
 # DateTimez
 $dateTimez = new \Flex\Date\DateTimez($model->start_date, $model->timezone);
 // $dateTimez->modify("+2 days");
-$dateTimez->add(new DateInterval("P1M20DT1H5M30S"));
+// $dateTimez->add(new DateInterval("P1M20DT2H5M30S"));
 // $dateTimez->add(new DateInterval("PT2H5M30S"));
-// $dateTimez->add(new DateInterval("PT1H30M30S"));
+$dateTimez->add(new DateInterval("PT2H30M30S"));
 $model->end_date = $dateTimez->format('Y-m-d H:i:s');
 
 
@@ -75,6 +75,19 @@ Log::d('Total 월-일 시:분:초', $period);
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'m-d h:i:s']);
 Log::d('Total 월-일 시:분:초', $period);
 
+Log::d ('=======================','=======================');
+$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'relative']);
+
+$snsf = explode(' ', $period);
+$snsformat = match($snsf[1]) {
+    'second','seconds' => sprintf("%d 초전",$snsf[0]),
+    'minute','minutes' => sprintf("약%d 분전",$snsf[0]),
+    'hour','hours'     => sprintf("약%d 시간전",$snsf[0]),
+    'day','days'       => sprintf("약%d 일전",$snsf[0]),
+    'month','months'   => sprintf("약%d 개월전",$snsf[0]),
+    defalut            => $model->start_date,
+};
+Log::d('SNS 시간 포멧', $period,'--->',$snsformat);
 Log::d ('=======================','=======================');
 
 # 시:분
