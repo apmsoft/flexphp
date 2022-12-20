@@ -6,8 +6,6 @@ use \DateTimeZone;
 use \ErrorException;
 use Flex\Log\Log;
 
-# Parent Class : DateTime::';
-# purpose : 날짜/시간에 필요한 것들을 다룬다
 class DateTimez extends DateTime
 {
 	public DateTimeZone $dateTimeZone;
@@ -25,8 +23,6 @@ class DateTimez extends DateTime
 		# datetime
 		parent::__construct(self::chkTimestamp($times), $this->dateTimeZone);
 	}
-
-	// public function 
 
 	public function chkTimestamp(string|int $times) : string 
 	{

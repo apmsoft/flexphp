@@ -28,25 +28,46 @@ $model->end_date   = '';
 //     $model->timezone = date_default_timezone_get();
 // }
 
-
-try{
-    $dateTimez = new \Flex\Date\DateTimez($model->start_date, $model->timezone);
-    // $dateTimez->modify("+2 days");
-    $dateTimez->add(new DateInterval("P1M2DT1H"));
-    $model->end_date = $dateTimez->format('Y-m-d H:i:s');
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# DateTimez
+$dateTimez = new \Flex\Date\DateTimez($model->start_date, $model->timezone);
+// $dateTimez->modify("+2 days");
+$dateTimez->add(new DateInterval("P1M2DT1H5M30S"));
+// $dateTimez->add(new DateInterval("PT2H5M30S"));
+// $dateTimez->add(new DateInterval("PT1H30M30S"));
+$model->end_date = $dateTimez->format('Y-m-d H:i:s');
 
 
-try{
-    $dateTimezPeriod = new \Flex\Date\DateTimezPeriod($model->timezone);
-    
-    // $period = $dateTimezPeriod->getDatePeriod($model->start_date, $model->end_date, ["format"=>'%Y-%M-%D %H:%I:%S']);
-    $period = $dateTimezPeriod->getDatePeriod($model->start_date, $model->end_date, ["format"=>'%m month, %d days, %h hours, %i minutes']);
-    Log::d( $period);
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# 년-월-일 시:분:초
+$dateTimezPeriod = new \Flex\Date\DateTimezPeriod($model->timezone);
 
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'seconds']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'minutes','nf'=>'1']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'hours','nf'=>'3']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'minutes:seconds']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'i:s']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'hours:minutes:seconds']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'h:i:s']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'days']);
+$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months','nf'=>'0']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months:days:hours:minutes:seconds']);
+// $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'m-d h:i:s']);
+Log::d( $period);
+
+
+# 시:분
+$dateTimezPeriod2 = new \Flex\Date\DateTimezPeriod($model->timezone);
+// $period2 = $dateTimezPeriod2->diff('10:11', '11:11', ["format"=>'h:i:s']);
+$period2 = $dateTimezPeriod2->diff('10:11:50', '10:21:40', ["format"=>'i:s']);
+Log::d( $period2);
+
+# 120초 후
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$model->start_date = $dateTimez->format('Y-m-d H:i:s');
+Log::d('now',$model->start_date);
+$dateTimez->modify("120 seconds");
+$model->end_date = $dateTimez->format('Y-m-d H:i:s');
+Log::d('120초 후',$model->end_date);
+
+$period3 = $dateTimezPeriod2->diff($model->start_date, $model->end_date, ["format"=>'i:s']);
+Log::d( '120초 후 시간 차이',$period3);
 ?>

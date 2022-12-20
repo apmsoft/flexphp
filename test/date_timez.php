@@ -28,249 +28,150 @@ $model->timezone = 'Asia/Seoul';
 
 // DateTimeZone::ASIA
 # timestamp
-try{
-    $dateTimez = new \Flex\Date\DateTimez(time(), $model->timezone);
-    Log::d('TIMEZONE ', $dateTimez->timezone);
-    Log::d($dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez(time(), $model->timezone);
+Log::d('TIMEZONE ', $dateTimez->timezone);
+Log::d('LOCATION ', $dateTimez->location);
+Log::d($dateTimez->format('Y-m-d H:i:s'));
 
 Log::d ('=======================');
 
 # now
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    Log::d('now',$dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+Log::d('now',$dateTimez->format('Y-m-d H:i:s P'));
 
 Log::d ('=======================');
 
-# today
-try{
-    $dateTimez = new \Flex\Date\DateTimez("today", $model->timezone);
-    Log::d('today',$dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# 오늘
+$dateTimez = new \Flex\Date\DateTimez("today", $model->timezone);
+Log::d('오늘',$dateTimez->format('Y-m-d H:i:s'));
 
-# yesterday
-try{
-    $dateTimez = new \Flex\Date\DateTimez("yesterday", $model->timezone);
-    Log::d('yesterday',$dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# 어제
+$dateTimez = new \Flex\Date\DateTimez("yesterday", $model->timezone);
+Log::d('어제',$dateTimez->format('Y-m-d H:i:s'));
 
-# tomorrow
-try{
-    $dateTimez = new \Flex\Date\DateTimez("tomorrow", $model->timezone);
-    Log::d('tomorrow',$dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# 내일
+$dateTimez = new \Flex\Date\DateTimez("tomorrow", $model->timezone);
+Log::d('내일',$dateTimez->format('Y-m-d H:i:s'));
 
-# 2 days ago
-try{
-    $dateTimez = new \Flex\Date\DateTimez("2 days ago", $model->timezone);
-    Log::d('2 days ago',$dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# 120초 후
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->modify("120 seconds");
+Log::d('120초 후',$dateTimez->format('Y-m-d H:i:s'));
 
-# 2 months 5 days ago
-try{
-    $dateTimez = new \Flex\Date\DateTimez("2 months 5 days ago", $model->timezone);
-    Log::d('2 months 5 days ago',$dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# 2 일전
+$dateTimez = new \Flex\Date\DateTimez("2 days ago", $model->timezone);
+Log::d('2 일전',$dateTimez->format('Y-m-d H:i:s'));
 
-# +2 weeks
-try{
-    $dateTimez = new \Flex\Date\DateTimez("2 weeks", $model->timezone);
-    Log::d('2 weeks',$dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# 2 개월 5 일전
+$dateTimez = new \Flex\Date\DateTimez("2 months 5 days ago", $model->timezone);
+Log::d('2 개월 5 일전',$dateTimez->format('Y-m-d H:i:s'));
+
+# 2 주후
+$dateTimez = new \Flex\Date\DateTimez("2 weeks", $model->timezone);
+Log::d('2 주후',$dateTimez->format('Y-m-d H:i:s'));
+
 
 # 15분 경과
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->modify("15 minutes");
-    Log::d('15분 후',$dateTimez->format('Y-m-d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->modify("15 minutes");
+Log::d('15분 후',$dateTimez->format('Y-m-d H:i:s'));
 
-# modify +
-try{
-    $dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s'), $model->timezone);
-    Log::d('date',$dateTimez->format('Y/m/d H:i:s'));
-    $dateTimez->modify("+1 day");
-    Log::d('+1 day',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+
+# modify + 1일 후
+$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s'), $model->timezone);
+Log::d('date',$dateTimez->format('Y/m/d H:i:s'));
+$dateTimez->modify("+1 day");
+Log::d('modify 1일 후',$dateTimez->format('Y/m/d H:i:s'));
 
 # modify -
-try{
-    $dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s'), $model->timezone);
-    Log::d('date',$dateTimez->format('Y/m/d H:i:s'));
-    $dateTimez->modify("-3 days");
-    Log::d('-3 days',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s'), $model->timezone);
+Log::d('date',$dateTimez->format('Y/m/d H:i:s'));
+$dateTimez->modify("-3 days");
+Log::d('modify 3일전',$dateTimez->format('Y/m/d H:i:s'));
 
 Log::d ('=======================');
 
 # 10초 후
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->add(new DateInterval("PT10S"));
-    Log::d('10초 후',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->add(new DateInterval("PT10S"));
+Log::d('add 10초 후',$dateTimez->format('Y/m/d H:i:s'));
 
 # 10분 후
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->add(new DateInterval("PT10M"));
-    Log::d('10분 후',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->add(new DateInterval("PT10M"));
+Log::d('add 10분 후',$dateTimez->format('Y/m/d H:i:s'));
 
 # 1시간 후
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->add(new DateInterval("PT1H"));
-    Log::d('한시간 후',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->add(new DateInterval("PT1H"));
+Log::d('add 한시간 후',$dateTimez->format('Y/m/d H:i:s'));
 
 # 1시간 10분 후
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->add(new DateInterval("PT1H10M"));
-    Log::d('한시간 10분 후',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->add(new DateInterval("PT1H10M"));
+Log::d('add 한시간 10분 후',$dateTimez->format('Y/m/d H:i:s'));
 
-# 하루 후
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->add(new DateInterval("P1D"));
-    Log::d('하루 후',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+# 하루 1 day 후
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->add(new DateInterval("P1D"));
+Log::d('add 하루 후',$dateTimez->format('Y/m/d H:i:s'));
 
 # 1주 후
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->add(new DateInterval("P1W"));
-    Log::d('하루 후',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->add(new DateInterval("P1W"));
+Log::d('add 하루 후',$dateTimez->format('Y/m/d H:i:s'));
 
 # 한달 후
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->add(new DateInterval("P1M"));
-    Log::d('한달 후',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->add(new DateInterval("P1M"));
+Log::d('add 한달 후',$dateTimez->format('Y/m/d H:i:s'));
 
 # 1년 후
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->add(new DateInterval("P1Y"));
-    Log::d('1년 후',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->add(new DateInterval("P1Y"));
+Log::d('add 1년 후',$dateTimez->format('Y/m/d H:i:s'));
 
 Log::d ('=======================');
 
 # 10초 전
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->sub(new DateInterval("PT10S"));
-    Log::d('10초 전',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->sub(new DateInterval("PT10S"));
+Log::d('sub 10초 전',$dateTimez->format('Y/m/d H:i:s'));
 
 # 10분 전
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->sub(new DateInterval("PT10M"));
-    Log::d('10분 전',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->sub(new DateInterval("PT10M"));
+Log::d('sub 10분 전',$dateTimez->format('Y/m/d H:i:s'));
 
 # 1시간 전
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->sub(new DateInterval("PT1H"));
-    Log::d('한시간 전',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->sub(new DateInterval("PT1H"));
+Log::d('sub 한시간 전',$dateTimez->format('Y/m/d H:i:s'));
 
 # 1시간 10분 전
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->sub(new DateInterval("PT1H10M"));
-    Log::d('한시간 10분 전',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->sub(new DateInterval("PT1H10M"));
+Log::d('sub 한시간 10분 전',$dateTimez->format('Y/m/d H:i:s'));
 
 # 하루 전
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->sub(new DateInterval("P1D"));
-    Log::d('하루 전',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->sub(new DateInterval("P1D"));
+Log::d('sub 하루 전',$dateTimez->format('Y/m/d H:i:s'));
+
 
 # 1주 전
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->sub(new DateInterval("P1W"));
-    Log::d('하루 전',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->sub(new DateInterval("P1W"));
+Log::d('sub 하루 전',$dateTimez->format('Y/m/d H:i:s'));
 
 # 한달 전
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->sub(new DateInterval("P1M"));
-    Log::d('한달 전',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->sub(new DateInterval("P1M"));
+Log::d('sub 한달 전',$dateTimez->format('Y/m/d H:i:s'));
 
 # 1년 전
-try{
-    $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-    $dateTimez->sub(new DateInterval("P1Y"));
-    Log::d('1년 전',$dateTimez->format('Y/m/d H:i:s'));
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
+$dateTimez->sub(new DateInterval("P1Y"));
+Log::d('sub 1년 전',$dateTimez->format('Y/m/d H:i:s'));
 
 ?>

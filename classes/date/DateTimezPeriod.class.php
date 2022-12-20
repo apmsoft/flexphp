@@ -2,24 +2,14 @@
 namespace Flex\Date;
 
 use Flex\Date\DateTimez;
-use \ErrorException;
-use \DateTimeImmutable;
 use Flex\Log\Log;
+use \DateTimeImmutable;
+use \ErrorException;
 
-# purpose : 날짜/시간에 필요한 것들을 다룬다
 class DateTimezPeriod
 {
     # Asia/Seoul
     public string $timezone = '';
-
-    private $format_styles = [
-        'days' => "%a days",
-        'day'  => "%a days",
-        'h:i:s'=> '%H:%I:%S',
-        'hour'=> '%H Hours',
-        'm:s'=> '%i Minute %s Seconds',
-        's'=> '%s Seconds'
-    ];
 
 	public function __construct(string $timezone='Asia/Seoul')
 	{
@@ -27,22 +17,30 @@ class DateTimezPeriod
 	}
 
     /**
-     * 
+     * 특정 날짜와 타켓 날짜사이 시간차
      */
-    public function getDatePeriod(string|int $start_date, string|int $end_date, array $style = ["format"=>'days']) : mixed 
+    public function diff(string|int $start_date, string|int $end_date, array $formatter = ["format"=>'days','nf'=>'2']) : mixed 
     {
         $s = new DateTimeImmutable($start_date);
         $e = new DateTimeImmutable($end_date);
         $interval = $s->diff($e);
-        $format = $style['format'];
+
+        # 소수점 자리수
+        $nf = (isset($formatter['nf'])) ? sprintf("%%0.%df", $formatter['nf']) : "%0.2f";
         
+        # 월하는 데이터 형
+        $result = match($formatter['format']) {
+            'days','day' => sprintf($nf, $interval->days),
+            'seconds'    => $interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s,
+            'minutes'    => sprintf($nf, ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 60),
+            'hours'      => sprintf($nf, ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 3600),
+            'minutes:seconds','i:s' => sprintf("%02d:%02d",( ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60) / 60),$interval->s),
+            'hours:minutes:seconds','h:i:s' => sprintf("%02d:%02d:%02d",( ($interval->days * 86400 + $interval->h * 3600) / 3600), ($interval->i * 60 / 60),$interval->s),
+            'months'      => sprintf($nf,($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 86400),
+            'months:days:hours:minutes:seconds','m-d h:i:s' => sprintf("%02d-%02d %02d:%02d:%02d",$interval->m,$interval->d,$interval->h,$interval->i,$interval->s)
+        };
 
-    return $interval->format($format);
+    return $result;
     }
-
-	# 프라퍼티 값 가져오기
-	public function __get($propertyname) : mixed{
-		return $this->{$propertyname};
-	}
 }
 ?>
