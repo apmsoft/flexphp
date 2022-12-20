@@ -35,6 +35,7 @@ class DateTimez extends DateTime
 	return $_times;
 	}
 
+	# modify, add, sub 기능
 	public function formatter(string $formatter) : DateTimez
     {
 		if(strpos($formatter,'-P') !==false){
