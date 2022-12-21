@@ -64,19 +64,17 @@ class DateTimezPeriod
 
     # 날짜와 날짜 사이 날짜
     /**
-     * formatter ["term"] =>1  // 날짜(1일, 3일)간격
-     * formatter ["days"] =>30 // 며칠(30일/개)
+     * interval : 1  // 날짜(1일, 3일)간격
+     * days :  30 // 며칠(30일/개)
      */
-    public function period(string $start_date, array $formatter) : array 
+    public function period(string $start_date, int $interval, int $days) : array 
     {
         $result = [];
 
-        $format = sprintf("P%dD",$formatter['term']);
-        $recurrences = $formatter['days'];
-
+        $format = sprintf("P%dD", $interval);
         $startDateTimez = new DateTimez($start_date, $this->timezone);
         $interval  = new DateInterval($format);
-        $period    = new DatePeriod($startDateTimez, $interval, $recurrences);
+        $period    = new DatePeriod($startDateTimez, $interval, $days);
         foreach($period as $dateTimez){
             $result[] = $dateTimez->format('Y-m-d');
         }
