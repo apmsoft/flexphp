@@ -24,26 +24,26 @@ class DateTimezPeriod
     /**
      * 특정 날짜와 타켓 날짜사이 시간차
      * format : 시간차 포멧
-     * nf : 소수점 자리
+     * demical : 소수점 자리
      */
-    public function diff(string $start_date, string $end_date, array $formatter = ["format"=>'default','nf'=>'2']) : mixed 
+    public function diff(string $start_date, string $end_date, array $formatter = ["format"=>'default','demical'=>'2']) : mixed 
     {
         $s = new DateTimeImmutable($start_date);
         $e = new DateTimeImmutable($end_date);
         $interval = $s->diff($e);
 
         # 소수점 자리수
-        $nf = (isset($formatter['nf'])) ? sprintf("%%0.%df", $formatter['nf']) : "%0.2f";
+        $demical = (isset($formatter['demical'])) ? sprintf("%%0.%df", $formatter['demical']) : "%0.2f";
         
         # 월하는 데이터 형
         $result = match($formatter['format']) {
             'days','day' => $interval->days,
             'seconds'    => $interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s,
-            'minutes'    => sprintf($nf, ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 60),
-            'hours'      => sprintf($nf, ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 3600),
+            'minutes'    => sprintf($demical, ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 60),
+            'hours'      => sprintf($demical, ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 3600),
             'minutes:seconds','i:s' => sprintf("%02d:%02d",( ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60) / 60),$interval->s),
             'hours:minutes:seconds','h:i:s' => sprintf("%02d:%02d:%02d",( ($interval->days * 86400 + $interval->h * 3600) / 3600), ($interval->i * 60 / 60),$interval->s),
-            'months'      => sprintf($nf,($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 86400),
+            'months'      => sprintf($demical,($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 86400),
             'months:days:hours:minutes:seconds','m-d h:i:s' => sprintf("%02d-%02d %02d:%02d:%02d",$interval->m,$interval->d,$interval->h,$interval->i,$interval->s),
             'top' => $interval->format("%y-%m-%d %h:%i:%s"),
             default => $interval->format("%Y-%M-%D %H:%I:%S")

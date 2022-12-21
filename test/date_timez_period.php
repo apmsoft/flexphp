@@ -30,11 +30,7 @@ $model->end_date   = '';
 
 # DateTimez
 $dateTimez = new \Flex\Date\DateTimez($model->start_date, $model->timezone);
-// $dateTimez->modify("+2 days");
-// $dateTimez->add(new DateInterval("P1M20DT2H5M30S"));
-// $dateTimez->add(new DateInterval("PT2H5M30S"));
-$dateTimez->add(new DateInterval("PT2H30M30S"));
-$model->end_date = $dateTimez->format('Y-m-d H:i:s');
+$model->end_date = $dateTimez->formatter("PT2H30M30S")->format('Y-m-d H:i:s');
 
 
 # 년-월-일 시:분:초
@@ -45,10 +41,10 @@ Log::d('Total default', $period);
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'seconds']);
 Log::d('Total 초 ', $period);
 
-$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'minutes','nf'=>'1']);
+$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'minutes','demical'=>'1']);
 Log::d('Total 분, 소수 1자리 ', $period);
 
-$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'hours','nf'=>'3']);
+$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'hours','demical'=>'3']);
 Log::d('Total 시간, 소수 3자리 ', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'minutes:seconds']);
@@ -66,7 +62,7 @@ Log::d('Total 시:분:초 ','h:i:s', $period);
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'days']);
 Log::d('Total 일', $period);
 
-$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months','nf'=>'0']);
+$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months','demical'=>'0']);
 Log::d('Total 개월, 소수 0자리', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months:days:hours:minutes:seconds']);
