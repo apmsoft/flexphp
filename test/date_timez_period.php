@@ -112,4 +112,15 @@ Log::d('120초 후',$model->end_date);
 
 $period3 = $dateTimezPeriod2->diff($model->start_date, $model->end_date, ["format"=>'i:s']);
 Log::d( '120초 후 시간 차이',$period3);
+
+
+Log::d ('=======================','=======================');
+# 날짜와 날짜 사이 날짜
+/**
+ * term : 1  // 날짜(1일)간격
+ * days : 30 // 며칠(30일/개)
+ */
+$dateTimezPeriod3 = new \Flex\Date\DateTimezPeriod($model->timezone);
+$date_period = $dateTimezPeriod3->period( date('Y-m-d'), ["term"=>1, "days"=>30]);
+Log::d ( '시작날짜와 특정기간동안의 날짜 사이의 날짜',$date_period );
 ?>
