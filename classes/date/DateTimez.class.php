@@ -10,19 +10,34 @@ use Flex\Log\Log;
 class DateTimez extends DateTime
 {
 	public DateTimeZone $dateTimeZone;
-	public $timezone;
-	public $location;
+	public string $timezone;
+	public array $location = [];
+	public array $abbreviations = [];
 
 	# time() || now || today || yesterday , Asia/Seoul
 	public function __construct(string|int $times="now", string $timezone='Asia/Seoul')
 	{
 		# timezone
 		$this->dateTimeZone = new \DateTimeZone($timezone);
-		$this->timezone = $this->dateTimeZone->getName();
-		$this->location = $this->dateTimeZone->getLocation();
+		$this->timezone      = $this->dateTimeZone->getName();
+		$this->location      = $this->dateTimeZone->getLocation();
+		$this->abbreviations = self::filterAbbreviations(DateTimeZone::listAbbreviations());
 
 		# datetime
 		parent::__construct(self::chkTimestamp($times), $this->dateTimeZone);
+	}
+
+	private function filterAbbreviations(array $args) : array 
+	{
+		$abbrs = [];
+		foreach($args as $abbr => $reviations){
+			foreach($reviations as $rv){
+				if($rv['timezone_id']){
+					$abbrs[] = array_merge($rv, ['abbr' => strtoupper($abbr)]);
+				}
+			}
+		}
+	return $abbrs;
 	}
 
 	public function chkTimestamp(string|int $times) : string 
