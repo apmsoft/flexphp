@@ -52,16 +52,16 @@ $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"
 Log::d('Total 시간, 소수 3자리 ', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'minutes:seconds']);
-Log::d('Total 분:초 ', $period);
+Log::d('Total 분:초','minutes:seconds', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'i:s']);
-Log::d('Total 분:초 ', $period);
+Log::d('Total 분:초','i:s', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'hours:minutes:seconds']);
-Log::d('Total 시:분:초 ', $period);
+Log::d('Total 시:분:초 ','hours:minutes:seconds', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'h:i:s']);
-Log::d('Total 시:분:초 ', $period);
+Log::d('Total 시:분:초 ','h:i:s', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'days']);
 Log::d('Total 일', $period);
@@ -70,10 +70,10 @@ $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"
 Log::d('Total 개월, 소수 0자리', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months:days:hours:minutes:seconds']);
-Log::d('Total 월-일 시:분:초', $period);
+Log::d('Total 월-일 시:분:초','months:days:hours:minutes:seconds', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'m-d h:i:s']);
-Log::d('Total 월-일 시:분:초', $period);
+Log::d('Total 월-일 시:분:초', 'm-d h:i:s', $period);
 
 Log::d ('=======================','=======================');
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'top']);
@@ -94,10 +94,10 @@ Log::d ('=======================','=======================');
 $dateTimezPeriod2 = new \Flex\Date\DateTimezPeriod($model->timezone);
 
 $period2 = $dateTimezPeriod2->diff('10:11', '11:11', ["format"=>'h:i:s']);
-Log::d( '시간 차 11:11 - 10:11 ',$period2);
+Log::d( '시간 차 11:11 - 10:11 ','h:i:s',$period2);
 
 $period2 = $dateTimezPeriod2->diff('10:11:50', '10:21:40', ["format"=>'i:s']);
-Log::d( '분차 10:21:40 - 10:11:50 ', $period2);
+Log::d( '분차 10:21:40 - 10:11:50 ','i:s', $period2);
 
 Log::d ('=======================','=======================');
 
