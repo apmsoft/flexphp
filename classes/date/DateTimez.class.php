@@ -73,7 +73,6 @@ class DateTimez extends DateTime
 	public function parseDate(string $formatter = 'Y-m-d H:i:s') : array 
 	{
 		$result = [];
-		$localtimes = localtime(parent::format('U'),true);
 		$result = date_parse(parent::format($formatter));
 		$result['wday'] = $localtimes['tm_wday']; # 오늘이 주의 무슨요일에 해당하는지 0~6
 		$result['yday'] = $localtimes['tm_yday']; # 오늘이 1년중 몇번째 날인지 체크 100/365
