@@ -173,7 +173,36 @@ Log::d('sub 한달 전', $datetimev );
 
 # 1년 전
 $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("-P1Y")->format('Y/m/d H:i:s');
-Log::d('sub 1년 전', $datetimev );
+$datetimev = $dateTimez->formatter("-P1Y")->format(DateTime::ATOM);
+Log::d('sub 1년 전', 'format ATOM', $datetimev );
 
+# 날짜를 배열화 하기 default
+$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s P'), $model->timezone);
+$parse_date = $dateTimez->parseDate();
+Log::d('parse date ', 'default', $parse_date );
+
+# 날짜를 배열화 하기 포멧 정하기
+$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s P'), $model->timezone);
+$parse_date = $dateTimez->parseDate('Y-m-d H:i:s P');
+Log::d('parse date', 'format 지정', $parse_date );
+
+# 날짜 증가 또는 이전 시킨 후 데이터 parse 시키기 default
+$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s P'), $model->timezone);
+$parse_date = $dateTimez->formatter("-P1Y")->parseDate();
+Log::d('parse date', '날짜 증가 및 이전 시킨 후', 'default', $parse_date );
+
+# 날짜 증가 또는 이전 시킨 후 데이터 parse 시키기 : format 정하기
+$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s P'), $model->timezone);
+$parse_date = $dateTimez->formatter("+P1Y")->parseDate(DateTime::ATOM);
+Log::d('parse date', $parse_date );
+
+# 지정된 날짜의 일몰/일출 시간
+$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d'), $model->timezone);
+$sun_info = $dateTimez->sunInfo();
+Log::d('지정 날짜의 일몰/일출 시간', $sun_info );
+
+# 지정된 날짜의 일몰/일출 시간
+$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d'), $model->timezone);
+$sun_info = $dateTimez->formatter("+10 days")->sunInfo();
+Log::d('날짜 변경 후 일몰/일출 시간', $sun_info );
 ?>
