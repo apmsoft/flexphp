@@ -32,22 +32,32 @@ class DateTimezPeriod
         $e = new DateTimeImmutable($end_date);
         $interval = $s->diff($e);
 
-        # 소수점 자리수
-        $demical = (isset($formatter['demical'])) ? sprintf("%%0.%df", $formatter['demical']) : "%0.2f";
-        
         # 월하는 데이터 형
         $result = match($formatter['format']) {
             'days','day' => $interval->days,
             'seconds'    => $interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s,
-            'minutes'    => sprintf($demical, ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 60),
-            'hours'      => sprintf($demical, ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 3600),
+            'minutes'    => ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 60,
+            'hours'      => ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 3600,
             'minutes:seconds','i:s' => sprintf("%02d:%02d",( ($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60) / 60),$interval->s),
             'hours:minutes:seconds','h:i:s' => sprintf("%02d:%02d:%02d",( ($interval->days * 86400 + $interval->h * 3600) / 3600), ($interval->i * 60 / 60),$interval->s),
-            'months'      => sprintf($demical,($interval->days * 86400 + $interval->h * 3600 + $interval->i * 60 + $interval->s) / 86400),
+            'months'      => (($interval->m /12) + ($interval->days / 30)),
             'months:days:hours:minutes:seconds','m-d h:i:s' => sprintf("%02d-%02d %02d:%02d:%02d",$interval->m,$interval->d,$interval->h,$interval->i,$interval->s),
             'top' => $interval->format("%y-%m-%d %h:%i:%s"),
             default => $interval->format("%Y-%M-%D %H:%I:%S")
         };
+
+        # 소수점 자리 및 버리기
+        if(isset($formatter['demical'])){
+            if( in_array($formatter['format'], ['minutes','hours','months'])){
+                $_f = sprintf("%%0.%df", $formatter['demical']);
+                $int_demical = (int)$formatter['demical'];
+                $result = match($int_demical) {
+                    1,2,3,4 => sprintf($_f, $result),
+                    default => floor($result)
+                };
+            }
+        }
+        
 
         # 시간이 큰것만 우선 순위 출력 약 시간 표시용
         # 약 1분전, 약 1시간전, 약10일전

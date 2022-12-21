@@ -30,7 +30,7 @@ $model->end_date   = '';
 
 # DateTimez
 $dateTimez = new \Flex\Date\DateTimez($model->start_date, $model->timezone);
-$model->end_date = $dateTimez->formatter("PT2H30M30S")->format('Y-m-d H:i:s');
+$model->end_date = $dateTimez->formatter("P1M20DT2H30M30S")->format('Y-m-d H:i:s');
 
 
 # 년-월-일 시:분:초
@@ -62,7 +62,7 @@ Log::d('Total 시:분:초 ','h:i:s', $period);
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'days']);
 Log::d('Total 일', $period);
 
-$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months','demical'=>'0']);
+$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months','demical'=>'1']);
 Log::d('Total 개월, 소수 0자리', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months:days:hours:minutes:seconds']);
@@ -101,14 +101,14 @@ Log::d ('=======================','=======================');
 # 120초 후
 $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
 $model->start_date = $dateTimez->format('Y-m-d H:i:s');
-Log::d('지금시간',$model->start_date);
+// Log::d('지금시간',$model->start_date);
 
 $dateTimez->modify("120 seconds");
 $model->end_date = $dateTimez->format('Y-m-d H:i:s');
-Log::d('120초 후',$model->end_date);
+// Log::d('120초 후',$model->end_date);
 
 $period3 = $dateTimezPeriod2->diff($model->start_date, $model->end_date, ["format"=>'i:s']);
-Log::d( '120초 후 시간 차이',$period3);
+// Log::d( '120초 후 시간 차이',$period3);
 
 
 Log::d ('=======================','=======================');
@@ -119,5 +119,5 @@ Log::d ('=======================','=======================');
  */
 $dateTimezPeriod3 = new \Flex\Date\DateTimezPeriod($model->timezone);
 $date_period = $dateTimezPeriod3->period( date('Y-m-d'), $interval = 1, $days = 30);
-Log::d ( '시작날짜와 특정기간동안의 날짜 사이의 날짜',$date_period );
+// Log::d ( '시작날짜와 특정기간동안의 날짜 사이의 날짜',$date_period );
 ?>
