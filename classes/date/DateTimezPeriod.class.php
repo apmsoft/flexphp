@@ -49,12 +49,12 @@ class DateTimezPeriod
         # 소수점 자리 및 버리기
         if(isset($formatter['demical'])){
             if( in_array($formatter['format'], ['minutes','hours','months'])){
-                $_f = sprintf("%%0.%df", $formatter['demical']);
-                $int_demical = (int)$formatter['demical'];
-                $result = match($int_demical) {
-                    1,2,3,4 => sprintf($_f, $result),
-                    default => floor($result)
-                };
+                if((int)$formatter['demical'] > 0){
+                    $_f = (int)"1".str_repeat("0", $formatter['demical']);
+                    $result = floor($result * $_f)/$_f;
+                }else {
+                    $result = floor($result);
+                }
             }
         }
         

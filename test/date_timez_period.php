@@ -62,7 +62,7 @@ Log::d('Total 시:분:초 ','h:i:s', $period);
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'days']);
 Log::d('Total 일', $period);
 
-$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months','demical'=>'1']);
+$period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months','demical'=>'2']);
 Log::d('Total 개월, 소수 0자리', $period);
 
 $period = $dateTimezPeriod->diff($model->start_date, $model->end_date, ["format"=>'months:days:hours:minutes:seconds']);
