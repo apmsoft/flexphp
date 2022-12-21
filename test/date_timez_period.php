@@ -106,6 +106,7 @@ Log::d ('=======================','=======================');
 $dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
 $model->start_date = $dateTimez->format('Y-m-d H:i:s');
 Log::d('지금시간',$model->start_date);
+
 $dateTimez->modify("120 seconds");
 $model->end_date = $dateTimez->format('Y-m-d H:i:s');
 Log::d('120초 후',$model->end_date);
