@@ -21,23 +21,27 @@ class DateTimez extends DateTime
 		$this->dateTimeZone = new \DateTimeZone($timezone);
 		$this->timezone      = $this->dateTimeZone->getName();
 		$this->location      = $this->dateTimeZone->getLocation();
-		$this->abbreviations = self::filterAbbreviations(DateTimeZone::listAbbreviations());
+		self::filterAbbreviations(DateTimeZone::listAbbreviations());
 
 		# datetime
 		parent::__construct(self::chkTimestamp($times), $this->dateTimeZone);
 	}
 
-	private function filterAbbreviations(array $args) : array 
+	private function filterAbbreviations(array $args) : void 
 	{
-		$abbrs = [];
 		foreach($args as $abbr => $reviations){
 			foreach($reviations as $rv){
 				if($rv['timezone_id']){
-					$abbrs[] = array_merge($rv, ['abbr' => strtoupper($abbr)]);
+					if($this->timezone == $rv['timezone_id']){
+						$this->location['abbr']   = strtoupper($abbr);
+						$this->location['offset'] = $rv['offset'];
+						$this->location['utc']    = ($rv['offset'] != 0) ? $rv['offset'] / 3600 : 0;
+						$this->location['dst']    = $rv['dst'];
+						break;
+					}
 				}
 			}
 		}
-	return $abbrs;
 	}
 
 	public function chkTimestamp(string|int $times) : string 
