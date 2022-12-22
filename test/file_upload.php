@@ -16,7 +16,9 @@ require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;
 Log::init(Log::MESSAGE_FILE, _ROOT_PATH_.'/'._DATA_.'/log.txt');
-Log::d($_FILES);
+
+Log::d('_FILES',$_FILES);
+
 $upload_dir = _ROOT_PATH_.'/'._UPLOAD_.'/fileupload';
 try{
     $upload_file_info = (new FileUpload( $upload_dir ))

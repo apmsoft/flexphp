@@ -477,3 +477,42 @@
  | 
 2022-12-22 14:21:10 >> E : e_no_was_uploaded | 
 2022-12-22 14:21:10 >> E : 파일이 전송되지 않았습니다 | 
+2022-12-22 14:23:03 >> D : _FILES | Array
+(
+)
+
+2022-12-22 14:23:03 >> E : e_no_was_uploaded | 
+2022-12-22 14:23:03 >> E : 파일이 전송되지 않았습니다 | 
+2022-12-22 14:27:44 >> D : _FILES | Array
+(
+)
+
+2022-12-22 14:27:44 >> E : e_no_was_uploaded | 
+2022-12-22 14:27:44 >> E : 파일이 전송되지 않았습니다 | 
+2022-12-22 14:27:44 >> D : _FILES | Array
+(
+    [filepond] => Array
+        (
+            [name] => beautiful-young-asian-woman-happy-relax-walking-beach-near-sea.jpg
+            [full_path] => beautiful-young-asian-woman-happy-relax-walking-beach-near-sea.jpg
+            [type] => image/jpeg
+            [tmp_name] => /tmp/phpQJOX5j
+            [error] => 0
+            [size] => 8089470
+        )
+
+)
+
+2022-12-22 14:27:44 >> D : tmp_name | /tmp/phpQJOX5j
+2022-12-22 14:27:44 >> D : filename | beautiful-young-asian-woman-happy-relax-walking-beach-near-sea.jpg
+2022-12-22 14:27:44 >> D : mimeType | image/jpeg
+2022-12-22 14:27:44 >> D : size | 8089470
+2022-12-22 14:27:44 >> D : error | 0
+2022-12-22 14:27:44 >> D : Array
+(
+    [filesize] => 8089470
+    [mimeType] => image/jpg
+    [ofilename] => beautiful_young_asian_woman_happy_relax_walking_beach_near_sea.jpg
+    [sfilename] => b11a2507cbc5d4ac1d5b2f42fe9ea0ed.jpg
+)
+ | 
