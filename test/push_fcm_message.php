@@ -31,11 +31,9 @@ Log::init(Log::MESSAGE_ECHO);
 define('_FCM_SERVICE_ACCOUT_KEY_', '/home/flexphp/public_html/firebase-adminsdk-mnazt-e2d8795ac6.json');
 define('_FCM_PROJECT_ID_', 'smartds-5ca46');
 
-# class
-$pushFCMMessage = new \Flex\Push\PushFCMMessage( _FCM_PROJECT_ID_ );
-
 # 푸시토큰
 try{
+    $pushFCMMessage = new \Flex\Push\PushFCMMessage( _FCM_PROJECT_ID_ );
     if($pushFCMMessage->getGoogleAccessToken( _FCM_SERVICE_ACCOUT_KEY_ ))
     {
         $push_title   = 'FCM';
