@@ -8,9 +8,9 @@ use \ArrayAccess;
 use \ErrorException;
 
 # Parent : MySqli
-# Parent : DBSwitch
+# Parent : DbInterface
 # purpose : mysqli을 활용해 확장한다
-class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
+class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 {
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES

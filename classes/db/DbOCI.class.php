@@ -6,7 +6,7 @@ use \ErrorException;
 
 # parnet : DbOCIResult
 # purpose : oci 함수를 활용해 확장한다
-class DbOCI extends DbOCIResult implements DbSwitch,ArrayAccess
+class DbOCI extends DbOCIResult implements DbInterface,ArrayAccess
 {
 	private $host,$dbname;
 	private $handle;

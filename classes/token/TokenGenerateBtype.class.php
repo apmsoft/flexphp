@@ -4,7 +4,7 @@ namespace Flex\Token;
 use Flex\Cipher\CipherEncrypt;
 use Flex\Log\Log;
 
-class TokenGenerateBtype extends TokenSwitch
+class TokenGenerateBtype extends TokenAbstract
 {
     private string $value = '';
 

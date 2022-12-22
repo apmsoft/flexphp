@@ -6,7 +6,7 @@ use \ErrorException;
 
 # parnet : DBSqliteResult
 # purpose : sqlite 함수를 활용해 확장한다
-class DbSqlite extends DbSqliteResult implements DbSwitch,ArrayAccess
+class DbSqlite extends DbSqliteResult implements DbInterface,ArrayAccess
 {
 	private $host,$dbname;
 	private $handle;

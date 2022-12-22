@@ -4,7 +4,7 @@ namespace Flex\Token;
 use Flex\Cipher\CipherEncrypt;
 use Flex\Cipher\CipherDecrypt;
 
-class TokenGenerateAtype extends TokenSwitch
+class TokenGenerateAtype extends TokenAbstract
 {
     const TAG = 'TokenGenerateAtype::';
     public string $value = '';

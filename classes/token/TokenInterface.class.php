@@ -1,12 +1,9 @@
 <?php
 namespace Flex\Token;
 
-use Flex\R\R;
 use Flex\Random\Random;
-use Flex\Cipher\CipherEncrypt;
-use Flex\Log\Log;
 
-abstract class TokenSwitch
+abstract class TokenAbstract
 {
     protected function cleanEtcWords(string $token){
         return preg_replace("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",'',$token);
