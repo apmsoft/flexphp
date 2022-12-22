@@ -34,4 +34,14 @@ try{
 }catch (\ErrorException $e){
     Log::e($e->getMessage());
 }
+
+# 객체 선언 변수로 받아 처리
+try{
+    Log::d('객체 선언 변수로 받아 처리');
+    $filesSize = new \Flex\Files\FilesSize( );
+    $size = $filesSize->setBytes(72054)->size();
+    Log::d('file size', $size);
+}catch (\ErrorException $e){
+    Log::e($e->getMessage());
+}
 ?>

@@ -16,7 +16,7 @@ final class ImageViewer extends ImageGDS
 
 	#@ return String
 	# 파일 확장자 추출
-	public function getExtName(string $filename) : string{
+	private function getExtName(string $filename) : string{
 		$count = strrpos($filename,'.');
 		$file_extension = strtolower(substr($filename, $count+1));
 	return $file_extension;
