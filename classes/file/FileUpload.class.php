@@ -41,11 +41,11 @@ class FileUpload extends DirInfo
         }
 
         $this->process = $_FILES[$process_id];
-        #Log::d('tmp_name' ,$this->process['tmp_name']);
-        #Log::d('filename' ,$this->process['name']);
-        #Log::d('mimeType',$this->process['type']);
-        #Log::d('size', $this->process['size']);
-        #Log::d('error', $this->process['error']);
+        // Log::d('tmp_name' ,$this->process['tmp_name']);
+        // Log::d('filename' ,$this->process['name']);
+        // Log::d('mimeType',$this->process['type']);
+        // Log::d('size', $this->process['size']);
+        // Log::d('error', $this->process['error']);
 
         # 기초에러
         if($this->process['error'] > 0){
@@ -115,7 +115,7 @@ class FileUpload extends DirInfo
 			$ifdo = (new \Flex\Image\ImageExif( $fullname ))->getIfdo();
 			if(isset($ifdo['Orientation']) && !empty($ifdo['Orientation']))
             {
-                Log::d('filterOrientation >>>>',$ifdo);
+                // Log::d('filterOrientation >>>>',$ifdo);
 				$im = imagecreatefromjpeg( $fullname );
 				switch($ifdo['Orientation']) {
                     case 8:
