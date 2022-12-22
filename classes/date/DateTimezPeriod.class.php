@@ -19,6 +19,7 @@ class DateTimezPeriod
 	public function __construct(string $timezone='Asia/Seoul')
 	{
 		$this->timezone = $timezone;
+    return $this;
 	}
 
     /**
@@ -93,7 +94,7 @@ class DateTimezPeriod
     }
 
     # 최상위 순서대로만 표시 y > m > d > h > i > s
-    public function aboutTopTime (string $relative) : string 
+    private function aboutTopTime (string $relative) : string 
     {
         $result = '';
         $argv = explode('-',strtr($relative,[':'=>'-',' '=>'-']));

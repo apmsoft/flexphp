@@ -3,6 +3,7 @@
 use Flex\App\App;
 use Flex\Log\Log;
 
+use Flex\Date\DateTimez;
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
@@ -28,7 +29,7 @@ $model->timezone = 'Asia/Seoul';
 
 // DateTimeZone::ASIA
 # timestamp
-$dateTimez = new \Flex\Date\DateTimez(time(), $model->timezone);
+$dateTimez = new DateTimez(time(), $model->timezone);
 Log::d('TIMEZONE ', $dateTimez->timezone );
 Log::d('LOCATION ', $dateTimez->location );
 Log::d($dateTimez->format('Y-m-d H:i:s'));
@@ -36,173 +37,143 @@ Log::d($dateTimez->format('Y-m-d H:i:s'));
 Log::d ('=======================');
 
 # now
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-Log::d('now',$dateTimez->format('Y-m-d H:i:s P'));
+$datetimev = (new DateTimez("now", $model->timezone))->format('Y-m-d H:i:s P');
+Log::d('now', $datetimev );
 
 Log::d ('=======================');
 
 # 오늘
-$dateTimez = new \Flex\Date\DateTimez("today", $model->timezone);
-Log::d('오늘',$dateTimez->format('Y-m-d H:i:s'));
+$datetimev = (new DateTimez("today", $model->timezone))->format('Y-m-d H:i:s');
+Log::d('오늘', $datetimev );
 
 # 어제
-$dateTimez = new \Flex\Date\DateTimez("yesterday", $model->timezone);
-Log::d('어제',$dateTimez->format('Y-m-d H:i:s'));
+$datetimev = (new DateTimez("yesterday", $model->timezone))->format('Y-m-d H:i:s');
+Log::d('어제', $datetimev );
 
 # 내일
-$dateTimez = new \Flex\Date\DateTimez("tomorrow", $model->timezone);
-Log::d('내일',$dateTimez->format('Y-m-d H:i:s'));
+$datetimev = (new DateTimez("tomorrow", $model->timezone))->format('Y-m-d H:i:s');
+Log::d('내일', $datetimev );
 
 # 120초 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-Log::d('120초 후',$dateTimez->formatter("120 seconds")->format('Y-m-d H:i:s'));
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("120 seconds")->format('Y-m-d H:i:s');
+Log::d('120초 후', $datetimev );
 
 # 2 일전
-$dateTimez = new \Flex\Date\DateTimez("2 days ago", $model->timezone);
-Log::d('2 일전',$dateTimez->format('Y-m-d H:i:s'));
+$datetimev = (new DateTimez("2 days ago", $model->timezone))->format('Y-m-d H:i:s');
+Log::d('2 일전', $datetimev );
 
 # 2 개월 5 일전
-$dateTimez = new \Flex\Date\DateTimez("2 months 5 days ago", $model->timezone);
-$datetimev = $dateTimez->format('Y-m-d H:i:s');
+$datetimev = (new DateTimez("2 months 5 days ago", $model->timezone))->format('Y-m-d H:i:s');
 Log::d('2 개월 5 일전', $datetimev );
 
 # 2 주후
-$dateTimez = new \Flex\Date\DateTimez("2 weeks", $model->timezone);
-$datetimev = $dateTimez->format('Y-m-d H:i:s');
+$datetimev = (new DateTimez("2 weeks", $model->timezone))->format('Y-m-d H:i:s');
 Log::d('2 주후', $datetimev );
 
 
 # 15분 경과
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("15 minutes")->format('Y-m-d H:i:s');
+$dateTimez = (new DateTimez("now", $model->timezone))->formatter("15 minutes")->format('Y-m-d H:i:s');
 Log::d('15분 후', $datetimev );
 
 
 # modify + 1일 후
-$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s'), $model->timezone);
-Log::d('date',$dateTimez->format('Y/m/d H:i:s'));
-$datetimev = $dateTimez->formatter("+1 day")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez( date('Y-m-d H:i:s'), $model->timezone))->formatter("+1 day")->format('Y/m/d H:i:s');
 Log::d('modify 1일 후', $datetimev );
 
 # modify -
-$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s'), $model->timezone);
-Log::d('date',$dateTimez->format('Y/m/d H:i:s'));
-
-$datetimev = $dateTimez->formatter("-3 days")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez( date('Y-m-d H:i:s'), $model->timezone))->formatter("-3 days")->format('Y/m/d H:i:s');
 Log::d('modify 3일전', $datetimev );
 
 Log::d ('=======================');
 
 # 10초 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("PT10S")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("PT10S")->format('Y/m/d H:i:s');
 Log::d('add 10초 후', $datetimev );
 
 # 10분 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("PT10M")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("PT10M")->format('Y/m/d H:i:s');
 Log::d('add 10분 후', $datetimev );
 
 # 1시간 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("PT1H")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("PT1H")->format('Y/m/d H:i:s');
 Log::d('add 한시간 후', $datetimev );
 
 # 1시간 10분 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("PT1H10M")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("PT1H10M")->format('Y/m/d H:i:s');
 Log::d('add 한시간 10분 후', $datetimev );
 
 # 하루 1 day 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("P1D")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("P1D")->format('Y/m/d H:i:s');
 Log::d('add 하루 후', $datetimev );
 
 # 1주 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("P1W")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("P1W")->format('Y/m/d H:i:s');
 Log::d('add 하루 후', $datetimev );
 
 # 한달 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("P1M")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("P1M")->format('Y/m/d H:i:s');
 Log::d('add 한달 후', $datetimev );
 
 # 1년 후
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("P1Y")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("P1Y")->format('Y/m/d H:i:s');
 Log::d('add 1년 후', $datetimev );
 
 Log::d ('=======================');
 
 # 10초 전
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("-PT10S")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("-PT10S")->format('Y/m/d H:i:s');
 Log::d('sub 10초 전', $datetimev );
 
 # 10분 전
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("-PT10M")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("-PT10M")->format('Y/m/d H:i:s');
 Log::d('sub 10분 전',$datetimev );
 
 # 1시간 전
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("-PT1H")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("-PT1H")->format('Y/m/d H:i:s');
 Log::d('sub 한시간 전', $datetimev );
 
 # 1시간 10분 전
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("-PT1H10M")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("-PT1H10M")->format('Y/m/d H:i:s');
 Log::d('sub 한시간 10분 전', $datetimev );
 
 # 하루 전
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev =  $dateTimez->formatter("-P1D")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("-P1D")->format('Y/m/d H:i:s');
 Log::d('sub 하루 전', $datetimev );
 
 
 # 1주 전
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("-P1W")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("-P1W")->format('Y/m/d H:i:s');
 Log::d('sub 하루 전', $datetimev );
 
 # 한달 전
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("-P1M")->format('Y/m/d H:i:s');
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("-P1M")->format('Y/m/d H:i:s');
 Log::d('sub 한달 전', $datetimev );
 
 # 1년 전
-$dateTimez = new \Flex\Date\DateTimez("now", $model->timezone);
-$datetimev = $dateTimez->formatter("-P1Y")->format(DateTime::ATOM);
+$datetimev = (new DateTimez("now", $model->timezone))->formatter("-P1Y")->format(DateTime::ATOM);
 Log::d('sub 1년 전', 'format ATOM', $datetimev );
 
 # 날짜를 배열화 하기 default
-$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s P'), $model->timezone);
-$parse_date = $dateTimez->parseDate();
+$parse_date = (new DateTimez(date('Y-m-d H:i:s P'), $model->timezone))->parseDate();
 Log::d('parse date ', 'default', $parse_date );
 
 # 날짜를 배열화 하기 포멧 정하기
-$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s P'), $model->timezone);
-$parse_date = $dateTimez->parseDate('Y-m-d H:i:s P');
+$parse_date = (new DateTimez(date('Y-m-d H:i:s P'), $model->timezone))->parseDate('Y-m-d H:i:s P');
 Log::d('parse date', 'format 지정', $parse_date );
 
 # 날짜 증가 또는 이전 시킨 후 데이터 parse 시키기 default
-$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s P'), $model->timezone);
-$parse_date = $dateTimez->formatter("-P1Y")->parseDate();
+$parse_date = (new DateTimez(date('Y-m-d H:i:s P'), $model->timezone))->formatter("-P1Y")->parseDate();
 Log::d('parse date', '날짜 증가 및 이전 시킨 후', 'default', $parse_date );
 
 # 날짜 증가 또는 이전 시킨 후 데이터 parse 시키기 : format 정하기
-$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d H:i:s P'), $model->timezone);
-$parse_date = $dateTimez->formatter("+P1Y")->parseDate(DateTime::ATOM);
+$parse_date = (new DateTimez(date('Y-m-d H:i:s P'), $model->timezone))->formatter("+P1Y")->parseDate(DateTime::ATOM);
 Log::d('parse date', $parse_date );
 
 # 지정된 날짜의 일몰/일출 시간
-$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d'), $model->timezone);
-$sun_info = $dateTimez->sunInfo();
+$sun_info = (new DateTimez(date('Y-m-d'), $model->timezone))->sunInfo();
 Log::d('지정 날짜의 일몰/일출 시간', $sun_info );
 
 # 지정된 날짜의 일몰/일출 시간
-$dateTimez = new \Flex\Date\DateTimez(date('Y-m-d'), $model->timezone);
-$sun_info = $dateTimez->formatter("+10 days")->sunInfo();
+$sun_info = (new DateTimez(date('Y-m-d'), $model->timezone))->formatter("+10 days")->sunInfo();
 Log::d('날짜 변경 후 일몰/일출 시간', $sun_info );
 ?>
