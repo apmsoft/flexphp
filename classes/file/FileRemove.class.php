@@ -7,7 +7,7 @@ use Flex\Dir\DirObject;
 # purpose : 파일삭제
 final class FileRemove extends DirObject
 {
-    public array $files = [];
+    public array $list = [];
 
 	final function __construct(string $dir) {
         parent::__construct($dir);
@@ -19,17 +19,19 @@ final class FileRemove extends DirObject
 	{		
         # 디렉토리인지 체크
         if($this->isDir($this->directory)){
-            $this->files = $this->findFiles($pattern,$nothing);            
+            $this->list = $this->findFiles($pattern,$nothing);            
         }
 
     return $this;
     }
 
     # 파일삭제
-    public function remove() : void{
-        if(count($this->files))
+    public function remove() : void
+    {
+        if(count($this->list))
         {
-            foreach($this->files as $filename){
+            foreach($this->list as $filename){
+                Log::d($this->directory.'/'.$filename);
                 unlink($this->directory.'/'.$filename) or throw new ErrorException('e_file_deletion_failed');
             }
         }

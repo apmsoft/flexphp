@@ -17,7 +17,7 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 	const RANDOM_BYTES          = 16;
 	private $encryption_enable = false;	# 암호화/복호화 활성화
 
-	private $params = array();
+	private $params = [];
 
 	# dsn : host:dbname = localhost:dbname
 	public function __construct(string $dsn='',string $user='',string $passwd='', int $port=3306, string $chrset='utf8')
