@@ -1,17 +1,17 @@
 <?php
-namespace Flex\String;
+namespace Flex\Random;
 
 # purpose : 랜덤문자 만들기
-class StringRandom {
+class Random {
 	protected array $regs = [
 		'A',1,'B',2,'C',3,'D',4,'E',5,'F',6,'G',7,'H',8,'A',9,'J',9,
 		'K',1,'L',2,'M',3,'N',4,'A',5,'P',6,'Q',7,'R',8,'S',9,'T',7,
 		'U',1,'V',2,'X',3,'Y',4,'Z'
 	];
 
-	protected array $int_regs=array(0,1,2,3,4,5,6,7,8,9);
+	protected array $int_regs= [0,1,2,3,4,5,6,7,8,9];
 
-	public function __construct(array $regs){
+	public function __construct(array $regs = []){
 		if(is_array($regs) && count($regs)){
 			$this->regs = $regs;
 		}

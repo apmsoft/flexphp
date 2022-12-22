@@ -1,8 +1,8 @@
 <?php
-namespace Flex\String;
+namespace Flex\Text;
 
 # purpose : 문자을 변경하거나 더하거나 등 가공하는 역할을 한다.
-class StringUtil
+class TextUtil
 {
 	private string $value;
 
@@ -12,13 +12,13 @@ class StringUtil
 	}
 
 	# 기존문자에 문자 덮붙이기
-	public function append(string|int $s) : StringUtil{
+	public function append(string|int $s) : TextUtil{
 		$this->value .=$s;
 	return $this;
 	}
 
 	#기본 문자 앞에 덮붙이기
-	public function prepend(string|int $s) : StringUtil {
+	public function prepend(string|int $s) : TextUtil {
 		$this->value = $s.$this->value;
 	return $this;
 	}
@@ -26,7 +26,7 @@ class StringUtil
 	# 문자를 지정된길이부터 특정 문자로 변경하기
 	# 010-4023-7046 => 010-****-7046
 	# startNumber : 시작위치(index), endNumber : 길이만큼, chgString : 변형될 문자
-	public function replace(int $startNumber, int $endNumber,string $chgString) : StringUtil
+	public function replace(int $startNumber, int $endNumber,string $chgString) : TextUtil
 	{
 		$result = '';
 		$s = [];
@@ -47,7 +47,7 @@ class StringUtil
 
 	# 문자 자르기
 	# length : 문자길이
-	public function cut(int $length, bool $is_apeend_cutstr = true, string $strip_tags = '<font><strong><b><strike>') : StringUtil
+	public function cut(int $length, bool $is_apeend_cutstr = true, string $strip_tags = '<font><strong><b><strike>') : TextUtil
 	{
 		$result = '';
 		$str =&$this->value;
@@ -90,7 +90,7 @@ class StringUtil
 	}
 
 	#숫자를 특정문자 타입의 형태로 출력
-	public function formatNumberPrintf(string $str='-') : StringUtil{
+	public function formatNumberPrintf(string $str='-') : TextUtil{
 		$result = $this->value;
 		$patterns = [
 			4  => ['/(\d{1,1})(\d{1,3})/', '\1'.$str.'\2'],

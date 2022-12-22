@@ -2,6 +2,9 @@
 use Flex\App\App;
 use Flex\Log\Log;
 
+
+use Flex\Text\TextKeyword;
+
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
@@ -16,10 +19,8 @@ $query = '대한민국은!!^만만세 하세요&*korean ++/ 100%';
 $allow_tags = ['%','+'];
 
 # 키워드 허용된 특수 문자 제외하고 한글 | 영어 추출
-$stringKeyword = new \Flex\String\StringKeyword( $query, $allow_tags );
-$keywords = $stringKeyword->get_keywords();
-
-Log::d( $keywords );
+$text_value = (new \Flex\Text\TextKeyword( $query, $allow_tags ))->value;
+Log::d( $text_value );
 
 ### 특정 글자 및 끝글자 삭제 하기 필터 기능 ######
 # 특정 글자 삭제
@@ -30,8 +31,7 @@ $filter_words =['할수'=>'','있습'=>'','니다'=>'','있나'=>'','있나요'=
 $filter_end_words = [
     '가','이','은','는'
 ];
-$stringKeyword->filterCleanWord($filter_words, $filter_end_words);
-$keywords2 = $stringKeyword->get_keywords();
 
-Log::d( $keywords2 );
+$text_value = (new \Flex\Text\TextKeyword( $query, $allow_tags ))->filterCleanWord($filter_words,$filter_end_words)->value;
+Log::d($text_value);
 ?>

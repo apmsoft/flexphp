@@ -1,18 +1,17 @@
 <?php
-namespace Flex\String;
+namespace Flex\Text;
 
-# define : _CHRSET_
 # purpose : 문자을 변경하거나 더하거나 등 가공하는 역할을 한다.
-class StringKeyword
+class TextKeyword
 {
-	private $keywords;
-	private $allow_tags = [];
+	private $value;
+	private array $allow_tags = [];
 
 	# 키워드 중 지우고 싶은 글자 및 단어
-	protected $filter_words = [];
+	protected array $filter_words = [];
 
 	# 키워드 중 끝 -1 글자 지우기
-	protected $filter_end_words = [];
+	protected array $filter_end_words = [];
 
 	public function __construct(string $keyword, array $allow_tags=[]){
 		if($keyword && $keyword !=''){
@@ -20,15 +19,14 @@ class StringKeyword
 			if(is_array($allow_tags) && count($allow_tags)){
 				$this->allow_tags = $allow_tags;
 			}
-
-			# 특수 문자 제거
-			$this->keywords = self::cleanWord($keyword);
+			$this->value = $keyword;
+			self::cleanWord();
 		}
+	return $this;
 	}
 
 	# 특수문자 제거 및 단어별 배열로 리턴
-	# return array()
-	private function cleanWord($keywords)
+	private function cleanWord() : TextKeyword
 	{
 		# 한글 영어 숫자만 추출
 		$pattern = '/([\xEA-\xED][\x80-\xBF]{2}|[a-zA-Z0-9]';
@@ -43,6 +41,7 @@ class StringKeyword
 		$pattern .= ')+/';
 
 		# 클린
+		$keywords = $this->value;
 		preg_match_all($pattern, $keywords, $match);
 		$keywords = $match[0];
 		if(is_array($keywords)){
@@ -61,15 +60,16 @@ class StringKeyword
 			}
 		}
 
-		return array_filter(array_unique($keywords));
+		$this->value = array_filter(array_unique($keywords));
+	return $this;
 	}
 
 	# 분리된 단어중에서 필터 단어로 등록된 단어 지운 후 리턴
 	/**
-	 * filter_words : 틀정 문자를 특정문자로 변환
+	 * filter_words : 특정 문자를 특정문자로 변환
 	 * filter_end_words : 마지막 끝 글자를 특정문자로 변환
 	 */
-	public function filterCleanWord(array $filter_words =[], array $filter_end_words =[])
+	public function filterCleanWord(array $filter_words =[], array $filter_end_words =[]) : TextKeyword
 	{
 		# init
 		if(is_array($filter_words) && count($filter_words)){
@@ -81,7 +81,7 @@ class StringKeyword
 		}
 
 		# 필터
-		$argv = $this->keywords;
+		$argv = $this->value;
 		$data = array();
 		foreach($argv as $w)
 		{
@@ -98,14 +98,17 @@ class StringKeyword
 			}			
 		}
 		if(count($data)>0){
-			$this->keywords = array_unique($data);
+			$this->value = array_unique($data);
 		}
+	return $this;
 	}
 
-	#@ return
-	# keywords 값 배열 리턴
-	public function get_keywords(){
-		return $this->keywords;
-	}
+	public function __get(string $propertyName){
+        $result = [];
+        if(property_exists($this,$propertyName)){
+            $result = $this->{$propertyName};
+        }
+    return $result;
+    }
 }
 ?>
