@@ -35,18 +35,26 @@ class FileUpload extends DirInfo
     # 2 첨부파일
     public function process(string $process_id) : FileUpload
     {
+        # 값이 정상적인지 체크
+        if(!isset($_FILES[$process_id])){
+            self::exceptionsErrorHandler(4);
+        }
+        Log::d($_FILES[$process_id]);
+
         $this->process = $_FILES[$process_id];
+        Log::d('tmp_name' ,$this->process['tmp_name']);
         Log::d('filename' ,$this->process['name']);
-        Log::d('mediaType',$this->process['type']);
+        Log::d('mimeType',$this->process['type']);
         Log::d('size', $this->process['size']);
         Log::d('error', $this->process['error']);
 
+        # 기초에러
         if($this->process['error'] > 0){
             self::exceptionsErrorHandler($this->process['error']);
         }
 
         # 업로드 된 파일인지 체크
-        if(!self::is_upload_files($this->process['tmp_name'])){
+        if(!self::is_upload_files()){
             self::exceptionsErrorHandler(9);
         }
 
@@ -56,6 +64,7 @@ class FileUpload extends DirInfo
     # 3 업로드 허용된 파일 인치 체크
     public function filterExtension(array $allowe_extension=['jpg','jpeg','png','gif']) : FileUpload
 	{
+        self::getExtName();
         if(!in_array($this->file_extension,$allowe_extension)){
 			self::exceptionsErrorHandler(5);
         }
@@ -98,7 +107,7 @@ class FileUpload extends DirInfo
 	}
 
     # 7 orientation
-    public function chkOrientation() : FileUpload
+    public function filterOrientation() : FileUpload
     {
         # jpeg, jpg 인지 체크
 		if( preg_match('/(jpeg|jpg)/',$this->file_extension) )
@@ -107,6 +116,7 @@ class FileUpload extends DirInfo
 			$ifdo = (new \Flex\Image\ImageExif( $fullname ))->getIfdo();
 			if(isset($ifdo['Orientation']) && !empty($ifdo['Orientation']))
             {
+                Log::d('filterOrientation >>>>',$ifdo);
 				$im = imagecreatefromjpeg( $fullname );
 				switch($ifdo['Orientation']) {
                     case 8:
@@ -141,15 +151,14 @@ class FileUpload extends DirInfo
     # 파일 확장자 추출
 	private function getExtName() : void
     {
-		$basename = basename($this->process['name']);
-		$count    = strrpos($tmpfile,'.');
-		$this->file_extension = strtolower(substr($basename, $count+1));
+		$count    = strrpos($this->process['name'],'.');
+		$this->file_extension = strtolower(substr($this->process['name'], $count+1));
         $this->mimeType = (preg_match('/(gif|jpeg|jpg|png)/',$this->file_extension)) ? 'image/'.$this->file_extension : 'application/'.$this->file_extension;
 	}
 
     # 업로드된 파일인지 체크
-	private function is_upload_files(string $tmpfile): bool{
-		if(!is_uploaded_file($tmpfile)) return false;
+	private function is_upload_files(): bool{
+		if(!is_uploaded_file( $this->process['tmp_name'] )) return false;
 	return true;
 	}
 
@@ -163,11 +172,10 @@ class FileUpload extends DirInfo
     # 에러 발생시키기
     private function exceptionsErrorHandler(int $error_no) : void
     {
-        $error_code = match($error_no){
-            2,3,4,6,7,8 => spprintf("E%d",$error_no),
-            default => 'E9'
-        };
-        throw new \Exception($this->error_msg[$error_code]);
+        if($error_no >= 2 && $error_no <= 9) {
+            $error_code = sprintf("E%d",$error_no);
+            throw new \Exception($this->error_msg[$error_code]);
+        }
     }
 }
 ?>

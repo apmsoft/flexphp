@@ -1,4 +1,8 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
+
 use Flex\App\App;
 use Flex\Log\Log;
 
@@ -8,7 +12,7 @@ require $path. '/config/config.inc.php';
 # 기본값 MESSAGE_FILE, log.txt;
 Log::init();
 Log::init(Log::MESSAGE_ECHO);
-
+Log::setDebugs('e');
 
 # model
 $model = new \Flex\Model\Model();
@@ -44,4 +48,6 @@ try{
 }catch (\ErrorException $e){
     Log::e($e->getMessage());
 }
+
+echo json_encode(['result'=>'true','msg'=>'test']);
 ?>

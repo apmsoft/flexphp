@@ -17,7 +17,7 @@ Log::options([
 
 # model
 $model = new \Flex\Model\Model();
-$model->picture = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe/g0e6b3d364_640.jpg';
+$model->picture = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe/beautiful-young-asian-woman-happy-relax-walking-beach-near-sea.jpg';
 
 try{
     $imageExif = new \Flex\Image\ImageExif( $model->picture );

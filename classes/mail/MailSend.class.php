@@ -10,7 +10,7 @@ $file_args[]=array(
 );
 
 $mailSend = new MailSend();
-$mailSend->setHeaaderAttach($file_args);
+$mailSend->setHeaderAttach($file_args);
 $mailSend->setFrom($is_member['email'], $is_member['name']);
 $mailSend->setDescription($_REQUEST['description']);
 $mailSend->setAttachmentFiles($file_args);
@@ -28,7 +28,7 @@ class MailSend
 	private $boundary = '';
 
 	#수신자 등록
-	private $to_emails = [];
+	private array $to = [];
 
 	# 전송 인코딩 방식 설정
 	public function __construct(string $contype='', string $encoding='', string $chrset='')
@@ -51,7 +51,7 @@ class MailSend
 
 	}
 
-	public function setHeaaderAttach($files){
+	public function setHeaderAttach(array|null $files) : void{
 		if(is_array($files) && count($files)>0)
 			$this->headers= 'Content-Type: multipart/mixed; '.'boundary="------=_Part_001_'. $this->boundary .'"'. "\r\n";
 		else
@@ -65,12 +65,12 @@ class MailSend
 
 	# 추가헤더
 	# ex) "Reply-To: info@my_site.com" | "Return-Path: info@my_site.com"
-	public function setHeadersAppend($header_con){
+	public function setHeadersAppend(string $header_con){
 		$this->headers.= $header_con . "\r\n";
 	}
 
 	# 메일 내용
-	public function setDescription($message){
+	public function setDescription(string $message){
 		$this->description = "\r\n";
 		$this->description.= '------=_Part_000_'.$this->boundary. "\r\n";
 		$this->description.= 'Content-Type: text/'.$this->content_type.'; charset='. strtoupper($this->chrset) ."\r\n";
@@ -85,14 +85,13 @@ class MailSend
 	}
 
 	# 첨부파일
-	public function setAttachmentFiles($files=array())
+	public function setAttachmentFiles(array $files) : void
 	{
 		$count = count($files);
 		for ($i=0; $i<=$count; $i++)
 		{
-			$strObj = new StringObject($files[$i]['ofilename']);
 			$full_filename	= $files[$i]['fullname'];
-			$filename		= $strObj->isEuckrChg();
+			$filename		= $files[$i]['ofilename'];
 			$filetype		= $files[$i]['file_type'];
 
 			$tmp_contents = '';
@@ -118,14 +117,14 @@ class MailSend
 
 	# @void
 	# 수신자 등록 및 중복 체크
-	public function setTo($name, $email)
+	public function setTo(string $name, string $email) : void
 	{
 		$bool = true;
-		if(is_array($this->to_mails))
+		if(is_array($this->to))
 		{
-			$count = count($this->to_mails);
+			$count = count($this->to);
 			for($i=0; $i<$count; $i++){
-				if($this->to_mails[$i]['email'] == $email){
+				if($this->to[$i]['email'] == $email){
 					$bool =true;
 					break;
 				}
@@ -134,7 +133,7 @@ class MailSend
 
 		if($bool)
 		{
-			$this->to_mails[] = array(
+			$this->to[] = array(
 				'name' =>$name,
 				'email' => $email
 			);
@@ -144,13 +143,13 @@ class MailSend
 	# @return boolean
 	# 메일 전송
 	# ex) Mary <mary@example.com>, Kelly <kelly@example.com>
-	public function send($title)
+	public function send(string $title) : bool
 	{
 		# 수신자 작업
 		$to = '';
-		$count = count($this->to_mails);
+		$count = count($this->to);
 		for($i=0; $i<$count; $i++){
-			$to.= $this->to_mails[$i]['name'].'<'.$this->to_mails[$i]['email'].'>,';
+			$to.= $this->to[$i]['name'].'<'.$this->to[$i]['email'].'>,';
 		}
 
 		if($to)
@@ -168,7 +167,8 @@ class MailSend
 	}
 
 	# 문자 출력 값이 utf-8인지 체크 후 변환하기
-	public function setCharet($msg){
+	private function setCharet($msg) : string
+	{
 		# 전송된 값을 원하는 문자셋으로 변경
 		if(iconv($this->chrset,$this->chrset,$msg)==$msg){
 			return $msg;
