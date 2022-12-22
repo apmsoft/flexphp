@@ -516,3 +516,47 @@
     [sfilename] => b11a2507cbc5d4ac1d5b2f42fe9ea0ed.jpg
 )
  | 
+2022-12-22 14:36:49 >> D : _FILES | Array
+(
+)
+
+2022-12-22 14:36:49 >> E : e_no_was_uploaded | 
+2022-12-22 14:36:49 >> E : 파일이 전송되지 않았습니다 | 
+2022-12-22 14:36:50 >> D : _FILES | Array
+(
+    [filepond] => Array
+        (
+            [name] => KakaoTalk_Photo_2022-12-14-21-42-59.jpeg
+            [full_path] => KakaoTalk_Photo_2022-12-14-21-42-59.jpeg
+            [type] => image/jpeg
+            [tmp_name] => /tmp/phpeB0iGl
+            [error] => 0
+            [size] => 2337275
+        )
+
+)
+
+2022-12-22 14:36:50 >> D : filterOrientation >>>> | Array
+(
+    [ImageWidth] => 4032
+    [ImageLength] => 1960
+    [Orientation] => 6
+    [YCbCrPositioning] => 1
+    [XResolution] => 72/1
+    [YResolution] => 72/1
+    [ResolutionUnit] => 2
+    [Make] => samsung
+    [Model] => SM-G965N
+    [Software] => G965NKSU5FVG2
+    [DateTime] => 2022:12:14 18:48:27
+    [Exif_IFD_Pointer] => 225
+)
+
+2022-12-22 14:36:50 >> D : Array
+(
+    [filesize] => 2337275
+    [mimeType] => image/jpeg
+    [ofilename] => KakaoTalk_Photo_2022_12_14_21_42_59.jpeg
+    [sfilename] => facd47955ff800deb23b875986dd1930.jpeg
+)
+ | 
