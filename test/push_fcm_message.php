@@ -34,18 +34,20 @@ define('_FCM_PROJECT_ID_', 'smartds-5ca46');
 # class
 $pushFCMMessage = new \Flex\Push\PushFCMMessage( _FCM_PROJECT_ID_ );
 
-# 전송 메세지
-$push_send_params = [
-    'title'  => 'FlexPHP2',
-    'body'   => 'flexphp 가 새롭게 업데이트 되었어요'
-];
-Log::d('push_send_params ', $push_send_params);
-
 # 푸시토큰
 try{
-    if($pushFCMMessage->getGoogleAccessToken( _FCM_SERVICE_ACCOUT_KEY_ )){
-        $pushFCMMessage->setDeivce('토큰1');
-        $pushFCMMessage->send($push_send_params);
+    if($pushFCMMessage->getGoogleAccessToken( _FCM_SERVICE_ACCOUT_KEY_ ))
+    {
+        $push_title   = 'FCM';
+        $push_message = "%s님 flexphp2가 탄생했습니다.";
+
+        # 메세지
+        $pushFCMMessage->setDeivce('토큰1', ['title'=>$push_title,'body'=>sprintf($push_message, '홍길동')]);
+        $pushFCMMessage->setDeivce('토큰2', ['title'=>$push_title,'body'=>sprintf($push_message, '유관순')]);
+        $pushFCMMessage->setDeivce('토큰3', ['title'=>$push_title,'body'=>sprintf($push_message, '이순신')]);
+
+        # 전송
+        $pushFCMMessage->send();
     }
 }catch(\Exception $e){
     Log::e($e->getMessage());

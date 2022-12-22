@@ -1,20 +1,21 @@
 <?php
 namespace Flex\Push;
 
+use Flex\Http\HttpRequest;
 use Flex\Log\Log;
 
-class PushFCMMessage
+class PushFCMMessage extends HttpRequest
 {
-	private string $url   = '';
-	private $serverApiKey = '';
-	private $devices      = [];
-	public $log           = false;	// true : echo message, false: none;
-	private $googleAccessToken = []; // [access_token] => [expires_in] => 만료여부 3599[token_type] => Bearer[created] => 1656300909
+	private string $url            = '';
+	private string $serverApiKey   = '';
+	private array $devices         = [];
+	private $googleAccessToken     = []; // [access_token] => [expires_in] => 만료여부 3599[token_type] => Bearer[created] => 1656300909
 	private $sendGoogleAccessToken = '';
 
 	public function __construct(string $project_id){
-		if(!$project_id)
+		if(!$project_id){
 			throw new \Exception('project_id is empty!!');
+		}
 
 		$this->url = sprintf("https://fcm.googleapis.com/v1/projects/%s/messages:send", $project_id);
 	}
@@ -22,7 +23,7 @@ class PushFCMMessage
 	#@void accesstoken
 	public function getGoogleAccessToken( string $serviceAccountKey) : bool
 	{
-		$is_request = false;
+		$is_request = true;
 		if(count($this->googleAccessToken))
 		{
 			$is_request = true;
@@ -46,70 +47,59 @@ class PushFCMMessage
 			$this->googleAccessToken = $client->getAccessToken();
 			
 			Log::d($this->googleAccessToken);
-			$token_argv = explode('.', $this->googleAccessToken['access_token']);
+			$token_argv   = explode('.', $this->googleAccessToken['access_token']);
 			$access_token = sprintf("%s.%s.%s", $token_argv[0],$token_argv[1],$token_argv[2]);
 			$this->sendGoogleAccessToken = sprintf("%s %s", $this->googleAccessToken['token_type'],$access_token );
 			Log::d('NEW --> GoogleAccessToken ::: => ',$this->sendGoogleAccessToken);
+			$is_request = true;
 		}
 
-		return $this->sendGoogleAccessToken;
+	return $is_request;
 	}
 
 	# 하나씩 넣기
-	public function setDeivce(string $deviceId) : void
+	public function setDeivce(string $deviceId, array $argv) : void
 	{
-		if(!$deviceId)
+		if(!$deviceId){
 			throw new \Exception('deviceId is empty!!');
-		
-		$this->devices[] = $deviceId;
-	}
-
-	#전송
-	public function send(array $argv) : void
-	{
-		if(!is_array($this->devices) || count($this->devices) == 0){
-			$this->error("No devices set");
-		}
-
-		if(strlen($this->sendGoogleAccessToken) < 8){
-			throw new \Exception('GoogleAccessToken is empty!!');
 		}
 
 		$fields = [
 			"message" => [
-				"token"        => $this->devices[0],
+				"token"        => $deviceId,
 				"notification" => $argv
 			]
 		];
-		Log::d($fields);
 
-		$headers = array(
+		$headers = [
 			'Authorization: ' . $this->sendGoogleAccessToken,
 			'Content-Type: application/json'
-		);
+		];
+		
+		$this->devices[] = [
+			'url'    => $this->url,
+			'params' => $fields,
+			'headers'=> $headers
+		];
+	}
 
-		// Open connection
-		$ch = curl_init();
-
-		// Set the url, number of POST vars, POST data
-		curl_setopt( $ch, CURLOPT_URL, $this->url );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $fields ) );
-
-		// Execute post
-		$result = curl_exec($ch);
-		if (curl_errno($ch)) {
-			throw new \Exception(curl_getinfo($ch, CURLINFO_HTTP_CODE).' '.curl_getinfo($ch, CURLINFO_EFFECTIVE_URL));
+	#전송
+	public function send() : void
+	{
+		if(!is_array($this->devices) || count($this->devices) == 0){
+			throw new \Exception('deviceId is empty!!');
 		}
 
-		Log::d($result);
+		#Log::d($this->devices);
 
-		// Close connection
-		curl_close($ch);
+		// 전송
+		(new HttpRequest( $this->devices ))->post(function($data){
+			if(is_array($data)){
+				foreach($data as $idx => $contents){
+					Log::d( $this->devices[$idx]['params']['message'], $contents);
+				}
+			}
+		});
 	}
 }
 
