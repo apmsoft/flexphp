@@ -3,6 +3,10 @@ namespace Flex\Uuid;
 
 class UuidGenerator
 {
+	public function __construct(){
+	return $this;
+	}
+
 	#@ String
 	public function v3($uuid, $keyname)
 	{
