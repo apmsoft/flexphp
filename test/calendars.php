@@ -1,5 +1,4 @@
 <?php
-# session_start();
 use Flex\App\App;
 use Flex\Log\Log;
 use Flex\R\R;
