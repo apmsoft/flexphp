@@ -30,6 +30,7 @@ class ImageExif
 			if($this->exifargs ===false)
 				throw new ErrorException(__CLASS__.' :: '.__LINE__.' exif_read_data functions are not available');
 		}
+	return $this;
 	}
 	
 	# FILE

@@ -2,6 +2,9 @@
 use Flex\App\App;
 use Flex\Log\Log;
 
+
+use Flex\Files\FilesStorage;
+
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
@@ -30,26 +33,23 @@ Log::d($model->fetch());
 # https://www.php.net/manual/en/class.splfileobject.php 
 
 # 파일 쓰기 1
-$filesStorage1 = new \Flex\Files\FilesStorage($model->filename, 'w');
-$filesStorage1->write($model->contents);
+(new FilesStorage($model->filename, 'w'))->write($model->contents);
 
 # 파일 읽기 1
-$filesStorage2 = new \Flex\Files\FilesStorage($model->filename, 'r');
-Log::d($filesStorage2->read());
+$read_contents = (new FilesStorage($model->filename, 'r'))->read();
+Log::d( $read_contents );
 
 # 파일 쓰기 2 : 한번에 쓰기
-$filesStorage3 = new \Flex\Files\FilesStorage($model->filename2, 'w');
-$filesStorage3->put($model->pg_contents);
+(new FilesStorage($model->filename2, 'w'))->put($model->pg_contents);
 
 # 파일 읽기 2 : 한번에 읽기
-$filesStorage4 = new \Flex\Files\FilesStorage($model->filename2, 'r');
-Log::d($filesStorage4->get());
+$get_contents = (new FilesStorage($model->filename2, 'r'))->get();
+Log::d($get_contents);
 
 # 파일 쓰기 3 : CSV
-$filesStorage5 = new \Flex\Files\FilesStorage($model->filename3, 'w');
-$filesStorage5->write_csv($model->csv_contents);
+(new FilesStorage($model->filename3, 'w'))->write_csv($model->csv_contents);
 
 # 파일 읽기 3 : CSV
-$filesStorage6 = new \Flex\Files\FilesStorage($model->filename3, 'r');
-Log::d($filesStorage6->read_csv());
+$read_csv = (new FilesStorage($model->filename3, 'r'))->read_csv();
+Log::d( $read_csv );
 ?>

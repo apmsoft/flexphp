@@ -8,18 +8,12 @@ class HttpRequest {
     private $mch;
 
     # 생성자
-    public function __construct(){
-        $this->mch = curl_multi_init();
-    }
-
-    public function __invoke(array $argv)
-    {
+    public function __construct($argv){
         if(!is_array($argv)){
             throw new ErrorException(__CLASS__.' :: '.__LINE__.' is not array');
         }
-
         $this->urls = $argv;
-        return $this;
+        $this->mch = curl_multi_init();
     }
 
     /**

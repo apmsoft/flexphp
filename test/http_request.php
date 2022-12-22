@@ -36,8 +36,7 @@ $urls[] = [
     ]
 ];
 try{
-    $httpRequest = new Flex\Http\HttpRequest();
-    $httpRequest($urls)->get(function($data) use ($urls){
+    (new Flex\Http\HttpRequest( $urls ))->get(function($data) use ($urls){
         if(is_array($data)){
             foreach($data as $idx => $contents){
                 Log::d('-------------------------');
@@ -57,9 +56,8 @@ try{
         }
         #return $data[0];
     });
-    // $httpRequest($urls)->post(function($data){
+    // (new Flex\Http\HttpRequest( $urls ))->post(function($data){
     //      Log::d($data);
-    //      return $data[0];
     // });
 }catch(\Exception $e){
     Log::e($e->getMessage());

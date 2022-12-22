@@ -28,6 +28,8 @@ try{
     Log::d ('GPS', $imageExif->getGPS());
     Log::d ('Makenote', $imageExif->getMakenote());
     Log::d ('한번에 출력 :', $imageExif->fetch());
+
+    # (new \Flex\Image\ImageExif( $model->picture ))->fetch();
 }catch (\Exception $e){
     Log::e( $e->getMessage() );
 }

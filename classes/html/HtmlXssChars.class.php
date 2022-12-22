@@ -9,6 +9,7 @@ class HtmlXssChars
 
 	public function __construct(string $description){
 		$this->description = $description;
+	return $this;
 	}
 
 	#@ void

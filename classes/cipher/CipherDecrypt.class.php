@@ -10,6 +10,7 @@ class CipherDecrypt
 
 	public function __construct(string $str){
 		$this->decrypt_str = $str;
+	return $this;
 	}
 
 	#@ return String

@@ -1,4 +1,7 @@
 <?php
+use Flex\Token\TokenGenerateAtype;
+
+
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
@@ -10,7 +13,7 @@ define('__TOKEN_CHARACTER__','.');
 echo 'module_id : '.$module_id.PHP_EOL;
 
 # 시크릿키 생성
-$tokenGenerateAtype = new \Flex\Token\TokenGenerateAtype(null|5);
+$tokenGenerateAtype = new TokenGenerateAtype(null|5);
 
 # sha256 | sha512 | md5
 $secret_key = $tokenGenerateAtype->generateHashKey($tokenGenerateAtype->generate_string,'sha256');

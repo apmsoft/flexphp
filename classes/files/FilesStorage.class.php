@@ -9,13 +9,14 @@ class FilesStorage extends SplFileObject
     protected $file_name = '';
     private $open_mode;
 
-    public function __construct ( $file_name, $mode ){
+    public function __construct ( string $file_name, string $mode ){
         $this->file_name = $file_name;
         $this->open_mode = $mode;
         parent::__construct($this->file_name, $this->open_mode);
         if (parent::isFile()) {
             $this->file_name = parent::getRealPath();
         }
+    return $this;
     }
 
     #@ 파일쓰기
