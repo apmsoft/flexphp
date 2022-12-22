@@ -2,6 +2,7 @@
 namespace Flex\Token;
 
 use Flex\R\R;
+use Flex\Random\Random;
 use Flex\Cipher\CipherEncrypt;
 use Flex\Log\Log;
 
@@ -14,8 +15,7 @@ abstract class TokenSwitch
     # 길이만큼랜덤으로 문자를 조합
     public function generateString(int $length) : string
     {
-        $stringRandom = new \Flex\String\StringRandom([]);
-        return $stringRandom->arrayRand($length);
+        return (new Random([]))->arrayRand($length);
     }
 
     # 특정한 문자를 암호화 한다.
@@ -24,9 +24,9 @@ abstract class TokenSwitch
     }
 
     # 해시키 만들기
-    abstract public function generateHashKey(string $generate_string) : string;
+    abstract public function generateHashKey() : mixed;
 
     # 토큰생성
-    abstract public function generateToken(string $token) : string;
+    abstract public function generateToken(string $hash) : mixed;
 }
 ?>

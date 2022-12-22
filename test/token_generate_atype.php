@@ -1,29 +1,55 @@
 <?php
+use Flex\Log\Log;
+
+
 use Flex\Token\TokenGenerateAtype;
 
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
+# 기본값 MESSAGE_FILE, log.txt;
+Log::init();
+Log::init(Log::MESSAGE_ECHO);
+
+Log::options([
+    'datetime'   => false, # 날짜시간 출력여부
+    'debug_type' => true, # 디버그 타입 출력여부
+    'newline'    => true  # 개행문자 출력여부
+]);
+
 # class
 $module_id = 'comflexphp';
-$secret_key = '';
-define('__TOKEN_CHARACTER__','.');
 
-echo 'module_id : '.$module_id.PHP_EOL;
+Log::d("=========================");
 
 # 시크릿키 생성
-$tokenGenerateAtype = new TokenGenerateAtype(null|5);
+#$token = (new TokenGenerateAtype( null,10 ))->value;
+$token = (new TokenGenerateAtype( $module_id ))->value;
+Log::d('module_id ',$token);
 
-# sha256 | sha512 | md5
-$secret_key = $tokenGenerateAtype->generateHashKey($tokenGenerateAtype->generate_string,'sha256');
-echo 'secret_key : '.$secret_key.PHP_EOL;
+Log::d("=========================");
+
+# sha256
+$token_256 = (new TokenGenerateAtype( $module_id ))->generateHashKey('sha256')->value;
+Log::d('sha256','secret_key',$token_256);
+
+# sha512
+$token_512 = (new TokenGenerateAtype( $module_id ))->generateHashKey('sha512')->value;
+Log::d('sha512','secret_key',$token_512);
+
+# md5
+$token_md5 = (new TokenGenerateAtype( $module_id ))->generateHashKey('md5')->value;
+Log::d('md5   ','secret_key',$token_md5);
+
+Log::d("=========================");
 
 # 토큰만들기
-$access_token = $tokenGenerateAtype->generateToken( implode(__TOKEN_CHARACTER__, [$module_id, $secret_key]) );
-echo 'access_token : '.$access_token.PHP_EOL;
+$token = (new TokenGenerateAtype( $module_id ))->generateHashKey('sha256')->generateToken(sprintf("%s.",$module_id))->value;
+Log::d('EnCrypt :',$token);
 
 # 토큰 디코딩
-$decode_access_token = $tokenGenerateAtype->decodeToken($access_token);
-echo 'decoding access_token : '.$decode_access_token.PHP_EOL;
+$token = (new TokenGenerateAtype( $module_id ))->decodeToken($token)->value;
+Log::d('DeCrypt :',$token);
+Log::d(explode('.', $token));
 ?>

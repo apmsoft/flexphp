@@ -1,21 +1,33 @@
 <?php
+use Flex\Log\Log;
+
+use Flex\Token\TokenGenerateBtype;
+
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
-# class
-# 지정문자로 생성 : 토큰 비교 가능
-# $tokenGenerateBtype = new \Flex\Token\TokenGenerateBtype('AE68A9MPVZ');
+# 기본값 MESSAGE_FILE, log.txt;
+Log::init();
+Log::init(Log::MESSAGE_ECHO);
+
+Log::options([
+    'datetime'   => false, # 날짜시간 출력여부
+    'debug_type' => true, # 디버그 타입 출력여부
+    'newline'    => true  # 개행문자 출력여부
+]);
+
+// $generate_string = 'abdsrefdsfds';
+$generate_string = null;
 
 # 랜덤 문자 생성 : 토큰 비교 불가
-$tokenGenerateBtype = new \Flex\Token\TokenGenerateBtype(null,10);
+$token = (new TokenGenerateBtype($generate_string,10))->value;
+Log::d($token);
 
-# generateHashKey
-$hashKey = $tokenGenerateBtype->generateHashKey($tokenGenerateBtype->generate_string);
-echo $hashKey;
-echo PHP_EOL;
+# generate HashKey
+$token = (new TokenGenerateBtype($generate_string,10))->generateHashKey()->value;
+Log::d($token);
 
-# 긴토큰 생성
-$btoken = $tokenGenerateBtype->generateToken($hashKey);
-echo $btoken;
-echo PHP_EOL;
+# generate Token
+$token = (new TokenGenerateBtype($generate_string,10))->generateHashKey()->generateToken()->value;
+Log::d($token);
 ?>
