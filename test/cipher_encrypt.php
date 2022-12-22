@@ -32,8 +32,12 @@ Log::d("====================================");
 
 
 # 암호화
-$_encrypt = (new CipherEncrypt($random_text))->_md5();
-Log::d( $_encrypt );
+try{
+    $_encrypt = (new CipherEncrypt($random_text))->_md5();
+    Log::d( $_encrypt );
+}catch(\Exception $e){
+    Log::e($e->getMessage());
+}
 
 $_encrypt = (new CipherEncrypt($random_text))->_md5_base64();
 Log::d( $_encrypt );
