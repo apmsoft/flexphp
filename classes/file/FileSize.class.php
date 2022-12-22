@@ -1,14 +1,14 @@
 <?php
-namespace Flex\Files;
+namespace Flex\File;
 
 use \ErrorException;
 
 # 파일 용량을 알아보기 쉽도록 변환
-class FilesSize
+class FileSize
 {
-	protected $filename;
+	protected string $filename;
 	protected $filesize_bytes = 0;
-	private $convert_type = array('B', 'Kb', 'MB', 'GB', 'TB', 'PB');
+	private array $convert_type = array('B', 'Kb', 'MB', 'GB', 'TB', 'PB');
 
 	#@ void
 	# 파일전체 경로
@@ -24,7 +24,7 @@ class FilesSize
 	}
 
 	# 파일사이즈 등록
-	public function setBytes(int $bytes) : FilesSize{
+	public function setBytes(int $bytes) : FileSize{
 		if(!empty($bytes))
 			$this->filesize_bytes = $bytes;
 

@@ -18,7 +18,7 @@ $model->picture = $model->dir.'/thumb90100x100_j.jpeg';
 
 # 기본 멀티 코딩
 try{
-    $fileDownload = new \Flex\Files\FilesDownload( $model->picture );
+    $fileDownload = new \Flex\File\FileDownload( $model->picture );
     $file_extension = $fileDownload->file_extension;
     $bytes          = $fileDownload->bytes();
     $size           = $fileDownload->size();
@@ -42,15 +42,15 @@ try{
 
     #===========[한줄코딩]============;
     # 파일 컨테츠만 가져오기;
-    // $file_contents = (new \Flex\Files\FilesDownload( $model->picture ))->getContents();
+    // $file_contents = (new \Flex\File\FileDownload( $model->picture ))->getContents();
 
     # 허용된 확장자만
-    // $file_contents = (new \Flex\Files\FilesDownload( $model->picture ))->setFileTypes(['pdf'])->getContents();
+    // $file_contents = (new \Flex\File\FileDownload( $model->picture ))->setFileTypes(['pdf'])->getContents();
     #Log::d('file contents', $file_contents);
     
     # 다운로드 실행 # 파일 다운로드 실행 (이전에 어떠한 문자도 출력이 되어선 안됨);
-    // (new \Flex\Files\FilesDownload( $model->picture ))->download('테스트');
-    // (new \Flex\Files\FilesDownload( $model->picture ))->setFileTypes(['pdf'])->download('테스트');
+    // (new \Flex\File\FileDownload( $model->picture ))->download('테스트');
+    // (new \Flex\File\FileDownload( $model->picture ))->setFileTypes(['pdf'])->download('테스트');
 }catch (\ErrorException $e){
     Log::e($e->getMessage());
     Log::e(R::$sysmsg[R::$language][$e->getMessage()]);

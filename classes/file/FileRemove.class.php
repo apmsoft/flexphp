@@ -1,11 +1,11 @@
 <?php
-namespace Flex\Files;
+namespace Flex\File;
 
 use Flex\Log\Log;
 use Flex\Dir\DirObject;
 
 # purpose : 파일삭제
-final class FilesRemove extends DirObject
+final class FileRemove extends DirObject
 {
     public array $files = [];
 
@@ -15,7 +15,7 @@ final class FilesRemove extends DirObject
 	}
 
     # 디렉토리내 파일 찾기
-	public function find (string $pattern, array $nothing=['html','md','php']) : FilesRemove
+	public function find (string $pattern, array $nothing=['html','md','php']) : FileRemove
 	{		
         # 디렉토리인지 체크
         if($this->isDir($this->directory)){

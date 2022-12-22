@@ -18,11 +18,11 @@ $model->pattern = "gd_*.png"; # 삭제할 파일 패턴
 
 try{
     # 삭제할 파일 찾아보기
-    $find_files = (new \Flex\Files\FilesRemove( $model->dir ))->find( $model->pattern )->files;
+    $find_files = (new \Flex\File\FileRemove( $model->dir ))->find( $model->pattern )->files;
     Log::d('find files ', $find_files);
 
     # 파일삭제
-    // (new \Flex\Files\FilesRemove( $model->dir ))->find( $model->pattern )->remove();
+    // (new \Flex\File\FileRemove( $model->dir ))->find( $model->pattern )->remove();
 }catch (\ErrorException $e){
     Log::e($e->getMessage());
 }

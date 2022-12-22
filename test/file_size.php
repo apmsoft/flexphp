@@ -18,8 +18,8 @@ $model->picture = $model->dir.'/g0e6b3d364_640.jpg';
 # 파일로 파일 사이즈 구하기
 try{
     Log::d('파일로 파일 사이즈 구하기');
-    $bytes= (new \Flex\Files\FilesSize( $model->picture ))->bytes();
-    $size = (new \Flex\Files\FilesSize( $model->picture ))->size();
+    $bytes= (new \Flex\File\FileSize( $model->picture ))->bytes();
+    $size = (new \Flex\File\FileSize( $model->picture ))->size();
     Log::d('file bytes', $bytes);
     Log::d('file size', $size);
 }catch (\ErrorException $e){
@@ -29,7 +29,7 @@ try{
 # 파일 사이즈 등록 및 구하기
 try{
     Log::d('파일 사이즈 등록 및 구하기');
-    $size = (new \Flex\Files\FilesSize( ))->setBytes(72054)->size();
+    $size = (new \Flex\File\FileSize( ))->setBytes(72054)->size();
     Log::d('file size', $size);
 }catch (\ErrorException $e){
     Log::e($e->getMessage());
@@ -38,7 +38,7 @@ try{
 # 객체 선언 변수로 받아 처리
 try{
     Log::d('객체 선언 변수로 받아 처리');
-    $filesSize = new \Flex\Files\FilesSize( );
+    $filesSize = new \Flex\File\FileSize( );
     $size = $filesSize->setBytes(72054)->size();
     Log::d('file size', $size);
 }catch (\ErrorException $e){

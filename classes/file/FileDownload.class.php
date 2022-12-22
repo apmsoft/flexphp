@@ -1,5 +1,5 @@
 <?php
-namespace Flex\Files;
+namespace Flex\File;
 
 use Flex\Log\Log;
 use Flex\Files\FilesSize;
@@ -7,7 +7,7 @@ use \ErrorException;
 
 # parnet : 
 # purpose : 파일다운로드
-final class FilesDownload extends FilesSize
+final class FileDownload extends FilesSize
 {
 	# 다운로드 허용 확장자
 	private array $allowed_filetypes = ['pdf','xls','xlsx','doc','docx','zip','hwp','ppt','pptx','jpg','jpeg','png','gif'];

@@ -1,10 +1,10 @@
 <?php
-namespace Flex\Files;
+namespace Flex\File;
 
 use \SplFileObject;
 
 # 파일을 이용한 스토리지 데이타 관리
-class FilesStorage extends SplFileObject
+class FileStorage extends SplFileObject
 {
     protected $file_name = '';
     private $open_mode;
