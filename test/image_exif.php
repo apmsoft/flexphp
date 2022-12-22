@@ -29,7 +29,8 @@ try{
     Log::d ('Makenote', $imageExif->getMakenote());
     Log::d ('한번에 출력 :', $imageExif->fetch());
 
-    # (new \Flex\Image\ImageExif( $model->picture ))->fetch();
+    $image_exif_info = (new \Flex\Image\ImageExif( $model->picture ))->fetch();
+    Log::d($image_exif_info);
 }catch (\Exception $e){
     Log::e( $e->getMessage() );
 }

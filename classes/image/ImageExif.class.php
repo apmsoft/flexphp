@@ -4,19 +4,19 @@ namespace Flex\Image;
 # purpose : 카메라 촬영 정보
 class ImageExif 
 {
-	private $exifargs = array();
+	private $exifargs = [];
 
 	# computed : 넓이,높이,조리개,촬영거리,CCD
 	# ifdo : 카메라정보
 	# exif : 노출모드,조리개값,플래시사용여부,화이트발란스,줌,ISO감도,초점거리,측광모드 ,오리지날촬영시간
 	# makenote : 펌웨어버전,사용렌즈
-	private $setkey_args = array(
-		'file'		=> array('FileName','FileSize','FileDateTime','MimeType'),
-		'computed'	=> array('Width','Height','ApertureFNumber','FocusDistance','CCDWidth'),
-		'ifdo'		=> array('Make','Model','Software','Orientation'),
-		'exif'		=> array('ExposureTime','FNumber','Flash','WhiteBalance','DigitalZoomRatio','ISOSpeedRatings','FocalLength','MeteringMode','DateTimeOriginal'),
-		'makenote'	=> array('FirmwareVersion','UndefinedTag:0x0095')
-	);
+	private $setkey_args = [
+		'file'		=> ['FileName','FileSize','FileDateTime','MimeType'],
+		'computed'	=> ['Width','Height','ApertureFNumber','FocusDistance','CCDWidth'],
+		'ifdo'		=> ['Make','Model','Software','Orientation'],
+		'exif'		=> ['ExposureTime','FNumber','Flash','WhiteBalance','DigitalZoomRatio','ISOSpeedRatings','FocalLength','MeteringMode','DateTimeOriginal'],
+		'makenote'	=> ['FirmwareVersion','UndefinedTag:0x0095']
+	];
 	
 	# 사진 전체 경로
 	public function __construct(string $picture){
