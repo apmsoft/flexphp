@@ -267,7 +267,7 @@ class DbMySqli extends mysqli implements DbSwitch,ArrayAccess
 	public function __call($method, $args) : mixed{
 		if(method_exists($this, $method)){
 			if($method == 'aes_decrypt' || $method == 'aes_encrypt'){
-            	return call_user_func_array(array($this, $method),$args);
+				return call_user_func_array(array($this, $method),$args);
 			}
 		}
 	}
