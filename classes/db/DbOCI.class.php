@@ -8,6 +8,7 @@ use \ErrorException;
 # purpose : oci 함수를 활용해 확장한다
 class DbOCI extends DbOCIResult implements DbInterface,ArrayAccess
 {
+	const CHARSET = 'utf-8';
 	private $host,$dbname;
 	private $handle;
 	private $affected_rows;	# 저장 레코드 갯수
@@ -31,10 +32,6 @@ class DbOCI extends DbOCIResult implements DbInterface,ArrayAccess
 			$e = oci_error();
 			throw new ErrorException(htmlentities($e['message'].' '.$e['sqltext']),$e['message']);
 		}
-
-		# 문자셋
-		#$chrset = parent::character_set_name();
-		#if(strcmp($chrset,'utf8')) parent::set_charset(str_replace('-','',_CHRSET_));
 
 		$this->host		= $dsn_args[0];
 		$this->dbname	= $dsn_args[1];

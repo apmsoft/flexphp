@@ -1,11 +1,5 @@
 <?php
 /** ======================================================
-| @Author	: 김종관 | 010-4023-7046
-| @Email	: apmsoft@gmail.com
-| @HomePage	: http://www.apmsoftax.com
-| @Editor	: Eclipse(default)
-| @UPDATE	: 2010-05-07
-
 // example
 $file_args[]=array(
 	'file_type'=>$file_row['file_type'],
@@ -15,13 +9,13 @@ $file_args[]=array(
 	'fullname'=>$_dir.'/'.$tables->talk.'/'.$date_dir.'/'.$file_row['sfilename']
 );
 
-$mainSendObj = new MailSend();
-$mainSendObj->setHeaaderAttach($file_args);
-$mainSendObj->setFrom($is_member['email'], $is_member['name']);
-$mainSendObj->setDescription($_REQUEST['description']);
-$mainSendObj->setAttachmentFiles($file_args);
-$mainSendObj->setTo($emv, trim($emv));
-$mainSendObj->send($is_member['name'].'님이 글을 등록하였습니다');
+$mailSend = new MailSend();
+$mailSend->setHeaaderAttach($file_args);
+$mailSend->setFrom($is_member['email'], $is_member['name']);
+$mailSend->setDescription($_REQUEST['description']);
+$mailSend->setAttachmentFiles($file_args);
+$mailSend->setTo($emv, trim($emv));
+$mailSend->send($is_member['name'].'님이 글을 등록하였습니다');
 ----------------------------------------------------------*/
 namespace Flex\Mail;
 
@@ -34,10 +28,10 @@ class MailSend
 	private $boundary = '';
 
 	#수신자 등록
-	private $to_emails = array();
+	private $to_emails = [];
 
 	# 전송 인코딩 방식 설정
-	public function __construct($contype='', $encoding='', $chrset='')
+	public function __construct(string $contype='', string $encoding='', string $chrset='')
 	{
 		# 인코딩 방식
 		if(!empty($encoding))
@@ -176,10 +170,10 @@ class MailSend
 	# 문자 출력 값이 utf-8인지 체크 후 변환하기
 	public function setCharet($msg){
 		# 전송된 값을 원하는 문자셋으로 변경
-		if(iconv(_CHRSET_,$this->chrset,$msg)==$msg){
+		if(iconv($this->chrset,$this->chrset,$msg)==$msg){
 			return $msg;
 		}else{
-			return iconv(_CHRSET_, $this->chrset, $msg);
+			return iconv($this->chrset, $this->chrset, $msg);
 		}
 	}
 }

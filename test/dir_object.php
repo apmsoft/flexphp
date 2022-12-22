@@ -16,8 +16,8 @@ $model->dir2 = sprintf("%s/classes/db",_ROOT_PATH_);
 
 # 디렉토리 탐색
 try{
-    $dirObject = new \Flex\Dir\DirObject($model->dir);
-    Log::d ( $dirObject->findFolders() );
+    $find_files = (new \Flex\Dir\DirObject($model->dir))->findFolders();
+    Log::d ( $find_files );
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }

@@ -25,14 +25,13 @@ class DirInfo
 				foreach($dir_args as $folder){
 					$current_dir = $current_dir.'/'.$folder;
 					if(!$this->makeDirectory($current_dir)){
-						throw new ErrorException(R::$sysmsg['e_filenotfound']);
+						throw new ErrorException('e_filenotfound');
 					}
 				}
 			}
 		}
 	}
 
-	#@ return boolean
 	# 폴더 만들기
 	public function makeDirectory(string $dir) : bool
 	{

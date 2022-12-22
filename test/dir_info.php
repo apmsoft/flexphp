@@ -36,4 +36,12 @@ try{
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
+
+# 디렉토리 탐색
+try{
+    $find_dirs = (new \Flex\Dir\DirObject($model->dir))->findFolders();
+    Log::d ( $find_dirs );
+}catch(\Exception $e){
+    Log::e($e->getMessage());
+}
 ?>

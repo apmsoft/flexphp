@@ -3,6 +3,7 @@ namespace Flex\Token;
 
 use Flex\Cipher\CipherEncrypt;
 use Flex\Log\Log;
+use Flex\Token\TokenAbstract;
 
 class TokenGenerateBtype extends TokenAbstract
 {

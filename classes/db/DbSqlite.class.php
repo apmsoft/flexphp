@@ -8,6 +8,7 @@ use \ErrorException;
 # purpose : sqlite 함수를 활용해 확장한다
 class DbSqlite extends DbSqliteResult implements DbInterface,ArrayAccess
 {
+	const CHARSET = 'utf-8';
 	private $host,$dbname;
 	private $handle;
 	private $affected_rows;	# 저장 레코드 갯수
@@ -22,10 +23,6 @@ class DbSqlite extends DbSqliteResult implements DbInterface,ArrayAccess
         if($errno_num = sqlite_last_error($this->handle)){
 			throw new ErrorException(sqlite_error_string($errno_num),$errno_num);
         }
-
-		# 문자셋
-		#$chrset = parent::character_set_name();
-		#if(strcmp($chrset,'utf8')) parent::set_charset(str_replace('-','',_CHRSET_));
 
 		$this->host		= $dsn_args[0];
 		$this->dbname	= $dsn_args[1];

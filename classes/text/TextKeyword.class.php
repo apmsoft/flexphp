@@ -4,6 +4,7 @@ namespace Flex\Text;
 # purpose : 문자을 변경하거나 더하거나 등 가공하는 역할을 한다.
 class TextKeyword
 {
+	const CHARSET = 'utf-8';
 	private $value;
 	private array $allow_tags = [];
 
@@ -88,10 +89,10 @@ class TextKeyword
 			$s = strtr($w, $this->filter_words);
 			if($s && $s !='')
 			{
-				$es = mb_substr($s, -1, NULL, _CHRSET_);
+				$es = mb_substr($s, -1, NULL, self::CHARSET);
 				if (in_array($es, $this->filter_end_words)) {
-					$elen = mb_strlen($s, _CHRSET_) - 1;
-					$data[] = mb_substr($w, 0, $elen, _CHRSET_);
+					$elen = mb_strlen($s, self::CHARSET) - 1;
+					$data[] = mb_substr($w, 0, $elen, self::CHARSET);
 				}else{
 					$data[] = $s;
 				}
