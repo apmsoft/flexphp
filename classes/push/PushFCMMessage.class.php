@@ -20,7 +20,7 @@ class PushFCMMessage extends HttpRequest
 		$this->url = sprintf("https://fcm.googleapis.com/v1/projects/%s/messages:send", $project_id);
 	}
 
-	#@void accesstoken
+	#@accesstoken
 	public function getGoogleAccessToken( string $serviceAccountKey) : bool
 	{
 		$is_request = true;
