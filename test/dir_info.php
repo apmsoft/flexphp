@@ -15,16 +15,24 @@ $model->dir = sprintf("%s/%s",_ROOT_PATH_, _DATA_);
 
 # 하나의 디렉토리 경로 만들기
 try{
+    # multi line
     $dirInfo = new \Flex\Dir\DirInfo($model->dir);
     $dirInfo->makeDirectory( $model->dir.'/test1');
+
+    # single line
+    (new \Flex\Dir\DirInfo($model->dir))->makeDirectory( $model->dir.'/test2');
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
 
 # 멀티 디렉토리 만들기
 try{
-    $dirInfo2 = new \Flex\Dir\DirInfo($model->dir.'/test2/m1/m2');
+    # multi line
+    $dirInfo2 = new \Flex\Dir\DirInfo($model->dir.'/test1/m1/m2');
     $dirInfo2->makesDir();
+
+    # single line
+    (new \Flex\Dir\DirInfo($model->dir.'/test2/m1/m2'))->makesDir();
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }

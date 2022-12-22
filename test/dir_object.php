@@ -15,22 +15,42 @@ $model->dir  = sprintf("%s",_ROOT_PATH_);
 $model->dir2 = sprintf("%s/classes/db",_ROOT_PATH_);
 
 # 디렉토리 탐색
-$dirObject = new \Flex\Dir\DirObject($model->dir);
-Log::d ( $dirObject->findFolders() );
+try{
+    $dirObject = new \Flex\Dir\DirObject($model->dir);
+    Log::d ( $dirObject->findFolders() );
+}catch(\Exception $e){
+    Log::e($e->getMessage());
+}
 
 # 디렉토리 탐색 [제외시킬 디렉토리명]
-$dirObject1 = new \Flex\Dir\DirObject($model->dir);
-Log::d ( $dirObject1->findFolders(['vendor']) );
+try{
+    $find_files = (new \Flex\Dir\DirObject($model->dir))->findFolders(['vendor']);
+    Log::d ( $find_files );
+}catch(\Exception $e){
+    Log::e($e->getMessage());
+}
 
 # 파일 탐색
-$dirObject2 = new \Flex\Dir\DirObject($model->dir2);
-Log::d ( $dirObject2->findFiles() );
+try{
+    $find_files = (new \Flex\Dir\DirObject($model->dir2))->findFiles();
+    Log::d ( $find_files );
+}catch(\Exception $e){
+    Log::e($e->getMessage());
+}
 
 # 파일 탐색  원하는 파일만
-$dirObject3 = new \Flex\Dir\DirObject($model->dir);
-Log::d ( $dirObject3->findFiles('*.json') );
+try{
+    $find_files = (new \Flex\Dir\DirObject($model->dir))->findFiles('*.json');
+    Log::d ( $find_files);
+}catch(\Exception $e){
+    Log::e($e->getMessage());
+}
 
 # 제외시킬 파일 확장자
-$dirObject4 = new \Flex\Dir\DirObject($model->dir);
-Log::d ( $dirObject4->findFiles('*', ['json','md']) );
+try{
+    $find_files = (new \Flex\Dir\DirObject($model->dir))->findFiles('*', ['json','md']);
+    Log::d ( $find_files );
+}catch(\Exception $e){
+    Log::e($e->getMessage());
+}
 ?>

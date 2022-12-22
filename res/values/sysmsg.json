@@ -50,6 +50,8 @@
     "e_upload_stopped": "파일 업로드가 중지되었습니다",
     "e_not_uploaded_file": "정상적인 업로드 파일이 아닙니다",
     "e_extension_not_allowed": "허용되지 않은 파일입니다.",
+    "e_file_deletion_failed": "파일 삭제 실패하였습니다.",
+
     "e_db_unenabled": "데이타가 이미 삭제 되었거나 분실된 정보입니다",
     "e_usernotfound": "사용자 정보를 찾을 수 없습니다.",
     "e_table_name": "I can not find the table name.",   

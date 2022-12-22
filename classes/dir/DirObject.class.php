@@ -7,6 +7,7 @@ use Flex\Dir\DirInfo;
 class DirObject extends DirInfo{
     public function __construct(string $dir){
         parent::__construct($dir);
+    return $this;
     }
 
     #@ return array
@@ -15,7 +16,7 @@ class DirObject extends DirInfo{
     public function findFiles(string $pattern='*', Array $nothing=array()) : Array
     {
         $result = array();
-        $files= glob($this->dirpath.DIRECTORY_SEPARATOR.$pattern);
+        $files= glob($this->directory.DIRECTORY_SEPARATOR.$pattern);
         if(is_array($files))
         {
             foreach($files as $filename){
@@ -36,7 +37,7 @@ class DirObject extends DirInfo{
     public function findFolders(Array $nothing=array()) : Array
     {
         $result = array();
-        $dirs= glob($this->dirpath.DIRECTORY_SEPARATOR.'*', GLOB_ONLYDIR);
+        $dirs= glob($this->directory.DIRECTORY_SEPARATOR.'*', GLOB_ONLYDIR);
         if(is_array($dirs))
         {
             foreach($dirs as $dirname){

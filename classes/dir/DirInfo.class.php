@@ -4,20 +4,22 @@ namespace Flex\Dir;
 # purpose : 디렉토리 관련
 class DirInfo
 {
-	protected $dirpath;
+	public string $directory;
 	const permission	= 0707;
 
 	public function __construct(string $dir)
 	{
-		$this->dirpath = $dir;
+		$this->directory = $dir;
+
+	return $this;
 	}
 
 	# 복수 폴더 만들기
 	public function makesDir() : void
 	{
-		if(strpos($this->dirpath, '/') !==false)
+		if(strpos($this->directory, '/') !==false)
 		{
-			$dir_args = explode('/', str_replace(_ROOT_PATH_.'/','',$this->dirpath));
+			$dir_args = explode('/', str_replace(_ROOT_PATH_.'/','',$this->directory));
 			$current_dir = _ROOT_PATH_;
 			if(is_array($dir_args)){
 				foreach($dir_args as $folder){
