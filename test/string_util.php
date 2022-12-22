@@ -2,6 +2,9 @@
 use Flex\App\App;
 use Flex\Log\Log;
 
+
+use Flex\String\StringUtil;
+
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
@@ -11,86 +14,67 @@ Log::init();
 # 화면에만 출력
 Log::init(Log::MESSAGE_ECHO);
 
-# 기본 글자
-$str = 'Victory';
-
-#
-$stringUtil = new \Flex\String\StringUtil( $str );
-Log::d( $stringUtil->str );
-
-# 앞에 문자 덮붙이기
-$stringUtil->prepend( '대한민국');
-Log::d( $stringUtil->str );
-
-# 뒤에 문자 붙이기
-$stringUtil->append( ' VS 브라질');
-Log::d( $stringUtil->str );
+# 문자 앞/뒤로 문자 붙이기
+$text_value = (new StringUtil( '대한민국' ))->prepend( '반드시' )->append('은 이긴다')->value;
+Log::d( $text_value );
 
 # 문자를 지정된길이부터 특정 문자로 변경하기
 # 010-0000-7046 => 010-****-7046
 # startNumber : 시작위치(0~), endNumber : 길이, chgString : 변형될 문자
-$stringUtil->replace(7, strlen($stringUtil->str), '*');
-Log::d( $stringUtil->str );
+$text_value2 = (new StringUtil( $text_value ))->replace(7, strlen($text_value), '*')->value;
+Log::d( $text_value2 );
 
 # 글자 자르기
-$stringUtil2 = new \Flex\String\StringUtil( '대만민국 국제 올림픽 대화에서' );
-$stringUtil2->cut(10);
-Log::d( $stringUtil2->str );
+$text_value = (new StringUtil( '대만민국 국제 올림픽 대회에서' ))->cut(10)->value;
+Log::d( $text_value );
 
 # 글자 자르기2 문자 줄임표시 문자 추가 안하기
-$stringUtil3 = new \Flex\String\StringUtil( '대만민국 국제 올림픽 대화에서' );
-$stringUtil3->cut(10, false);
-Log::d( $stringUtil3->str );
+$text_value = (new StringUtil( '대만민국 국제 올림픽 대화에서' ))->cut(10, false)->value;
+Log::d( $text_value );
 
 # 글자 자르기3 특정태그 허용
-$stringUtil4 = new \Flex\String\StringUtil( '<b>대만민국</b> 국제 <font color="red">올림픽</font> 대화에서' );
-$stringUtil4->cut(10, true, '<b><strong><strike>');
-Log::d( $stringUtil4->str );
+$text_value = (new StringUtil( '<b>대만민국</b> 국제 <font color="red">올림픽</font> 대화에서' ))->cut(10, true, '<b><strong><strike>')->value;
+Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기1 [길이 3 ~ 16], 길이 11
-$stringUtil6 = new \Flex\String\StringUtil( '01012345678' );
-$stringUtil6->formatNumberPrintf( '-');
-Log::d( $stringUtil6->str );
+$text_value = (new StringUtil( '01012345678' ))->formatNumberPrintf( '-' )->value;
+Log::d( $text_value );
 
 # 특정 숫자 가리기 
-$stringUtil61 = new \Flex\String\StringUtil( $stringUtil6->str );
-# 시작 index, 길이만큼, 대체할문자
-$stringUtil61->replace(4, 4, '*');
-Log::d( $stringUtil61->str );
+$text_value = (new StringUtil( '010-1234-5678' ))->replace(4, 4, '*')->value;
+Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기1 [길이 4 ~ 16] , 길이 8
-$stringUtil7 = new \Flex\String\StringUtil( '15881234' );
-$stringUtil7->formatNumberPrintf( '-');
-Log::d( $stringUtil7->str );
+$text_value = (new StringUtil( '15881234' ))->formatNumberPrintf('-')->value;
+Log::d( $text_value );
 
 
 # 숫자 자동 포멧화 하기3 [길이 4 ~ 16], 길이 16
-$stringUtil8 = new \Flex\String\StringUtil( '1234567812345678' );
-$stringUtil8->formatNumberPrintf( '-');
-Log::d( $stringUtil8->str );
+$text_value = (new StringUtil( '1234567812345678' ))->formatNumberPrintf('-')->value;
+Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기3 [길이 4 ~ 16], 길이 15
-$stringUtil9 = new \Flex\String\StringUtil( '012345678123456' );
-$stringUtil9->formatNumberPrintf( '-');
-Log::d( $stringUtil9->str );
+$text_value = (new StringUtil( '012345678123456' ))->formatNumberPrintf('-')->value;
+Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 4
-$stringUtil10 = new \Flex\String\StringUtil( '1000' );
-$stringUtil10->formatNumberPrintf( ',');
-Log::d( $stringUtil10->str );
+$text_value = (new StringUtil( '1000' ))->formatNumberPrintf(',')->value;
+Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 3 숫자 범위 벗어 났을 경우 테스트
-$stringUtil11 = new \Flex\String\StringUtil( '100' );
-$stringUtil11->formatNumberPrintf( ',');
-Log::d( $stringUtil11->str );
+$text_value = (new StringUtil( '100' ))->formatNumberPrintf(',')->value;
+Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 5
-$stringUtil11 = new \Flex\String\StringUtil( '15000' );
-$stringUtil11->formatNumberPrintf( ',');
-Log::d( $stringUtil11->str );
+$text_value = (new StringUtil( '15000' ))->formatNumberPrintf(',')->value;
+Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 6
-$stringUtil12 = new \Flex\String\StringUtil( '153000' );
-$stringUtil12->formatNumberPrintf( ',');
-Log::d( $stringUtil12->str );
+$text_value = (new StringUtil( '153000' ))->formatNumberPrintf(',')->value;
+Log::d( $text_value );
+
+
+# 숫자 자동 포멧화 하고 특정위치 부터까지 특수문자로 표시하기
+$text_value = (new StringUtil( '01012345678' ))->formatNumberPrintf('-')->replace(4, 4, '*')->value;
+Log::d( $text_value );
 ?>

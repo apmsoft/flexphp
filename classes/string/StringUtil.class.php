@@ -2,35 +2,36 @@
 namespace Flex\String;
 
 # purpose : 문자을 변경하거나 더하거나 등 가공하는 역할을 한다.
-class StringUtil{
-	private $str;
+class StringUtil
+{
+	private string $value;
 
-	#@ void
 	public function __construct(string $s){
-		$this->str = $s;
+		$this->value = $s;
+	return $this;
 	}
 
-	#@ void
 	# 기존문자에 문자 덮붙이기
-	public function append(string|int $s) : void{
-		$this->str .=$s;
+	public function append(string|int $s) : StringUtil{
+		$this->value .=$s;
+	return $this;
 	}
 
 	#기본 문자 앞에 덮붙이기
-	public function prepend(string|int $s) : void {
-		$this->str = $s.$this->str;
+	public function prepend(string|int $s) : StringUtil {
+		$this->value = $s.$this->value;
+	return $this;
 	}
 
-	# @ return String
 	# 문자를 지정된길이부터 특정 문자로 변경하기
 	# 010-4023-7046 => 010-****-7046
 	# startNumber : 시작위치(index), endNumber : 길이만큼, chgString : 변형될 문자
-	public function replace(int $startNumber, int $endNumber,string $chgString) : void
+	public function replace(int $startNumber, int $endNumber,string $chgString) : StringUtil
 	{
 		$result = '';
 		$s = [];
-		$sLength = strlen($this->str);
-		$str =&$this->str;
+		$sLength = strlen($this->value);
+		$str =&$this->value;
 		$cnt=0;
 		$endNumber2 = ($startNumber-1)+$endNumber;
 		for($i=0; $i<$sLength; $i++){
@@ -40,15 +41,16 @@ class StringUtil{
 			else if((Ord($str[$i])<=244)&&(Ord($str[$i])>=240)){$result .=($cnt>=$startNumber && $cnt<=$endNumber2) ? $chgString : $str[$i].$str[$i+1].$str[$i+2].$str[$i+3];$i+3; $cnt++;}
 		}
 
-		$this->str = $result;
+		$this->value = $result;
+	return $this;
 	}
 
 	# 문자 자르기
 	# length : 문자길이
-	public function cut(int $length, bool $is_apeend_cutstr = true, string $strip_tags = '<font><strong><b><strike>') : void
+	public function cut(int $length, bool $is_apeend_cutstr = true, string $strip_tags = '<font><strong><b><strike>') : StringUtil
 	{
 		$result = '';
-		$str =&$this->str;
+		$str =&$this->value;
 
 		# 예외태그 허용
 		if(trim($strip_tags)) {
@@ -83,13 +85,13 @@ class StringUtil{
 			}
 		}
 
-		if($result) $this->str = $result;
+		if($result) $this->value = $result;
+	return $this;
 	}
 
-	#@ return String
 	#숫자를 특정문자 타입의 형태로 출력
-	public function formatNumberPrintf(string $str='-') : void{
-		$result = $this->str;
+	public function formatNumberPrintf(string $str='-') : StringUtil{
+		$result = $this->value;
 		$patterns = [
 			4  => ['/(\d{1,1})(\d{1,3})/', '\1'.$str.'\2'],
 			5  => ['/(\d{1,2})(\d{1,3})/', '\1'.$str.'\2'],
@@ -107,29 +109,17 @@ class StringUtil{
 
 		$length = strlen($result);
 		if(isset($patterns[$length])){
-			$this->str = preg_replace($patterns[$length][0], $patterns[$length][1],$this->str);
+			$this->value = preg_replace($patterns[$length][0], $patterns[$length][1],$this->value);
 		}
+	return $this;
 	}
 
-	#@ return String
-	# utf-8 문자인지 체크 /--
-	public function isUTF8Chg() : void
-	{
-		if(iconv("utf-8","utf-8",$this->str)==$this->str){}
-		else $this->str = iconv('euc-kr','utf-8',$this->str);
-	}
-
-	#@ return String
-	# euc-kr 문자인지 체크 /--
-	public function isEuckrChg() : void
-	{
-		if(iconv("euc-kr","euc-kr",$this->str)==$this->str) {}
-		else $this->str = iconv('utf-8','euc-kr',$this->str);
-	}
-
-	# 변경된 문자 값 돌려주기
-	public function __get($propertyname){
-		return $this->{$propertyname};
-	}
+	public function __get(string $propertyName){
+        $result = [];
+        if(property_exists($this,$propertyName)){
+            $result = $this->{$propertyName};
+        }
+    return $result;
+    }
 }
 ?>
