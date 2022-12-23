@@ -4,11 +4,10 @@ session_start();
 use Flex\Annona\R\R;
 use Flex\Annona\App\App;
 
-// @ini_set('include_path', './PEAR' . PATH_SEPARATOR .?; ini_get('include_path'));
-// @ini_set('display_error', 'On');
 # set error reporting
+#@ini_set('display_error', 'On');
 #error_reporting(E_ERROR | E_WARNING | E_PARSE);
-// error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+#error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 #error_reporting(E_ALL & ~E_NOTICE);
 #error_reporting(E_ALL);
 
@@ -35,16 +34,18 @@ include_once _ROOT_PATH_.'/config/config.db.php';
 
 # 클래스 자동 인클루드 /--------------
 spl_autoload_register(function($class_name){
-    $tmp_args=explode('\\',preg_replace('/([a-z0-9])([A-Z.])/',"$1$2",$class_name));
-    $class_path_name= (count($tmp_args)>1) ? 
-        strtolower($tmp_args[1]). '/'. $tmp_args[2] :
-            strtolower($tmp_args[0]). '/'. $tmp_args[0];
-    
-    if(!class_exists($class_path_name,false))
-    {
-        # classes 폴더
-        if(file_exists(_ROOT_PATH_.'/classes/'.$class_path_name.'.class.php')!==false){
-            include_once _ROOT_PATH_.'/classes/'.$class_path_name.'.class.php';
+    $paths =explode('\\',preg_replace('/([a-z0-9])([A-Z.])/',"$1$2",$class_name));
+    if(!strcmp($paths[0],'Flex')){
+        $cnt = count($paths)-1;
+        $cut = $cnt-1;
+        $class_package   = implode('/',array_map('strtolower',array_slice($paths,1,$cut)));
+        $class_path_name = sprintf("%s/%s",$class_package,$paths[$cnt]);
+        if(!class_exists($class_path_name,false))
+        {
+            # classes 폴더
+            if(file_exists(_ROOT_PATH_.'/classes/'.$class_path_name.'.class.php')){
+                include_once _ROOT_PATH_.'/classes/'.$class_path_name.'.class.php';
+            }
         }
     }
 });
