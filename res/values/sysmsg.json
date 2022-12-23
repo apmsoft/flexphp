@@ -23,11 +23,13 @@
 
     "e_null": "을(를) 입력 하세요",
     "e_spaces": "공백없이 입력 하세요",
+    "e_ctype_alnum": "영문 또는 숫자만 입력하세요",
     "e_same_repeat_string" : "연속된 문자를 %s자 이상 입력할 수 없습니다.",
     "e_number": "숫자만 입력하세요",
     "e_korean": "한글을 입력할 수 없습니다",
     "e_string_length": "길이는 %d~%d자를 입력하세요",
     "e_etc_string": "허용된 특수문자%s 외에는 입력할 수 없습니다",
+    "e_chk_etc_string": "특수문자를 최소 1개 이상 입력하세요",
     "e_alphabet": "영어(alphabet)을 입력 하세요",
     "e_date": "날짜를 정확하게 입력 하세요",
     "e_time": "시간을 정확하게 입력 하세요",
@@ -39,7 +41,6 @@
     "e_json":"데이터를 JSON 형태로 입력 하세요",
     "e_float": "숫자와 소수형 숫자만 입력하세요",
     "e_link_url": "URL 주소 정확하게 입력 하세요",
-    "e_password_secure_symbol": "특수문자(_,$,#,!,^,*,-,@,&,(,),+)를 최소 한자 이상 입력하세요.",
 
     "e_filenotfound": "파일을 찾을 수 없습니다",
     "e_upload_max_filesize": "업로드한 파일이 최대 업로드 사이즈를 초과합니다",
