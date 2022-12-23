@@ -1,8 +1,7 @@
 <?php
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
+use Flex\Annona\App;
+use Flex\Annona\Log;
 
-use Flex\Annona\R\R;
 use Flex\Annona\Request\Request;
 
 $path = dirname(__DIR__);

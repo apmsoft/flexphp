@@ -1,8 +1,8 @@
 <?php
 namespace Flex\Annona\Token;
 
-use Flex\Annona\Cipher\CipherEncrypt;
-use Flex\Annona\Cipher\CipherDecrypt;
+use Flex\Annona\Cipher\Encrypt;
+use Flex\Annona\Cipher\Decrypt;
 use Flex\Annona\Token\TokenAbstract;
 
 class TokenGenerateAtype extends TokenAbstract
@@ -18,21 +18,21 @@ class TokenGenerateAtype extends TokenAbstract
     public function generateHashKey(string $encrypt_type ='sha512') : TokenGenerateAtype
     {
         $this->value = match ($encrypt_type) {
-            'sha256','sha512' => (new CipherEncrypt($this->value))->_hash($encrypt_type),
-            'md5' => (new CipherEncrypt($this->value))->_md5()
+            'sha256','sha512' => (new Encrypt($this->value))->_hash($encrypt_type),
+            'md5' => (new Encrypt($this->value))->_md5()
         };
     return $this;
     }
 
     # @abstract 토큰생성 : _base64_urlencode
     public function generateToken(string $hash) : TokenGenerateAtype {
-        $this->value = (new CipherEncrypt(sprintf("%s%s",$hash,$this->value)))->_base64_urlencode();
+        $this->value = (new Encrypt(sprintf("%s%s",$hash,$this->value)))->_base64_urlencode();
     return $this;
     }
 
     # @abstract 토큰생성 : _base64_urlencode
     public function decodeToken(string $token) : TokenGenerateAtype {
-        $this->value = (new CipherDecrypt($token))->_base64_urldecode();
+        $this->value = (new Decrypt($token))->_base64_urldecode();
     return $this;
     }
 

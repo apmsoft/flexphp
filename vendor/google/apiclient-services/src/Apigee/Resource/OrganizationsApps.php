@@ -42,7 +42,7 @@ class OrganizationsApps extends \Google\Service\Resource
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], GoogleCloudApigeeV1App::class);
+    return $this->call('get', [$params], GoogleCloudApigeeV1Flex\Annona\App::class);
   }
   /**
    * Lists IDs of apps within an organization that have the specified app status

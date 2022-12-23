@@ -22,4 +22,4 @@ class GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog::class, 'Google_Service_DLP_GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog');
+class_alias(GooglePrivacyDlpV2PublishFindingsToCloudDataCataFlex\Annona\Log::class, 'Google_Service_DLP_GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog');

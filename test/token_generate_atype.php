@@ -1,5 +1,5 @@
 <?php
-use Flex\Annona\Log\Log;
+use Flex\Annona\Log;
 
 
 use Flex\Annona\Token\TokenGenerateAtype;

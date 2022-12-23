@@ -22,7 +22,7 @@ class Post extends \Google\Collection
   protected $collection_key = 'labels';
   protected $authorType = PostAuthor::class;
   protected $authorDataType = '';
-  protected $blogType = PostBlog::class;
+  protected $blogType = PostBFlex\Annona\Log::class;
   protected $blogDataType = '';
   /**
    * @var string

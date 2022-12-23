@@ -1,5 +1,5 @@
 <?php
-namespace Flex\Annona\Log;
+namespace Flex\Annona;
 
 final class Log
 {

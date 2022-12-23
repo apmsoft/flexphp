@@ -20,15 +20,15 @@ namespace Google\Service\Contentwarehouse;
 class AssistantLogsQueryAnnotationLog extends \Google\Collection
 {
   protected $collection_key = 'structureAnnotations';
-  protected $deviceAnnotationType = AssistantLogsDeviceAnnotationLog::class;
+  protected $deviceAnnotationType = AssistantLogsDeviceAnnotationFlex\Annona\Log::class;
   protected $deviceAnnotationDataType = '';
-  protected $deviceAnnotationsType = AssistantLogsDeviceAnnotationLog::class;
+  protected $deviceAnnotationsType = AssistantLogsDeviceAnnotationFlex\Annona\Log::class;
   protected $deviceAnnotationsDataType = 'array';
-  protected $roomAnnotationType = AssistantLogsRoomAnnotationLog::class;
+  protected $roomAnnotationType = AssistantLogsRoomAnnotationFlex\Annona\Log::class;
   protected $roomAnnotationDataType = '';
-  protected $roomAnnotationsType = AssistantLogsRoomAnnotationLog::class;
+  protected $roomAnnotationsType = AssistantLogsRoomAnnotationFlex\Annona\Log::class;
   protected $roomAnnotationsDataType = 'array';
-  protected $structureAnnotationsType = AssistantLogsStructureAnnotationLog::class;
+  protected $structureAnnotationsType = AssistantLogsStructureAnnotationFlex\Annona\Log::class;
   protected $structureAnnotationsDataType = 'array';
 
   /**
@@ -104,4 +104,4 @@ class AssistantLogsQueryAnnotationLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsQueryAnnotationLog::class, 'Google_Service_Contentwarehouse_AssistantLogsQueryAnnotationLog');
+class_alias(AssistantLogsQueryAnnotationFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsQueryAnnotationLog');

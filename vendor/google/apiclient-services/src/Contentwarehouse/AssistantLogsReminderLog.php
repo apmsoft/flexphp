@@ -59,4 +59,4 @@ class AssistantLogsReminderLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsReminderLog::class, 'Google_Service_Contentwarehouse_AssistantLogsReminderLog');
+class_alias(AssistantLogsReminderFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsReminderLog');

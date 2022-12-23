@@ -21,7 +21,7 @@ class DialogAction extends \Google\Model
 {
   protected $actionStatusType = ActionStatus::class;
   protected $actionStatusDataType = '';
-  protected $dialogType = Dialog::class;
+  protected $dialogType = DiaFlex\Annona\Log::class;
   protected $dialogDataType = '';
 
   /**

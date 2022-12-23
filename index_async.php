@@ -6,8 +6,8 @@ use React\Http\Message\Response;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Promise\Promise;
 
-use Flex\Annona\R\R;
-use Flex\Annona\Log\Log;
+use Flex\Annona\R;
+use Flex\Annona;
 
 $path = __DIR__;
 require $path. '/vendor/autoload.php';
@@ -16,11 +16,11 @@ require $path. '/config/config.inc.php';
 $loop = React\EventLoop\Loop::get();
 
 # Log setting
-# 메세지출력 방법 : echo [Log::MESSAGE_ECHO], file [Log::MESSAGE_FILE]
-# default 값: Log::MESSAGE_FILE, filename : log.txt
-Log::init();
-Log::setDebugs('i','d','v','e');
-Log::options([
+# 메세지출력 방법 : echo [Flex\Annona\Log::MESSAGE_ECHO], file [Flex\Annona\Log::MESSAGE_FILE]
+# default 값: Flex\Annona\Log::MESSAGE_FILE, filename : log.txt
+Flex\Annona\Log::init();
+Flex\Annona\Log::setDebugs('i','d','v','e');
+Flex\Annona\Log::options([
     'datetime'   => true,
     'debug_type' => true,
     'newline'    => true
@@ -30,14 +30,14 @@ Log::options([
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/users', function($params){
         parse_str($params, $url_queries);
-        Log::d("/users -> params -> ".json_encode($url_queries));
+        Flex\Annona\Log::d("/users -> params -> ".json_encode($url_queries));
         return ['result'=>'true', 'msg'=>'ok'];
     });
 
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', function($params){
         parse_str($params, $url_queries);
-        Log::d('<<< /user/id:+ >> params : '.json_encode($params));
+        Flex\Annona\Log::d('<<< /user/id:+ >> params : '.json_encode($params));
 
         return ['result'=>'true','msg'=>'id'];
     });
@@ -53,7 +53,7 @@ React\Async\waterfall(
         {
             # 기본정보
             $uri = $_SERVER['REQUEST_URI'];
-            Log::i($_SERVER['REMOTE_ADDR'], $_SERVER['REQUEST_METHOD'], $uri);
+            Flex\Annona\Log::i($_SERVER['REMOTE_ADDR'], $_SERVER['REQUEST_METHOD'], $uri);
 
             # url parsing
             $url_parse = parse_url($uri);
@@ -71,7 +71,7 @@ React\Async\waterfall(
         $method = $_SERVER['REQUEST_METHOD'];
         $router_path= strtr($path,['/index.php'=>'']);
 
-        Log::d($router_path);
+        Flex\Annona\Log::d($router_path);
         
         return new Promise(function ($resolve) use ($dispatcher, $router_path,$params,$method)
         {
@@ -79,11 +79,11 @@ React\Async\waterfall(
             switch ($routeInfo[0])
             {
                 case FastRoute\Dispatcher::NOT_FOUND:
-                    Log::e("404 Not Found");
+                    Flex\Annona\Log::e("404 Not Found");
                     break;
                 case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
                     $allowedMethods = $routeInfo[1];
-                    Log::e($allowedMethods." >> 405 Method Not Allowed");
+                    Flex\Annona\Log::e($allowedMethods." >> 405 Method Not Allowed");
                     break;
                 case FastRoute\Dispatcher::FOUND:
                     $handler = $routeInfo[1];
@@ -96,7 +96,7 @@ React\Async\waterfall(
     }
 ])
 ->then(function ($message){
-    Log::v($message);
+    Flex\Annona\Log::v($message);
     header('Content-Type: application/json; charset=utf-8');
     echo $message;
 }, function (Exception $e) {

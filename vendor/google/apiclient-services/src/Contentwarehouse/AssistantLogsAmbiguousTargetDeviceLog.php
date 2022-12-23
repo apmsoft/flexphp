@@ -24,15 +24,15 @@ class AssistantLogsAmbiguousTargetDeviceLog extends \Google\Collection
    * @var int[]
    */
   public $ambiguousDeviceIndex;
-  protected $devicesAfterPromotersType = AssistantLogsDeviceInfoLog::class;
+  protected $devicesAfterPromotersType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $devicesAfterPromotersDataType = 'array';
-  protected $finalTargetDeviceType = AssistantLogsDeviceInfoLog::class;
+  protected $finalTargetDeviceType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $finalTargetDeviceDataType = '';
   /**
    * @var int[]
    */
   public $playabilityFilteredDevicesIndex;
-  protected $puntInfoLogType = AssistantLogsAmbiguousTargetDeviceLogPuntInfoLog::class;
+  protected $puntInfoLogType = AssistantLogsAmbiguousTargetDeviceLogPuntInfoFlex\Annona\Log::class;
   protected $puntInfoLogDataType = 'array';
   /**
    * @var int[]
@@ -126,4 +126,4 @@ class AssistantLogsAmbiguousTargetDeviceLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsAmbiguousTargetDeviceLog::class, 'Google_Service_Contentwarehouse_AssistantLogsAmbiguousTargetDeviceLog');
+class_alias(AssistantLogsAmbiguousTargetDeviceFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsAmbiguousTargetDeviceLog');

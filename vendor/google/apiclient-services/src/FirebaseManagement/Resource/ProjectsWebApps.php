@@ -71,7 +71,7 @@ class ProjectsWebApps extends \Google\Service\Resource
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], WebApp::class);
+    return $this->call('get', [$params], WebFlex\Annona\App::class);
   }
   /**
    * Gets the configuration artifact associated with the specified WebApp.
@@ -150,7 +150,7 @@ class ProjectsWebApps extends \Google\Service\Resource
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('patch', [$params], WebApp::class);
+    return $this->call('patch', [$params], WebFlex\Annona\App::class);
   }
   /**
    * Removes the specified WebApp from the FirebaseProject. (webApps.remove)

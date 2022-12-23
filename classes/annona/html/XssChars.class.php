@@ -2,7 +2,7 @@
 namespace Flex\Annona\Html;
 
 # purpose : xss 방지 및
-class HtmlXssChars
+class XssChars
 {
 	private $description;
 	private $allow_tags = array();

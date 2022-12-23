@@ -19,15 +19,15 @@ namespace Google\Service\Testing;
 
 class TestEnvironmentCatalog extends \Google\Model
 {
-  protected $androidDeviceCatalogType = AndroidDeviceCatalog::class;
+  protected $androidDeviceCatalogType = AndroidDeviceCataFlex\Annona\Log::class;
   protected $androidDeviceCatalogDataType = '';
-  protected $deviceIpBlockCatalogType = DeviceIpBlockCatalog::class;
+  protected $deviceIpBlockCatalogType = DeviceIpBlockCataFlex\Annona\Log::class;
   protected $deviceIpBlockCatalogDataType = '';
-  protected $iosDeviceCatalogType = IosDeviceCatalog::class;
+  protected $iosDeviceCatalogType = IosDeviceCataFlex\Annona\Log::class;
   protected $iosDeviceCatalogDataType = '';
-  protected $networkConfigurationCatalogType = NetworkConfigurationCatalog::class;
+  protected $networkConfigurationCatalogType = NetworkConfigurationCataFlex\Annona\Log::class;
   protected $networkConfigurationCatalogDataType = '';
-  protected $softwareCatalogType = ProvidedSoftwareCatalog::class;
+  protected $softwareCatalogType = ProvidedSoftwareCataFlex\Annona\Log::class;
   protected $softwareCatalogDataType = '';
 
   /**
@@ -103,4 +103,4 @@ class TestEnvironmentCatalog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(TestEnvironmentCatalog::class, 'Google_Service_Testing_TestEnvironmentCatalog');
+class_alias(TestEnvironmentCataFlex\Annona\Log::class, 'Google_Service_Testing_TestEnvironmentCatalog');

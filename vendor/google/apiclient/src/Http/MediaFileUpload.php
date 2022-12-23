@@ -28,7 +28,7 @@ use Psr\Http\Message\RequestInterface;
  * Manage large file uploads, which may be media but can be any type
  * of sizable data.
  */
-class MediaFileUpload
+class MediaUpload
 {
     const UPLOAD_MEDIA_TYPE = 'media';
     const UPLOAD_MULTIPART_TYPE = 'multipart';

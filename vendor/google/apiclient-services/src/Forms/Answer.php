@@ -19,8 +19,8 @@ namespace Google\Service\Forms;
 
 class Answer extends \Google\Model
 {
-  protected $fileUploadAnswersType = FileUploadAnswers::class;
-  protected $fileUploadAnswersDataType = '';
+  protected $UploadAnswersType = UploadAnswers::class;
+  protected $UploadAnswersDataType = '';
   protected $gradeType = Grade::class;
   protected $gradeDataType = '';
   /**
@@ -31,18 +31,18 @@ class Answer extends \Google\Model
   protected $textAnswersDataType = '';
 
   /**
-   * @param FileUploadAnswers
+   * @param UploadAnswers
    */
-  public function setFileUploadAnswers(FileUploadAnswers $fileUploadAnswers)
+  public function setUploadAnswers(UploadAnswers $UploadAnswers)
   {
-    $this->fileUploadAnswers = $fileUploadAnswers;
+    $this->UploadAnswers = $UploadAnswers;
   }
   /**
-   * @return FileUploadAnswers
+   * @return UploadAnswers
    */
-  public function getFileUploadAnswers()
+  public function getUploadAnswers()
   {
-    return $this->fileUploadAnswers;
+    return $this->UploadAnswers;
   }
   /**
    * @param Grade

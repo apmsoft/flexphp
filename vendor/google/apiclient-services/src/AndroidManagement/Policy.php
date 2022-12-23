@@ -298,7 +298,7 @@ class Policy extends \Google\Collection
    * @var bool
    */
   public $unmuteMicrophoneDisabled;
-  protected $usageLogType = UsageLog::class;
+  protected $usageLogType = UsageFlex\Annona\Log::class;
   protected $usageLogDataType = '';
   /**
    * @var bool

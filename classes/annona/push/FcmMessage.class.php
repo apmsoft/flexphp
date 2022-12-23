@@ -2,9 +2,9 @@
 namespace Flex\Annona\Push;
 
 use Flex\Annona\Http\HttpRequest;
-use Flex\Annona\Log\Log;
+use Flex\Annona\Log;
 
-class PushFCMMessage extends HttpRequest
+class FcmMessage extends HttpRequest
 {
 	private string $url            = '';
 	private string $serverApiKey   = '';

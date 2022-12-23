@@ -21,7 +21,7 @@ class Comment extends \Google\Model
 {
   protected $authorType = CommentAuthor::class;
   protected $authorDataType = '';
-  protected $blogType = CommentBlog::class;
+  protected $blogType = CommentBFlex\Annona\Log::class;
   protected $blogDataType = '';
   /**
    * @var string

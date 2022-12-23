@@ -41,7 +41,7 @@ class AccountsCustomApps extends \Google\Service\Resource
   {
     $params = ['account' => $account, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('create', [$params], CustomApp::class);
+    return $this->call('create', [$params], CustomFlex\Annona\App::class);
   }
 }
 

@@ -95,4 +95,4 @@ class AssistantLogsRoomAnnotationLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsRoomAnnotationLog::class, 'Google_Service_Contentwarehouse_AssistantLogsRoomAnnotationLog');
+class_alias(AssistantLogsRoomAnnotationFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsRoomAnnotationLog');

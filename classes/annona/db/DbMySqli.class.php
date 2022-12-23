@@ -1,8 +1,8 @@
 <?php
 namespace Flex\Annona\Db;
 
-use Flex\Annona\R\R;
-use Flex\Annona\Request\RequestValidation;
+use Flex\Annona\R;
+use Flex\Annona\Request\Validation;
 use \MySQLi;
 use \ArrayAccess;
 use \ErrorException;
@@ -186,7 +186,7 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 		foreach($this->params as $k => $v){
 			$fieldk .= sprintf("`%s`,",$k);			
 			if($this->encryption_enable){
-				$isChceker = new RequestValidation($v);
+				$isChceker = new Validation($v);
 				if($isChceker->isNumber()){ // 숫자만 있으면 인코딩 안함
 					$datav .= sprintf("'%s',", parent::real_escape_string($v));
 				}else{
@@ -219,7 +219,7 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 		foreach($this->params as $k => $v){
 			$datav = '';
 			if($this->encryption_enable){
-				$isChceker = new RequestValidation($v);
+				$isChceker = new Validation($v);
 				if($isChceker->isNumber()){ // 숫자만 있으면 인코딩 안함
 					$datav = sprintf("'%s'", parent::real_escape_string($v));
 				}else{

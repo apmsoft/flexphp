@@ -44,7 +44,7 @@ class Blogs extends \Google\Service\Resource
   {
     $params = ['blogId' => $blogId];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], Blog::class);
+    return $this->call('get', [$params], BFlex\Annona\Log::class);
   }
   /**
    * Gets a blog by url. (blogs.getByUrl)
@@ -59,7 +59,7 @@ class Blogs extends \Google\Service\Resource
   {
     $params = ['url' => $url];
     $params = array_merge($params, $optParams);
-    return $this->call('getByUrl', [$params], Blog::class);
+    return $this->call('getByUrl', [$params], BFlex\Annona\Log::class);
   }
   /**
    * Lists blogs by user. (blogs.listByUser)

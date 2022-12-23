@@ -55,7 +55,7 @@ class Webapps extends \Google\Service\Resource
   {
     $params = ['enterpriseId' => $enterpriseId, 'webAppId' => $webAppId];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], WebApp::class);
+    return $this->call('get', [$params], WebFlex\Annona\App::class);
   }
   /**
    * Creates a new web app for the enterprise. (webapps.insert)
@@ -69,7 +69,7 @@ class Webapps extends \Google\Service\Resource
   {
     $params = ['enterpriseId' => $enterpriseId, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('insert', [$params], WebApp::class);
+    return $this->call('insert', [$params], WebFlex\Annona\App::class);
   }
   /**
    * Retrieves the details of all web apps for a given enterprise.
@@ -98,7 +98,7 @@ class Webapps extends \Google\Service\Resource
   {
     $params = ['enterpriseId' => $enterpriseId, 'webAppId' => $webAppId, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('update', [$params], WebApp::class);
+    return $this->call('update', [$params], WebFlex\Annona\App::class);
   }
 }
 

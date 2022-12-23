@@ -48,11 +48,11 @@ spl_autoload_register(function($class_name){
 });
 
 # 기본 선언 클래스 /-------------------
-Flex\Annona\App\App::init();
+Flex\Annona\App::init();
 
 # resource XML 자동 로드 /---------------
-Flex\Annona\R\R::init(Flex\Annona\App\App::$language);
-Flex\Annona\R\R::__autoload_resource([
+Flex\Annona\R::init(Flex\Annona\App::$language);
+Flex\Annona\R::__autoload_resource([
     _VALUES_  => ['sysmsg','strings','integers']
 ]);
 

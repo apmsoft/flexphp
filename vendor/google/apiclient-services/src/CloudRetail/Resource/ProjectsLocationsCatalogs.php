@@ -178,7 +178,7 @@ class ProjectsLocationsCatalogs extends \Google\Service\Resource
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('patch', [$params], GoogleCloudRetailV2Catalog::class);
+    return $this->call('patch', [$params], GoogleCloudRetailV2CataFlex\Annona\Log::class);
   }
   /**
    * Set a specified branch id as default branch. API methods such as

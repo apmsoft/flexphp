@@ -1,16 +1,14 @@
 <?php
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
+use Flex\Annona\App;
+use Flex\Annona\Log;
 
-use Flex\Annona\R\R;
-use Flex\Annona\Request\RequestForm;
+use Flex\Annona\R;
+use Flex\Annona\Request\FormValidation;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
 Log::init();
-
-# 화면에만 출력
 Log::init(Log::MESSAGE_ECHO);
 
 /************************************************
@@ -40,7 +38,7 @@ Log::init(Log::MESSAGE_ECHO);
 
 # set
 $request = new \Flex\Annona\Request\Request();
-$request->addr       = '주소 달 서구 대박동 120-4 번지 / 대충빌딩 (2층) ';
+$request->addr       = '주소 달 서구 대박동 120-4 번지 / 대충빌딩 (2층)';
 $request->userid     = 'sfdsafda';
 $request->passwd     = 'passwd#';
 $request->secure_passwd = 'dsl123safdsa_';
@@ -59,20 +57,20 @@ $request->key        = 'dsdf_23_7';
 
 
 try{
-    (new RequestForm('addr','주소',$request->addr))->null()->length(4,160)->disliking(['-','/','(',')']);
-    (new RequestForm('userid','아이디',$request->userid))->null()->length(4,16)->space()->disliking()->alnum();
-    (new RequestForm('passwd', '비밀번호',$request->passwd))->null()->length(4,16)->space()->liking();
-    (new RequestForm('name', '이름',$request->name))->null()->length(4,16)->space()->disliking([]);
-    (new RequestForm('phone', '전화번호',$request->phone))->null()->length(8,16)->space()->disliking(['-'])->number();
-    (new RequestForm('age', '나이',$request->age))->null()->length(1,3)->space()->number();
-    (new RequestForm('eng_str', '영어단어',$request->eng_str))->null()->space()->alphabet();
-    (new RequestForm('email', '이메일',$request->email))->null()->space()->email();
-    (new RequestForm('birthday', '생년-월-일',$request->birthday))->null()->space()->datef();
-    (new RequestForm('start_date', '숙박예약',$request->start_date))->null()->dateperiod($request->end_date);
-    (new RequestForm('authnumber', '인증번호',$request->authnumber))->null()->space()->equal('FlexPHP');
-    (new RequestForm('point', '[소수]값',$request->point))->null()->space()->floatf();
-    (new RequestForm('key', '영어+숫자+_ 만허용',$request->key))->null()->space()->disliking(['_'])->alnum();
-    (new RequestForm('linkurl', 'http 주소타입인지 체크',$request->linkurl))->space()->url();
+    (new FormValidation('addr','주소',$request->addr))->null()->length(4,160)->disliking(['-','/','(',')']);
+    (new FormValidation('userid','아이디',$request->userid))->null()->length(4,16)->space()->disliking()->alnum();
+    (new FormValidation('passwd', '비밀번호',$request->passwd))->null()->length(4,16)->space()->liking();
+    (new FormValidation('name', '이름',$request->name))->null()->length(4,16)->space()->disliking([]);
+    (new FormValidation('phone', '전화번호',$request->phone))->null()->length(8,16)->space()->disliking(['-'])->number();
+    (new FormValidation('age', '나이',$request->age))->null()->length(1,3)->space()->number();
+    (new FormValidation('eng_str', '영어단어',$request->eng_str))->null()->space()->alphabet();
+    (new FormValidation('email', '이메일',$request->email))->null()->space()->email();
+    (new FormValidation('birthday', '생년-월-일',$request->birthday))->null()->space()->datef();
+    (new FormValidation('start_date', '숙박예약',$request->start_date))->null()->dateperiod($request->end_date);
+    (new FormValidation('authnumber', '인증번호',$request->authnumber))->null()->space()->equal('FlexPHP');
+    (new FormValidation('point', '[소수]값',$request->point))->null()->space()->floatf();
+    (new FormValidation('key', '영어+숫자+_ 만허용',$request->key))->null()->space()->disliking(['_'])->alnum();
+    (new FormValidation('linkurl', 'http 주소타입인지 체크',$request->linkurl))->space()->url();
 }catch(\Exception $e){
     Log::e(json_decode($e->getMessage(),true));
     exit;

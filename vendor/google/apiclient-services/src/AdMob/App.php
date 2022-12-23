@@ -109,4 +109,4 @@ class App extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(App::class, 'Google_Service_AdMob_App');
+class_alias(Flex\Annona\App::class, 'Google_Service_AdMob_App');

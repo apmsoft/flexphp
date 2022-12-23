@@ -59,4 +59,4 @@ class ProvidedSoftwareCatalog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(ProvidedSoftwareCatalog::class, 'Google_Service_Testing_ProvidedSoftwareCatalog');
+class_alias(ProvidedSoftwareCataFlex\Annona\Log::class, 'Google_Service_Testing_ProvidedSoftwareCatalog');

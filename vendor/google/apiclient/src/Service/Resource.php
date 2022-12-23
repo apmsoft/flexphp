@@ -18,7 +18,7 @@
 namespace Google\Service;
 
 use Google\Exception as GoogleException;
-use Google\Http\MediaFileUpload;
+use Google\Http\MediaUpload;
 use Google\Model;
 use Google\Utils\UriTemplate;
 use GuzzleHttp\Psr7\Request;
@@ -213,7 +213,7 @@ class Resource
                 ? $parameters['mimeType']['value']
                 : 'application/octet-stream';
             $data = $parameters['data']['value'];
-            $upload = new MediaFileUpload($this->client, $request, $mimeType, $data);
+            $upload = new MediaUpload($this->client, $request, $mimeType, $data);
 
             // pull down the modified request
             $request = $upload->getRequest();

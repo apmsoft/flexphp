@@ -204,7 +204,7 @@ class ComposerStaticInitb9eae466d1f286120ef4d62a7f1f96ad
         'Google_Collection' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
         'Google_Exception' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
         'Google_Http_Batch' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
-        'Google_Http_MediaFileUpload' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
+        'Google_Http_MediaUpload' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
         'Google_Http_REST' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
         'Google_Model' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
         'Google_Service' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',

@@ -17,21 +17,21 @@
 
 namespace Google\Service\Forms;
 
-class FileUploadAnswers extends \Google\Collection
+class UploadAnswers extends \Google\Collection
 {
   protected $collection_key = 'answers';
-  protected $answersType = FileUploadAnswer::class;
+  protected $answersType = UploadAnswer::class;
   protected $answersDataType = 'array';
 
   /**
-   * @param FileUploadAnswer[]
+   * @param UploadAnswer[]
    */
   public function setAnswers($answers)
   {
     $this->answers = $answers;
   }
   /**
-   * @return FileUploadAnswer[]
+   * @return UploadAnswer[]
    */
   public function getAnswers()
   {
@@ -40,4 +40,4 @@ class FileUploadAnswers extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(FileUploadAnswers::class, 'Google_Service_Forms_FileUploadAnswers');
+class_alias(UploadAnswers::class, 'Google_Service_Forms_UploadAnswers');

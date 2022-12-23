@@ -41,4 +41,4 @@ class PageBlog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(PageBlog::class, 'Google_Service_Blogger_PageBlog');
+class_alias(PageBFlex\Annona\Log::class, 'Google_Service_Blogger_PageBlog');

@@ -1,5 +1,5 @@
 <?php
-namespace Flex\Annona\R;
+namespace Flex\Annona;
 
 use \ArrayObject;
 use \ErrorException;

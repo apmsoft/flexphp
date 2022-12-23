@@ -20,7 +20,7 @@ namespace Google\Service\FirebaseManagement;
 class ListAndroidAppsResponse extends \Google\Collection
 {
   protected $collection_key = 'apps';
-  protected $appsType = AndroidApp::class;
+  protected $appsType = AndroidFlex\Annona\App::class;
   protected $appsDataType = 'array';
   /**
    * @var string

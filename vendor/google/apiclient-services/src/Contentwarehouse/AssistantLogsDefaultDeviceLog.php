@@ -19,9 +19,9 @@ namespace Google\Service\Contentwarehouse;
 
 class AssistantLogsDefaultDeviceLog extends \Google\Model
 {
-  protected $defaultSpeakerType = AssistantLogsDeviceInfoLog::class;
+  protected $defaultSpeakerType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $defaultSpeakerDataType = '';
-  protected $defaultTvType = AssistantLogsDeviceInfoLog::class;
+  protected $defaultTvType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $defaultTvDataType = '';
   /**
    * @var string
@@ -73,4 +73,4 @@ class AssistantLogsDefaultDeviceLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsDefaultDeviceLog::class, 'Google_Service_Contentwarehouse_AssistantLogsDefaultDeviceLog');
+class_alias(AssistantLogsDefaultDeviceFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsDefaultDeviceLog');

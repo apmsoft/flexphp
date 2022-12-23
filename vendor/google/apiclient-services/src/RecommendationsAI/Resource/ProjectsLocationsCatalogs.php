@@ -67,7 +67,7 @@ class ProjectsLocationsCatalogs extends \Google\Service\Resource
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('patch', [$params], GoogleCloudRecommendationengineV1beta1Catalog::class);
+    return $this->call('patch', [$params], GoogleCloudRecommendationengineV1beta1CataFlex\Annona\Log::class);
   }
 }
 

@@ -20,7 +20,7 @@ namespace Google\Service\CloudRetail;
 class GoogleCloudRetailV2ListCatalogsResponse extends \Google\Collection
 {
   protected $collection_key = 'catalogs';
-  protected $catalogsType = GoogleCloudRetailV2Catalog::class;
+  protected $catalogsType = GoogleCloudRetailV2CataFlex\Annona\Log::class;
   protected $catalogsDataType = 'array';
   /**
    * @var string

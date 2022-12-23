@@ -623,4 +623,4 @@ class RequestLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(RequestLog::class, 'Google_Service_Logging_RequestLog');
+class_alias(RequestFlex\Annona\Log::class, 'Google_Service_Logging_RequestLog');

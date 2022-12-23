@@ -20,37 +20,37 @@ namespace Google\Service\Contentwarehouse;
 class AssistantLogsDeviceSelectionLog extends \Google\Collection
 {
   protected $collection_key = 'testCodes';
-  protected $allDefaultDevicesType = AssistantLogsDefaultDeviceLog::class;
+  protected $allDefaultDevicesType = AssistantLogsDefaultDeviceFlex\Annona\Log::class;
   protected $allDefaultDevicesDataType = 'array';
-  protected $allMediaStreamLogType = AssistantLogsAllMediaStreamLog::class;
+  protected $allMediaStreamLogType = AssistantLogsAllMediaStreamFlex\Annona\Log::class;
   protected $allMediaStreamLogDataType = '';
-  protected $counterfactualDeviceSelectionLogType = AssistantLogsDeviceSelectionLog::class;
+  protected $counterfactualDeviceSelectionLogType = AssistantLogsDeviceSelectionFlex\Annona\Log::class;
   protected $counterfactualDeviceSelectionLogDataType = '';
-  protected $defaultDevicesType = AssistantLogsDefaultDeviceLog::class;
+  protected $defaultDevicesType = AssistantLogsDefaultDeviceFlex\Annona\Log::class;
   protected $defaultDevicesDataType = '';
-  protected $defaultDevicesLogType = AssistantLogsDefaultDevicesLog::class;
+  protected $defaultDevicesLogType = AssistantLogsDefaultDevicesFlex\Annona\Log::class;
   protected $defaultDevicesLogDataType = '';
   /**
    * @var string[]
    */
   public $devicesStr;
-  protected $inputErrorLogType = AssistantLogsInputErrorLog::class;
+  protected $inputErrorLogType = AssistantLogsInputErrorFlex\Annona\Log::class;
   protected $inputErrorLogDataType = 'array';
-  protected $localDeviceType = AssistantLogsDeviceInfoLog::class;
+  protected $localDeviceType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $localDeviceDataType = '';
   /**
    * @var string
    */
   public $logDataSource;
-  protected $mediaFocusType = AssistantLogsMediaFocusInfoLog::class;
+  protected $mediaFocusType = AssistantLogsMediaFocusInfoFlex\Annona\Log::class;
   protected $mediaFocusDataType = '';
-  protected $mediaFocusesLogType = AssistantLogsMediaFocusesLog::class;
+  protected $mediaFocusesLogType = AssistantLogsMediaFocusesFlex\Annona\Log::class;
   protected $mediaFocusesLogDataType = '';
-  protected $nearbyDevicesLogType = AssistantLogsNearbyDevicesLog::class;
+  protected $nearbyDevicesLogType = AssistantLogsNearbyDevicesFlex\Annona\Log::class;
   protected $nearbyDevicesLogDataType = '';
-  protected $queryAnnotationType = AssistantLogsQueryAnnotationLog::class;
+  protected $queryAnnotationType = AssistantLogsQueryAnnotationFlex\Annona\Log::class;
   protected $queryAnnotationDataType = '';
-  protected $selectionResultType = AssistantLogsDeviceSelectionResultLog::class;
+  protected $selectionResultType = AssistantLogsDeviceSelectionResultFlex\Annona\Log::class;
   protected $selectionResultDataType = '';
   protected $testCodesType = AssistantLogsDeviceTargetingTestCode::class;
   protected $testCodesDataType = 'array';
@@ -268,4 +268,4 @@ class AssistantLogsDeviceSelectionLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsDeviceSelectionLog::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceSelectionLog');
+class_alias(AssistantLogsDeviceSelectionFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceSelectionLog');

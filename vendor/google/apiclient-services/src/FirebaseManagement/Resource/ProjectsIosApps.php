@@ -71,7 +71,7 @@ class ProjectsIosApps extends \Google\Service\Resource
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], IosApp::class);
+    return $this->call('get', [$params], IosFlex\Annona\App::class);
   }
   /**
    * Gets the configuration artifact associated with the specified IosApp.
@@ -149,7 +149,7 @@ class ProjectsIosApps extends \Google\Service\Resource
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('patch', [$params], IosApp::class);
+    return $this->call('patch', [$params], IosFlex\Annona\App::class);
   }
   /**
    * Removes the specified IosApp from the FirebaseProject. (iosApps.remove)

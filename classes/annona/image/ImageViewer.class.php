@@ -2,7 +2,7 @@
 namespace Flex\Annona\Image;
 
 use Flex\Annona\Image\ImageGDS;
-use Flex\Annona\Log\Log;
+use Flex\Annona;
 use \Exception;
 
 # 이미지 뷰어

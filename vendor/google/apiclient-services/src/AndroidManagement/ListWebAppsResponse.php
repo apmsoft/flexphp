@@ -24,7 +24,7 @@ class ListWebAppsResponse extends \Google\Collection
    * @var string
    */
   public $nextPageToken;
-  protected $webAppsType = WebApp::class;
+  protected $webAppsType = WebFlex\Annona\App::class;
   protected $webAppsDataType = 'array';
 
   /**

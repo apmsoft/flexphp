@@ -77,4 +77,4 @@ class AssistantLogsDeviceAnnotationLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsDeviceAnnotationLog::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceAnnotationLog');
+class_alias(AssistantLogsDeviceAnnotationFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceAnnotationLog');

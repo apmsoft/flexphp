@@ -66,7 +66,7 @@ class OrganizationsDevelopersApps extends \Google\Service\Resource
   {
     $params = ['parent' => $parent, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('create', [$params], GoogleCloudApigeeV1DeveloperApp::class);
+    return $this->call('create', [$params], GoogleCloudApigeeV1DeveloperFlex\Annona\App::class);
   }
   /**
    * Deletes a developer app. **Note**: The delete operation is asynchronous. The
@@ -84,7 +84,7 @@ class OrganizationsDevelopersApps extends \Google\Service\Resource
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('delete', [$params], GoogleCloudApigeeV1DeveloperApp::class);
+    return $this->call('delete', [$params], GoogleCloudApigeeV1DeveloperFlex\Annona\App::class);
   }
   /**
    * Manages access to a developer app by enabling you to: * Approve or revoke a
@@ -125,7 +125,7 @@ class OrganizationsDevelopersApps extends \Google\Service\Resource
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('generateKeyPairOrUpdateDeveloperAppStatus', [$params], GoogleCloudApigeeV1DeveloperApp::class);
+    return $this->call('generateKeyPairOrUpdateDeveloperAppStatus', [$params], GoogleCloudApigeeV1DeveloperFlex\Annona\App::class);
   }
   /**
    * Returns the details for a developer app. (apps.get)
@@ -149,7 +149,7 @@ class OrganizationsDevelopersApps extends \Google\Service\Resource
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], GoogleCloudApigeeV1DeveloperApp::class);
+    return $this->call('get', [$params], GoogleCloudApigeeV1DeveloperFlex\Annona\App::class);
   }
   /**
    * Lists all apps created by a developer in an Apigee organization. Optionally,
@@ -207,7 +207,7 @@ class OrganizationsDevelopersApps extends \Google\Service\Resource
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('update', [$params], GoogleCloudApigeeV1DeveloperApp::class);
+    return $this->call('update', [$params], GoogleCloudApigeeV1DeveloperFlex\Annona\App::class);
   }
 }
 

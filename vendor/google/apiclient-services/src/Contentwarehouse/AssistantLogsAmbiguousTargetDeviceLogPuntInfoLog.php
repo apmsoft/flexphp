@@ -78,4 +78,4 @@ class AssistantLogsAmbiguousTargetDeviceLogPuntInfoLog extends \Google\Collectio
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsAmbiguousTargetDeviceLogPuntInfoLog::class, 'Google_Service_Contentwarehouse_AssistantLogsAmbiguousTargetDeviceLogPuntInfoLog');
+class_alias(AssistantLogsAmbiguousTargetDeviceLogPuntInfoFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsAmbiguousTargetDeviceLogPuntInfoLog');

@@ -25,7 +25,7 @@ class GooglePrivacyDlpV2Action extends \Google\Model
   protected $jobNotificationEmailsDataType = '';
   protected $pubSubType = GooglePrivacyDlpV2PublishToPubSub::class;
   protected $pubSubDataType = '';
-  protected $publishFindingsToCloudDataCatalogType = GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog::class;
+  protected $publishFindingsToCloudDataCatalogType = GooglePrivacyDlpV2PublishFindingsToCloudDataCataFlex\Annona\Log::class;
   protected $publishFindingsToCloudDataCatalogDataType = '';
   protected $publishSummaryToCsccType = GooglePrivacyDlpV2PublishSummaryToCscc::class;
   protected $publishSummaryToCsccDataType = '';

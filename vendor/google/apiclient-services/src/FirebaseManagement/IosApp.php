@@ -203,4 +203,4 @@ class IosApp extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(IosApp::class, 'Google_Service_FirebaseManagement_IosApp');
+class_alias(IosFlex\Annona\App::class, 'Google_Service_FirebaseManagement_IosApp');

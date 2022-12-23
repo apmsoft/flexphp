@@ -31,7 +31,7 @@ class GenerateDefaultLineItemRequest extends \Google\Model
    * @var string
    */
   public $lineItemType;
-  protected $mobileAppType = MobileApp::class;
+  protected $mobileAppType = MobileFlex\Annona\App::class;
   protected $mobileAppDataType = '';
 
   /**

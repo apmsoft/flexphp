@@ -93,4 +93,4 @@ class GoogleCloudRecommendationengineV1beta1Catalog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(GoogleCloudRecommendationengineV1beta1Catalog::class, 'Google_Service_RecommendationsAI_GoogleCloudRecommendationengineV1beta1Catalog');
+class_alias(GoogleCloudRecommendationengineV1beta1CataFlex\Annona\Log::class, 'Google_Service_RecommendationsAI_GoogleCloudRecommendationengineV1beta1Catalog');

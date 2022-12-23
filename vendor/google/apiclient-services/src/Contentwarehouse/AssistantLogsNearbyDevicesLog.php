@@ -40,9 +40,9 @@ class AssistantLogsNearbyDevicesLog extends \Google\Collection
    * @var int
    */
   public $eliminatedByUnregisteredDevice;
-  protected $localDeviceType = AssistantLogsDeviceInfoLog::class;
+  protected $localDeviceType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $localDeviceDataType = '';
-  protected $nearbyDevicesType = AssistantLogsDeviceInfoLog::class;
+  protected $nearbyDevicesType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $nearbyDevicesDataType = 'array';
   /**
    * @var int
@@ -236,4 +236,4 @@ class AssistantLogsNearbyDevicesLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsNearbyDevicesLog::class, 'Google_Service_Contentwarehouse_AssistantLogsNearbyDevicesLog');
+class_alias(AssistantLogsNearbyDevicesFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsNearbyDevicesLog');

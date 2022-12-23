@@ -113,4 +113,4 @@ class MobileApp extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(MobileApp::class, 'Google_Service_Dfareporting_MobileApp');
+class_alias(MobileFlex\Annona\App::class, 'Google_Service_Dfareporting_MobileApp');

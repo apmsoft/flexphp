@@ -72,7 +72,7 @@ class QualityActionsReminder extends \Google\Collection
   public $id;
   protected $locationType = QualityActionsReminderLocation::class;
   protected $locationDataType = '';
-  protected $logType = AssistantLogsReminderLog::class;
+  protected $logType = AssistantLogsReminderFlex\Annona\Log::class;
   protected $logDataType = '';
   protected $memoryPayloadType = AssistantRemindersMemoryPayload::class;
   protected $memoryPayloadDataType = '';

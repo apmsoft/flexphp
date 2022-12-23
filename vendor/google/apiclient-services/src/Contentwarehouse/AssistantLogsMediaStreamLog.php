@@ -24,7 +24,7 @@ class AssistantLogsMediaStreamLog extends \Google\Collection
    * @var int[]
    */
   public $deviceIndex;
-  protected $sessionType = AssistantLogsDeviceMediaSessionLog::class;
+  protected $sessionType = AssistantLogsDeviceMediaSessionFlex\Annona\Log::class;
   protected $sessionDataType = '';
 
   /**
@@ -58,4 +58,4 @@ class AssistantLogsMediaStreamLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsMediaStreamLog::class, 'Google_Service_Contentwarehouse_AssistantLogsMediaStreamLog');
+class_alias(AssistantLogsMediaStreamFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsMediaStreamLog');

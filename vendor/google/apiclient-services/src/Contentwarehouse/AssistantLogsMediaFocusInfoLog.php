@@ -27,7 +27,7 @@ class AssistantLogsMediaFocusInfoLog extends \Google\Model
    * @var bool
    */
   public $dialogTriggered;
-  protected $focusDeviceType = AssistantLogsDeviceInfoLog::class;
+  protected $focusDeviceType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $focusDeviceDataType = '';
   /**
    * @var string
@@ -111,4 +111,4 @@ class AssistantLogsMediaFocusInfoLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsMediaFocusInfoLog::class, 'Google_Service_Contentwarehouse_AssistantLogsMediaFocusInfoLog');
+class_alias(AssistantLogsMediaFocusInfoFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsMediaFocusInfoLog');

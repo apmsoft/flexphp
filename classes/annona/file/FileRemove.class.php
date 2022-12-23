@@ -1,7 +1,7 @@
 <?php
 namespace Flex\Annona\File;
 
-use Flex\Annona\Log\Log;
+use Flex\Annona;
 use Flex\Annona\Dir\DirObject;
 
 # purpose : 파일삭제
@@ -31,7 +31,7 @@ final class FileRemove extends DirObject
         if(count($this->list))
         {
             foreach($this->list as $filename){
-                Log::d($this->directory.'/'.$filename);
+                Flex\Annona\Log::d($this->directory.'/'.$filename);
                 unlink($this->directory.'/'.$filename) or throw new ErrorException('e_file_deletion_failed');
             }
         }

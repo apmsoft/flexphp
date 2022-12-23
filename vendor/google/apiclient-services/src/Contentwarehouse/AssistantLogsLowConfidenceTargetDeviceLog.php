@@ -19,9 +19,9 @@ namespace Google\Service\Contentwarehouse;
 
 class AssistantLogsLowConfidenceTargetDeviceLog extends \Google\Model
 {
-  protected $fallbackDeviceLogType = AssistantLogsDeviceInfoLog::class;
+  protected $fallbackDeviceLogType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $fallbackDeviceLogDataType = '';
-  protected $lowConfTargetDeviceLogType = AssistantLogsDeviceInfoLog::class;
+  protected $lowConfTargetDeviceLogType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $lowConfTargetDeviceLogDataType = '';
 
   /**
@@ -55,4 +55,4 @@ class AssistantLogsLowConfidenceTargetDeviceLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsLowConfidenceTargetDeviceLog::class, 'Google_Service_Contentwarehouse_AssistantLogsLowConfidenceTargetDeviceLog');
+class_alias(AssistantLogsLowConfidenceTargetDeviceFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsLowConfidenceTargetDeviceLog');

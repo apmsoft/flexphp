@@ -20,7 +20,7 @@ namespace Google\Service\ChromeManagement;
 class GoogleChromeManagementV1CountInstalledAppsResponse extends \Google\Collection
 {
   protected $collection_key = 'installedApps';
-  protected $installedAppsType = GoogleChromeManagementV1InstalledApp::class;
+  protected $installedAppsType = GoogleChromeManagementV1InstalledFlex\Annona\App::class;
   protected $installedAppsDataType = 'array';
   /**
    * @var string

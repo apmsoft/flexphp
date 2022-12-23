@@ -1,9 +1,7 @@
 <?php
 namespace Flex\Annona\Auth;
 
-use Flex\Annona\Log\Log;
-
-final class AuthSession
+final class Session
 {
     # 세션 항목
     private $auth_args = [];
@@ -46,7 +44,7 @@ final class AuthSession
             @session_start();
             foreach($this->auth_args as $k => $session_key){
                 if(isset($data_args[$k]) && $data_args[$k]!=''){
-                    #Log::d($session_key, $data_args[$k]);
+                    #Flex\Annona\Log::d($session_key, $data_args[$k]);
                     $_SESSION[$session_key] = $data_args[$k];
                 }
             }

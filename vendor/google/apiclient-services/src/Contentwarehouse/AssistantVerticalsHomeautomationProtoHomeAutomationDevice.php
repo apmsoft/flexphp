@@ -20,7 +20,7 @@ namespace Google\Service\Contentwarehouse;
 class AssistantVerticalsHomeautomationProtoHomeAutomationDevice extends \Google\Collection
 {
   protected $collection_key = 'matchedItemValue';
-  protected $deviceSelectionLogType = AssistantLogsDeviceSelectionLog::class;
+  protected $deviceSelectionLogType = AssistantLogsDeviceSelectionFlex\Annona\Log::class;
   protected $deviceSelectionLogDataType = '';
   protected $dtoErrorType = AssistantDeviceTargetingDeviceTargetingError::class;
   protected $dtoErrorDataType = '';

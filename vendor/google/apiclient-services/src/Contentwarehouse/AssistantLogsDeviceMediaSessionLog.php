@@ -130,4 +130,4 @@ class AssistantLogsDeviceMediaSessionLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsDeviceMediaSessionLog::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceMediaSessionLog');
+class_alias(AssistantLogsDeviceMediaSessionFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceMediaSessionLog');

@@ -44,7 +44,7 @@ class EnterprisesWebApps extends \Google\Service\Resource
   {
     $params = ['parent' => $parent, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('create', [$params], WebApp::class);
+    return $this->call('create', [$params], WebFlex\Annona\App::class);
   }
   /**
    * Deletes a web app. (webApps.delete)
@@ -72,7 +72,7 @@ class EnterprisesWebApps extends \Google\Service\Resource
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], WebApp::class);
+    return $this->call('get', [$params], WebFlex\Annona\App::class);
   }
   /**
    * Lists web apps for a given enterprise. (webApps.listEnterprisesWebApps)
@@ -109,7 +109,7 @@ class EnterprisesWebApps extends \Google\Service\Resource
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('patch', [$params], WebApp::class);
+    return $this->call('patch', [$params], WebFlex\Annona\App::class);
   }
 }
 

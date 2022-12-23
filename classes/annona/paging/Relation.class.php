@@ -1,9 +1,9 @@
 <?php
 namespace Flex\Annona\Paging;
 
-use Flex\Annona\Log\Log;
+use Flex\Annona;
 
-class PagingRelation
+class Relation
 {
 	public $version         = '2.0';
 	private $page           = 1;		# 현제 페이지

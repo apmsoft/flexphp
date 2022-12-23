@@ -149,4 +149,4 @@ class GoogleCloudDialogflowCxV3Changelog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(GoogleCloudDialogflowCxV3Changelog::class, 'Google_Service_Dialogflow_GoogleCloudDialogflowCxV3Changelog');
+class_alias(GoogleCloudDialogflowCxV3ChangeFlex\Annona\Log::class, 'Google_Service_Dialogflow_GoogleCloudDialogflowCxV3Changelog');

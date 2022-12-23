@@ -32,7 +32,7 @@ class DeepLink extends \Google\Collection
    * @var string
    */
   public $kind;
-  protected $mobileAppType = MobileApp::class;
+  protected $mobileAppType = MobileFlex\Annona\App::class;
   protected $mobileAppDataType = '';
   /**
    * @var string[]

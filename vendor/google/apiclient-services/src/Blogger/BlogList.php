@@ -22,7 +22,7 @@ class BlogList extends \Google\Collection
   protected $collection_key = 'items';
   protected $blogUserInfosType = BlogUserInfo::class;
   protected $blogUserInfosDataType = 'array';
-  protected $itemsType = Blog::class;
+  protected $itemsType = BFlex\Annona\Log::class;
   protected $itemsDataType = 'array';
   /**
    * @var string

@@ -121,4 +121,4 @@ class ScienceCitationUnionCatalog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(ScienceCitationUnionCatalog::class, 'Google_Service_Contentwarehouse_ScienceCitationUnionCatalog');
+class_alias(ScienceCitationUnionCataFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_ScienceCitationUnionCatalog');

@@ -1,10 +1,6 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: *");
-
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
+use Flex\Annona\App;
+use Flex\Annona\Log;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -12,10 +8,10 @@ require $path. '/config/config.inc.php';
 # 기본값 MESSAGE_FILE, log.txt;
 Log::init();
 Log::init(Log::MESSAGE_ECHO);
-Log::setDebugs('e');
+Log::setDebugs('d','e');
 
 # model
-$model = new \Flex\Annona\Model\Model();
+$model = new \Flex\Annona\Model();
 $model->dir  = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe';
 $model->picture = $model->dir.'/g0e6b3d364_640.jpg';
 
@@ -48,6 +44,4 @@ try{
 }catch (\ErrorException $e){
     Log::e($e->getMessage());
 }
-
-echo json_encode(['result'=>'true','msg'=>'test']);
 ?>

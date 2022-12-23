@@ -20,7 +20,7 @@ namespace Google\Service\Dfareporting;
 class ChangeLogsListResponse extends \Google\Collection
 {
   protected $collection_key = 'changeLogs';
-  protected $changeLogsType = ChangeLog::class;
+  protected $changeLogsType = ChangeFlex\Annona\Log::class;
   protected $changeLogsDataType = 'array';
   /**
    * @var string

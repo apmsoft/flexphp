@@ -24,7 +24,7 @@ class MobileAppsListResponse extends \Google\Collection
    * @var string
    */
   public $kind;
-  protected $mobileAppsType = MobileApp::class;
+  protected $mobileAppsType = MobileFlex\Annona\App::class;
   protected $mobileAppsDataType = 'array';
   /**
    * @var string

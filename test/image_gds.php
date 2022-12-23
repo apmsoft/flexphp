@@ -1,7 +1,7 @@
 <?php
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
-use Flex\Annona\R\R;
+use Flex\Annona\App;
+use Flex\Annona\Log;
+use Flex\Annona\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -17,7 +17,7 @@ Log::options([
 
 
 # model
-$model = new \Flex\Annona\Model\Model();
+$model = new \Flex\Annona\Model();
 $model->dir  = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe';
 $model->picture = $model->dir.'/g0e6b3d364_640.jpg';
 

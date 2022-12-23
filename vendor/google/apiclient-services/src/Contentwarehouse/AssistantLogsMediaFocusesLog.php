@@ -24,11 +24,11 @@ class AssistantLogsMediaFocusesLog extends \Google\Collection
    * @var bool
    */
   public $dialogTriggered;
-  protected $localMediaFocusType = AssistantLogsMediaFocusInfoLog::class;
+  protected $localMediaFocusType = AssistantLogsMediaFocusInfoFlex\Annona\Log::class;
   protected $localMediaFocusDataType = '';
-  protected $mediaFocusesType = AssistantLogsMediaFocusInfoLog::class;
+  protected $mediaFocusesType = AssistantLogsMediaFocusInfoFlex\Annona\Log::class;
   protected $mediaFocusesDataType = 'array';
-  protected $nearbyMediaFocusesType = AssistantLogsMediaFocusInfoLog::class;
+  protected $nearbyMediaFocusesType = AssistantLogsMediaFocusInfoFlex\Annona\Log::class;
   protected $nearbyMediaFocusesDataType = 'array';
 
   /**
@@ -90,4 +90,4 @@ class AssistantLogsMediaFocusesLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsMediaFocusesLog::class, 'Google_Service_Contentwarehouse_AssistantLogsMediaFocusesLog');
+class_alias(AssistantLogsMediaFocusesFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsMediaFocusesLog');

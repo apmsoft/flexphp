@@ -18,7 +18,7 @@ $classMap = [
     'Google\\AuthHandler\\Guzzle5AuthHandler' => 'Google_AuthHandler_Guzzle5AuthHandler',
     'Google\\AuthHandler\\AuthHandlerFactory' => 'Google_AuthHandler_AuthHandlerFactory',
     'Google\\Http\\Batch' => 'Google_Http_Batch',
-    'Google\\Http\\MediaFileUpload' => 'Google_Http_MediaFileUpload',
+    'Google\\Http\\MediaUpload' => 'Google_Http_MediaUpload',
     'Google\\Http\\REST' => 'Google_Http_REST',
     'Google\\Task\\Retryable' => 'Google_Task_Retryable',
     'Google\\Task\\Exception' => 'Google_Task_Exception',
@@ -73,7 +73,7 @@ if (\false) {
     class Google_Http_Batch extends \Google\Http\Batch
     {
     }
-    class Google_Http_MediaFileUpload extends \Google\Http\MediaFileUpload
+    class Google_Http_MediaUpload extends \Google\Http\MediaUpload
     {
     }
     class Google_Http_REST extends \Google\Http\REST

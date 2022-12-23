@@ -91,7 +91,7 @@ class QualityQrewritePersonalContactData extends \Google\Collection
   public $matchedRecognitionAlternateName;
   protected $personDataType = AppsPeopleOzExternalMergedpeopleapiPerson::class;
   protected $personDataDataType = '';
-  protected $personalContactDataLogType = AssistantLogsCommunicationPersonalContactDataLog::class;
+  protected $personalContactDataLogType = AssistantLogsCommunicationPersonalContactDataFlex\Annona\Log::class;
   protected $personalContactDataLogDataType = '';
   protected $pkgPersonType = NlpSemanticParsingQRefAnnotation::class;
   protected $pkgPersonDataType = '';

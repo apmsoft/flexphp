@@ -254,4 +254,4 @@ class GoogleCloudApigeeV1DeveloperApp extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(GoogleCloudApigeeV1DeveloperApp::class, 'Google_Service_Apigee_GoogleCloudApigeeV1DeveloperApp');
+class_alias(GoogleCloudApigeeV1DeveloperFlex\Annona\App::class, 'Google_Service_Apigee_GoogleCloudApigeeV1DeveloperApp');

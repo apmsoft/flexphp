@@ -72,7 +72,7 @@ class ProjectsAndroidApps extends \Google\Service\Resource
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], AndroidApp::class);
+    return $this->call('get', [$params], AndroidFlex\Annona\App::class);
   }
   /**
    * Gets the configuration artifact associated with the specified AndroidApp.
@@ -151,7 +151,7 @@ class ProjectsAndroidApps extends \Google\Service\Resource
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
-    return $this->call('patch', [$params], AndroidApp::class);
+    return $this->call('patch', [$params], AndroidFlex\Annona\App::class);
   }
   /**
    * Removes the specified AndroidApp from the FirebaseProject.

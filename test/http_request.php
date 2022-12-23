@@ -1,8 +1,8 @@
 <?php
 # session_start();
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
-use Flex\Annona\R\R;
+use Flex\Annona\App;
+use Flex\Annona\Log;
+use Flex\Annona\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -45,8 +45,8 @@ try{
                 Log::d('-------------------------');
                 Log::d('-------------------------');
 
-                $htmlXssChars = new \Flex\Annona\Html\HtmlXssChars( $contents );
-                Log::d($htmlXssChars->getContext('XSS'));
+                $xssChars = new \Flex\Annona\Html\xssChars( $contents );
+                Log::d($xssChars->getContext('XSS'));
                 Log::d('-------------------------');
                 Log::d('-------------------------');
                 Log::d('-------------------------');

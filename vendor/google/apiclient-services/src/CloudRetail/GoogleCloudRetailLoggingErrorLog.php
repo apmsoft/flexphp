@@ -141,4 +141,4 @@ class GoogleCloudRetailLoggingErrorLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(GoogleCloudRetailLoggingErrorLog::class, 'Google_Service_CloudRetail_GoogleCloudRetailLoggingErrorLog');
+class_alias(GoogleCloudRetailLoggingErrorFlex\Annona\Log::class, 'Google_Service_CloudRetail_GoogleCloudRetailLoggingErrorLog');

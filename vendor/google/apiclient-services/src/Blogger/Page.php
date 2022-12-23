@@ -21,7 +21,7 @@ class Page extends \Google\Model
 {
   protected $authorType = PageAuthor::class;
   protected $authorDataType = '';
-  protected $blogType = PageBlog::class;
+  protected $blogType = PageBFlex\Annona\Log::class;
   protected $blogDataType = '';
   /**
    * @var string

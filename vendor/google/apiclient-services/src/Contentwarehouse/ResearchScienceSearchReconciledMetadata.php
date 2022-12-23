@@ -28,7 +28,7 @@ class ResearchScienceSearchReconciledMetadata extends \Google\Collection
    * @var string
    */
   public $authorList;
-  protected $catalogType = ResearchScienceSearchCatalog::class;
+  protected $catalogType = ResearchScienceSearchCataFlex\Annona\Log::class;
   protected $catalogDataType = '';
   /**
    * @var string[]

@@ -1,7 +1,7 @@
 <?php
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
-use Flex\Annona\R\R;
+use Flex\Annona\App;
+use Flex\Annona\Log;
+use Flex\Annona\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -16,7 +16,7 @@ Log::options([
 ]);
 
 # model
-$model = new \Flex\Annona\Model\Model();
+$model = new \Flex\Annona\Model();
 $model->picture = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe/beautiful-young-asian-woman-happy-relax-walking-beach-near-sea.jpg';
 
 try{

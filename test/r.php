@@ -1,8 +1,8 @@
 <?php
 # session_start();
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
-use Flex\Annona\R\R;
+use Flex\Annona\App;
+use Flex\Annona\Log;
+use Flex\Annona\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -23,7 +23,7 @@ Log::options([
 // strings_jp.json     - 일본어
 
 # 기본언어 설정
-R::init( App::$language );
+R::init( Flex\Annona\App::$language );
 Log::d('R :: language ', R::$language);
 
 # res/string 기본 호출

@@ -20,7 +20,7 @@ namespace Google\Service\FirebaseManagement;
 class ListWebAppsResponse extends \Google\Collection
 {
   protected $collection_key = 'apps';
-  protected $appsType = WebApp::class;
+  protected $appsType = WebFlex\Annona\App::class;
   protected $appsDataType = 'array';
   /**
    * @var string

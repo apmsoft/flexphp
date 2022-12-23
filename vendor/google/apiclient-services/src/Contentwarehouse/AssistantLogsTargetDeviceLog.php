@@ -20,7 +20,7 @@ namespace Google\Service\Contentwarehouse;
 class AssistantLogsTargetDeviceLog extends \Google\Collection
 {
   protected $collection_key = 'devices';
-  protected $devicesType = AssistantLogsDeviceInfoLog::class;
+  protected $devicesType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $devicesDataType = 'array';
   /**
    * @var string
@@ -76,4 +76,4 @@ class AssistantLogsTargetDeviceLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsTargetDeviceLog::class, 'Google_Service_Contentwarehouse_AssistantLogsTargetDeviceLog');
+class_alias(AssistantLogsTargetDeviceFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsTargetDeviceLog');

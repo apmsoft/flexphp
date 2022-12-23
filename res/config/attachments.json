@@ -3,7 +3,7 @@
     "columns" : {
         "extract_id": "첨부파일토큰"
     },
-    "fileupload" : {
+    "Upload" : {
         "file_extension": "jpg,jpeg,png,ppt,pptx,pdf,zip,doc,docx,xls,xlsx,hwp",
         "file_maxsize": 10
     }

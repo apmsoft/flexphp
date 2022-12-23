@@ -60,4 +60,4 @@ class UsageLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(UsageLog::class, 'Google_Service_AndroidManagement_UsageLog');
+class_alias(UsageFlex\Annona\Log::class, 'Google_Service_AndroidManagement_UsageLog');

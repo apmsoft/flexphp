@@ -148,4 +148,4 @@ class WebApp extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(WebApp::class, 'Google_Service_AndroidEnterprise_WebApp');
+class_alias(WebFlex\Annona\App::class, 'Google_Service_AndroidEnterprise_WebApp');

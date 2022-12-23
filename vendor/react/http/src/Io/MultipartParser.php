@@ -60,7 +60,7 @@ final class MultipartParser
      *
      * @var int
      */
-    private $maxFileUploads;
+    private $maxUploads;
 
     private $postCount = 0;
     private $filesCount = 0;
@@ -68,9 +68,9 @@ final class MultipartParser
 
     /**
      * @param int|string|null $uploadMaxFilesize
-     * @param int|null $maxFileUploads
+     * @param int|null $maxUploads
      */
-    public function __construct($uploadMaxFilesize = null, $maxFileUploads = null)
+    public function __construct($uploadMaxFilesize = null, $maxUploads = null)
     {
         $var = \ini_get('max_input_vars');
         if ($var !== false) {
@@ -86,7 +86,7 @@ final class MultipartParser
         }
 
         $this->uploadMaxFilesize = IniUtil::iniSizeToBytes($uploadMaxFilesize);
-        $this->maxFileUploads = $maxFileUploads === null ? (\ini_get('file_uploads') === '' ? 0 : (int)\ini_get('max_file_uploads')) : (int)$maxFileUploads;
+        $this->maxUploads = $maxUploads === null ? (\ini_get('file_uploads') === '' ? 0 : (int)\ini_get('max_file_uploads')) : (int)$maxUploads;
     }
 
     public function parse(ServerRequestInterface $request)
@@ -198,7 +198,7 @@ final class MultipartParser
         }
 
         // ignore excessive number of file uploads
-        if (++$this->filesCount > $this->maxFileUploads) {
+        if (++$this->filesCount > $this->maxUploads) {
             return;
         }
 

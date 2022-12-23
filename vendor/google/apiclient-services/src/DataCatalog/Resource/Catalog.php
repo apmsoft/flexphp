@@ -56,4 +56,4 @@ class Catalog extends \Google\Service\Resource
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(Catalog::class, 'Google_Service_DataCatalog_Resource_Catalog');
+class_alias(CataFlex\Annona\Log::class, 'Google_Service_DataCatalog_Resource_Catalog');

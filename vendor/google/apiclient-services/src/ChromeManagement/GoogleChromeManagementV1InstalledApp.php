@@ -222,4 +222,4 @@ class GoogleChromeManagementV1InstalledApp extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(GoogleChromeManagementV1InstalledApp::class, 'Google_Service_ChromeManagement_GoogleChromeManagementV1InstalledApp');
+class_alias(GoogleChromeManagementV1InstalledFlex\Annona\App::class, 'Google_Service_ChromeManagement_GoogleChromeManagementV1InstalledApp');

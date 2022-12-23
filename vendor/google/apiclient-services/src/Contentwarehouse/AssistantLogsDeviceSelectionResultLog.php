@@ -20,7 +20,7 @@ namespace Google\Service\Contentwarehouse;
 class AssistantLogsDeviceSelectionResultLog extends \Google\Collection
 {
   protected $collection_key = 'processorInfo';
-  protected $ambiguousTargetDevicesType = AssistantLogsAmbiguousTargetDeviceLog::class;
+  protected $ambiguousTargetDevicesType = AssistantLogsAmbiguousTargetDeviceFlex\Annona\Log::class;
   protected $ambiguousTargetDevicesDataType = '';
   protected $deviceSelectionDecisionSummaryType = AssistantLogsMediaDeviceSelectionDecisionSummary::class;
   protected $deviceSelectionDecisionSummaryDataType = '';
@@ -32,7 +32,7 @@ class AssistantLogsDeviceSelectionResultLog extends \Google\Collection
    * @var string
    */
   public $finalLumosStage;
-  protected $lowConfidenceTargetDeviceType = AssistantLogsLowConfidenceTargetDeviceLog::class;
+  protected $lowConfidenceTargetDeviceType = AssistantLogsLowConfidenceTargetDeviceFlex\Annona\Log::class;
   protected $lowConfidenceTargetDeviceDataType = '';
   /**
    * @var string
@@ -40,11 +40,11 @@ class AssistantLogsDeviceSelectionResultLog extends \Google\Collection
   public $mediaFocusSelectionErrorType;
   protected $processorInfoType = AssistantLogsLumosProcessorInfo::class;
   protected $processorInfoDataType = 'array';
-  protected $qualifiedDevicesType = AssistantLogsAmbiguousTargetDeviceLog::class;
+  protected $qualifiedDevicesType = AssistantLogsAmbiguousTargetDeviceFlex\Annona\Log::class;
   protected $qualifiedDevicesDataType = '';
-  protected $singleTargetDeviceType = AssistantLogsDeviceInfoLog::class;
+  protected $singleTargetDeviceType = AssistantLogsDeviceInfoFlex\Annona\Log::class;
   protected $singleTargetDeviceDataType = '';
-  protected $targetDeviceType = AssistantLogsTargetDeviceLog::class;
+  protected $targetDeviceType = AssistantLogsTargetDeviceFlex\Annona\Log::class;
   protected $targetDeviceDataType = '';
 
   /**
@@ -190,4 +190,4 @@ class AssistantLogsDeviceSelectionResultLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsDeviceSelectionResultLog::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceSelectionResultLog');
+class_alias(AssistantLogsDeviceSelectionResultFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceSelectionResultLog');

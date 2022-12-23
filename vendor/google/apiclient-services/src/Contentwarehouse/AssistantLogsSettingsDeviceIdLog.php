@@ -131,4 +131,4 @@ class AssistantLogsSettingsDeviceIdLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsSettingsDeviceIdLog::class, 'Google_Service_Contentwarehouse_AssistantLogsSettingsDeviceIdLog');
+class_alias(AssistantLogsSettingsDeviceIdFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsSettingsDeviceIdLog');

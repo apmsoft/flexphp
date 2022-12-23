@@ -88,4 +88,4 @@ class IosDeviceCatalog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(IosDeviceCatalog::class, 'Google_Service_Testing_IosDeviceCatalog');
+class_alias(IosDeviceCataFlex\Annona\Log::class, 'Google_Service_Testing_IosDeviceCatalog');

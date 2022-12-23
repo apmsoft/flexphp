@@ -59,4 +59,4 @@ class AssistantLogsInputErrorLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsInputErrorLog::class, 'Google_Service_Contentwarehouse_AssistantLogsInputErrorLog');
+class_alias(AssistantLogsInputErrorFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsInputErrorLog');

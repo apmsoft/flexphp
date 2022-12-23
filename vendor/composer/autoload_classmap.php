@@ -17,7 +17,7 @@ return array(
     'Google_Collection' => $vendorDir . '/google/apiclient/src/aliases.php',
     'Google_Exception' => $vendorDir . '/google/apiclient/src/aliases.php',
     'Google_Http_Batch' => $vendorDir . '/google/apiclient/src/aliases.php',
-    'Google_Http_MediaFileUpload' => $vendorDir . '/google/apiclient/src/aliases.php',
+    'Google_Http_MediaUpload' => $vendorDir . '/google/apiclient/src/aliases.php',
     'Google_Http_REST' => $vendorDir . '/google/apiclient/src/aliases.php',
     'Google_Model' => $vendorDir . '/google/apiclient/src/aliases.php',
     'Google_Service' => $vendorDir . '/google/apiclient/src/aliases.php',

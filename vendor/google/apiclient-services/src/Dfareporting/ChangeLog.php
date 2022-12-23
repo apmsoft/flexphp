@@ -275,4 +275,4 @@ class ChangeLog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(ChangeLog::class, 'Google_Service_Dfareporting_ChangeLog');
+class_alias(ChangeFlex\Annona\Log::class, 'Google_Service_Dfareporting_ChangeLog');

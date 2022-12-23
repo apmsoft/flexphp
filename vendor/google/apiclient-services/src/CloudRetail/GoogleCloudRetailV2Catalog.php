@@ -75,4 +75,4 @@ class GoogleCloudRetailV2Catalog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(GoogleCloudRetailV2Catalog::class, 'Google_Service_CloudRetail_GoogleCloudRetailV2Catalog');
+class_alias(GoogleCloudRetailV2CataFlex\Annona\Log::class, 'Google_Service_CloudRetail_GoogleCloudRetailV2Catalog');

@@ -251,4 +251,4 @@ class Blog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(Blog::class, 'Google_Service_Blogger_Blog');
+class_alias(BFlex\Annona\Log::class, 'Google_Service_Blogger_Blog');

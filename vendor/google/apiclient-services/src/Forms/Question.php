@@ -23,8 +23,8 @@ class Question extends \Google\Model
   protected $choiceQuestionDataType = '';
   protected $dateQuestionType = DateQuestion::class;
   protected $dateQuestionDataType = '';
-  protected $fileUploadQuestionType = FileUploadQuestion::class;
-  protected $fileUploadQuestionDataType = '';
+  protected $UploadQuestionType = UploadQuestion::class;
+  protected $UploadQuestionDataType = '';
   protected $gradingType = Grading::class;
   protected $gradingDataType = '';
   /**
@@ -73,18 +73,18 @@ class Question extends \Google\Model
     return $this->dateQuestion;
   }
   /**
-   * @param FileUploadQuestion
+   * @param UploadQuestion
    */
-  public function setFileUploadQuestion(FileUploadQuestion $fileUploadQuestion)
+  public function setUploadQuestion(UploadQuestion $UploadQuestion)
   {
-    $this->fileUploadQuestion = $fileUploadQuestion;
+    $this->UploadQuestion = $UploadQuestion;
   }
   /**
-   * @return FileUploadQuestion
+   * @return UploadQuestion
    */
-  public function getFileUploadQuestion()
+  public function getUploadQuestion()
   {
-    return $this->fileUploadQuestion;
+    return $this->UploadQuestion;
   }
   /**
    * @param Grading

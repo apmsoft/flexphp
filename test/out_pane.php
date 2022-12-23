@@ -1,7 +1,5 @@
 <?php
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
-use Flex\Annona\R\R;
+use Flex\Annona\Log;
 
 use Flex\Annona\Out\OutPane;
 
@@ -9,8 +7,8 @@ $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;
-Log::init();
-Log::init(Log::MESSAGE_ECHO);
+Flex\Annona\Log::init();
+Flex\Annona\Log::init(Flex\Annona\Log::MESSAGE_ECHO);
 
 /**
  * 자바스크립트를 활요한 웹페이지 강제 이동용
@@ -29,8 +27,8 @@ Log::init(Log::MESSAGE_ECHO);
 #OutPane::opener_location(string $url);
 
 # 자바스크립트 prompt 창을 통해 데이타 값 받기
-#OutPane::input_prompt('이름을 입력하세요', '당신의 이름은 ');
+OutPane::input_prompt('이름을 입력하세요', '당신의 이름은 ');
 
 # 자바스크립트 confirm 창을 통해 true/false 값 받기
-OutPane::window_confirm('FlexVUE 페이지로 이동하시겠습니까?', $true_url = 'http://flexvue.fancyupsoft.com', $false_url='http://naver.com');
+#OutPane::window_confirm('FlexVUE 페이지로 이동하시겠습니까?', $true_url = 'http://flexvue.fancyupsoft.com', $false_url='http://naver.com');
 ?>

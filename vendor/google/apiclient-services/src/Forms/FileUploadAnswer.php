@@ -17,7 +17,7 @@
 
 namespace Google\Service\Forms;
 
-class FileUploadAnswer extends \Google\Model
+class UploadAnswer extends \Google\Model
 {
   /**
    * @var string
@@ -77,4 +77,4 @@ class FileUploadAnswer extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(FileUploadAnswer::class, 'Google_Service_Forms_FileUploadAnswer');
+class_alias(UploadAnswer::class, 'Google_Service_Forms_UploadAnswer');

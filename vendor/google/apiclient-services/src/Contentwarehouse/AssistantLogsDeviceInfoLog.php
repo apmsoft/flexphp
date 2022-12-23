@@ -32,7 +32,7 @@ class AssistantLogsDeviceInfoLog extends \Google\Collection
    * @var string
    */
   public $deviceId;
-  protected $deviceIdLogType = AssistantLogsSettingsDeviceIdLog::class;
+  protected $deviceIdLogType = AssistantLogsSettingsDeviceIdFlex\Annona\Log::class;
   protected $deviceIdLogDataType = '';
   /**
    * @var int
@@ -68,7 +68,7 @@ class AssistantLogsDeviceInfoLog extends \Google\Collection
    * @var string
    */
   public $name;
-  protected $sessionsType = AssistantLogsDeviceMediaSessionLog::class;
+  protected $sessionsType = AssistantLogsDeviceMediaSessionFlex\Annona\Log::class;
   protected $sessionsDataType = 'array';
   /**
    * @var string
@@ -288,4 +288,4 @@ class AssistantLogsDeviceInfoLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsDeviceInfoLog::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceInfoLog');
+class_alias(AssistantLogsDeviceInfoFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsDeviceInfoLog');

@@ -1,10 +1,10 @@
 <?php
 # session_start();
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
+use Flex\Annona\App;
+use Flex\Annona\Log;
 
-use Flex\Annona\Cipher\CipherEncrypt;
-use Flex\Annona\Cipher\CipherDecrypt;
+use Flex\Annona\Cipher\Encrypt;
+use Flex\Annona\Cipher\Decrypt;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -34,11 +34,11 @@ Log::d("====================================");
 
 try{
     # 암호화
-    $_encrypt = (new CipherEncrypt($random_text))->_base64_urlencode();
+    $_encrypt = (new Encrypt($random_text))->_base64_urlencode();
     Log::d( '암호화',$_encrypt );
 
     # 복호화 ===========================
-    $_decrypt = (new CipherDecrypt($_encrypt))->_base64_urldecode();
+    $_decrypt = (new Decrypt($_encrypt))->_base64_urldecode();
     Log::d( '복호화',$_decrypt );
 }catch(\Exception $e){
     Log::e($e->getMessage());

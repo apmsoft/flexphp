@@ -95,4 +95,4 @@ class ResearchScienceSearchCatalog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(ResearchScienceSearchCatalog::class, 'Google_Service_Contentwarehouse_ResearchScienceSearchCatalog');
+class_alias(ResearchScienceSearchCataFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_ResearchScienceSearchCatalog');

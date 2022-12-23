@@ -42,7 +42,7 @@ class MobileApps extends \Google\Service\Resource
   {
     $params = ['profileId' => $profileId, 'id' => $id];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], MobileApp::class);
+    return $this->call('get', [$params], MobileFlex\Annona\App::class);
   }
   /**
    * Retrieves list of available mobile apps. (mobileApps.listMobileApps)

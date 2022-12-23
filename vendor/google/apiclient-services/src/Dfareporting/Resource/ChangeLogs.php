@@ -42,7 +42,7 @@ class ChangeLogs extends \Google\Service\Resource
   {
     $params = ['profileId' => $profileId, 'id' => $id];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], ChangeLog::class);
+    return $this->call('get', [$params], ChangeFlex\Annona\Log::class);
   }
   /**
    * Retrieves a list of change logs. This method supports paging.

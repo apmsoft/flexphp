@@ -20,7 +20,7 @@ namespace Google\Service\Contentwarehouse;
 class AssistantLogsCommunicationPersonMetadataLog extends \Google\Collection
 {
   protected $collection_key = 'deviceContactInfo';
-  protected $deviceContactInfoType = AssistantLogsCommunicationDeviceContactInfoLog::class;
+  protected $deviceContactInfoType = AssistantLogsCommunicationDeviceContactInfoFlex\Annona\Log::class;
   protected $deviceContactInfoDataType = 'array';
 
   /**
@@ -40,4 +40,4 @@ class AssistantLogsCommunicationPersonMetadataLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsCommunicationPersonMetadataLog::class, 'Google_Service_Contentwarehouse_AssistantLogsCommunicationPersonMetadataLog');
+class_alias(AssistantLogsCommunicationPersonMetadataFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsCommunicationPersonMetadataLog');

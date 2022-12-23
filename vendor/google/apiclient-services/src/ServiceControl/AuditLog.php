@@ -282,4 +282,4 @@ class AuditLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AuditLog::class, 'Google_Service_ServiceControl_AuditLog');
+class_alias(AuditFlex\Annona\Log::class, 'Google_Service_ServiceControl_AuditLog');

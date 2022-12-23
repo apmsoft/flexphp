@@ -17,7 +17,7 @@
 
 namespace Google\Service\Forms;
 
-class FileUploadQuestion extends \Google\Collection
+class UploadQuestion extends \Google\Collection
 {
   protected $collection_key = 'types';
   /**
@@ -96,4 +96,4 @@ class FileUploadQuestion extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(FileUploadQuestion::class, 'Google_Service_Forms_FileUploadQuestion');
+class_alias(UploadQuestion::class, 'Google_Service_Forms_UploadQuestion');

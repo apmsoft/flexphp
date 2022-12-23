@@ -3,10 +3,12 @@ namespace Flex\Annona\Db;
 
 use \ArrayAccess;
 use \ErrorException;
+use Flex\Annona\Db\DbOCIResult;
+use Flex\Annona\Db\DbInterface;
 
 # parnet : DbOCIResult
 # purpose : oci 함수를 활용해 확장한다
-class DbOCI extends DbOCIResult implements DbInterface,ArrayAccess
+class DbOCI extends OCIResult implements DbInterface,ArrayAccess
 {
 	const CHARSET = 'utf-8';
 	private $host,$dbname;

@@ -20,7 +20,7 @@ namespace Google\Service\AdMob;
 class ListAppsResponse extends \Google\Collection
 {
   protected $collection_key = 'apps';
-  protected $appsType = App::class;
+  protected $appsType = Flex\Annona\App::class;
   protected $appsDataType = 'array';
   /**
    * @var string

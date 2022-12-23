@@ -41,4 +41,4 @@ class CommentBlog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(CommentBlog::class, 'Google_Service_Blogger_CommentBlog');
+class_alias(CommentBFlex\Annona\Log::class, 'Google_Service_Blogger_CommentBlog');

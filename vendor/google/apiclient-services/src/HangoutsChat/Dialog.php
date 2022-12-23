@@ -39,4 +39,4 @@ class Dialog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(Dialog::class, 'Google_Service_HangoutsChat_Dialog');
+class_alias(DiaFlex\Annona\Log::class, 'Google_Service_HangoutsChat_Dialog');

@@ -5,7 +5,7 @@ use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
 use \ErrorException;
-use Flex\Annona\Log\Log;
+use Flex\Annona;
 
 class DateTimez extends DateTime
 {

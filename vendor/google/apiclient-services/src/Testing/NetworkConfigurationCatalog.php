@@ -40,4 +40,4 @@ class NetworkConfigurationCatalog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(NetworkConfigurationCatalog::class, 'Google_Service_Testing_NetworkConfigurationCatalog');
+class_alias(NetworkConfigurationCataFlex\Annona\Log::class, 'Google_Service_Testing_NetworkConfigurationCatalog');

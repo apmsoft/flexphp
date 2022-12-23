@@ -38,12 +38,12 @@ spl_autoload_register(function($class_name){
 [추가]
 # 기본 선언 클래스 /-------------------
 [Annona 버전]
-Flex\Annona\App\App::init();
+Flex\Annona\App::init();
 
 [기존버전]
-Flex\App\App::init();
-define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: Flex\App\App::$lang);
-define('_SITE_HOST_',Flex\App\App::$host);  # HOST URL
+Flex\App\Flex\Annona\App::init();
+define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: Flex\App\Flex\Annona\App::$lang);
+define('_SITE_HOST_',Flex\App\Flex\Annona\App::$host);  # HOST URL
 
 # resource XML 자동 로드 /---------------
 [기존버전]
@@ -53,8 +53,8 @@ Flex\R\R::__autoload_resource(array(
 ));
 
 [Annona 버전]
-Flex\Annona\R\R::init(Flex\Annona\App\App::$language);
-Flex\Annona\R\R::__autoload_resource([
+Flex\Annona\R::init(Flex\Annona\App::$language);
+Flex\Annona\R::__autoload_resource([
     _VALUES_  => ['sysmsg','strings','integers']
 ]);
 

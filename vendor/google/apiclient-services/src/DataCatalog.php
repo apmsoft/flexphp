@@ -980,4 +980,4 @@ class DataCatalog extends \Google\Service
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(DataCatalog::class, 'Google_Service_DataCatalog');
+class_alias(DataCataFlex\Annona\Log::class, 'Google_Service_DataCatalog');

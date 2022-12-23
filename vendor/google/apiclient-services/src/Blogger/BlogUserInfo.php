@@ -22,7 +22,7 @@ class BlogUserInfo extends \Google\Model
   protected $internal_gapi_mappings = [
         "blogUserInfo" => "blog_user_info",
   ];
-  protected $blogType = Blog::class;
+  protected $blogType = BFlex\Annona\Log::class;
   protected $blogDataType = '';
   protected $blogUserInfoType = BlogPerUserInfo::class;
   protected $blogUserInfoDataType = '';

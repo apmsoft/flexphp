@@ -38,7 +38,7 @@ class AssistantLogsCommunicationPersonalContactDataLog extends \Google\Collectio
    * @var int
    */
   public $emailIdCount;
-  protected $fuzzyNgramMatchType = AssistantLogsCommunicationFuzzyNgramMatchLog::class;
+  protected $fuzzyNgramMatchType = AssistantLogsCommunicationFuzzyNgramMatchFlex\Annona\Log::class;
   protected $fuzzyNgramMatchDataType = 'array';
   /**
    * @var string
@@ -76,7 +76,7 @@ class AssistantLogsCommunicationPersonalContactDataLog extends \Google\Collectio
    * @var string[]
    */
   public $matchedStarlightLookupName;
-  protected $metadataType = AssistantLogsCommunicationPersonMetadataLog::class;
+  protected $metadataType = AssistantLogsCommunicationPersonMetadataFlex\Annona\Log::class;
   protected $metadataDataType = '';
   /**
    * @var int[]
@@ -86,7 +86,7 @@ class AssistantLogsCommunicationPersonalContactDataLog extends \Google\Collectio
    * @var string
    */
   public $originalQueryName;
-  protected $phoneType = AssistantLogsCommunicationPhoneLog::class;
+  protected $phoneType = AssistantLogsCommunicationPhoneFlex\Annona\Log::class;
   protected $phoneDataType = 'array';
   /**
    * @var int
@@ -108,7 +108,7 @@ class AssistantLogsCommunicationPersonalContactDataLog extends \Google\Collectio
    * @var int
    */
   public $relationshipMemoryCount;
-  protected $selectedPhoneType = AssistantLogsCommunicationPhoneLog::class;
+  protected $selectedPhoneType = AssistantLogsCommunicationPhoneFlex\Annona\Log::class;
   protected $selectedPhoneDataType = '';
   protected $shortcutContactInfoType = MajelContactInformationShortcutInformation::class;
   protected $shortcutContactInfoDataType = '';
@@ -534,4 +534,4 @@ class AssistantLogsCommunicationPersonalContactDataLog extends \Google\Collectio
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsCommunicationPersonalContactDataLog::class, 'Google_Service_Contentwarehouse_AssistantLogsCommunicationPersonalContactDataLog');
+class_alias(AssistantLogsCommunicationPersonalContactDataFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsCommunicationPersonalContactDataLog');

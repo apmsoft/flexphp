@@ -72,4 +72,4 @@ class AndroidDeviceCatalog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AndroidDeviceCatalog::class, 'Google_Service_Testing_AndroidDeviceCatalog');
+class_alias(AndroidDeviceCataFlex\Annona\Log::class, 'Google_Service_Testing_AndroidDeviceCatalog');

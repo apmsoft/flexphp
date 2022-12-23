@@ -1,6 +1,6 @@
 <?php
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
+use Flex\Annona\App;
+use Flex\Annona\Log;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -10,7 +10,7 @@ Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
 # model
-$model = new \Flex\Annona\Model\Model([]);
+$model = new \Flex\Annona\Model([]);
 $model->dir = sprintf("%s/%s",_ROOT_PATH_, _DATA_);
 
 # 하나의 디렉토리 경로 만들기

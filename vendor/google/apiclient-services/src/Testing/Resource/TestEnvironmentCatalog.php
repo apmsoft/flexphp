@@ -52,4 +52,4 @@ class TestEnvironmentCatalog extends \Google\Service\Resource
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(TestEnvironmentCatalog::class, 'Google_Service_Testing_Resource_TestEnvironmentCatalog');
+class_alias(TestEnvironmentCataFlex\Annona\Log::class, 'Google_Service_Testing_Resource_TestEnvironmentCatalog');

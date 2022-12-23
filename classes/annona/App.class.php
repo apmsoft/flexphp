@@ -1,5 +1,5 @@
 <?php
-namespace Flex\Annona\App;
+namespace Flex\Annona;
 
 # 접속에 따른 디바이스|브라우저등 정보
 final class App

@@ -80,4 +80,4 @@ class Playcustomapp extends \Google\Service
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(Playcustomapp::class, 'Google_Service_Playcustomapp');
+class_alias(PlaycustomFlex\Annona\App::class, 'Google_Service_Playcustomapp');

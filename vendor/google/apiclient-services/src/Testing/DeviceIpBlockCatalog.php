@@ -40,4 +40,4 @@ class DeviceIpBlockCatalog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(DeviceIpBlockCatalog::class, 'Google_Service_Testing_DeviceIpBlockCatalog');
+class_alias(DeviceIpBlockCataFlex\Annona\Log::class, 'Google_Service_Testing_DeviceIpBlockCatalog');

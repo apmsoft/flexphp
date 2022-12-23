@@ -68,7 +68,7 @@ class LineItem extends \Google\Collection
    * @var string
    */
   public $lineItemType;
-  protected $mobileAppType = MobileApp::class;
+  protected $mobileAppType = MobileFlex\Annona\App::class;
   protected $mobileAppDataType = '';
   /**
    * @var string

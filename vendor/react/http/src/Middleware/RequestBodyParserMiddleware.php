@@ -11,11 +11,11 @@ final class RequestBodyParserMiddleware
 
     /**
      * @param int|string|null $uploadMaxFilesize
-     * @param int|null $maxFileUploads
+     * @param int|null $maxUploads
      */
-    public function __construct($uploadMaxFilesize = null, $maxFileUploads = null)
+    public function __construct($uploadMaxFilesize = null, $maxUploads = null)
     {
-        $this->multipart = new MultipartParser($uploadMaxFilesize, $maxFileUploads);
+        $this->multipart = new MultipartParser($uploadMaxFilesize, $maxUploads);
     }
 
     public function __invoke(ServerRequestInterface $request, $next)

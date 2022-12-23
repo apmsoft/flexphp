@@ -3,6 +3,8 @@ namespace Flex\Annona\Db;
 
 use \ArrayAccess;
 use \ErrorException;
+use Flex\Annona\Db\DbSqliteResult;
+use Flex\Annona\Db\DbInterface;
 
 # parnet : DBSqliteResult
 # purpose : sqlite 함수를 활용해 확장한다

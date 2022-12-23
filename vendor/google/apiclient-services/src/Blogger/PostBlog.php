@@ -41,4 +41,4 @@ class PostBlog extends \Google\Model
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(PostBlog::class, 'Google_Service_Blogger_PostBlog');
+class_alias(PostBFlex\Annona\Log::class, 'Google_Service_Blogger_PostBlog');

@@ -523,7 +523,7 @@ class ScienceCitation extends \Google\Collection
   protected $subjectDataType = 'array';
   protected $translatedauthorType = ScienceCitationTranslatedAuthor::class;
   protected $translatedauthorDataType = 'array';
-  protected $unioncatalogType = ScienceCitationUnionCatalog::class;
+  protected $unioncatalogType = ScienceCitationUnionCataFlex\Annona\Log::class;
   protected $unioncatalogDataType = 'array';
 
   /**

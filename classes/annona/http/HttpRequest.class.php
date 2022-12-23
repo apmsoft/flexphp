@@ -1,7 +1,7 @@
 <?php
 namespace Flex\Annona\Http;
 
-use Flex\Annona\Log\Log;
+use Flex\Annona\Log;
 
 class HttpRequest {
     private $urls = [];

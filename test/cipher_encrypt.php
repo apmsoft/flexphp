@@ -1,9 +1,9 @@
 <?php
 # session_start();
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
+use Flex\Annona\App;
+use Flex\Annona\Log;
 
-use Flex\Annona\Cipher\CipherEncrypt;
+use Flex\Annona\Cipher\Encrypt;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -33,30 +33,30 @@ Log::d("====================================");
 
 # 암호화
 try{
-    $_encrypt = (new CipherEncrypt($random_text))->_md5();
+    $_encrypt = (new Encrypt($random_text))->_md5();
     Log::d( $_encrypt );
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
 
-$_encrypt = (new CipherEncrypt($random_text))->_md5_base64();
+$_encrypt = (new Encrypt($random_text))->_md5_base64();
 Log::d( $_encrypt );
 
-$_encrypt = (new CipherEncrypt($random_text))->_md5_utf8encode();
+$_encrypt = (new Encrypt($random_text))->_md5_utf8encode();
 Log::d( $_encrypt );
 
-$_encrypt = (new CipherEncrypt($random_text))->_hash('sha256');
+$_encrypt = (new Encrypt($random_text))->_hash('sha256');
 Log::d( $_encrypt );
 
-$_encrypt = (new CipherEncrypt($random_text))->_hash('sha512');
+$_encrypt = (new Encrypt($random_text))->_hash('sha512');
 Log::d( $_encrypt );
 
-$_encrypt = (new CipherEncrypt($random_text))->_hash_base64('sha256');
+$_encrypt = (new Encrypt($random_text))->_hash_base64('sha256');
 Log::d( $_encrypt );
 
-$_encrypt = (new CipherEncrypt($random_text))->_hash_base64('sha512');
+$_encrypt = (new Encrypt($random_text))->_hash_base64('sha512');
 Log::d( $_encrypt );
 
-$_encrypt = (new CipherEncrypt($random_text))->_base64_urlencode();
+$_encrypt = (new Encrypt($random_text))->_base64_urlencode();
 Log::d( $_encrypt );
 ?>

@@ -20,9 +20,9 @@ namespace Google\Service\Contentwarehouse;
 class AssistantLogsAllMediaStreamLog extends \Google\Collection
 {
   protected $collection_key = 'streams';
-  protected $streamsType = AssistantLogsMediaStreamLog::class;
+  protected $streamsType = AssistantLogsMediaStreamFlex\Annona\Log::class;
   protected $streamsDataType = 'array';
-  protected $targetStreamType = AssistantLogsMediaStreamLog::class;
+  protected $targetStreamType = AssistantLogsMediaStreamFlex\Annona\Log::class;
   protected $targetStreamDataType = '';
 
   /**
@@ -56,4 +56,4 @@ class AssistantLogsAllMediaStreamLog extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AssistantLogsAllMediaStreamLog::class, 'Google_Service_Contentwarehouse_AssistantLogsAllMediaStreamLog');
+class_alias(AssistantLogsAllMediaStreamFlex\Annona\Log::class, 'Google_Service_Contentwarehouse_AssistantLogsAllMediaStreamLog');

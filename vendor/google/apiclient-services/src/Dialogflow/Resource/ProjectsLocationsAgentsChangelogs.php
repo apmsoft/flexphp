@@ -42,7 +42,7 @@ class ProjectsLocationsAgentsChangelogs extends \Google\Service\Resource
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], GoogleCloudDialogflowCxV3Changelog::class);
+    return $this->call('get', [$params], GoogleCloudDialogflowCxV3ChangeFlex\Annona\Log::class);
   }
   /**
    * Returns the list of Changelogs.

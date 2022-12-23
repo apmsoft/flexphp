@@ -5,7 +5,7 @@ use \ErrorException;
 
 # 문자 암호화하기
 # _hash함수추가
-class CipherEncrypt
+class Encrypt
 {
 	private $encrypt_str = '';
 

@@ -1,7 +1,7 @@
 <?php
 # session_start();
-use Flex\Annona\App\App;
-use Flex\Annona\Log\Log;
+use Flex\Annona\App;
+use Flex\Annona\Log;
 
 use Flex\Annona\Date\DateTimez;
 use Flex\Annona\Date\DateTimezPeriod;
@@ -20,7 +20,7 @@ Log::options([
 ]);
 
 # model
-$model = new \Flex\Annona\Model\Model();
+$model = new \Flex\Annona\Model();
 $model->timezone   = 'Asia/Seoul';
 $model->start_date = date('Y-m-d H:i:s');
 $model->end_date   = '';

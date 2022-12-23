@@ -204,4 +204,4 @@ class AndroidApp extends \Google\Collection
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(AndroidApp::class, 'Google_Service_FirebaseManagement_AndroidApp');
+class_alias(AndroidFlex\Annona\App::class, 'Google_Service_FirebaseManagement_AndroidApp');

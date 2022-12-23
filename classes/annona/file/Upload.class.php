@@ -2,12 +2,12 @@
 namespace Flex\Annona\File;
 
 use Flex\Annona\Dir\DirInfo;
-use Flex\Annona\Cipher\CipherEncrypt;
-use Flex\Annona\Log\Log;
+use Flex\Annona\Cipher\Encrypt;
+use Flex\Annona;
 use Flex\Annona\Image\ImageExif;
 use \Exception;
 
-class FileUpload extends DirInfo
+class Upload extends DirInfo
 {
     public string $file_extension = '';
 	public string $mimeType;
@@ -34,7 +34,7 @@ class FileUpload extends DirInfo
 	}
 
     # 2 첨부파일
-    public function process(string $process_id) : FileUpload
+    public function process(string $process_id) : Upload
     {
         # 값이 정상적인지 체크
         if(!isset($_FILES[$process_id])){
@@ -42,11 +42,11 @@ class FileUpload extends DirInfo
         }
 
         $this->process = $_FILES[$process_id];
-        // Log::d('tmp_name' ,$this->process['tmp_name']);
-        // Log::d('filename' ,$this->process['name']);
-        // Log::d('mimeType',$this->process['type']);
-        // Log::d('size', $this->process['size']);
-        // Log::d('error', $this->process['error']);
+        // Flex\Annona\Log::d('tmp_name' ,$this->process['tmp_name']);
+        // Flex\Annona\Log::d('filename' ,$this->process['name']);
+        // Flex\Annona\Log::d('mimeType',$this->process['type']);
+        // Flex\Annona\Log::d('size', $this->process['size']);
+        // Flex\Annona\Log::d('error', $this->process['error']);
 
         # 기초에러
         if($this->process['error'] > 0){
@@ -62,7 +62,7 @@ class FileUpload extends DirInfo
     }
 
     # 3 업로드 허용된 파일 인치 체크
-    public function filterExtension(array $allowe_extension=['jpg','jpeg','png','gif']) : FileUpload
+    public function filterExtension(array $allowe_extension=['jpg','jpeg','png','gif']) : Upload
 	{
         self::getExtName();
         if(!in_array($this->file_extension,$allowe_extension)){
@@ -72,7 +72,7 @@ class FileUpload extends DirInfo
     }
 
     # 4 파일크기 체크 8(M),12(M),100(M)
-    public function filterSize(int $size) : FileUpload 
+    public function filterSize(int $size) : Upload 
     {
         $maxsize = (int)(1024 * 1024 * $size);
         if($this->process['size'] >= $maxsize){
@@ -82,7 +82,7 @@ class FileUpload extends DirInfo
     }
 
     # 5 업로드할 디렉토리 체크 및 만들기
-    public function makeDirs() : FileUpload
+    public function makeDirs() : Upload
     {
         try{
             parent::makesDir();
@@ -93,7 +93,7 @@ class FileUpload extends DirInfo
     }
 
     # 6 업로드 파일 복사하기
-	public function save(): FileUpload
+	public function save(): Upload
     {
         #저장할파일명
 		$tempfilename  = str_replace(['.',' '],['_','_'],microtime());
@@ -107,7 +107,7 @@ class FileUpload extends DirInfo
 	}
 
     # 7 orientation
-    public function filterOrientation() : FileUpload
+    public function filterOrientation() : Upload
     {
         # jpeg, jpg 인지 체크
 		if( preg_match('/(jpeg|jpg)/',$this->file_extension) )
@@ -116,7 +116,7 @@ class FileUpload extends DirInfo
 			$ifdo = (new ImageExif( $fullname ))->getIfdo();
 			if(isset($ifdo['Orientation']) && !empty($ifdo['Orientation']))
             {
-                // Log::d('filterOrientation >>>>',$ifdo);
+                // Flex\Annona\Log::d('filterOrientation >>>>',$ifdo);
 				$im = imagecreatefromjpeg( $fullname );
 				switch($ifdo['Orientation']) {
                     case 8:

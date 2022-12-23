@@ -4,7 +4,7 @@ namespace Flex\Annona\Cipher;
 use \ErrorException;
 
 # 문자 복호화하기
-class CipherDecrypt
+class Decrypt
 {
 	private $decrypt_str = '';
 
