@@ -22,17 +22,29 @@ Log::options([
 // strings_en.json     - 영어
 // strings_jp.json     - 일본어
 
+Log::d("===============================");
 # 기본언어 설정
 R::init( Flex\Annona\App::$language );
 Log::d('R :: language ', R::$language);
+
+Log::d("===============================");
 
 # res/string 기본 호출
 R::strings();
 Log::d(R::$strings[R::$language]);
 
+# 언어 데이터값을 Objects 타입으로 받기
+$strings = R::dic(R::$strings[R::$language]);
+Log::d( $strings->app_name );
+Log::d( $strings->copy_ceo );
+Log::d( $strings->app_theme_color );
+Log::d( $strings->copy_right );
+
 # res/string 배열값 추가 하기
 R::strings(['cus_fax' => '02-2235-2323', 'admin_email'=>'test@dddd.com']);
 Log::d('[ cus_fax, admin_email ] 추가 >>>',R::$strings[R::$language]);
+
+Log::d("===============================");
 
 # 기본언어 영어로 바꾸기 /==================
 R::init( 'en' );
@@ -50,7 +62,7 @@ Log::d ( '영어파일 없음 : ',R::$r->attachments );
 #============================
 # 기본 리소스 파일 호출 : parser
 #-----------------------
-
+R::init( 'ko' );
 # res/CONFIG 
 #R::parser(_ROOT_PATH_.'/'._CONFIG_.'/imageviewer.json', 'imageviewer');
 
@@ -101,9 +113,29 @@ Log::d('sysmsg',R::$sysmsg);
 R::ddd();
 // Log::d('ddd',R::$ddd);
 
+Log::d("===============================");
+
 # tables : 배열값 추가 하기
 R::tables(['a'=>'flex_a','b'=>'flex_b']);
 Log::d('tables',R::$tables);
 
-Log::d(R::$tables[R::$language]);
+# 사전 Objects 타일으로 받기
+$tables = R::Dic(R::$tables[R::$language]);
+Log::d( $tables->uploadfiles);
+Log::d( $tables->member);
+Log::d( $tables->member_upfiles);
+Log::d( $tables->a);
+Log::d( $tables->b);
+
+Log::d("===============================");
+
+# 언어 데이터값을 Objects 타입으로 받기
+$sysmsg = R::dic(R::$sysmsg[R::$language]);
+
+// Log::e ( print_r($sysmsg,true) );
+Log::e ( $sysmsg->w_aduuid );
+Log::e ( $sysmsg->w_token_isnot_match );
+Log::e ( $sysmsg->w_not_allowed_nation );
+Log::e ( $sysmsg->e_float );
+Log::e ( $sysmsg->e_filename_symbol );
 ?>

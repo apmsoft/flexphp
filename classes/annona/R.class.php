@@ -61,11 +61,14 @@ final class R
         }
     }
 
-    public static function __callStatic(string $query, array $args=[]) {
-        if(!self::isUpdated($query)){
+    public static function __callStatic(string $query, array $args=[]) 
+    {
+        # 배열을 dictionary Object 
+        if(strtolower($query) == 'dic' && count($args)){
+            return (object)(new \Flex\Annona\Model( $args[0] ))->fetch();
+        }else if(!self::isUpdated($query)){
             self::id($query);
-        }
-        if(isset($args[0])){
+        }else if(isset($args[0])){
             self::setIdValues($query, $args[0]);
         }
     }
