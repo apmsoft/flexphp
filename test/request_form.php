@@ -55,7 +55,7 @@ $request->end_date   = '2012-01-04';
 $request->authnumber = 'FlexPHP';
 $request->point      = '23.7';
 $request->key        = 'dsdf_23_7';
-$request->linkurl    = 'http://flexvue.fancyupsoft.com';
+// $request->linkurl    = 'http://flexvue.fancyupsoft.com';
 
 
 try{
@@ -72,7 +72,7 @@ try{
     (new RequestForm('authnumber', '인증번호',$request->authnumber))->null()->space()->equal('FlexPHP');
     (new RequestForm('point', '[소수]값',$request->point))->null()->space()->floatf();
     (new RequestForm('key', '영어+숫자+_ 만허용',$request->key))->null()->space()->disliking(['_'])->alnum();
-    (new RequestForm('linkurl', 'http 주소타입인지 체크',$request->linkurl))->null()->space()->url();
+    (new RequestForm('linkurl', 'http 주소타입인지 체크',$request->linkurl))->space()->url();
 }catch(\Exception $e){
     Log::e(json_decode($e->getMessage(),true));
     exit;
