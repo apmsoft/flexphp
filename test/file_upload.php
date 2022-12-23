@@ -5,11 +5,11 @@ header("Access-Control-Allow-Methods: *");
 
 ini_set('memory_limit','-1');
 
-use Flex\App\App;
-use Flex\Log\Log;
-use FLex\R\R;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
+use FLex\Annona\R\R;
 
-use Flex\File\FileUpload;
+use Flex\Annona\File\FileUpload;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';

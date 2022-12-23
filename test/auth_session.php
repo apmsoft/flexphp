@@ -1,7 +1,7 @@
 <?php
 # session_start();
-use Flex\App\App;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -17,7 +17,7 @@ $session_types = [
 ];
 
 # auth
-$authSession = new \Flex\Auth\AuthSession( $session_types );
+$authSession = new \Flex\Annona\Auth\AuthSession( $session_types );
 
 # 세션에 추가할 키와 값
 $authSession->regiAuth([

@@ -1,7 +1,7 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
-use Flex\R\R;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
+use Flex\Annona\R\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -17,12 +17,12 @@ Log::options([
 
 
 # model
-$model = new \Flex\Model\Model();
+$model = new \Flex\Annona\Model\Model();
 $model->dir  = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe';
 $model->picture = $model->dir.'/g0e6b3d364_640.jpg';
 
 try{
-    $imageGDS = new \Flex\Image\ImageGDS($model->picture);
+    $imageGDS = new \Flex\Annona\Image\ImageGDS($model->picture);
     Log::d( 'gd버전: ', $imageGDS->getVersion() );
 
     # 사진 이미지 사이즈
@@ -50,7 +50,7 @@ try{
     # 필터 워터마크 찍기
     # RB : 오른쪽 아래 기분, LB : 왼쪽 아래 기분, LT : 왼쪽 위 기준, RT : 오른쪽 위 기준
     Log::d('필터 워터마크 찍기');
-    $imageGDS = new \Flex\Image\ImageGDS($model->dir.'/gd_crop_500x150_x150_y100.jpg');
+    $imageGDS = new \Flex\Annona\Image\ImageGDS($model->dir.'/gd_crop_500x150_x150_y100.jpg');
     // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'RB');
     // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'LB');
     // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'LT');
@@ -59,7 +59,7 @@ try{
     Log::d($model->dir.'/gd_watermarks.jpg');
 
     Log::d('타이틀 이미지 만들기');
-    $imageGDS = new \Flex\Image\ImageGDS();
+    $imageGDS = new \Flex\Annona\Image\ImageGDS();
     $imageGDS->setBgColor(0x7fffffff);
     $imageGDS->setFont(_ROOT_PATH_.'/fonts/NanumMyeongjo-YetHangul.ttf');
     $imageGDS->setFontColor([0,0,0]);
@@ -71,7 +71,7 @@ try{
 
 
     Log::d('이미지 위에 글씨 넣기');
-    $imageGDS = new \Flex\Image\ImageGDS($model->dir.'/gd_watermarks.jpg');
+    $imageGDS = new \Flex\Annona\Image\ImageGDS($model->dir.'/gd_watermarks.jpg');
     $imageGDS->setFont(_ROOT_PATH_.'/fonts/NanumMyeongjo-YetHangul.ttf');
     $imageGDS->setFontColor([255,255,255]);
     $imageGDS->setFontSize(20);
@@ -82,7 +82,7 @@ try{
 
 
     Log::d('그림자 텍스트 이미지');
-    $imageGDS = new \Flex\Image\ImageGDS();
+    $imageGDS = new \Flex\Annona\Image\ImageGDS();
     $imageGDS->setFont(_ROOT_PATH_.'/fonts/NanumMyeongjo-YetHangul.ttf');
     $imageGDS->setFontSize(20);
     $imageGDS->setXY(5,50);

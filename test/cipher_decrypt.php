@@ -1,10 +1,10 @@
 <?php
 # session_start();
-use Flex\App\App;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
 
-use Flex\Cipher\CipherEncrypt;
-use Flex\Cipher\CipherDecrypt;
+use Flex\Annona\Cipher\CipherEncrypt;
+use Flex\Annona\Cipher\CipherDecrypt;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -26,7 +26,7 @@ $regs = [
 ];
 
 # 배열 중에서 랜덤 뽑기 10글자 : 기본 배열값중에서
-$random_text = (new \Flex\Random\Random( $regs ))->arrayRand( 20 );
+$random_text = (new \Flex\Annona\Random\Random( $regs ))->arrayRand( 20 );
 Log::d("====================================");
 Log::d('random_text', $random_text );
 Log::d("====================================");

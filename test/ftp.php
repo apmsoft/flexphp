@@ -1,7 +1,7 @@
 <?php
-use Flex\App\App;
-use Flex\R\R;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\R\R;
+use Flex\Annona\Log\Log;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -17,7 +17,7 @@ Log::options([
 
 # ftp
 try{
-    $ftp = new \Flex\Ftp\Ftp(
+    $ftp = new \Flex\Annona\Ftp\Ftp(
         'dddd.com',
         "sdfsa",
         "dddd&*d",

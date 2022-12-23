@@ -1,9 +1,9 @@
 <?php
 # session_start();
-use Flex\App\App;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
 
-use Flex\Date\DateTimez;
+use Flex\Annona\Date\DateTimez;
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
@@ -18,7 +18,7 @@ Log::options([
 ]);
 
 # model
-$model = new \Flex\Model\Model();
+$model = new \Flex\Annona\Model\Model();
 $model->timezone = 'Asia/Seoul';
 // $model->timezone = 'UTC';
 

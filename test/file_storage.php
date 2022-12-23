@@ -1,9 +1,9 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
 
 
-use Flex\File\FileStorage;
+use Flex\Annona\File\FileStorage;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -13,7 +13,7 @@ Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
 # model
-$model = new \Flex\Model\Model([]);
+$model = new \Flex\Annona\Model\Model([]);
 $model->filename = sprintf("%s/%s/test.txt",_ROOT_PATH_, _DATA_);
 $model->filename2 = sprintf("%s/%s/putget.txt",_ROOT_PATH_, _DATA_);
 $model->filename3 = sprintf("%s/%s/csvfile.csv",_ROOT_PATH_, _DATA_);

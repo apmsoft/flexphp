@@ -1,10 +1,10 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
-use Flex\R\R;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
+use Flex\Annona\R\R;
 
 
-use Flex\Image\ImageViewer;
+use Flex\Annona\Image\ImageViewer;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -23,7 +23,7 @@ R::parser(_ROOT_PATH_.'/'._CONFIG_.'/imageviewer.json', 'imageviewer');
 // Log::d(R::$r->imageviewer[R::$language]);
 
 # image viewer config :: model
-$imageViewOptions = new \Flex\Model\Model( R::$r->imageviewer[R::$language] );
+$imageViewOptions = new \Flex\Annona\Model\Model( R::$r->imageviewer[R::$language] );
 
 #=============================
 /**

@@ -1,7 +1,7 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
-use Flex\R\R;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
+use Flex\Annona\R\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -11,7 +11,7 @@ Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
 # model
-$model = new \Flex\Model\Model();
+$model = new \Flex\Annona\Model\Model();
 $model->todate = date('Y-m-d');
 
 
@@ -19,7 +19,7 @@ $model->todate = date('Y-m-d');
 R::parser(_ROOT_PATH_.'/'._RAW_.'/holiday.json', 'holiday');
 
 # calendar
-$calendar = new \Flex\Calendars\Calendars($model->todate);
+$calendar = new \Flex\Annona\Calendars\Calendars($model->todate);
 $calendar->set_memorials( R::$r->holiday[R::$language] );
 $calendar->set_days_of_month();
 $months =$calendar->days_of_month;

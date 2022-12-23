@@ -1,9 +1,9 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
 
 
-use Flex\Random\Random;
+use Flex\Annona\Random\Random;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';

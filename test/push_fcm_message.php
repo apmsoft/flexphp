@@ -1,8 +1,8 @@
 <?php
 # session_start();
-use Flex\App\App;
-use Flex\Log\Log;
-use Flex\R\R;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
+use Flex\Annona\R\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -33,7 +33,7 @@ define('_FCM_PROJECT_ID_', 'smartds-5ca46');
 
 # 푸시토큰
 try{
-    $pushFCMMessage = new \Flex\Push\PushFCMMessage( _FCM_PROJECT_ID_ );
+    $pushFCMMessage = new \Flex\Annona\Push\PushFCMMessage( _FCM_PROJECT_ID_ );
     if($pushFCMMessage->getGoogleAccessToken( _FCM_SERVICE_ACCOUT_KEY_ ))
     {
         $push_title   = 'FCM';

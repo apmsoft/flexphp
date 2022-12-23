@@ -1,6 +1,6 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -17,7 +17,7 @@ Log::options([
 # 기본값 
 
 # 1
-$model = new \Flex\Model\Model( [] );
+$model = new \Flex\Annona\Model\Model( [] );
 $model->name = '홍길동';
 $model->age = 11;
 

@@ -1,7 +1,7 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
-use Flex\R\R;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
+use Flex\Annona\R\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -16,11 +16,11 @@ Log::options([
 ]);
 
 # model
-$model = new \Flex\Model\Model();
+$model = new \Flex\Annona\Model\Model();
 $model->picture = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe/beautiful-young-asian-woman-happy-relax-walking-beach-near-sea.jpg';
 
 try{
-    $imageExif = new \Flex\Image\ImageExif( $model->picture );
+    $imageExif = new \Flex\Annona\Image\ImageExif( $model->picture );
     Log::d ('File',$imageExif->getFile());
     Log::d ('Computed', $imageExif->getComputed());
     Log::d ('Ifdo', $imageExif->getIfdo());
@@ -29,7 +29,7 @@ try{
     Log::d ('Makenote', $imageExif->getMakenote());
     Log::d ('한번에 출력 :', $imageExif->fetch());
 
-    $image_exif_info = (new \Flex\Image\ImageExif( $model->picture ))->fetch();
+    $image_exif_info = (new \Flex\Annona\Image\ImageExif( $model->picture ))->fetch();
     Log::d($image_exif_info);
 }catch (\Exception $e){
     Log::e( $e->getMessage() );

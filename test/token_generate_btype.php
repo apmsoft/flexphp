@@ -1,7 +1,7 @@
 <?php
-use Flex\Log\Log;
+use Flex\Annona\Log\Log;
 
-use Flex\Token\TokenGenerateBtype;
+use Flex\Annona\Token\TokenGenerateBtype;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';

@@ -1,7 +1,7 @@
 <?php
-use Flex\App\App;
-use Flex\R\R;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\R\R;
+use Flex\Annona\Log\Log;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -12,14 +12,14 @@ Log::init(Log::MESSAGE_ECHO);
 
 
 # model
-$model = new \Flex\Model\Model([]);
+$model = new \Flex\Annona\Model\Model([]);
 $model->total_record = 100;
 $model->page         = 1;
 $model->page_count   = 10;
 $model->block_limit  = 2;
 
 # pageing
-$pagingRelation = new \Flex\Paging\PagingRelation($model->total_record, $model->page);
+$pagingRelation = new \Flex\Annona\Paging\PagingRelation($model->total_record, $model->page);
 $pagingRelation->setQueryCount( $model->page_count, $model->block_limit);
 $pagingRelation->buildPageRelation();
 $print_relation = $pagingRelation->printRelation();

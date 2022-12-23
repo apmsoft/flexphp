@@ -1,6 +1,6 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -23,6 +23,6 @@ Log::options([
  * define('_DB_PORT_',33060);
  */
 # db
-// $db = new \Flex\Db\DbMySqli();
-$db = new \Flex\Db\DbMySqli('localhost:mysql', 'root', 'd1004', 8080);
+// $db = new \Flex\Annona\Db\DbMySqli();
+$db = new \Flex\Annona\Db\DbMySqli('localhost:mysql', 'root', 'd1004', 8080);
 ?>

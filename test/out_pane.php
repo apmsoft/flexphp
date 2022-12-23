@@ -1,9 +1,9 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
-use Flex\R\R;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
+use Flex\Annona\R\R;
 
-use Flex\Out\OutPane;
+use Flex\Annona\Out\OutPane;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';

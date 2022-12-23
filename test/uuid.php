@@ -1,8 +1,8 @@
 <?php
-use Flex\Log\Log;
+use Flex\Annona\Log\Log;
 
 
-use Flex\Uuid\UuidGenerator;
+use Flex\Annona\Uuid\UuidGenerator;
 
 
 $path = dirname(__DIR__);

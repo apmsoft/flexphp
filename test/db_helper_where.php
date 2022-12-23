@@ -1,7 +1,7 @@
 <?php
-use Flex\App\App;
-use Flex\R\R;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\R\R;
+use Flex\Annona\Log\Log;
 
 # config
 $path = dirname(__DIR__);
@@ -14,7 +14,7 @@ Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
 # db where 구문 만들기
-$dbHelperWhere = new \Flex\Db\DbHelperWhere();
+$dbHelperWhere = new \Flex\Annona\Db\DbHelperWhere();
 $dbHelperWhere->beginWhereGroup('groupa', 'AND');
     $dbHelperWhere->setBuildWhere('name', 'IN' , '홍길동,유관순', true);
     $dbHelperWhere->setBuildWhere('age', '>=' , 10, true);

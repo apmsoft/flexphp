@@ -1,8 +1,8 @@
 <?php
 # session_start();
-use Flex\App\App;
-use Flex\Log\Log;
-use Flex\R\R;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
+use Flex\Annona\R\R;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -36,7 +36,7 @@ $urls[] = [
     ]
 ];
 try{
-    (new Flex\Http\HttpRequest( $urls ))->get(function($data) use ($urls){
+    (new Flex\Annona\Http\HttpRequest( $urls ))->get(function($data) use ($urls){
         if(is_array($data)){
             foreach($data as $idx => $contents){
                 Log::d('-------------------------');
@@ -45,7 +45,7 @@ try{
                 Log::d('-------------------------');
                 Log::d('-------------------------');
 
-                $htmlXssChars = new \Flex\Html\HtmlXssChars( $contents );
+                $htmlXssChars = new \Flex\Annona\Html\HtmlXssChars( $contents );
                 Log::d($htmlXssChars->getContext('XSS'));
                 Log::d('-------------------------');
                 Log::d('-------------------------');
@@ -56,7 +56,7 @@ try{
         }
         #return $data[0];
     });
-    // (new Flex\Http\HttpRequest( $urls ))->post(function($data){
+    // (new Flex\Annona\Http\HttpRequest( $urls ))->post(function($data){
     //      Log::d($data);
     // });
 }catch(\Exception $e){

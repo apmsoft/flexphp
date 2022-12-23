@@ -1,9 +1,9 @@
 <?php
-use Flex\App\App;
-use Flex\Log\Log;
+use Flex\Annona\App\App;
+use Flex\Annona\Log\Log;
 
 
-use Flex\Text\TextKeyword;
+use Flex\Annona\Text\TextKeyword;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -19,7 +19,7 @@ $query = '대한민국은!!^만만세 하세요&*korean ++/ 100%';
 $allow_tags = ['%','+'];
 
 # 키워드 허용된 특수 문자 제외하고 한글 | 영어 추출
-$text_value = (new \Flex\Text\TextKeyword( $query, $allow_tags ))->value;
+$text_value = (new \Flex\Annona\Text\TextKeyword( $query, $allow_tags ))->value;
 Log::d( $text_value );
 
 ### 특정 글자 및 끝글자 삭제 하기 필터 기능 ######
@@ -32,6 +32,6 @@ $filter_end_words = [
     '가','이','은','는'
 ];
 
-$text_value = (new \Flex\Text\TextKeyword( $query, $allow_tags ))->filterCleanWord($filter_words,$filter_end_words)->value;
+$text_value = (new \Flex\Annona\Text\TextKeyword( $query, $allow_tags ))->filterCleanWord($filter_words,$filter_end_words)->value;
 Log::d($text_value);
 ?>
