@@ -181,9 +181,18 @@ Log::d('날짜 변경 후 일몰/일출 시간', $sun_info );
 Log::d ('=======================');
 
 # 세계 GMT 기준 시간 알아내기
-Log::d('파리  ', (new DateTimez( "now", 'GMT'))->formatter("+1 hours")->format( 'Y-m-d H:i T') );
-Log::d('런던  ', (new DateTimez( "now", 'GMT'))->formatter("0 hours")->format( 'Y-m-d H:i T') );
-Log::d('뉴욕  ', (new DateTimez( "now", 'GMT'))->formatter("-5 hours")->format( 'Y-m-d H:i T') );
-Log::d('두바이', (new DateTimez( "now", 'GMT'))->formatter("+4 hours")->format( 'Y-m-d H:i T') );
-Log::d('벤쿠버', (new DateTimez( "now", 'GMT'))->formatter("-10 hours")->format( 'Y-m-d H:i T') );
+Log::d('GMT 파리  ', (new DateTimez( "now", 'GMT'))->formatter("+1 hours")->format( 'Y-m-d H:i T') );
+Log::d('GMT 런던  ', (new DateTimez( "now", 'GMT'))->formatter("0 hours")->format( 'Y-m-d H:i T') );
+Log::d('GMT 뉴욕  ', (new DateTimez( "now", 'GMT'))->formatter("-5 hours")->format( 'Y-m-d H:i T') );
+Log::d('GMT 두바이', (new DateTimez( "now", 'GMT'))->formatter("+4 hours")->format( 'Y-m-d H:i T') );
+Log::d('GMT 벤쿠버', (new DateTimez( "now", 'GMT'))->formatter("-10 hours")->format( 'Y-m-d H:i T') );
+
+Log::d ('=======================');
+
+# 세계 UTC 기준 시간 알아내기
+Log::d('UTC 파리  ', (new DateTimez( "now", 'UTC'))->formatter("+1 hours")->format( 'Y-m-d H:i T') );
+Log::d('UTC 런던  ', (new DateTimez( "now", 'UTC'))->formatter("0 hours")->format( 'Y-m-d H:i T') );
+Log::d('UTC 뉴욕  ', (new DateTimez( "now", 'UTC'))->formatter("-5 hours")->format( 'Y-m-d H:i T') );
+Log::d('UTC 두바이', (new DateTimez( "now", 'UTC'))->formatter("+4 hours")->format( 'Y-m-d H:i T') );
+Log::d('UTC 벤쿠버', (new DateTimez( "now", 'UTC'))->formatter("-10 hours")->format( 'Y-m-d H:i T') );
 ?>
