@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-use Flex\Annona\R\R;
-use Flex\Annona\App\App;
-
 # set error reporting
 #@ini_set('display_error', 'On');
 #error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -51,14 +48,13 @@ spl_autoload_register(function($class_name){
 });
 
 # 기본 선언 클래스 /-------------------
-# 어플리케이션 환경
-App::init();
+Flex\Annona\App\App::init();
 
 # resource XML 자동 로드 /---------------
-R::init(App::$language);
-R::__autoload_resource(array(
+Flex\Annona\R\R::init(Flex\Annona\App\App::$language);
+Flex\Annona\R\R::__autoload_resource([
     _VALUES_  => ['sysmsg','strings','integers']
-));
+]);
 
 # 함수 자동 인클루드 /----------------
 # function 디렉토리에 있어야 하며 클래스를 지원하는 함수들
