@@ -20,7 +20,9 @@ class DateTimez extends DateTime
 		# timezone
 		$this->dateTimeZone = new \DateTimeZone($timezone);
 		$this->timezone      = $this->dateTimeZone->getName();
-		$this->location      = $this->dateTimeZone->getLocation();
+		if(is_array($this->dateTimeZone->getLocation())){
+			$this->location      = $this->dateTimeZone->getLocation();
+		}
 		self::filterAbbreviations(DateTimeZone::listAbbreviations());
 
 		# datetime

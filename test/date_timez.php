@@ -20,6 +20,7 @@ Log::options([
 # model
 $model = new \Flex\Model\Model();
 $model->timezone = 'Asia/Seoul';
+// $model->timezone = 'UTC';
 
 # 타임존 설정 및 가져오기
 // date_default_timezone_set('Asia/Seoul');
@@ -176,4 +177,13 @@ Log::d('지정 날짜의 일몰/일출 시간', $sun_info );
 # 지정된 날짜의 일몰/일출 시간
 $sun_info = (new DateTimez(date('Y-m-d'), $model->timezone))->formatter("+10 days")->sunInfo();
 Log::d('날짜 변경 후 일몰/일출 시간', $sun_info );
+
+Log::d ('=======================');
+
+# 세계 GMT 기준 시간 알아내기
+Log::d('파리  ', (new DateTimez( "now", 'GMT'))->formatter("+1 hours")->format( 'Y-m-d H:i T') );
+Log::d('런던  ', (new DateTimez( "now", 'GMT'))->formatter("0 hours")->format( 'Y-m-d H:i T') );
+Log::d('뉴욕  ', (new DateTimez( "now", 'GMT'))->formatter("-5 hours")->format( 'Y-m-d H:i T') );
+Log::d('두바이', (new DateTimez( "now", 'GMT'))->formatter("+4 hours")->format( 'Y-m-d H:i T') );
+Log::d('벤쿠버', (new DateTimez( "now", 'GMT'))->formatter("-10 hours")->format( 'Y-m-d H:i T') );
 ?>
