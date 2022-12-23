@@ -65,7 +65,7 @@ R::__autoload_resource(array(
 $__autoload_helper_funs = ['_fn'];
 foreach($__autoload_helper_funs as $fun_name){
     $tmp_fun_filename = _ROOT_PATH_.'/function/'.$fun_name.'.function.php';
-    if(file_exists($tmp_fun_filename)!==false){
+    if(file_exists($tmp_fun_filename)){
         include_once $tmp_fun_filename;
     }
 }
