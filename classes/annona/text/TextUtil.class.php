@@ -90,7 +90,7 @@ class TextUtil
 	}
 
 	#숫자를 특정문자 타입의 형태로 출력
-	public function formatNumberPrintf(string $str='-') : TextUtil{
+	public function numberf(string $str='-') : TextUtil{
 		$result = $this->value;
 		$patterns = [
 			4  => ['/(\d{1,1})(\d{1,3})/', '\1'.$str.'\2'],

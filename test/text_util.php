@@ -37,7 +37,7 @@ $text_value = (new TextUtil( '<b>대만민국</b> 국제 <font color="red">올�
 Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기1 [길이 3 ~ 16], 길이 11
-$text_value = (new TextUtil( '01012345678' ))->formatNumberPrintf( '-' )->value;
+$text_value = (new TextUtil( '01012345678' ))->numberf( '-' )->value;
 Log::d( $text_value );
 
 # 특정 숫자 가리기 
@@ -45,36 +45,36 @@ $text_value = (new TextUtil( '010-1234-5678' ))->replace(4, 4, '*')->value;
 Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기1 [길이 4 ~ 16] , 길이 8
-$text_value = (new TextUtil( '15881234' ))->formatNumberPrintf('-')->value;
+$text_value = (new TextUtil( '15881234' ))->numberf('-')->value;
 Log::d( $text_value );
 
 
 # 숫자 자동 포멧화 하기3 [길이 4 ~ 16], 길이 16
-$text_value = (new TextUtil( '1234567812345678' ))->formatNumberPrintf('-')->value;
+$text_value = (new TextUtil( '1234567812345678' ))->numberf('-')->value;
 Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기3 [길이 4 ~ 16], 길이 15
-$text_value = (new TextUtil( '012345678123456' ))->formatNumberPrintf('-')->value;
+$text_value = (new TextUtil( '012345678123456' ))->numberf('-')->value;
 Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 4
-$text_value = (new TextUtil( '1000' ))->formatNumberPrintf(',')->value;
+$text_value = (new TextUtil( '1000' ))->numberf(',')->value;
 Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 3 숫자 범위 벗어 났을 경우 테스트
-$text_value = (new TextUtil( '100' ))->formatNumberPrintf(',')->value;
+$text_value = (new TextUtil( '100' ))->numberf(',')->value;
 Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 5
-$text_value = (new TextUtil( '15000' ))->formatNumberPrintf(',')->value;
+$text_value = (new TextUtil( '15000' ))->numberf(',')->value;
 Log::d( $text_value );
 
 # 숫자 자동 포멧화 하기4 [길이 4 ~ 16], 길이 6
-$text_value = (new TextUtil( '153000' ))->formatNumberPrintf(',')->value;
+$text_value = (new TextUtil( '153000' ))->numberf(',')->value;
 Log::d( $text_value );
 
 
 # 숫자 자동 포멧화 하고 특정위치 부터까지 특수문자로 표시하기
-$text_value = (new TextUtil( '01012345678' ))->formatNumberPrintf('-')->replace(4, 4, '*')->value;
+$text_value = (new TextUtil( '01012345678' ))->numberf('-')->replace(4, 4, '*')->value;
 Log::d( $text_value );
 ?>
