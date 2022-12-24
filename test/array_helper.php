@@ -95,6 +95,7 @@ foreach($arrays_desc as $desc)
 }
 
 Log::d ("=================================");
+
 # 첫번째로 발견된 배열 받기
 $find_first_args = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->find("productName","I")->value;
 Log::d('find_first_args ', $find_first_args);
@@ -106,6 +107,8 @@ Log::d('find_index ', $find_index);
 # 검색에 해당하는 전체 배열 받기
 $find_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findAll("lowPrice",27200)->value;
 Log::d('find_all ', $find_all);
+
+Log::d ("=================================");
 
 # 배열 끝에 추가
 $append_args = [
@@ -119,10 +122,9 @@ $append = (new \Flex\Annona\Array\ArrayHelper( $args ))->append( $append_args )-
 Log::d('append ', $append);
 
 
-# 배열 끝에 추가 후 배열 정렬 ASC
+# 배열 끝에 추가 후 ---> 배열 정렬 ASC
 $append_and_sorting_asc = (new \Flex\Annona\Array\ArrayHelper( $args ))->append($append_args)->sorting('lowPrice','ASC')->value;
 Log::d('append_and_sorting_asc ', $append_and_sorting_asc);
 
-// $a = array_search("Z", array_column($args, 'productName'));
-// var_dump($a);
+Log::d ("=================================");
 ?>
