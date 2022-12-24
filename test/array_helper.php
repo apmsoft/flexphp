@@ -127,4 +127,12 @@ $append_and_sorting_asc = (new \Flex\Annona\Array\ArrayHelper( $args ))->append(
 Log::d('append_and_sorting_asc ', $append_and_sorting_asc);
 
 Log::d ("=================================");
+
+# 값이 [숫자]로 되어 있는 키의 총합을 구한다 (SUM)
+$numeric_sum = (new \Flex\Annona\Array\ArrayHelper( $args ))->sum('lowPrice');
+Log::d('numeric_sum ', '총합  ', $numeric_sum);
+
+# 값이 [숫자]로 되어 있는 키의 평균을 구한다 (AVG)
+$numeric_avg = (new \Flex\Annona\Array\ArrayHelper( $args ))->avg('lowPrice');
+Log::d('numeric_avg ', '평균값', $numeric_avg);
 ?>

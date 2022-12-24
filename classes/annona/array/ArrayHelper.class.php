@@ -51,6 +51,39 @@ class ArrayHelper
     return $this;
     }
 
+    # 특정 배열의 int 값 sum 하기
+    public function sum(string $key) : int
+    {
+        $result = [];
+        foreach($this->value as $a){
+            if(is_numeric($a[$key])){
+                $result[] = $a[$key];
+            }
+        }
+        $sum = 0;
+        if(count($result)){
+            $sum = array_sum($result);
+        }
+    return $sum;
+    }
+
+    # 특정 배열의 int 값의 평균 값
+    public function avg(string $key) : int
+    {
+        $result = [];
+        foreach($this->value as $a){
+            if(is_numeric($a[$key])){
+                $result[] = $a[$key];
+            }
+        }
+        $avg = 0;
+        $cnt = count($result);
+        if($cnt>0){
+            $avg = array_sum($result) / $cnt;
+        }
+    return $avg;
+    }
+
     # index key number
     public function findIndex(string $key, mixed $val) : int
     {
