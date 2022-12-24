@@ -71,7 +71,7 @@ $data = '[
 $args = json_decode($data,true);
 
 # ASC 
-$arrays_asc = (new \Flex\Annona\Arrays\ArraysHelper( $args ))->multiSort('lowPrice','ASC')->value;
+$arrays_asc = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','ASC')->value;
 foreach($arrays_asc as $asc)
 {
     Log::d( 
@@ -84,7 +84,7 @@ foreach($arrays_asc as $asc)
 Log::d ("=================================");
 
 # DESC 
-$arrays_desc = (new \Flex\Annona\Arrays\ArraysHelper( $args ))->multiSort('lowPrice','DESC')->value;
+$arrays_desc = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->value;
 foreach($arrays_desc as $desc)
 {
     Log::d(
@@ -93,4 +93,36 @@ foreach($arrays_desc as $desc)
         $desc['productName']
     );
 }
+
+Log::d ("=================================");
+# 첫번째로 발견된 배열 받기
+$find_first_args = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->find("productName","I")->value;
+Log::d('find_first_args ', $find_first_args);
+
+# find index
+$find_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findIndex("lowPrice",27200);
+Log::d('find_index ', $find_index);
+
+# 검색에 해당하는 전체 배열 받기
+$find_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findAll("lowPrice",27200)->value;
+Log::d('find_all ', $find_all);
+
+# 배열 끝에 추가
+$append_args = [
+	"rank"=> 10,
+	"lowPrice"=> 22000,
+	"productName"=> "J",
+	"purchaseCnt"=> 0
+];
+
+$append = (new \Flex\Annona\Array\ArrayHelper( $args ))->append( $append_args )->value;
+Log::d('append ', $append);
+
+
+# 배열 끝에 추가 후 배열 정렬 ASC
+$append_and_sorting_asc = (new \Flex\Annona\Array\ArrayHelper( $args ))->append($append_args)->sorting('lowPrice','ASC')->value;
+Log::d('append_and_sorting_asc ', $append_and_sorting_asc);
+
+// $a = array_search("Z", array_column($args, 'productName'));
+// var_dump($a);
 ?>
