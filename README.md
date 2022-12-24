@@ -11,9 +11,9 @@ _data
 
 
 
-# [기본 버전과 Annona (설탕 사과) 사용 방법]
+# [기본 버전과 Annona (설탕 사과)버전 같이 사용 방법]
 
-1. classes 폴더에 flex\annona 폴더 붙여넣기
+1. classes 폴더에 /classes/annona 폴더 붙여넣기
 2. config.inc.php 업데이트 하기
 
 [덮어쓰기]
@@ -41,7 +41,7 @@ spl_autoload_register(function($class_name){
 Flex\Annona\App::init();
 
 [기존버전]
-Flex\App\Flex\Annona\App::init();
+Flex\Annona\App::init();
 define('_LANG_',(isset($_SESSION['nation']))? $_SESSION['nation']: Flex\App\Flex\Annona\App::$lang);
 define('_SITE_HOST_',Flex\App\Flex\Annona\App::$host);  # HOST URL
 
