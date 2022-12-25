@@ -127,6 +127,7 @@ try{
     $db['name']     = '홍길동'.time();
     $db['signdate'] = date('Y-m-d H:i:s');
     $db->table($tables->member)->insert();
+    #$db->table($tables->member)->insertEncrypt();
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
@@ -135,6 +136,7 @@ try{
 try{
     $db['name'] = '홍길동M'.time();
     $db->table($tables->member)->where('id', 1)->update();
+    // $db->table($tables->member)->updateEncrypt();
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }

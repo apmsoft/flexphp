@@ -64,6 +64,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		return isset($this->params[$offset]) ? $this->params[$offset] : null;
 	}
 
+	# db 암호화 초기 셋팅 설정
 	public function set_encryption_mode() : void
 	{
 		# 서버 버전
@@ -84,17 +85,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		}
 	}
 
-	# 암호화/복호화 쿼리 활성화
-	public function begin_encrypt() : void{
-		$this->encryption_enable = true;
-	}
-
-	# 암호화/복호화 쿼리 비활성
-	public function end_encrypt() : void{
-		$this->encryption_enable = false;
-	}
-
-	#@ string
+	#@ 암호화
 	private function aes_encrypt(mixed $v) : string
 	{
 		$result = '';
@@ -106,20 +97,15 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		return $result;
 	}
 
-	private function aes_decrypt($column_name, $is_as=true) : string
+	# 복호화
+	private function aes_decrypt($column_name) : string
 	{
 		$result = '';
 		if($column_name && $column_name !='')
 		{
-			if($is_as){
-				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8)) as %s", 
-					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES, $column_name
-				);
-			}else{
-				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8))", 
-					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES
-				);
-			}
+			$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8)) as %s", 
+				$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES, $column_name
+			);
 		}
 		return $result;
 	}
@@ -141,9 +127,17 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
     public function selectGroupBy(...$columns) : DbMySqli{
 		$argv = [];
 		foreach($columns as $name){
-			if(strpos($name,'(') !==false){
-				$argv[] = $name;
-			}else{ $argv[] = sprintf("ANY_VALUE(%s)",$name); }
+			$argv[] = (strpos($name,'(') !==false) ? $name : sprintf("ANY_VALUE(%s)",$name);
+		}
+		$this->query_params['columns'] = implode(',', $argv);
+	return $this;
+	}
+
+	# select 암호화 -> 복호화 
+	public function selectCrypt(...$columns) : DbMySqli{
+		$argv = [];
+		foreach($columns as $name){
+			$argv[] = (strpos($name,'(') !==false) ? $name : aes_decrypt($name);
 		}
 		$this->query_params['columns'] = implode(',', $argv);
 	return $this;
@@ -152,26 +146,8 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	# @ abstract : QueryBuilderAbstract
     public function where(...$where) : DbMySqli
 	{
-		$length = count($where);
-		if($length > 0)
-		{
-			if(isset($where[0]) && trim($where[0]))
-			{
-				$this->query_params['where'] = 'WHERE '.$where[0];
-				if($length > 1)
-				{
-					$whereHelper = new \Flex\Annona\Db\WhereHelper();
-					$whereHelper->beginWhereGroup(time(), 'AND');
-					if($length ==2){
-						$whereHelper->setBuildWhere($where[0], '=' , $where[1], true);
-					}else if($length ==3){
-						$whereHelper->setBuildWhere($where[0], $where[1] , $where[2], true);
-					}
-					$whereHelper->endWhereGroup();
-					$this->query_params['where'] = 'WHERE '.$whereHelper->where;
-				}
-			}
-		}
+		$result = parent::buildWhere($where);
+		if($result) $this->query_params['where'] = 'WHERE '.$result;
 	return $this;
 	}
 
@@ -195,7 +171,10 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	}
 
 	# @ abstract : QueryBuilderAbstract
-    public function on(...$on) : DbMySqli{
+    public function on(...$on) : DbMySqli
+	{
+		$result = parent::buildWhere($on);
+		if($result) $this->query_params['on'] = 'ON '.$result;
 	return $this;
 	}
 
@@ -219,26 +198,8 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 
 	# @ abstract : QueryBuilderAbstract
     public function having(...$having) : DbMySqli{
-		$length = count($having);
-		if($length > 0)
-		{
-			if(isset($having[0]) && trim($having[0]))
-			{
-				$this->query_params['having'] = 'HAVING '.$having[0];
-				if($length > 1)
-				{
-					$whereHelper = new \Flex\Annona\Db\WhereHelper();
-					$whereHelper->beginWhereGroup(time(), 'AND');
-					if($length ==2){
-						$whereHelper->setBuildWhere($having[0], '=' , $having[1], true);
-					}else if($length ==3){
-						$whereHelper->setBuildWhere($having[0], $having[1] , $having[2], true);
-					}
-					$whereHelper->endWhereGroup();
-					$this->query_params['having'] = 'HAVING '.$whereHelper->where;
-				}
-			}
-		}
+		$result = parent::buildWhere($having);
+		if($result) $this->query_params['having'] = 'HAVING '.$result;
 	return $this;
 	}
 
@@ -278,16 +239,36 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		foreach($this->params as $k => $v)
 		{
 			$fieldk .= sprintf("`%s`,",$k);
-			if($this->encryption_enable)
-			{
-				$validation = new Validation($v);
-				if($validation->isNumber()){ // 숫자만 있으면 인코딩 안함
-					$datav .= sprintf("'%s',", parent::real_escape_string($v));
-				}else{
-					$datav .= sprintf("%s,", $this->aes_encrypt(parent::real_escape_string($v)) );
-				}
-			}else{
+			$datav .= sprintf("'%s',", parent::real_escape_string($v));
+		}
+
+		$fieldk	= substr($fieldk,0,-1);
+		$datav	= substr($datav,0,-1);
+		$this->params = array(); #변수값 초기화
+
+		$query= sprintf("INSERT INTO `%s` (%s) VALUES (%s)",$this->query_params['table'],$fieldk,$datav);
+		if($this->query($query)){
+			$result = true;
+		}
+	return $result;
+	}
+
+	# 암호화 저장
+	public function insertEncrypt() : bool
+	{
+		$result = false;
+		$fieldk = '';
+		$datav	= '';
+		if(count($this->params)<1) return $result;
+
+		foreach($this->params as $k => $v)
+		{
+			$fieldk .= sprintf("`%s`,",$k);
+			$validation = new Validation($v);
+			if($validation->isNumber()){ // 숫자만 있으면 인코딩 안함
 				$datav .= sprintf("'%s',", parent::real_escape_string($v));
+			}else{
+				$datav .= sprintf("%s,", $this->aes_encrypt(parent::real_escape_string($v)) );
 			}
 		}
 
@@ -312,15 +293,34 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		foreach($this->params as $k => $v)
 		{
 			$datav = '';
-			if($this->encryption_enable){
-				$validation = new Validation($v);
-				if($validation->isNumber()){ // 숫자만 있으면 인코딩 안함
-					$datav = sprintf("'%s'", parent::real_escape_string($v));
-				}else{
-					$datav = sprintf("%s", $this->aes_encrypt(parent::real_escape_string($v)) );
-				}
-			}else{
+			$datav = sprintf("'%s'", parent::real_escape_string($v));
+			$fieldkv .= sprintf("`%s`=%s,",$k, $datav);
+		}
+		$fieldkv = substr($fieldkv,0,-1);
+		$this->params = array(); #변수값 초기화
+
+		$query= sprintf("UPDATE `%s` SET %s WHERE %s",$this->query_params['table'],$fieldkv,$this->query_params['table']);
+		if($this->query($query)){
+			$result = true;
+		}
+	return $result;
+	}
+
+	# 암호화 업데이트
+	public function updateEncrypt() : bool
+	{
+		$result = false;
+		$fieldkv = '';
+
+		if(count($this->params)<1) return $result;		
+		foreach($this->params as $k => $v)
+		{
+			$datav = '';
+			$validation = new Validation($v);
+			if($validation->isNumber()){ // 숫자만 있으면 인코딩 안함
 				$datav = sprintf("'%s'", parent::real_escape_string($v));
+			}else{
+				$datav = sprintf("%s", $this->aes_encrypt(parent::real_escape_string($v)) );
 			}
 			$fieldkv .= sprintf("`%s`=%s,",$k, $datav);
 		}

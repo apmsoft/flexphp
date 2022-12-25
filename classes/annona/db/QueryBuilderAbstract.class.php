@@ -2,6 +2,7 @@
 namespace Flex\Annona\Db;
 
 use \MySQLi;
+use \Flex\Annona\Db\WhereHelper;
 
 # purpose : 각종 SQL 관련 디비를 통일성있게  작성할 수 있도록 틀을 제공
 abstract class QueryBuilderAbstract extends mysqli
@@ -9,9 +10,6 @@ abstract class QueryBuilderAbstract extends mysqli
     protected array $query_params;
     protected string $query_tpl = 'SELECT {columns}FROM {table}{on}{where}{groupby}{having}{orderby}{limit}';
     protected string $query = '';
-
-    const QUERY_GROUPBY = 2;
-    const QUERY_DEFAULT = 1;
 
     abstract public function table(...$table) : mixed;
     abstract public function select(...$columns) : mixed;
@@ -52,6 +50,33 @@ abstract class QueryBuilderAbstract extends mysqli
         // print_r($render_args);
         $this->query = trim(strtr($this->query_tpl, $render_args));
     return $this->query;
+    }
+
+    public function buildWhere(...$w) : string 
+    {
+        $result = '';
+        $length = (isset($w[0])) ? count($w[0]) : 0;
+		if($length > 0)
+		{
+            $wa = $w[0];
+			if(isset($wa[0]) && $wa[0])
+			{
+				$result = $wa[0];
+				if($length > 1)
+				{
+					$whereHelper = new WhereHelper();
+					$whereHelper->beginWhereGroup(time(), 'AND');
+					if($length ==2){
+						$whereHelper->setBuildWhere($wa[0], '=' , $wa[1], true);
+					}else if($length ==3){
+						$whereHelper->setBuildWhere($wa[0], $wa[1] , $wa[2], true);
+					}
+					$whereHelper->endWhereGroup();
+					$result = $whereHelper->where;
+				}
+			}
+		}
+    return $result;
     }
 }
 ?>
