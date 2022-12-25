@@ -45,9 +45,11 @@ $query = $db->table($tables->member)->where('id',1)->query;
 Log::d($query);
 
 $query = $db->table($tables->member)->select('id','name','userid')->where('id',1)->query;
+#$query = $db->table($tables->member)->select('id','name','userid')->where('id',1)->query()->fetch_assoc();
 Log::d($query);
 
 $query = $db->table($tables->member)->select('id','name','userid')->where('id','>',1)->query;
+#$query = $db->table($tables->member)->select('id','name','userid')->where('id','>',1)->query()->fetch_assoc();
 Log::d($query);
 
 $query = $db->table($tables->member)->select('id','name','userid')->where('id','IN',['공무원','프로그래머','경영인','디자이너'])->query;
