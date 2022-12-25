@@ -24,7 +24,7 @@ Log::options([
 
 Log::d("===============================");
 # 기본언어 설정
-R::init( Flex\Annona\App::$language );
+R::init( App::$language );
 Log::d('R :: language ', R::$language);
 
 Log::d("===============================");

@@ -3,14 +3,15 @@ namespace Flex\Annona\Db;
 
 use Flex\Annona\R;
 use Flex\Annona\Request\Validation;
-use \MySQLi;
+use Flex\Annona\Db\QueryBuilderAbstract;
+use Flex\Annona\Db\WhereHelper;
 use \ArrayAccess;
 use \ErrorException;
 
 # Parent : MySqli
 # Parent : DbInterface
 # purpose : mysqli을 활용해 확장한다
-class DbMySqli extends mysqli implements DbInterface,ArrayAccess
+class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 {
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
@@ -23,20 +24,20 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 	public function __construct(string $dsn='',string $user='',string $passwd='', int $port=3306, string $chrset='utf8')
 	{
 		# 데이타베이스 접속
-		if(!empty($dsn)){
-			$dsn_args = explode(':',$dsn);
-			parent::__construct($dsn_args[0],$user,$passwd,$dsn_args[1],$port);
-		}else{//config.inc.php > config.db.php
-			parent::__construct(_DB_HOST_,_DB_USER_,_DB_PASSWD_,_DB_NAME_, _DB_PORT_);
-		}
+		// if(!empty($dsn)){
+		// 	$dsn_args = explode(':',$dsn);
+		// 	parent::__construct($dsn_args[0],$user,$passwd,$dsn_args[1],$port);
+		// }else{//config.inc.php > config.db.php
+		// 	parent::__construct(_DB_HOST_,_DB_USER_,_DB_PASSWD_,_DB_NAME_, _DB_PORT_);
+		// }
 
-		if (mysqli_connect_error()){
-			throw new ErrorException(mysqli_connect_error(),mysqli_connect_errno());
-		}
+		// if (mysqli_connect_error()){
+		// 	throw new ErrorException(mysqli_connect_error(),mysqli_connect_errno());
+		// }
 
-		# 문자셋
-		$chrset_is = parent::character_set_name();
-		if(strcmp($chrset_is,$chrset)) parent::set_charset($chrset);
+		// # 문자셋
+		// $chrset_is = parent::character_set_name();
+		// if(strcmp($chrset_is,$chrset)) parent::set_charset($chrset);
 	}
 
 	#@ interface : ArrayAccess
@@ -63,9 +64,9 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 		return isset($this->params[$offset]) ? $this->params[$offset] : null;
 	}
 
-	#@ void
-	public function set_encryption_mode() : void{
-			# 서버 버전
+	public function set_encryption_mode() : void
+	{
+		# 서버 버전
 		$mysql_version = $this->server_version;
 		if($mysql_version < 50700){
 			$err_msg = sprintf("Setting(%s) is not possible.",self::BLOCK_ENCRYPTION_MODE);
@@ -83,20 +84,19 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 		}
 	}
 
-	#@ void
 	# 암호화/복호화 쿼리 활성화
 	public function begin_encrypt() : void{
 		$this->encryption_enable = true;
 	}
 
-	#@ void
 	# 암호화/복호화 쿼리 비활성
 	public function end_encrypt() : void{
 		$this->encryption_enable = false;
 	}
 
 	#@ string
-	private function aes_encrypt($v) : string{
+	private function aes_encrypt(mixed $v) : string
+	{
 		$result = '';
 		if($v && $v !=''){
 			$result = sprintf("(HEX( AES_ENCRYPT( '%s',  SHA2('%s',512), RANDOM_BYTES(%d)) ))",
@@ -106,9 +106,11 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 		return $result;
 	}
 
-	private function aes_decrypt($column_name, $is_as=true) : string{
+	private function aes_decrypt($column_name, $is_as=true) : string
+	{
 		$result = '';
-		if($column_name && $column_name !=''){
+		if($column_name && $column_name !='')
+		{
 			if($is_as){
 				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8)) as %s", 
 					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES, $column_name
@@ -122,51 +124,141 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 		return $result;
 	}
 
-	#@ return int
-	# 총게시물 갯수 추출
-	public function get_total_record(string $table, string $where="") : int{
-		$wh = ($where) ? " WHERE ".$where : '';
-		if($result = parent::query("SELECT count(*) FROM `".$table."`".$wh)){
-			$row = $result->fetch_row();
-			return $row[0];
-		}
-	return 0;
+	# @ abstract : QueryBuilderAbstract
+	public function table(...$table) : DbMySqli{
+		parent::init();
+		$this->query_params['table'] = implode(',', $table);
+	return $this;
 	}
 
-	#@ return int
-	# 총게시물 쿼리문에 의한 갯수 추출
-	public function get_total_query(string $qry) : int{
-		if($result = parent::query($qry)){
-			$row = $result->fetch_row();
-			return $row[0];
-		}
-	return 0;
+	# @ abstract : QueryBuilderAbstract
+    public function select(...$columns) : DbMySqli{
+		$this->query_params['columns'] = implode(',', $columns);
+	return $this;
 	}
 
-	# return boolean | array
-	# 하나의 레코드 값을 완성된 쿼리문을 받아 가져오기
-	public function get_record_assoc(string $qry) : bool|Array{
-		if($result = $this->query($qry)){
-			$row = $result->fetch_assoc();
-			return $row;
+	# @ abstract : QueryBuilderAbstract
+    public function selectGroupBy(...$columns) : DbMySqli{
+		$argv = [];
+		foreach($columns as $name){
+			if(strpos($name,'(') !==false){
+				$argv[] = $name;
+			}else{ $argv[] = sprintf("ANY_VALUE(%s)",$name); }
 		}
-	return false;
+		$this->query_params['columns'] = implode(',', $argv);
+	return $this;
 	}
 
-	# return boolean | array
-	# 하나의 레코드 값을 가져오기
-	public function get_record(string $field, string $table, string $where) : bool|Array{
-		$where = ($where) ? " WHERE ".$where : '';
-		$qry = "SELECT ".$field." FROM `".$table."` ".$where;
-		if($result = $this->query($qry)){
-			$row = $result->fetch_assoc();
-			return $row;
+	# @ abstract : QueryBuilderAbstract
+    public function where(...$where) : DbMySqli
+	{
+		$length = count($where);
+		if($length > 0)
+		{
+			if(isset($where[0]) && trim($where[0]))
+			{
+				$this->query_params['where'] = 'WHERE '.$where[0];
+				if($length > 1)
+				{
+					$whereHelper = new \Flex\Annona\Db\WhereHelper();
+					$whereHelper->beginWhereGroup(time(), 'AND');
+					if($length ==2){
+						$whereHelper->setBuildWhere($where[0], '=' , $where[1], true);
+					}else if($length ==3){
+						$whereHelper->setBuildWhere($where[0], $where[1] , $where[2], true);
+					}
+					$whereHelper->endWhereGroup();
+					$this->query_params['where'] = 'WHERE '.$whereHelper->where;
+				}
+			}
 		}
-	return false;
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+    public function orderBy(...$orderby) : DbMySqli
+	{
+		$_by = [];
+		if(count($orderby) > 2){
+			foreach($orderby as $idx => $name){
+				if($idx>0 && ($idx % 2) ==1){
+					$pre_idx = $idx -1;
+					$pre_name = $orderby[$pre_idx];
+					$_by[] = implode(' ',[$pre_name,$name]);
+				}
+			}
+		}else{
+			$_by = $orderby;
+		}
+		$this->query_params['orderby'] = 'ORDER BY '.implode(',',$_by);
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+    public function on(...$on) : DbMySqli{
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+    public function limit(...$limit) : DbMySqli{
+		$this->query_params['limit'] = 'LIMIT '.implode(',',$limit);
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+    public function distinct(string $column_name) : DbMySqli{
+		$this->query_params['columns'] = sprintf("DISTINCT %s", $column_name);
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+    public function groupBy(...$columns) : DbMySqli{
+		$this->query_params['groupby'] = 'GROUP BY '.implode(',',$columns);
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+    public function having(...$having) : DbMySqli{
+		$length = count($having);
+		if($length > 0)
+		{
+			if(isset($having[0]) && trim($having[0]))
+			{
+				$this->query_params['having'] = 'HAVING '.$having[0];
+				if($length > 1)
+				{
+					$whereHelper = new \Flex\Annona\Db\WhereHelper();
+					$whereHelper->beginWhereGroup(time(), 'AND');
+					if($length ==2){
+						$whereHelper->setBuildWhere($having[0], '=' , $having[1], true);
+					}else if($length ==3){
+						$whereHelper->setBuildWhere($having[0], $having[1] , $having[2], true);
+					}
+					$whereHelper->endWhereGroup();
+					$this->query_params['having'] = 'HAVING '.$whereHelper->where;
+				}
+			}
+		}
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+    public function total(string $column_name = '*') : int
+	{
+		$total = 0;
+		$this->query_params['columns'] = sprintf("count(%s)", $column_name);
+		$query = parent::get();
+		if($result = parent::query($query)){
+			$row   = $result->fetch_row();
+			$total = $row[0];
+		}
+	return $total;
 	}
 
 	# @ interface : DBSwitch
-	public function query(string $query, int $result_mode = MYSQLI_STORE_RESULT) : mixed{
+	public function query(string $query='', mixed $result_mode = MYSQLI_STORE_RESULT) : mixed{
+		if(!$query) $query = $this->query = parent::get();
+
 		$result = parent::query($query, $result_mode);
 		if(!$result){
 			throw new ErrorException(mysqli_error($this).' '.$query,mysqli_errno($this));
@@ -175,19 +267,21 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 	}
 
 	# @ interface : DBSwitch
-	# args = array(key => value)
-	# args['name'] = 1, args['age'] = 2;
-	public function insert($table) : bool{
+	# $db['name'] = 1, $db['age'] = 2;
+	public function insert() : bool
+	{
 		$result = false;
 		$fieldk = '';
 		$datav	= '';
 		if(count($this->params)<1) return $result;
 
-		foreach($this->params as $k => $v){
-			$fieldk .= sprintf("`%s`,",$k);			
-			if($this->encryption_enable){
-				$isChceker = new Validation($v);
-				if($isChceker->isNumber()){ // 숫자만 있으면 인코딩 안함
+		foreach($this->params as $k => $v)
+		{
+			$fieldk .= sprintf("`%s`,",$k);
+			if($this->encryption_enable)
+			{
+				$validation = new Validation($v);
+				if($validation->isNumber()){ // 숫자만 있으면 인코딩 안함
 					$datav .= sprintf("'%s',", parent::real_escape_string($v));
 				}else{
 					$datav .= sprintf("%s,", $this->aes_encrypt(parent::real_escape_string($v)) );
@@ -201,7 +295,7 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 		$datav	= substr($datav,0,-1);
 		$this->params = array(); #변수값 초기화
 
-		$query= sprintf("INSERT INTO `%s` (%s) VALUES (%s)",$table,$fieldk,$datav);
+		$query= sprintf("INSERT INTO `%s` (%s) VALUES (%s)",$this->query_params['table'],$fieldk,$datav);
 		if($this->query($query)){
 			$result = true;
 		}
@@ -209,18 +303,18 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 	}
 
 	# @ interface : DBSwitch
-	public function update($table,$where) : bool
+	public function update() : bool
 	{
 		$result = false;
 		$fieldkv = '';
 
-		if(count($this->params)<1) return $result;
-		
-		foreach($this->params as $k => $v){
+		if(count($this->params)<1) return $result;		
+		foreach($this->params as $k => $v)
+		{
 			$datav = '';
 			if($this->encryption_enable){
-				$isChceker = new Validation($v);
-				if($isChceker->isNumber()){ // 숫자만 있으면 인코딩 안함
+				$validation = new Validation($v);
+				if($validation->isNumber()){ // 숫자만 있으면 인코딩 안함
 					$datav = sprintf("'%s'", parent::real_escape_string($v));
 				}else{
 					$datav = sprintf("%s", $this->aes_encrypt(parent::real_escape_string($v)) );
@@ -233,7 +327,7 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 		$fieldkv = substr($fieldkv,0,-1);
 		$this->params = array(); #변수값 초기화
 
-		$query= sprintf("UPDATE `%s` SET %s WHERE %s",$table,$fieldkv,$where);
+		$query= sprintf("UPDATE `%s` SET %s WHERE %s",$this->query_params['table'],$fieldkv,$this->query_params['table']);
 		if($this->query($query)){
 			$result = true;
 		}
@@ -241,27 +335,14 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 	}
 
 	# @ interface : DBSwitch
-	public function delete($table,$where) : bool{
+	public function delete() : bool
+	{
 		$result = false;
-		$query = sprintf("DELETE FROM `%s` WHERE %s",$table,$where);
+		$query = sprintf("DELETE FROM `%s` WHERE %s",$this->query_params['table'],$this->query_params['table']);
 		if($this->query($query)){
 			$result = true;
 		}
 	return $result;
-	}
-
-	#@ array
-	#테이블에 속한 필드 명=>필드 type
-	#http://dev.mysql.com/doc/refman/5.0/en/columns-table.html
-	public function show_columns($table) : Array{
-		$columns = array();
-		$rlt = $this->query(sprintf("SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name ='%s'", $table));
-		while($row = $rlt->fetch_row()){
-			$field_name =$row[0];
-			$field_type =$row[1];
-			$columns[$field_name] =$field_type;
-		}
-	return $columns;
 	}
 
 	public function __call($method, $args) : mixed{
@@ -273,15 +354,19 @@ class DbMySqli extends mysqli implements DbInterface,ArrayAccess
 	}
 
 	# 상속한 부모 프라퍼티 값 포함한 가져오기
-	public function __get($propertyName) : mixed{
+	public function __get(string $propertyName) : mixed{
 		if(property_exists(__CLASS__,$propertyName)){
-			return $this->{$propertyName};
+			if($propertyName == 'query'){
+				return parent::get();
+			}else{
+				return $this->{$propertyName};
+			}
 		}
 	}
 
 	# db close
 	public function __destruct(){
-		parent::close();
+		#parent::close();
 	}
 }
 ?>
