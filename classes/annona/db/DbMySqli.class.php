@@ -2,6 +2,7 @@
 namespace Flex\Annona\Db;
 
 use Flex\Annona\Db\QueryBuilderAbstract;
+use Flex\Annona\Request\Validation;
 use \ArrayAccess;
 use \ErrorException;
 
@@ -95,14 +96,20 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	}
 
 	# 복호화
-	private function aes_decrypt($column_name) : string
+	private function aes_decrypt(string $column_name,bool $is_as =true) : string
 	{
 		$result = '';
 		if($column_name && $column_name !='')
 		{
-			$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8)) as %s", 
-				$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES, $column_name
-			);
+			if(!$is_as){
+				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8)) as %s", 
+					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES, $column_name
+				);
+			}else{
+				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8))", 
+					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES
+				);
+			}
 		}
 		return $result;
 	}
@@ -124,7 +131,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
     public function selectGroupBy(...$columns) : DbMySqli{
 		$argv = [];
 		foreach($columns as $name){
-			$argv[] = (strpos($name,'(') !==false) ? $name : sprintf("ANY_VALUE(%s)",$name);
+			$argv[] = (strpos($name,'(') !==false) ? $name : sprintf("ANY_VALUE(%s) as %s",$name,$name);
 		}
 		$this->query_params['columns'] = implode(',', $argv);
 	return $this;
@@ -134,7 +141,12 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	public function selectCrypt(...$columns) : DbMySqli{
 		$argv = [];
 		foreach($columns as $name){
-			$argv[] = (strpos($name,'(') !==false) ? $name : aes_decrypt($name);
+			$validation = new Validation($v);
+			if($validation->isNumber()){ 
+				$argv[] = $name;
+			}else{
+				$argv[] = self::aes_decrypt($name,false);
+			}
 		}
 		$this->query_params['columns'] = implode(',', $argv);
 	return $this;
@@ -151,19 +163,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	# @ abstract : QueryBuilderAbstract
     public function orderBy(...$orderby) : DbMySqli
 	{
-		$_by = [];
-		if(count($orderby) > 2){
-			foreach($orderby as $idx => $name){
-				if($idx>0 && ($idx % 2) ==1){
-					$pre_idx = $idx -1;
-					$pre_name = $orderby[$pre_idx];
-					$_by[] = implode(' ',[$pre_name,$name]);
-				}
-			}
-		}else{
-			$_by = $orderby;
-		}
-		$this->query_params['orderby'] = 'ORDER BY '.implode(',',$_by);
+		$this->query_params['orderby'] = 'ORDER BY '.implode(',',$orderby);
 	return $this;
 	}
 
@@ -296,7 +296,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		$fieldkv = substr($fieldkv,0,-1);
 		$this->params = array(); #변수값 초기화
 
-		$query= sprintf("UPDATE `%s` SET %s WHERE %s",$this->query_params['table'],$fieldkv,$this->query_params['table']);
+		$query= sprintf("UPDATE `%s` SET %s %s",$this->query_params['table'],$fieldkv,$this->query_params['where']);
 		if($this->query($query)){
 			$result = true;
 		}
@@ -324,7 +324,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		$fieldkv = substr($fieldkv,0,-1);
 		$this->params = array(); #변수값 초기화
 
-		$query= sprintf("UPDATE `%s` SET %s WHERE %s",$this->query_params['table'],$fieldkv,$this->query_params['table']);
+		$query= sprintf("UPDATE `%s` SET %s %s",$this->query_params['table'],$fieldkv,$this->query_params['where']);
 		if($this->query($query)){
 			$result = true;
 		}
@@ -335,14 +335,14 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	public function delete() : bool
 	{
 		$result = false;
-		$query = sprintf("DELETE FROM `%s` WHERE %s",$this->query_params['table'],$this->query_params['table']);
+		$query = sprintf("DELETE FROM `%s` %s",$this->query_params['table'],$this->query_params['where']);
 		if($this->query($query)){
 			$result = true;
 		}
 	return $result;
 	}
 
-	public function __call($method, $args) : mixed{
+	public function __call($method, $args){
 		if(method_exists($this, $method)){
 			if($method == 'aes_decrypt' || $method == 'aes_encrypt'){
 				return call_user_func_array(array($this, $method),$args);

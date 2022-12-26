@@ -4,7 +4,7 @@ namespace Flex\Annona\Db;
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class WhereHelper
 {
-	private $version = '1.5';
+	private $version = '1.5.1';
 	private $where = '';
 	private $where_group = [];
 	private $current_group = '';
@@ -37,9 +37,6 @@ class WhereHelper
 		# where 문을 그룹별로 묶기		
 		if($is_append)
 		{
-			$_field_name=''; 
-			$_field_name = (strpos($field_name,'.')!==false || !$is_qutawrap) ? $field_name : "`".$field_name."`";
-
 			$in_value = array();
 			if (is_array($value)){ // array
 				$in_value = $value;
@@ -58,31 +55,41 @@ class WhereHelper
 
 					// append
 					$this->where_group[$this->current_group][] = match($_uppper_condition) {
-						'LIKE' => sprintf("%s LIKE '%%%s%%'", $_field_name, $_word),
-						'LIKE-R' => sprintf("%s LIKE '%s%%'", $_field_name, $_word),
-						'LIKE-L' => sprintf("%s LIKE '%%%s'", $_field_name, $_word),
+						'LIKE' => sprintf("%s LIKE '%%%s%%'", $field_name, $_word),
+						'LIKE-R' => sprintf("%s LIKE '%s%%'", $field_name, $_word),
+						'LIKE-L' => sprintf("%s LIKE '%%%s'", $field_name, $_word),
 					};
 				}
 			} 
 			else if($_uppper_condition == 'IN'){
-				$in_value_str = "'" . implode ( "', '", $in_value ) . "'";
+				if(strpos($in_value,'.') !==false){
+					$in_value_str = implode ( ",", $in_value );
+				}else{
+					$in_value_str = "'" . implode ( "', '", $in_value ) . "'";
+				}
 
 				// append
-				$this->where_group[$this->current_group][] = sprintf("%s IN (%s)", $_field_name, $in_value_str);
+				$this->where_group[$this->current_group][] = sprintf("%s IN (%s)", $field_name, $in_value_str);
 			}
 			else if($_uppper_condition == 'JSON_CONTAINS'){
 				$in_value_str = json_encode($in_value, JSON_UNESCAPED_UNICODE);
 
 				// append
-				$this->where_group[$this->current_group][] = sprintf("JSON_CONTAINS(%s, '%s')", $_field_name, $in_value_str);
+				$this->where_group[$this->current_group][] = sprintf("JSON_CONTAINS(%s, '%s')", $field_name, $in_value_str);
 			}
 			else if($value == 'NULL'){
 				// append
-				$this->where_group[$this->current_group][] = sprintf("%s %s %s", $_field_name, $condition, $value);
+				$this->where_group[$this->current_group][] = sprintf("%s %s %s", $field_name, $condition, $value);
 			}
 			else{
 				// set
-				$this->where_group[$this->current_group][] = sprintf("%s %s '%s'", $_field_name, $condition, $in_value[0]);
+				$d_value = '';
+				if(strpos($in_value[0],'.') !==false){
+					$d_value = sprintf("%s %s %s", $field_name, $condition, $in_value[0]);
+				}else{
+					$d_value = sprintf("%s %s '%s'", $field_name, $condition, $in_value[0]);
+				}
+				$this->where_group[$this->current_group][] = $d_value;
 			}
 		}
 	}

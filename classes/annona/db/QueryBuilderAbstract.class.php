@@ -67,9 +67,9 @@ abstract class QueryBuilderAbstract extends mysqli
 					$whereHelper = new WhereHelper();
 					$whereHelper->beginWhereGroup(time(), 'AND');
 					if($length ==2){
-						$whereHelper->setBuildWhere($wa[0], '=' , $wa[1], true);
+						$whereHelper->setBuildWhere($wa[0], '=', $wa[1], true);
 					}else if($length ==3){
-						$whereHelper->setBuildWhere($wa[0], $wa[1] , $wa[2], true);
+						$whereHelper->setBuildWhere($wa[0], $wa[1], $wa[2], true);
 					}
 					$whereHelper->endWhereGroup();
 					$result = $whereHelper->where;
