@@ -44,15 +44,15 @@ $db = new DbMySqli();
 
 // $query = $db->table($tables->member)->select('id','name','userid')->where('id','>',1)->query;
 // Log::d($query);
-// $rlt = $db->table($tables->member)->select('id','name','userid')->where('id','>',1)->orderBy('id desc','name asc')->limit(3)->query();
+// $rlt = $db->table($tables->member)->select('id','name','userid')->where('id',1)->orderBy('id desc','name asc')->limit(3)->query();
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
 
 # 총 레코드 수
-$total = $db->table($tables->member)->total();
+// $total = $db->table($tables->member)->total();
 // $total = $db->table($tables->member)->where('name','LIKE-R','김')->total();
-Log::d('TOTAL',$total);
+// Log::d('TOTAL',$total);
 
 # Group By
 // $query = $db->table($tables->member)->selectGroupBy('id','name','signdate')->groupBy('`name`')->limit(0,10)->query;
@@ -71,12 +71,21 @@ Log::d('TOTAL',$total);
 // }
 
 # on
-$query = $db->table(sprintf("%s as m INNER JOIN %s as cn",$tables->member, $tables->coupon_numbers))->select('m.id','m.userid','cn.coupon_number','cn.id as cid')->on('m.id','cn.muid')->query;
-Log::d('join',$query);
-$rlt = $db->table(sprintf("%s as m INNER JOIN %s as cn",$tables->member, $tables->coupon_numbers))->select('m.id','m.userid','cn.coupon_number','cn.id as cid')->on('m.id','cn.muid')->query();
-while($row = $rlt->fetch_assoc()){
-    print_r($row);
-}
+// $query = $db->table(sprintf("%s as m INNER JOIN %s as cn",$tables->member, $tables->coupon_numbers))
+// ->on('m.id','cn.muid')
+// ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+// ->query;
+// Log::d('join',$query);
+
+// $innerJoin = sprintf("%s as m INNER JOIN %s as cn",$tables->member, $tables->coupon_numbers);
+// $rlt = $db->table($innerJoin)
+// ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+// ->on('m.id','cn.muid')
+// ->limit(3)
+// ->query();
+// while($row = $rlt->fetch_assoc()){
+//     print_r($row);
+// }
 
 # insert
 // try{
@@ -88,10 +97,10 @@ while($row = $rlt->fetch_assoc()){
 //     Log::e($e->getMessage());
 // }
 
-// # insert
+# insert
 // try{
-//     $db['id']       = 2;
-//     $db['name']     = '유관순';
+//     $db['id']       = 3;
+//     $db['name']     = '이순신';
 //     $db['signdate'] = time();
 //     $db->table($tables->test)->insertEncrypt();
 // }catch(\Exception $e){
@@ -121,10 +130,10 @@ while($row = $rlt->fetch_assoc()){
 
 
 # 암호호 데이터 쿼리
-// $query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query;
-// Log::d($query);
-// $data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query()->fetch_assoc();
-// Log::d($data);
+$query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query;
+Log::d($query);
+$data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query()->fetch_assoc();
+Log::d($data);
 
 
 // # 암호화된 필드 검색하기

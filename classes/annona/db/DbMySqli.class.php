@@ -137,7 +137,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	public function selectCrypt(...$columns) : DbMySqli{
 		$argv = [];
 		foreach($columns as $name){
-			$validation = new Validation($v);
+			$validation = new Validation($name);
 			if($validation->isNumber()){ 
 				$argv[] = $name;
 			}else{
