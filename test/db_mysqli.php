@@ -121,15 +121,15 @@ while($row = $rlt->fetch_assoc()){
 
 
 # 암호호 데이터 쿼리
-$query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query;
-Log::d($query);
-$data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query()->fetch_assoc();
-Log::d($data);
+// $query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query;
+// Log::d($query);
+// $data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query()->fetch_assoc();
+// Log::d($data);
 
 
-# 암호화된 필드 검색하기
-$query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where($db->aes_decrypt('name'),'LIKE-R','유관순')->query;
-Log::d($query);
-$data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where($db->aes_decrypt('name'),'LIKE-R','유관순')->query()->fetch_assoc();
-Log::d($data);
+// # 암호화된 필드 검색하기
+// $query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where($db->aes_decrypt('name'),'LIKE-R','유관순')->query;
+// Log::d($query);
+// $data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where($db->aes_decrypt('name'),'LIKE-R','유관순')->query()->fetch_assoc();
+// Log::d($data);
 ?>
