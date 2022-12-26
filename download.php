@@ -47,7 +47,7 @@ $req = new \Flex\Annona\Req\Req();
 # dispather
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use ($req)
 {
-    $r->addRoute('GET', '/download/{e:\w+}/{n}' function($path) use ($req){
+    $r->addRoute('GET', '/download/{e:\w+}/{n}', function($path) use ($req){
         $_uri_queies = explode('/',$path);
 
         $extract_id = $_uri_queies[2];
