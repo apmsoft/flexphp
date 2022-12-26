@@ -6,9 +6,6 @@ use Flex\Annona\Request\Validation;
 use \ArrayAccess;
 use \ErrorException;
 
-# Parent : MySqli
-# Parent : DbInterface
-# purpose : mysqli을 활용해 확장한다
 class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 {
 	# 암호화 / 복호화
