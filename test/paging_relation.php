@@ -20,9 +20,7 @@ $model->block_limit  = 2;
 
 # pageing
 $pagingRelation = new \Flex\Annona\Paging\Relation($model->total_record, $model->page);
-$pagingRelation->setQueryCount( $model->page_count, $model->block_limit);
-$pagingRelation->buildPageRelation();
-$print_relation = $pagingRelation->printRelation();
+$print_relation = $pagingRelation->setQueryCount( $model->page_count, $model->block_limit)->build()->paging();
 
 Log::d( 'current page :', $pagingRelation->page );
 Log::d( 'totalPage :', $pagingRelation->totalPage );

@@ -29,10 +29,11 @@ class Relation
 	public function __construct(int $totalRecord, int $page){
 		$this->totalRecord	= $totalRecord;
 		$this->page			= (!empty($page)) ? $page : 1;
+	return $this;
 	}
 
 	# 2 한페이지에 출력할 레코드 갯수
-	public function setQueryCount(int $pagecount=10, int $blockLimit=10)
+	public function setQueryCount(int $pagecount=10, int $blockLimit=10) : Relation
 	{
 		$this->blockLimit =$blockLimit;
 		$this->totalPage  =@ceil($this->totalRecord/$pagecount);
@@ -55,21 +56,23 @@ class Relation
 		}
 		
 		$this->pageLimit = $pagecount;
+	return $this;
 	}
 
 	#@ 3
 	# 출력
-	public function buildPageRelation() : void
+	public function build() : Relation
 	{
 		$this->rewindPage();
 		$this->prevPage();
 		$this->currentPage();
 		$this->nextPage();
 		$this->lastPage();
+	return $this;
 	}
 
 	#@void 현재페이지 출력
-	public function currentPage()
+	private function currentPage() : void
 	{
 		$s_page =$this->blockStartPage + 1;
 		for($i = $s_page; $i<=$this->blockEndPage; $i++)
@@ -79,28 +82,28 @@ class Relation
 	}
 
 	#이전페이지
-	public function prevPage() : void{
+	private function prevPage() : void{
 		if($this->page > 1 && $this->page <= $this->totalPage){
 			$this->relation['pre'] = $this->page -1;
 		}
 	}
 
 	#다음페이지
-	public function nextPage() : void{
+	private function nextPage() : void{
 		if($this->page >0 && $this->page < $this->totalPage){
 			$this->relation['next'] = $this->page + 1;
 		}
 	}
 
 	#처음페이지
-	public function rewindPage() : void{
+	private function rewindPage() : void{
 		if($this->page > 1 && $this->page <= $this->totalPage){
 			$this->relation['first'] = 1;
 		}
 	}
 
 	#마지막페이지
-	public function lastPage() : void{
+	private function lastPage() : void{
 		if($this->page > 0 && $this->page <= ($this->totalPage-1)){
 			$this->relation['last'] = $this->totalPage;
 		}else{
@@ -135,7 +138,8 @@ class Relation
     #last : 5
     #chanel : [1,2,3]
     #페이징 채널 배열 출력
-	public function printRelation() : array{
+	public function paging() : array
+	{
 		$result = array_merge($this->relation,array('chanel'=>$this->relation_current));
 	return $result;
 	}
