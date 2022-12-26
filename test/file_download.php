@@ -18,8 +18,8 @@ $model->picture = $model->dir.'/thumb90100x100_j.jpeg';
 
 # 기본 멀티 코딩
 try{
-    // $fileDownload = new \Flex\Annona\File\Download( $model->picture );
-    // $file_extension = $fileDownload->file_extension;
+    $fileDownload = new \Flex\Annona\File\Download( $model->picture );
+    $file_extension = $fileDownload->file_extension;
     // $bytes          = $fileDownload->bytes();
     // $size           = $fileDownload->size();
 
@@ -32,7 +32,7 @@ try{
     // $file_contents  = $fileDownload->getContents();
     
     # 파일 다운로드 실행 (이전에 어떠한 문자도 출력이 되어선 안됨)
-    // $fileDownload->download('테스트');
+    $fileDownload->download(sprintf("테스트.%s",$fileDownload->file_extension));
 
     // Log::d('file 확장자', $file_extension);
     // Log::d('file bytes', $bytes);
@@ -50,7 +50,7 @@ try{
     
     # 다운로드 실행 # 파일 다운로드 실행 (이전에 어떠한 문자도 출력이 되어선 안됨);
     // (new \Flex\Annona\File\Download( $model->picture ))->download('테스트');
-    (new \Flex\Annona\File\Download( $model->picture ))->setFileTypes(['csv','jpeg'])->download('테스트.jpeg');
+    // (new \Flex\Annona\File\Download( $model->picture ))->setFileTypes(['csv','jpeg'])->download('테스트.jpeg');
 }catch (\ErrorException $e){
     Log::e($e->getMessage());
     Log::e(R::$sysmsg[R::$language][$e->getMessage()]);
