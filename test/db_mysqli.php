@@ -27,10 +27,18 @@ $tables = R::dic(R::$tables[R::$language]);
 
 $db = new DbMySqli();
 
+# 기본1
 // $query = $db->table($tables->member)->query;
 // Log::d($query);
 // $data = $db->table($tables->member)->query()->fetch_assoc();
 // Log::d($data);
+
+# 기본 2
+// $query_string = $db->table($tables->member)->query;
+// $data2 = $db->query( $query_string )->fetch_assoc();
+// Log::d($data2);
+
+Log::d('=====================================');
 
 // $query = $db->table($tables->member)->select('id','name','userid')->query;
 // Log::d($query);
