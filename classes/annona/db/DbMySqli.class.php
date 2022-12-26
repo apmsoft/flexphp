@@ -133,6 +133,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	return $this;
 	}
 
+	# @ abstract : QueryBuilderAbstract
 	# select 암호화 -> 복호화 
 	public function selectCrypt(...$columns) : DbMySqli{
 		$argv = [];

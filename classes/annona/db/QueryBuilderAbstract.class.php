@@ -14,6 +14,7 @@ abstract class QueryBuilderAbstract extends mysqli
     abstract public function table(...$table) : mixed;
     abstract public function select(...$columns) : mixed;
     abstract public function selectGroupBy(...$columns) : mixed;
+    abstract public function selectCrypt(...$columns) : mixed;
     abstract public function where(...$where) : mixed;
     abstract public function orderBy(...$orderby) : mixed;
     abstract public function on(...$on) : mixed;
