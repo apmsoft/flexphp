@@ -81,7 +81,7 @@ try{
 # 단일 레코드
 try{
     #$record_info = $db->table($tables->member)->where('id', '1')->query()->fetch_assoc();
-    Log::d($record_info);
+    // Log::d($record_info);
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }

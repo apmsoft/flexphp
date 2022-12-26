@@ -1,10 +1,7 @@
 <?php
 namespace Flex\Annona\Db;
 
-use Flex\Annona\R;
-use Flex\Annona\Request\Validation;
 use Flex\Annona\Db\QueryBuilderAbstract;
-use Flex\Annona\Db\WhereHelper;
 use \ArrayAccess;
 use \ErrorException;
 
