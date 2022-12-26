@@ -11,7 +11,6 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
 	const RANDOM_BYTES          = 16;
-	private $encryption_enable = false;	# 암호화/복호화 활성화
 
 	private $params = [];
 
