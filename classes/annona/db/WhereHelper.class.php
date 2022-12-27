@@ -4,7 +4,7 @@ namespace Flex\Annona\Db;
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class WhereHelper
 {
-	private $version = '1.5.1';
+	private $version = '1.5.2';
 	private $where = '';
 	private $where_group = [];
 	private $current_group = '';
@@ -17,6 +17,7 @@ class WhereHelper
 	public function __construct()
 	{
 		$this->where = '';
+	return $this;
 	}
 
 	# void
@@ -26,7 +27,7 @@ class WhereHelper
 	# @value : NULL | VALUE | % | Array
 	# @is_append : 필수 적용
 	# @is_qutawrap : `` 퀄럼명 안전 특수문자 추가 여부
-	public function setBuildWhere(string $field_name, string $condition ,mixed $value ,bool $is_append=false, bool $is_qutawrap = true) : void
+	public function set(string $field_name, string $condition ,mixed $value ,bool $is_append=false, bool $is_qutawrap = true) : WhereHelper
 	{
 		if(!$is_append){
 			if($value && $value !=''){
@@ -62,7 +63,7 @@ class WhereHelper
 				}
 			} 
 			else if($_uppper_condition == 'IN'){
-				if(strpos($in_value,'.') !==false){
+				if(!is_array($in_value) && strpos($in_value,'.') !==false){
 					$in_value_str = implode ( ",", $in_value );
 				}else{
 					$in_value_str = "'" . implode ( "', '", $in_value ) . "'";
@@ -92,15 +93,21 @@ class WhereHelper
 				$this->where_group[$this->current_group][] = $d_value;
 			}
 		}
+	return $this;
 	}
 
 	# 상속한 부모 프라퍼티 값 포함한 가져오기
 	public function __get($propertyName) : string{
 		if(property_exists(__CLASS__,$propertyName))
 		{
-			if($propertyName == 'where')
-			{
+			if($propertyName == 'where'){
 				$this->where = (count($this->where_groups_data)) ? "(" . implode ( ") AND (", $this->where_groups_data ) . ")" : '';
+				
+				// reset
+				$this->current_group = '';
+				$this->current_coord = '';
+				$this->where_group   = [];
+				$this->where_groups_data = [];
 			}
 			
 			return $this->{$propertyName};
@@ -113,7 +120,7 @@ class WhereHelper
 	}
 
 	# where 그룹묶기 시작
-	public function beginWhereGroup(string $groupname, string $coord) : void{
+	public function begin(string $groupname, string $coord) : WhereHelper{
 		if ( !isset( $this->where_group[$groupname] ) ){
 			$this->where_group[$groupname] = [];
 		}
@@ -121,22 +128,20 @@ class WhereHelper
 		# 현재그룹 시작
 		$this->current_group = $groupname;
 		$this->current_coord = $coord;
+	return $this;
 	}
 
 	# where 그룹묶기 종료
-	public function endWhereGroup() : void{
-		// out_ln ( $this->current_group );
-		// out_ln ( $this->current_coord );
+	public function end() : WhereHelper{
 		if(count($this->where_group[$this->current_group])){
-			// out_r ($this->where_group[$this->current_group] );
 			$wher_str = implode(sprintf(" %s ", $this->current_coord), $this->where_group[$this->current_group]);
-			// out_ln($wher_str);
 			$this->where_groups_data[] = $wher_str;
 		}
 
 		# 현재그룹 시작
 		$this->current_group = '';
 		$this->current_coord = '';
+	return $this;
 	}
 
 	public function __destruct(){
