@@ -17,6 +17,7 @@ class WhereHelper
 	public function __construct()
 	{
 		$this->where = '';
+		self::init();
 	return $this;
 	}
 
@@ -26,7 +27,7 @@ class WhereHelper
 	# @condition : [=,!=,<,>,<=,>=,IN,LIKE-R=dd%,LIKE-L=%dd,LIKE=%dd%]
 	# @value : NULL | VALUE | % | Array
 	# @is_qutawrap : `` 퀄럼명 안전 특수문자 추가 여부
-	public function set(string $field_name, string $condition ,mixed $value, bool $is_qutawrap = true) : WhereHelper
+	public function case(string $field_name, string $condition ,mixed $value, bool $is_qutawrap = true) : WhereHelper
 	{
 		$is_append = false;
 		if($value == "0") $is_append = true;

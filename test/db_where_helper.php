@@ -20,24 +20,35 @@ Log::options([
 
 # db where 구문 만들기
 $whereHelper = new \Flex\Annona\Db\WhereHelper();
-
-# 한줄 코딩
 $where = $whereHelper
 ->begin('AND')
-    ->set('name','IN','홍길동,유관순')
-    ->set('price','>','0')
-    ->set('signdate','is not','NULL')
+    ->case('name','IN','홍길동,유관순')
+    ->case('price','>','0')
+    ->case('signdate','is not','NULL')
     ->end()
 ->begin('OR')
-    ->set('price','IN',[1,2,3,4,5,6])
-    ->set('price_month','>=',7)
+    ->case('price','IN',[1,2,3,4,5,6])
+    ->case('price_month','>=',7)
     ->end()
 ->begin('OR')
-    ->set('title','LIKE',['이순신','대통령'])
+    ->case('title','LIKE',['이순신','대통령'])
     ->end()
 ->fetch();
 // ->where;
 Log::d( $where );
 
-
+# direct
+$where2 = (new \Flex\Annona\Db\WhereHelper())
+->begin('AND')
+    ->case('price','>','0')
+    ->end()
+->begin('OR')
+    ->case('price_month','>=',7)
+    ->end()
+->begin('OR')
+    ->case('title','LIKE',['이순신','대통령'])
+    ->end()
+->fetch();
+// ->where;
+Log::d( $where2 );
 ?>
