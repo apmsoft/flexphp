@@ -111,9 +111,17 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	}
 
 	# @ abstract : QueryBuilderAbstract
-	public function table(...$table) : DbMySqli{
+	public function table(...$tables) : DbMySqli{
 		parent::init();
-		$this->query_params['table'] = implode(',', $table);
+		$length = count($tables);
+		$this->query_params['table'] = ($length ==2) ? implode(',',$tables) : implode(' ',$tables);
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+	public function tableJoin(string $join, ...$tables) : DbMySqli{
+		parent::init();
+		$this->query_params['table'] = implode(sprintf(" %s JOIN ",strtoupper($join)), $tables);
 	return $this;
 	}
 

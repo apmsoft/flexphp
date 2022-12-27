@@ -11,7 +11,8 @@ abstract class QueryBuilderAbstract extends mysqli
     protected string $query_tpl = 'SELECT {columns}FROM {table}{on}{where}{groupby}{having}{orderby}{limit}';
     protected string $query = '';
 
-    abstract public function table(...$table) : mixed;
+    abstract public function table(...$tables) : mixed;
+    abstract public function tableJoin(string $type,...$tables) : mixed;
     abstract public function select(...$columns) : mixed;
     abstract public function selectGroupBy(...$columns) : mixed;
     abstract public function selectCrypt(...$columns) : mixed;
