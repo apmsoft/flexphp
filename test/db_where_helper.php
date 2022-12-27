@@ -15,7 +15,21 @@ Log::init(Log::MESSAGE_ECHO);
 
 # db where 구문 만들기
 $whereHelper = new \Flex\Annona\Db\WhereHelper();
-$whereHelper->begin('groupa', 'AND');
+
+# 한줄 코딩
+$where = $whereHelper
+->begin('AND')->set('name','IN','홍길동,유관순')->set('price','>','0')->set('signdate','is not','NULL')->end()
+->begin('OR')->set('price','IN',[1,2,3,4,5,6])->set('price_month','>=',7)->end()
+->begin('OR')->set('title','LIKE',['이순신','대통령'])->end()
+->fetch();
+// ->where;
+Log::d( $where );
+
+
+Log::d("==============================");
+
+# 멀리 라인 코딩
+$whereHelper->begin('AND');
     $whereHelper->set('name', 'IN' , '홍길동,유관순');
     $whereHelper->set('age', '>=' , 10);
     $whereHelper->set('job', 'IN' , ['공무원','프로그래머','경영인','디자이너']);
@@ -24,32 +38,20 @@ $whereHelper->begin('groupa', 'AND');
     $whereHelper->set('price', '>', '0');
 $whereHelper->end();
 
-$whereHelper->begin('groupb', 'OR');
+$whereHelper->begin('OR');
     $whereHelper->set('price', 'IN' , [1,2,3,4,5,6]);
     $whereHelper->set('price_month', '>=' , 7);
 $whereHelper->end();
 
-$whereHelper->begin('groupc', 'OR');
+$whereHelper->begin('OR');
     $whereHelper->set('title', 'LIKE' , ['이순신','대통령']);
 $whereHelper->end();
 
 # string, array 출력하기
 Log::d('groups data',$whereHelper->fetch());
 
-// SELECT count(*) FROM `%s` c INNER JOIN `%s` n ON c.coupon_token = n.coupon_token 
-// WHERE (n.muid='%u' AND c.is_print='y' AND n.signdate is NULL) AND (c.start_date <='%s' AND c.end_date >= '%s')
-
 # where 문 출력
-Log::d( $whereHelper->where);
+// Log::d( $whereHelper->where);
 
-Log::d("==============================");
-
-$where = $whereHelper
-->begin('groupa','AND')->set('name','IN','홍길동,유관순')->set('price','>','0')->set('signdate','is not','NULL')->end()
-->begin('groupb','OR')->set('price','IN',[1,2,3,4,5,6])->set('price_month','>=',7)->end()
-->begin('groupc','OR')->set('title','LIKE',['이순신','대통령'])->end()
-->fetch();
-// ->where;
-Log::d( $where );
 
 ?>

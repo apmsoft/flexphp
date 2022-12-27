@@ -120,10 +120,9 @@ class WhereHelper
 	}
 
 	# where 그룹묶기 시작
-	public function begin(string $groupname, string $coord) : WhereHelper{
-		if ( !isset( $this->where_group[$groupname] ) ){
-			$this->where_group[$groupname] = [];
-		}
+	public function begin(string $coord) : WhereHelper{
+		$groupname = time();
+		$this->where_group[$groupname] = [];
 
 		# 현재그룹 시작
 		$this->current_group = $groupname;
