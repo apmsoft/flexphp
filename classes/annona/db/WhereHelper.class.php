@@ -25,20 +25,19 @@ class WhereHelper
 	# @where_str : name='홍길동'
 	# @condition : [=,!=,<,>,<=,>=,IN,LIKE-R=dd%,LIKE-L=%dd,LIKE=%dd%]
 	# @value : NULL | VALUE | % | Array
-	# @is_append : 필수 적용
 	# @is_qutawrap : `` 퀄럼명 안전 특수문자 추가 여부
-	public function set(string $field_name, string $condition ,mixed $value ,bool $is_append=false, bool $is_qutawrap = true) : WhereHelper
+	public function set(string $field_name, string $condition ,mixed $value, bool $is_qutawrap = true) : WhereHelper
 	{
-		if(!$is_append){
-			if($value && $value !=''){
-				$is_append = true;
-			}
+		$is_append = false;
+		if($value == "0") $is_append = true;
+		else if($value && $value !=''){
+			$is_append = true;
 		}
 
 		# where 문을 그룹별로 묶기		
 		if($is_append)
 		{
-			$in_value = array();
+			$in_value = [];
 			if (is_array($value)){ // array
 				$in_value = $value;
 			} else if (strpos($value, ",") !==false){
@@ -102,26 +101,31 @@ class WhereHelper
 		{
 			if($propertyName == 'where'){
 				$this->where = (count($this->where_groups_data)) ? "(" . implode ( ") AND (", $this->where_groups_data ) . ")" : '';
-				
-				// reset
-				$this->current_group = '';
-				$this->current_coord = '';
-				$this->where_group   = [];
-				$this->where_groups_data = [];
+				self::init();
 			}
 			
 			return $this->{$propertyName};
 		}
 	}
 
+	private function init() : void {
+		// reset
+		$this->current_group = '';
+		$this->current_coord = '';
+		$this->where_group   = [];
+		$this->where_groups_data = [];
+	}
+
 	public function fetch() : array
 	{
-		return $this->where_group;
+		$result = $this->where_group;
+		self::init();
+	return $result;
 	}
 
 	# where 그룹묶기 시작
 	public function begin(string $coord) : WhereHelper{
-		$groupname = time();
+		$groupname = strtr(microtime(),[' '=>'','0.'=>'w']);
 		$this->where_group[$groupname] = [];
 
 		# 현재그룹 시작
