@@ -7,6 +7,7 @@ use Flex\Annona\Log;
 use Flex\Annona\R;
 
 use \Flex\Annona\Db\DbMySqli;
+use \Flex\Annona\Db\WhereHelper;
 
 
 # 기본값 MESSAGE_FILE, log.txt;
@@ -167,7 +168,7 @@ while($row = $rlt->fetch_assoc()){
 // Log::d($data);
 
 
-// # 암호화된 필드 검색하기
+# 암호화된 필드 검색하기
 // $query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where($db->aes_decrypt('name'),'LIKE-R','유관순')->query;
 // Log::d($query);
 // $data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where($db->aes_decrypt('name'),'LIKE-R','유관순')->query()->fetch_assoc();
@@ -176,4 +177,22 @@ while($row = $rlt->fetch_assoc()){
 // $query_string = $db->table($tables->member)->query;
 // $data2 = $db->query( $query_string )->fetch_assoc();
 // Log::d($data2);
+
+
+# ================/==============
+# *******************************
+#######[ WhereHelper ] ##########
+# *******************************
+# ===============================
+$query = $db->table($tables->member)->select('id','name','userid')->where(
+    (new WhereHelper)->begin('AND')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()->where
+)->query;
+Log::d($query);
+
+$rlt = $db->table($tables->member)->select('id','name','userid')->where(
+    (new WhereHelper)->begin('AND')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()->where
+)->orderBy('id desc','name asc')->limit(3)->query();
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
 ?>
