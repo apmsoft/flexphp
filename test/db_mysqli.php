@@ -27,18 +27,10 @@ $tables = R::dic(R::$tables[R::$language]);
 
 $db = new DbMySqli();
 
-# 기본1
-// $query = $db->table($tables->member)->query;
-// Log::d($query);
-// $data = $db->table($tables->member)->query()->fetch_assoc();
-// Log::d($data);
-
-# 기본 2
-// $query_string = $db->table($tables->member)->query;
-// $data2 = $db->query( $query_string )->fetch_assoc();
-// Log::d($data2);
-
-Log::d('=====================================');
+$query = $db->table($tables->member)->query;
+Log::d($query);
+$data = $db->table($tables->member)->query()->fetch_assoc();
+Log::d($data);
 
 // $query = $db->table($tables->member)->select('id','name','userid')->query;
 // Log::d($query);
@@ -78,22 +70,53 @@ Log::d('=====================================');
 //     print_r($row);
 // }
 
-# on
-// $query = $db->table(sprintf("%s as m INNER JOIN %s as cn",$tables->member, $tables->coupon_numbers))
-// ->on('m.id','cn.muid')
-// ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
-// ->query;
-// Log::d('join',$query);
+# JOIN
+$query = $db->table("{$tables->member} m", "{$tables->coupon_numbers} cn")
+->where('m.id','cn.muid')
+->select('m.id','m.userid','cn.coupon_number','cn.id as cid')->query;
+Log::d('join',$query);
 
-// $innerJoin = sprintf("%s as m INNER JOIN %s as cn",$tables->member, $tables->coupon_numbers);
-// $rlt = $db->table($innerJoin)
-// ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
-// ->on('m.id','cn.muid')
-// ->limit(3)
-// ->query();
-// while($row = $rlt->fetch_assoc()){
-//     print_r($row);
-// }
+$rlt = $db->table("{$tables->member} m","{$tables->coupon_numbers} cn")
+->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+->where('m.id','cn.muid')
+->limit(3)
+->query();
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
+
+# INNER|LEFT|RIGHT|LEFT OUTTER|RIGHT OUTTER JOIN
+$query = $db->tableJoin("INNER", "{$tables->member} m", "{$tables->coupon_numbers} cn")
+->on('m.id','cn.muid')
+->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+->query;
+Log::d('join',$query);
+
+$rlt = $db->tableJoin("INNER","{$tables->member} m","{$tables->coupon_numbers} cn")
+->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+->on('m.id','cn.muid')
+->limit(3)
+->query();
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
+
+# INNER|LEFT|RIGHT|LEFT OUTTER|RIGHT OUTTER JOIN
+$query = $db->tableJoin("LEFT", "{$tables->member} m", "{$tables->coupon_numbers} cn")
+->on('m.id','cn.muid')
+->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+->query;
+Log::d('join',$query);
+
+$rlt = $db->tableJoin("INNER","{$tables->member} m","{$tables->coupon_numbers} cn")
+->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+->on('m.id','cn.muid')
+->where("m.id", ">",30)
+->limit(3)
+->query();
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
 
 # insert
 // try{
@@ -138,10 +161,10 @@ Log::d('=====================================');
 
 
 # 암호호 데이터 쿼리
-$query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query;
-Log::d($query);
-$data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query()->fetch_assoc();
-Log::d($data);
+// $query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query;
+// Log::d($query);
+// $data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query()->fetch_assoc();
+// Log::d($data);
 
 
 // # 암호화된 필드 검색하기
@@ -149,4 +172,8 @@ Log::d($data);
 // Log::d($query);
 // $data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where($db->aes_decrypt('name'),'LIKE-R','유관순')->query()->fetch_assoc();
 // Log::d($data);
+
+// $query_string = $db->table($tables->member)->query;
+// $data2 = $db->query( $query_string )->fetch_assoc();
+// Log::d($data2);
 ?>
