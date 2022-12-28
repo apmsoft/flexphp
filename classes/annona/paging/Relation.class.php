@@ -33,7 +33,7 @@ class Relation
 	}
 
 	# 2 한페이지에 출력할 레코드 갯수
-	public function setQueryCount(int $pagecount=10, int $blockLimit=10) : Relation
+	public function query(int $pagecount=10, int $blockLimit=10) : Relation
 	{
 		$this->blockLimit =$blockLimit;
 		$this->totalPage  =@ceil($this->totalRecord/$pagecount);
