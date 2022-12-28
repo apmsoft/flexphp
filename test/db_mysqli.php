@@ -185,12 +185,18 @@ while($row = $rlt->fetch_assoc()){
 # *******************************
 # ===============================
 $query = $db->table($tables->member)->select('id','name','userid')->where(
-    (new WhereHelper)->begin('AND')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()->where
+    (new WhereHelper)->
+        begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
+        begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
+    ->where
 )->query;
 Log::d($query);
 
 $rlt = $db->table($tables->member)->select('id','name','userid')->where(
-    (new WhereHelper)->begin('AND')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()->where
+    (new WhereHelper)->
+        begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
+        begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
+    ->where
 )->orderBy('id desc','name asc')->limit(3)->query();
 while($row = $rlt->fetch_assoc()){
     print_r($row);
