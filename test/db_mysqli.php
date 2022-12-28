@@ -120,6 +120,7 @@ while($row = $rlt->fetch_assoc()){
 }
 
 # insert
+// $db->autocommit(FALSE);
 // try{
 //     $db['id']       = 1;
 //     $db['name']     = '홍길동';
@@ -128,8 +129,10 @@ while($row = $rlt->fetch_assoc()){
 // }catch(\Exception $e){
 //     Log::e($e->getMessage());
 // }
+// $db->commit();
 
 # insert
+// $db->autocommit(FALSE);
 // try{
 //     $db['id']       = 3;
 //     $db['name']     = '이순신';
@@ -138,27 +141,33 @@ while($row = $rlt->fetch_assoc()){
 // }catch(\Exception $e){
 //     Log::e($e->getMessage());
 // }
+// $db->commit();
 
 # update
+// $db->autocommit(FALSE);
 // try{
 //     $db['name']     = '홍길동업';
 //     $db->table($tables->test)->where('id',1)->update();
 // }catch(\Exception $e){
 //     Log::e($e->getMessage());
 // }
+// $db->commit();
 
-
+// $db->autocommit(FALSE);
 // try{
 //     $db['name']     = '유관순업';
 //     $db->table($tables->test)->where('id',2)->updateEncrypt();
 // }catch(\Exception $e){
 //     Log::e($e->getMessage());
 // }
+// $db->commit();
 
 # delete
+// $db->autocommit(FALSE);
 // if($db->table($tables->test)->where('id',1)->delete()){
 //     Log::d('삭제성공 id = 1');
 // }
+// $db->commit();
 
 
 # 암호호 데이터 쿼리

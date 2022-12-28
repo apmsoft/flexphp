@@ -19,17 +19,17 @@ $model->page_count   = 10;
 $model->block_limit  = 2;
 
 # pageing
-$pagingRelation = new \Flex\Annona\Paging\Relation($model->total_record, $model->page);
-$print_relation = $pagingRelation->query( $model->page_count, $model->block_limit)->build()->paging();
+$paging = new \Flex\Annona\Paging\Relation($model->total_record, $model->page);
+$relation = $paging->query( $model->page_count, $model->block_limit)->build()->paging();
 
-Log::d( '*** currentPage :', $pagingRelation->page );
-Log::d( '*** totalPage   :', $pagingRelation->totalPage );
-Log::d( '***** DB Query Limit Start :', $pagingRelation->qLimitStart ,'*****');
-Log::d( '***** DB Query Limit End   :', $pagingRelation->qLimitEnd, '*****' );
+Log::d( '*** currentPage :', $paging->page );
+Log::d( '*** totalPage   :', $paging->totalPage );
+Log::d( '***** DB Query Limit Start :', $paging->qLimitStart ,'*****');
+Log::d( '***** DB Query Limit End   :', $paging->qLimitEnd, '*****' );
 
-Log::d( 'totalRecord :', $pagingRelation->totalRecord );
-Log::d( 'blockStartPage :', $pagingRelation->blockStartPage );
-Log::d( 'blockEndPage :', $pagingRelation->blockEndPage );
+Log::d( 'totalRecord :', $paging->totalRecord );
+Log::d( 'blockStartPage :', $paging->blockStartPage );
+Log::d( 'blockEndPage :', $paging->blockEndPage );
 
-Log::d( '* channel', $print_relation );
+Log::d( '* channel', $relation );
 ?>

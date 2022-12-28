@@ -17,7 +17,7 @@ Log::init(Log::MESSAGE_ECHO);
  * null      : 공백있는지 체크
  * length    : 문자 길이[최소 ~ 최대]
  * disliking : 특수 문자 있으면 reject
- * liking    : 특수 문자 없으면 에러 (최소 1개이상 입력)
+ * liking    : 특수 문자 없으면 reject (최소 1개이상 입력)
  * space     : 공백체크
  * alnum     : 영문 또는 숫자 만
  * repeat    : 연속 반복 문자 체크 [3]
