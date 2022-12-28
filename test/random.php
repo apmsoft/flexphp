@@ -15,15 +15,11 @@ Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
 # 배열 중에서 랜덤 뽑기 10글자 : 기본 배열값중에서
-$randomv = (new Random( [] ))->arrayRand( 10 );
+$randomv = (new Random( [] ))->array( 10 );
 Log::d( $randomv );
 
-# 랜덤으로 숫자 뽑기 1개 뽑기 : min : 시작범위, max : 끝범위
-$randomv = (new Random( ))->numberRand( 0, 3000 );
-Log::d( $randomv );
-
-# 숫자[0-9] 중 원하는 길이 만큼 랜덤 : 5자리
-$randomv = (new Random( [0,1,2,3,4,5,6,7,8,9] ))->arrayIntRand( 5 );
+# 랜덤으로 숫자 뽑기 1개 뽑기 : min : 시작범위, max : 끝범위, length : 랜덤카운터 
+$randomv = (new Random( ))->number( 0, 9, 5 );
 Log::d( $randomv );
 
 # 내가 지정한 배열 중에서 랜덤 뽑기 5글자
@@ -33,6 +29,6 @@ $regs = [
     'U',1,'V',2,'X',3,'Y',4,'Z','!','@','#','$','*','^','%'
 ];
 
-$randomv = (new Random( $regs ))->arrayRand( 10 );
+$randomv = (new Random( $regs ))->array( 10 );
 Log::d( $randomv );
 ?>

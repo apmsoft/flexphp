@@ -12,7 +12,7 @@ abstract class TokenAbstract
     # 길이만큼랜덤으로 문자를 조합
     public function generateString(int $length) : string
     {
-        return (new Random([]))->arrayRand($length);
+        return (new Random([]))->array($length);
     }
 
     # 특정한 문자를 암호화 한다.

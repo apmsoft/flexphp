@@ -21,37 +21,25 @@ class Random {
 	# 숫자로 정해진 범위의 숫자로 난수를 만드어 낸다
 	# min : 시작범위, max : 끝범위
 	# 리턴 길이 1
-	public function numberRand(int $min=0,int $max=9) : int
+	public function number(int $min=0,int $max=9, int $length=1) : int
 	{
-		mt_srand((double) microtime()*1000000);
-		$result = mt_rand($min,$max);
+		$result = '';
+		for($i=0; $i<$length; $i++){
+			$result .= mt_rand($min,$max);
+		}
+
 	return $result;
 	}
 
 	# 배열중에서 갯수 만큼 추출해 내기
-	public function arrayRand(int $length=1) : string
+	public function array(int $length=1) : string
 	{
 		$result = '';
-		srand((double) microtime()*1000000);
 		$array_keys = array_rand($this->regs,$length);
 
 		$cnt = count($array_keys);
 		for($i=0; $i<$cnt; $i++){
 			$result .= $this->regs[$array_keys[$i]];
-		}
-	return $result;
-	}
-
-	# 숫자 배열중에서 갯수 만큼 추출해 내기
-	public function arrayIntRand($length=1) : int
-	{
-		$result = '';
-		srand((double) microtime()*1000000);
-		$array_keys = array_rand($this->int_regs,$length);
-
-		$cnt = count($array_keys);
-		for($i=0; $i<$cnt; $i++){
-			$result .= $this->int_regs[$array_keys[$i]];
 		}
 	return $result;
 	}
