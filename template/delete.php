@@ -42,7 +42,7 @@ $db = new DbMySqli();
 
 # 데이터 체크
 $data = new Model(
-    $db->table($tables->member)->where('id',1)->query()->fetch_assoc()
+    $db->table($tables->member)->where('id',$request->id)->query()->fetch_assoc()
 );
 if(!isset($data->id)){
     return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>$sysmsg->e_db_unenabled];
