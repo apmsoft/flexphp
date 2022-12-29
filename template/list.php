@@ -76,13 +76,25 @@ $article = ($model->total_record - $paging->pageLimit * ($paging->page - 1) ); /
 while($row = $rlt->fetch_assoc())
 {
     # loop model
-    $loopModel = new Model( $row );
+    $loop = new Model( $row );
 
     # 순번 추가
-    $loopModel->num = $article;
+    $loop->num = $article;
+
+    # 등록일
+    $period = (new DateTimezPeriod())->diff(date('Y-m-d H:i:s'), $loop->signdate, ["format"=>'top']);
+    $snsf   = explode(' ', $period);
+    $data->signdate = match($snsf[1]) {
+        'second','seconds' => sprintf("%d 초전",$snsf[0]),
+        'minute','minutes' => sprintf("약%d 분전",$snsf[0]),
+        'hour','hours'     => sprintf("약%d 시간전",$snsf[0]),
+        'day','days'       => sprintf("약%d 일전",$snsf[0]),
+        'month','months'   => sprintf("약%d 개월전",$snsf[0]),
+        default            => $data->signdate
+    };
 
     # data 담기
-    $model->{"data+"} = $loopModel->fetch();
+    $model->{"data+"} = $loop->fetch();
 $article--;
 }
 

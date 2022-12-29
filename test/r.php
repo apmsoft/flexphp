@@ -121,9 +121,7 @@ Log::d('tables',R::$tables);
 
 # 사전 Objects 타일으로 받기
 $tables = R::Dic(R::$tables[R::$language]);
-Log::d( $tables->uploadfiles);
 Log::d( $tables->member);
-Log::d( $tables->member_upfiles);
 Log::d( $tables->a);
 Log::d( $tables->b);
 

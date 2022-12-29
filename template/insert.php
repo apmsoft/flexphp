@@ -29,6 +29,7 @@ $request = (object)(new Request())->post()->fetch();
 try{
     (new FormValidation('name','이름',$request->name))->null()->disliking([]);
     (new FormValidation('email','이메일',$request->email))->null()->space()->email();
+    (new FormValidation('extract_id','토큰',$request->extract_id))->null()->disliking([]);
 }catch(\Exception $e){
     Log::e($e->getMessage());
     return json_decode($e->getMessage(),true);
@@ -47,9 +48,10 @@ $db = new DbMySqli();
 # insert
 $db->autocommit(FALSE);
 try{
-    $db['name']     = $request->name;
-    $db['email']    = $request->email;
-    $db['signdate'] = (new DateTimez("now"))->format('Y-m-d H:i:s');
+    $db['name']       = $request->name;
+    $db['email']      = $request->email;
+    $db['extract_id'] = $request->extract_id;
+    $db['signdate']   = (new DateTimez("now"))->format('Y-m-d H:i:s');
     $db->table($tables->member)->insert();
 }catch(\Exception $e){
     Log::e($e->getMessage());

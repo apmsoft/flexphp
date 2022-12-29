@@ -24,7 +24,9 @@ $module_id = 'comflexphp';
 Log::d("=========================");
 
 # 시크릿키 생성
-#$token = (new TokenGenerateAtype( null,10 ))->value;
+$random_moduleid = (new TokenGenerateAtype( null,10 ))->value;
+Log::d('랜덤 ',$random_moduleid);
+
 $token = (new TokenGenerateAtype( $module_id ))->value;
 Log::d('module_id ',$token);
 
