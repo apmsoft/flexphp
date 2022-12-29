@@ -1,6 +1,6 @@
 <?php
 namespace Flex\My\BBS;
-# classes/my/bbs/Notice.class.php
+# classes/my/bbs
 
 use Flex\Annona\App;
 use Flex\Annona\Log;
@@ -15,6 +15,7 @@ use Flex\Annona\Paging\Relation;
 use Flex\Annona\Date\DateTimez;
 use Flex\Annona\Date\DateTimezPeriod;
 
+# classes/my/bbs/Notice.class.php
 class Notice 
 {
     DbMySqli $db;
