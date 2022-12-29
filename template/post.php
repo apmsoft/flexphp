@@ -33,7 +33,6 @@ $array  = R::dic(R::$array[R::$language]);
 # output
 return [
     "result" => 'true',
-    "r"      => $r,
     "msg"    => [
         'extract_id' => (new TokenGenerateAtype( null,10 ))->generateHashKey('md5')->value;
     ]

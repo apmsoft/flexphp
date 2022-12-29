@@ -24,7 +24,7 @@ Log::options([
 ]);
 
 # request
-$request = (object)(new Request())->post()->fetch();
+$request = (object)(new Request())->get()->fetch();
 
 # Form Validation
 try{
