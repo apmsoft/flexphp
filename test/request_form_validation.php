@@ -38,7 +38,7 @@ Log::init(Log::MESSAGE_ECHO);
 
 # set
 $request = new \Flex\Annona\Request\Request();
-$request->addr       = '주소 달 서구 대박동 120-4 번지 / 대충빌딩 (2층)';
+$request->addr       = '주소 달 서구 대박동 120-4 번지 / 대충빌딩 (2층)+++';
 $request->userid     = 'sfdsafda';
 $request->passwd     = 'passwd#';
 $request->secure_passwd = 'dsl123safdsa_';
