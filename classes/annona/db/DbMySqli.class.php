@@ -32,6 +32,8 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		# 문자셋
 		$chrset_is = parent::character_set_name();
 		if(strcmp($chrset_is,$chrset)) parent::set_charset($chrset);
+
+	return $this;
 	}
 
 	#@ interface : ArrayAccess
