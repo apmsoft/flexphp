@@ -46,6 +46,7 @@ Log::d($data);
 // while($row = $rlt->fetch_assoc()){
 //     Log::d($row);
 // }
+// $rlt->free();
 
 // $query = $db->table($tables->member)->select('id','name','userid')->query;
 // Log::d($query);
@@ -64,6 +65,7 @@ Log::d($data);
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
+// $rlt->free();
 
 # 총 레코드 수
 $total = $db->table($tables->member)->total();
@@ -77,6 +79,7 @@ Log::d('TOTAL',$total);
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
+// $rlt->free();
 
 # Group By HAVING
 // $query = $db->table($tables->member)->selectGroupBy('id','userid','count(id) as cnt','signdate')->groupBy('userid')->having('id','>','0')->query;
@@ -85,6 +88,7 @@ Log::d('TOTAL',$total);
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
+// $rlt->free();
 
 # JOIN
 // $query = $db->table("{$tables->member} m", "{$tables->coupon_numbers} cn")
@@ -100,6 +104,7 @@ Log::d('TOTAL',$total);
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
+// $rlt->free();
 
 # INNER|LEFT|RIGHT|LEFT OUTTER|RIGHT OUTTER JOIN
 // $query = $db->tableJoin("INNER", "{$tables->member} m", "{$tables->coupon_numbers} cn")
@@ -117,6 +122,7 @@ while($row = $rlt->fetch_object()){
     // print_r($row);
     Log::d('object',$row->id, $row->userid, $row->coupon_number, $row->cid);
 }
+$rlt->free();
 
 # INNER|LEFT|RIGHT|LEFT OUTTER|RIGHT OUTTER JOIN
 // $query = $db->tableJoin("LEFT", "{$tables->member} m", "{$tables->coupon_numbers} cn")
@@ -134,6 +140,7 @@ while($row = $rlt->fetch_object()){
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
+// $rlt->free();
 
 # insert
 // try{
