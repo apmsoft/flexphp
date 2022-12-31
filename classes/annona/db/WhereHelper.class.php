@@ -63,7 +63,7 @@ class WhereHelper
 				}
 			} 
 			else if($_uppper_condition == 'IN'){
-				if(!is_array($in_value) && strpos($in_value,'.') !==false){
+				if(strpos($in_value[0],'.') !==false){
 					$in_value_str = implode ( ",", $in_value );
 				}else{
 					$in_value_str = "'" . implode ( "', '", $in_value ) . "'";
