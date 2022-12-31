@@ -130,8 +130,6 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		switch($upcase){
 			case 'UNION': # 중복제거
 			case 'UNION ALL': # 중복포함
-			case 'EXCEPT': #두 번째 테이블에 없는 열을 반환
-			case 'INTERSECT': #중복부분만
 				$this->query_tpl = $this->tpl['union'];
 				$implode_join = sprintf(" %s ",$upcase);
 				break;
