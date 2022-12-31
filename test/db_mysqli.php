@@ -50,7 +50,6 @@ while($row = $rlt->fetch_assoc()){
 }
 $rlt->free();
 
-
 // $query = $db->table($tables->member)->where('id',1)->query;
 // Log::d($query);
 // $data = $db->table($tables->member)->where('id',1)->query()->fetch_assoc();
@@ -63,11 +62,33 @@ $rlt->free();
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
+// $rlt->free();
 
 # 총 레코드 수
 // $total = $db->table($tables->member)->total();
 // $total = $db->table($tables->member)->where('name','LIKE-R','김')->total();
 // Log::d('TOTAL',$total);
+
+# ************
+# SELECT id, name,userid FROM flex_member WHERE (id IN (SELECT muid FROM flex_coupon_numbers))
+#--------------
+$_main_qry = $db->table($tables->member)->select("id","name","userid")->where("id IN (%s)")->query;
+$_sub_qry  = $db->table($tables->coupon_numbers)->select("muid")->query;
+$qry = sprintf($_main_qry, $_sub_qry);
+Log::d($qry);
+
+$rlt = $db->query($qry);
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
+$rlt->free();
+
+
+# ================/==============
+# *******************************
+#######[ Group By ] ##########
+# *******************************
+# ===============================
 
 # Group By
 // $query = $db->table($tables->member)->selectGroupBy('id','name','signdate')->groupBy('`name`')->limit(0,10)->query;
@@ -84,6 +105,13 @@ $rlt->free();
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
+
+
+# ================/==============
+# *******************************
+#######[ JOIN ] ##########
+# *******************************
+# ===============================
 
 # JOIN
 // $query = $db->table("{$tables->member} m", "{$tables->coupon_numbers} cn")
@@ -140,6 +168,12 @@ while($row = $rlt->fetch_assoc()){
 }
 $rlt->free();
 
+# ================/==============
+# *******************************
+#######[ INSERT, UPDATE, DELETE ] ##########
+# *******************************
+# ===============================
+
 # insert
 // try{
 //     $db['id']       = 1;
@@ -182,6 +216,12 @@ $rlt->free();
 // }
 
 
+# ================/==============
+# *******************************
+#######[ 암호화 ] ##########
+# *******************************
+# ===============================
+
 # 암호호 데이터 쿼리
 // $query = $db->table($tables->test)->selectCrypt('id','name','signdate')->where('id',2)->query;
 // Log::d($query);
@@ -198,4 +238,28 @@ $rlt->free();
 // $query_string = $db->table($tables->member)->query;
 // $data2 = $db->query( $query_string )->fetch_assoc();
 // Log::d($data2);
+
+
+# ================/==============
+# *******************************
+#######[ WhereHelper ] ##########
+# *******************************
+# ===============================
+$query = $db->table($tables->member)->select('id','name','userid')->where(
+    (new WhereHelper)->
+        begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
+        begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
+    ->where
+)->query;
+Log::d($query);
+
+$rlt = $db->table($tables->member)->select('id','name','userid')->where(
+    (new WhereHelper)->
+        begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
+        begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
+    ->where
+)->orderBy('id desc','name asc')->limit(3)->query();
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
 ?>
