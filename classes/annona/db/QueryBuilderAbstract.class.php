@@ -8,7 +8,11 @@ use \Flex\Annona\Db\WhereHelper;
 abstract class QueryBuilderAbstract extends mysqli
 {
     protected array $query_params;
-    protected string $query_tpl = 'SELECT {columns}FROM {table}{on}{where}{groupby}{having}{orderby}{limit}';
+    protected string $query_tpl = '';
+    protected array $tpl = [
+        'union'   => '{table}{where}{groupby}{having}{orderby}{limit}',
+        'default' => 'SELECT {columns}FROM {table}{on}{where}{groupby}{having}{orderby}{limit}'
+    ];
     protected string $query = '';
 
     abstract public function table(...$tables) : mixed;

@@ -32,7 +32,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		# 문자셋
 		$chrset_is = parent::character_set_name();
 		if(strcmp($chrset_is,$chrset)) parent::set_charset($chrset);
-
+	
 	return $this;
 	}
 
@@ -116,6 +116,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	public function table(...$tables) : DbMySqli{
 		parent::init();
 		$length = count($tables);
+		$this->query_tpl =  $this->tpl['default'];
 		$this->query_params['table'] = ($length ==2) ? implode(',',$tables) : implode(' ',$tables);
 	return $this;
 	}
@@ -123,7 +124,22 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	# @ abstract : QueryBuilderAbstract
 	public function tableJoin(string $join, ...$tables) : DbMySqli{
 		parent::init();
-		$this->query_params['table'] = implode(sprintf(" %s JOIN ",strtoupper($join)), $tables);
+
+		$upcase = strtoupper($join);
+		$implode_join = sprintf(" %s JOIN ",$upcase);
+		switch($upcase){
+			case 'UNION': # 중복제거
+			case 'UNION ALL': # 중복포함
+			case 'EXCEPT': #두 번째 테이블에 없는 열을 반환
+			case 'INTERSECT': #중복부분만
+				$this->query_tpl = $this->tpl['union'];
+				$implode_join = sprintf(" %s ",$upcase);
+				break;
+			default : 
+				$this->query_tpl = $this->tpl['default'];
+		}
+
+		$this->query_params['table'] = implode($implode_join, $tables);
 	return $this;
 	}
 

@@ -25,39 +25,37 @@ R::tables();
 R::tables(['test'=>'test']);
 $tables = R::dic(R::$tables[R::$language]);
 
-# 싱글 라인
-$data = (new DbMySqli())->table($tables->member)->where('id',1)->query()->fetch_assoc();
-Log::d('single line', $data);
+$db = new DbMySqli();
+
+// $query = $db->table($tables->member)->query;
+// Log::d($query);
+// $data = $db->table($tables->member)->query()->fetch_assoc();
+// Log::d($data);
+
+$rlt = $db->table($tables->member)->query();
+while($row = $rlt->fetch_assoc()){
+    Log::d($row);
+}
+$rlt->free();
+
+$query = $db->table($tables->member)->select('id','name','userid')->query;
+Log::d($query);
+$data = $db->table($tables->member)->select('id','name','userid')->query()->fetch_assoc();
+Log::d('instance',$data);
+$db->free();
 
 $rlt = (new DbMySqli())->table($tables->member)->select('id','name','userid')->limit(10)->query();
 while($row = $rlt->fetch_assoc()){
     print_r($row);
 }
-
-# 멀티
-$db = new DbMySqli();
-
-// $query = $db->table($tables->member)->query;
-// Log::d($query);
-$data = $db->table($tables->member)->query()->fetch_assoc();
-Log::d($data);
-
-// $rlt = $db->table($tables->member)->query();
-// while($row = $rlt->fetch_assoc()){
-//     Log::d($row);
-// }
-// $rlt->free();
-
-// $query = $db->table($tables->member)->select('id','name','userid')->query;
-// Log::d($query);
-// $data = $db->table($tables->member)->select('id','name','userid')->query()->fetch_assoc();
-// Log::d('instance',$data);
+$rlt->free();
 
 
 // $query = $db->table($tables->member)->where('id',1)->query;
 // Log::d($query);
 // $data = $db->table($tables->member)->where('id',1)->query()->fetch_assoc();
 // Log::d($data);
+// Log::d('direct',(new DbMySqli())->table($tables->member)->where('id',1)->query()->fetch_assoc() );
 
 // $query = $db->table($tables->member)->select('id','name','userid')->where('id','>',1)->query;
 // Log::d($query);
@@ -65,12 +63,11 @@ Log::d($data);
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
-// $rlt->free();
 
 # 총 레코드 수
-$total = $db->table($tables->member)->total();
-$total = $db->table($tables->member)->where('name','LIKE-R','김')->total();
-Log::d('TOTAL',$total);
+// $total = $db->table($tables->member)->total();
+// $total = $db->table($tables->member)->where('name','LIKE-R','김')->total();
+// Log::d('TOTAL',$total);
 
 # Group By
 // $query = $db->table($tables->member)->selectGroupBy('id','name','signdate')->groupBy('`name`')->limit(0,10)->query;
@@ -79,7 +76,6 @@ Log::d('TOTAL',$total);
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
-// $rlt->free();
 
 # Group By HAVING
 // $query = $db->table($tables->member)->selectGroupBy('id','userid','count(id) as cnt','signdate')->groupBy('userid')->having('id','>','0')->query;
@@ -88,7 +84,6 @@ Log::d('TOTAL',$total);
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
-// $rlt->free();
 
 # JOIN
 // $query = $db->table("{$tables->member} m", "{$tables->coupon_numbers} cn")
@@ -104,15 +99,8 @@ Log::d('TOTAL',$total);
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
-// $rlt->free();
 
-# INNER|LEFT|RIGHT|LEFT OUTTER|RIGHT OUTTER JOIN
-// $query = $db->tableJoin("INNER", "{$tables->member} m", "{$tables->coupon_numbers} cn")
-// ->on('m.id','cn.muid')
-// ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
-// ->query;
-// Log::d('join',$query);
-
+# JOIN
 $rlt = $db->tableJoin("INNER","{$tables->member} m","{$tables->coupon_numbers} cn")
 ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
 ->on('m.id','cn.muid')
@@ -122,25 +110,35 @@ while($row = $rlt->fetch_object()){
     // print_r($row);
     Log::d('object',$row->id, $row->userid, $row->coupon_number, $row->cid);
 }
-$rlt->free();
 
+# LEFT
 # INNER|LEFT|RIGHT|LEFT OUTTER|RIGHT OUTTER JOIN
-// $query = $db->tableJoin("LEFT", "{$tables->member} m", "{$tables->coupon_numbers} cn")
-// ->on('m.id','cn.muid')
-// ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
-// ->query;
-// Log::d('join',$query);
+$query = $db->tableJoin("LEFT", "{$tables->member} m", "{$tables->coupon_numbers} cn")
+->on('m.id','cn.muid')
+->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+->query;
+Log::d('join',$query);
 
-// $rlt = $db->tableJoin("INNER","{$tables->member} m","{$tables->coupon_numbers} cn")
-// ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
-// ->on('m.id','cn.muid')
-// ->where("m.id", ">",30)
-// ->limit(3)
-// ->query();
-// while($row = $rlt->fetch_assoc()){
-//     print_r($row);
-// }
-// $rlt->free();
+# INNER
+$rlt = $db->tableJoin("INNER","{$tables->member} m","{$tables->coupon_numbers} cn")
+->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
+->on('m.id','cn.muid')
+->where("m.id", ">",30)
+->limit(3)
+->query();
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
+
+$rlt = $db->tableJoin("UNION",
+    $db->table($tables->member)->select('id','name','userid')->query,
+    $db->table($tables->member)->select('id','name','userid')->query
+)->where('id', '>', 2)->limit(10)->query();
+// Log::d($rlt);
+while($row = $rlt->fetch_assoc()){
+    Log::d($row);
+}
+$rlt->free();
 
 # insert
 // try{
