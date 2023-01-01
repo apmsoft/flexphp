@@ -69,15 +69,40 @@ $rlt->free();
 // $total = $db->table($tables->member)->where('name','LIKE-R','김')->total();
 // Log::d('TOTAL',$total);
 
+# ================/==============
+# *******************************
+#######[ SUB QUERY ] ##########
+# *******************************
+# ===============================
 # ************
 # SELECT id, name,userid FROM flex_member WHERE (id IN (SELECT muid FROM flex_coupon_numbers))
+# tableSub
 #--------------
-$_main_qry = $db->table($tables->member)->select("id","name","userid")->where("id IN (%s)")->query;
-$_sub_qry  = $db->table($tables->coupon_numbers)->select("muid")->query;
-$qry = sprintf($_main_qry, $_sub_qry);
-Log::d($qry);
+$rlt = $db->table($tables->member)->select("id","name","userid")->where( 
+    sprintf("id IN (%s)", $db->tableSub($tables->coupon_numbers)->select("muid")->query)
+)->query();
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
+$rlt->free();
 
 $rlt = $db->query($qry);
+while($row = $rlt->fetch_assoc()){
+    print_r($row);
+}
+$rlt->free();
+
+### 
+### tableSub in select, 
+### tableSub in where
+###
+$rlt = $db->table($tables->member)->select("id","name",
+    sprintf("(%s) as cnt", $db->tableSub($tables->coupon_numbers)->select("count(*)")->where('muid','>','0')->query)
+)->where(
+    sprintf("id IN (%s)", $db->tableSub($tables->coupon_numbers)->select("muid")->query)
+)->query();
+// Log::d($rlt);
+
 while($row = $rlt->fetch_assoc()){
     print_r($row);
 }

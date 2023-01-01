@@ -8,6 +8,8 @@ use \ErrorException;
 
 class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 {
+	private $version = '2.0.1';
+
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
 	const RANDOM_BYTES          = 16;
@@ -114,36 +116,47 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 
 	# @ abstract : QueryBuilderAbstract
 	public function table(...$tables) : DbMySqli{
-		parent::init();
+		parent::init('MAIN');
 		$length = count($tables);
-		$this->query_tpl =  $this->tpl['default'];
-		$this->query_params['table'] = ($length ==2) ? implode(',',$tables) : implode(' ',$tables);
+		$value = ($length ==2) ? implode(',',$tables) : implode(' ',$tables);
+		parent::set('table', $value);
+	return $this;
+	}
+
+	# @ abstract : QueryBuilderAbstract
+	public function tableSub(...$tables) : DbMySqli{
+		parent::init('SUB');
+		$length = count($tables);
+		$value = ($length ==2) ? implode(',',$tables) : implode(' ',$tables);
+		parent::set('table', $value);
 	return $this;
 	}
 
 	# @ abstract : QueryBuilderAbstract
 	public function tableJoin(string $join, ...$tables) : DbMySqli{
-		parent::init();
+		parent::init('JOIN');
 
 		$upcase = strtoupper($join);
 		$implode_join = sprintf(" %s JOIN ",$upcase);
 		switch($upcase){
 			case 'UNION': # 중복제거
 			case 'UNION ALL': # 중복포함
-				$this->query_tpl = $this->tpl['union'];
+				parent::setQueryTpl('UNINON');
 				$implode_join = sprintf(" %s ",$upcase);
 				break;
 			default : 
-				$this->query_tpl = $this->tpl['default'];
+				parent::setQueryTpl('default');
 		}
 
-		$this->query_params['table'] = implode($implode_join, $tables);
+		$value = implode($implode_join, $tables);
+		parent::set('table', $value);
 	return $this;
 	}
 
 	# @ abstract : QueryBuilderAbstract
     public function select(...$columns) : DbMySqli{
-		$this->query_params['columns'] = implode(',', $columns);
+		$value = implode(',', $columns);
+		parent::set('columns', $value);
 	return $this;
 	}
 
@@ -153,7 +166,8 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		foreach($columns as $name){
 			$argv[] = (strpos($name,'(') !==false) ? $name : sprintf("ANY_VALUE(%s) as %s",$name,$name);
 		}
-		$this->query_params['columns'] = implode(',', $argv);
+		$value = implode(',', $argv);
+		parent::set('columns', $value);
 	return $this;
 	}
 
@@ -169,7 +183,8 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 				$argv[] = self::aes_decrypt($name,false);
 			}
 		}
-		$this->query_params['columns'] = implode(',', $argv);
+		$value = implode(',', $argv);
+		parent::set('columns', $value);
 	return $this;
 	}
 
@@ -177,14 +192,18 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
     public function where(...$where) : DbMySqli
 	{
 		$result = parent::buildWhere($where);
-		if($result) $this->query_params['where'] = 'WHERE '.$result;
+		if($result){
+			$value = 'WHERE '.$result;
+			parent::set('where', $value);
+		}
 	return $this;
 	}
 
 	# @ abstract : QueryBuilderAbstract
     public function orderBy(...$orderby) : DbMySqli
 	{
-		$this->query_params['orderby'] = 'ORDER BY '.implode(',',$orderby);
+		$value = 'ORDER BY '.implode(',',$orderby);
+		parent::set('orderby', $value);
 	return $this;
 	}
 
@@ -192,32 +211,41 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
     public function on(...$on) : DbMySqli
 	{
 		$result = parent::buildWhere($on);
-		if($result) $this->query_params['on'] = 'ON '.$result;
+		if($result){
+			$value = 'ON '.$result;
+			parent::set('on', $value);
+		}
 	return $this;
 	}
 
 	# @ abstract : QueryBuilderAbstract
     public function limit(...$limit) : DbMySqli{
-		$this->query_params['limit'] = 'LIMIT '.implode(',',$limit);
+		$value = 'LIMIT '.implode(',',$limit);
+		parent::set('limit', $value);
 	return $this;
 	}
 
 	# @ abstract : QueryBuilderAbstract
     public function distinct(string $column_name) : DbMySqli{
-		$this->query_params['columns'] = sprintf("DISTINCT %s", $column_name);
+		$value = sprintf("DISTINCT %s", $column_name);
+		parent::set('columns', $value);
 	return $this;
 	}
 
 	# @ abstract : QueryBuilderAbstract
     public function groupBy(...$columns) : DbMySqli{
-		$this->query_params['groupby'] = 'GROUP BY '.implode(',',$columns);
+		$value = 'GROUP BY '.implode(',',$columns);
+		parent::set('groupby', $value);
 	return $this;
 	}
 
 	# @ abstract : QueryBuilderAbstract
     public function having(...$having) : DbMySqli{
 		$result = parent::buildWhere($having);
-		if($result) $this->query_params['having'] = 'HAVING '.$result;
+		if($result){
+			$value = 'HAVING '.$result;
+			parent::set('having', $value);
+		}
 	return $this;
 	}
 
@@ -225,7 +253,8 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
     public function total(string $column_name = '*') : int
 	{
 		$total = 0;
-		$this->query_params['columns'] = sprintf("count(%s)", $column_name);
+		$value = sprintf("count(%s)", $column_name);
+		parent::set('columns', $value);
 		$query = parent::get();
 		if($result = parent::query($query)){
 			$row   = $result->fetch_row();
