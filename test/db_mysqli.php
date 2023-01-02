@@ -183,9 +183,10 @@ while($row = $rlt->fetch_assoc()){
     print_r($row);
 }
 
+# UNION
 $rlt = $db->tableJoin("UNION",
-    $db->table($tables->member)->select('id','name','userid')->query,
-    $db->table($tables->member)->select('id','name','userid')->query
+    $db->tableSub($tables->member)->select('id','name','userid')->query,
+    $db->tableSub($tables->member)->select('id','name','userid')->query
 )->where('id', '>', 2)->limit(10)->query();
 // Log::d($rlt);
 while($row = $rlt->fetch_assoc()){
