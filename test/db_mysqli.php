@@ -228,6 +228,16 @@ $rlt->free();
 //     Log::e($e->getMessage());
 // }
 
+// try{
+    # UPDATE `flex_coupon` SET uses_number=uses_number+1 WHERE `id`='1'
+    # 사용횟수 업데이트
+    // $this->db['uses_number'] = 'uses_number+1';
+    // $this->db->table($tables->coupon)->where('id', $coupon_info['id'])->update();
+// }catch(\Exception $e){
+//     Log::e($e->getMessage());
+// }
+
+
 
 // try{
 //     $db['name']     = '유관순업';

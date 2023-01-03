@@ -8,7 +8,7 @@ use \ErrorException;
 
 class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 {
-	private $version = '2.0.1';
+	private $version = '2.0.2';
 
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
@@ -340,13 +340,18 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		foreach($this->params as $k => $v)
 		{
 			$datav = '';
-			$datav = sprintf("'%s'", parent::real_escape_string($v));
+			$pattern = sprintf("/(%s)(\+|\-|\*|\/)([0-9])/i", $k);
+			if(preg_match($pattern, $v)){
+				$datav = sprintf("%s", parent::real_escape_string($v));
+			}else{
+				$datav = sprintf("'%s'", parent::real_escape_string($v));
+			}
 			$fieldkv .= sprintf("`%s`=%s,",$k, $datav);
 		}
 		$fieldkv = substr($fieldkv,0,-1);
 		$this->params = array(); #변수값 초기화
 
-		$query= sprintf("UPDATE `%s` SET %s %s",$this->query_params['table'],$fieldkv,$this->query_params['where']);
+		$query= sprintf("UPDATE `%s` SET %s %s",$this->query_params['table'],$fieldkv,$this->query_params['where']);s
 		if($this->query($query)){
 			$result = true;
 		}

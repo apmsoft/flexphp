@@ -9,7 +9,7 @@ abstract class QueryBuilderAbstract extends mysqli
 {
     private string $version = '1.5.1';
     private string $query_mode;
-    private array $query_params;
+    protected array $query_params;
     private array $sub_query_params;
     private string $query_tpl = '';
     private array $tpl = [
