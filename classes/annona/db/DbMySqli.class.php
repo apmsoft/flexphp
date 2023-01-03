@@ -351,7 +351,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 		$fieldkv = substr($fieldkv,0,-1);
 		$this->params = array(); #변수값 초기화
 
-		$query= sprintf("UPDATE `%s` SET %s %s",$this->query_params['table'],$fieldkv,$this->query_params['where']);s
+		$query= sprintf("UPDATE `%s` SET %s %s",$this->query_params['table'],$fieldkv,$this->query_params['where']);
 		if($this->query($query)){
 			$result = true;
 		}
