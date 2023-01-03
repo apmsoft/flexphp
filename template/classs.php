@@ -87,13 +87,13 @@ class Notice
             # 등록일
             $period = (new DateTimezPeriod())->diff(date('Y-m-d H:i:s'), $loop->signdate, ["format"=>'top']);
             $snsf   = explode(' ', $period);
-            $data->signdate = match($snsf[1]) {
+            $loop->signdate = match($snsf[1]) {
                 'second','seconds' => sprintf("%d 초전",$snsf[0]),
                 'minute','minutes' => sprintf("약%d 분전",$snsf[0]),
                 'hour','hours'     => sprintf("약%d 시간전",$snsf[0]),
                 'day','days'       => sprintf("약%d 일전",$snsf[0]),
                 // 'month','months'   => sprintf("약%d 개월전",$snsf[0]),
-                default            => $data->signdate
+                default            => $loop->signdate
             };
 
             # data 담기
