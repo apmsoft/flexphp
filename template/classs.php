@@ -61,7 +61,7 @@ class Notice
         $model->total_record = $db->table($tables->member)->total();
 
         # pageing
-        $paging = new \Flex\Annona\Paging\Relation($model->total_record, $model->page);
+        $paging = new Relation($model->total_record, $model->page);
         $relation = $paging->query( $model->page_count, $model->block_limit)->build()->paging();
 
         # query
