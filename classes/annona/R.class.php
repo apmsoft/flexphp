@@ -62,6 +62,20 @@ final class R
         }
     }
 
+    public static function select(string $query, string $fieldname){
+        switch($query){
+            case 'sysmsg': return self::$sysmsg[self::$language][$fieldname]; break;
+            case 'strings': return  self::$strings[self::$language][$fieldname]; break;
+            case 'integers': return  self::$integers[self::$language][$fieldname]; break;
+            case 'floats': return  self::$floats[self::$language][$fieldname]; break;
+            case 'doubles': return  self::$doubles[self::$language][$fieldname]; break;
+            case 'array': return  self::$array[self::$language][$fieldname]; break;
+            case 'tables': return  self::$tables[self::$language][$fieldname]; break;
+            default :
+                return  self::$r->{$query}[self::$language][$fieldname]; break;
+        }
+    }
+
     public static function __callStatic(string $query, array $args=[]) 
     {
         # 배열을 dictionary Object 
@@ -69,7 +83,9 @@ final class R
             return (object)$args[0];
         }else if(!self::isUpdated($query)){
             self::id($query);
-        }else if(isset($args[0])){
+        }else if(isset($args[0]) && is_string($args[0])){
+            return self::select($query, $args[0]);
+        }else if(isset($args[0]) && is_array($args[0])){
             self::setIdValues($query, $args[0]);
         }
     }

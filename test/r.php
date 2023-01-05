@@ -115,6 +115,14 @@ R::ddd();
 
 Log::d("===============================");
 
+# 설정된 언어 값 바로 받기 [ko,en...]등 설정된 언어 값
+Log::d('strings',R::strings('app_name'));
+Log::d('tables',R::tables('member'));
+Log::d('sysmsg',R::sysmsg('w_duplicate_nickname'));
+Log::d('r',R::attachments('Upload')['file_extension']);
+
+Log::d("===============================");
+
 # tables : 배열값 추가 하기
 R::tables(['a'=>'flex_a','b'=>'flex_b']);
 Log::d('tables',R::$tables);
