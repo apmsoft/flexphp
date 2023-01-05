@@ -3,7 +3,7 @@ namespace Flex\Annona;
 
 use \ArrayObject;
 use \ErrorException;
-use \Flex\Annona\Model;
+use Flex\Annona\Log;
 
 final class R
 {
@@ -66,7 +66,7 @@ final class R
     {
         # 배열을 dictionary Object 
         if(strtolower($query) == 'dic' && count($args)){
-            return (object)(new Model( $args[0] ))->fetch();
+            return (object)$args[0];
         }else if(!self::isUpdated($query)){
             self::id($query);
         }else if(isset($args[0])){
