@@ -1,10 +1,13 @@
 <?php
 namespace Flex\Annona\Request;
 
+use Flex\Log\Log;
+
 # _POST, _GET, 값들을 제어 및 기본작업 수행
 class Request
 {
 	private array $params = [];
+	private array $headers = [];
 
 	public function __construct(){ 
     return $this; 
@@ -47,6 +50,42 @@ class Request
 				$this->params[$k]=$v;
 			}
 		}
+	}
+
+	public function getHeaders() : array
+	{
+		if (function_exists('getallheaders')) {
+			$this->headers = getallheaders();
+		} else if (!function_exists('apache_request_headers')){
+			$this->headers = apache_request_headers();
+		} else {
+			$headers = [];
+			foreach ($_SERVER as $name => $value) {
+				if (strtolower(substr($name, 0, 5)) == 'http_') {
+					$headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+				}
+			}
+
+			$this->headers = $headers;
+		}
+
+	return $this->headers;
+	}
+
+	public function getHeaderLine(string $name) : string 
+	{
+		$header_val = '';
+		if(!count($this->headers)){
+			self::getHeaders();
+		}
+
+		foreach($this->headers as $k =>$v){
+			if($name == $k){
+				$header_val = strtr($v,["\""=>'','\'=>']);
+				break;
+			}
+		}
+	return $header_val;
 	}
 
     public function fetch() : array{

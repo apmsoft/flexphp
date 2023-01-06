@@ -66,6 +66,9 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
         {            
             return new Promise(function ($resolve) use ($dispatcher, $request, $method, $uri_path)
             {
+                # headers
+                $headers_all = (new \Flex\Annona\Request\Request)->getHeaders();
+                Log::d($headers_all);
                 $routeInfo = $dispatcher->dispatch($method, $uri_path);
                 switch ($routeInfo[0])
                 {
@@ -89,22 +92,22 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
     ->then(function ($message) use ($uri_path){
         Log::v($message);
 
-        if($uri_path=='/download'){
-            return new React\Http\Message\Response(React\Http\Message\Response::STATUS_OK, [
-                'Content-Type'              => 'application/octet-stream',
-                'Cache-control'             => 'privat  e',
-                'Content-Disposition'       => sprintf("attachment;filename=\"%s\"", '테스트.jpeg'),
-                'Content-Transfer-Encoding' => 'binary',
-                'Pragma'                    => 'no-cache'
-            ], $message['msg']);
-        }else{
+        // if($uri_path=='/download'){
+        //     return new React\Http\Message\Response(React\Http\Message\Response::STATUS_OK, [
+        //         'Content-Type'              => 'application/octet-stream',
+        //         'Cache-control'             => 'privat  e',
+        //         'Content-Disposition'       => sprintf("attachment;filename=\"%s\"", '테스트.jpeg'),
+        //         'Content-Transfer-Encoding' => 'binary',
+        //         'Pragma'                    => 'no-cache'
+        //     ], $message['msg']);
+        // }else{
             return new React\Http\Message\Response(React\Http\Message\Response::STATUS_OK, [
                 'Content-Type' => 'application/json',
                 'Access-Control-Allow-Origin'=>'*',
                 'Access-Control-Allow-Headers'=>'*',
                 'Access-Control-Allow-Methods'=>'*'
             ],json_encode($message));
-        }
+        // }
 
     }, function (Exception $e) {
         echo $e;

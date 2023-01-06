@@ -26,4 +26,10 @@ $request->a = 'a';
 $request->b = 'b';
 $request->c = 'c';
 Log::d('GET',$request->fetch());
+
+# headers
+$headers_all = $request->getHeaders();
+Log::d($headers_all);
+
+Log::d('getHeaderLine',$request->getHeaderLine('Sec-Ch-Ua-Platform'));
 ?>
