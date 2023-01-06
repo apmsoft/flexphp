@@ -22,6 +22,9 @@ Log::options([
     'newline'    => true
 ]);
 
+# resource
+R::tables();
+
 # request
 $request = (object)(new Request())->post()->fetch();
 
@@ -35,13 +38,6 @@ try{
     return json_decode($e->getMessage(),true);
 }
 
-# resource
-R::tables();
-R::array();
-$sysmsg = R::dic(R::$sysmsg[R::$language]);
-$tables = R::dic(R::$tables[R::$language]);
-$array  = R::dic(R::$array[R::$language]);
-
 # Database
 $db = new DbMySqli();
 
@@ -52,7 +48,7 @@ try{
     $db['email']      = $request->email;
     $db['extract_id'] = $request->extract_id;
     $db['signdate']   = (new DateTimez("now"))->format('Y-m-d H:i:s');
-    $db->table($tables->member)->insert();
+    $db->table(R::tables('member'))->insert();
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
@@ -61,6 +57,6 @@ $db->commit();
 # output
 return [
     "result" => 'true',
-    "msg"    => $sysmsg->v_insert
+    "msg"    => R::sysmsg('v_insert')
 ];
 ?>

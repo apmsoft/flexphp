@@ -41,10 +41,7 @@ class Notice
 
         # resource
         R::tables();
-        // R::array();
-        $sysmsg = R::dic(R::$sysmsg[R::$language]);
-        $tables = R::dic(R::$tables[R::$language]);
-        // $array  = R::dic(R::$array[R::$language]);
+        R::array();
 
         # Database
         $db = new DbMySqli();
@@ -58,14 +55,14 @@ class Notice
         $model->data         = [];
 
         # total record
-        $model->total_record = $db->table($tables->member)->total();
+        $model->total_record = $db->table(R::tables('member'))->total();
 
         # pageing
-        $paging = new Relation($model->total_record, $model->page);
+        $paging = new \Flex\Annona\Paging\Relation($model->total_record, $model->page);
         $relation = $paging->query( $model->page_count, $model->block_limit)->build()->paging();
 
         # query
-        $rlt = $db->table($tables->member)->select('id','name','userid','cellphone','signdate')->where(
+        $rlt = $db->table(R::tables('member'))->select('id','name','userid','cellphone','signdate')->where(
             (new WhereHelper)->
                 begin('OR')
                     ->case('name','LIKE',$request->q)
@@ -87,13 +84,13 @@ class Notice
             # 등록일
             $period = (new DateTimezPeriod())->diff(date('Y-m-d H:i:s'), $loop->signdate, ["format"=>'top']);
             $snsf   = explode(' ', $period);
-            $loop->signdate = match($snsf[1]) {
+            $data->signdate = match($snsf[1]) {
                 'second','seconds' => sprintf("%d 초전",$snsf[0]),
                 'minute','minutes' => sprintf("약%d 분전",$snsf[0]),
                 'hour','hours'     => sprintf("약%d 시간전",$snsf[0]),
                 'day','days'       => sprintf("약%d 일전",$snsf[0]),
-                // 'month','months'   => sprintf("약%d 개월전",$snsf[0]),
-                default            => $loop->signdate
+                'month','months'   => sprintf("약%d 개월전",$snsf[0]),
+                default            => $data->signdate
             };
 
             # data 담기
@@ -101,9 +98,13 @@ class Notice
         $article--;
         }
 
+        #r
+        $r = R::select(['array'=>"is_push,random_params"]);
+
         # output
         return [
             "result"       => 'true',
+            "r" => $r,
             'total_page'   => $paging->totalPage,
             'total_record' => $paging->totalRecord,
             'page'         => $paging->page,
@@ -118,14 +119,15 @@ class Notice
         $request = (object)(new Request())->get()->fetch();
 
         # resource
-        // R::tables();
-        // R::array();
-        // $sysmsg = R::dic(R::$sysmsg[R::$language]);
-        // $array  = R::dic(R::$array[R::$language]);
+        R::array();
+
+        #r
+        $r = R::select(['array'=>"is_push,random_params"]);
 
         # output
         return [
             "result" => 'true',
+            "r" => $r,
             "msg"    => [
                 'extract_id' => (new TokenGenerateAtype( null,10 ))->generateHashKey('md5')->value;
             ]
@@ -134,6 +136,9 @@ class Notice
 
     public function doInsert()
     {
+        # resource
+        R::tables();
+
         # request
         $request = (object)(new Request())->post()->fetch();
 
@@ -147,13 +152,6 @@ class Notice
             return json_decode($e->getMessage(),true);
         }
 
-        # resource
-        R::tables();
-        // R::array();
-        $sysmsg = R::dic(R::$sysmsg[R::$language]);
-        $tables = R::dic(R::$tables[R::$language]);
-        // $array  = R::dic(R::$array[R::$language]);
-
         # Database
         $db = new DbMySqli();
 
@@ -164,7 +162,7 @@ class Notice
             $db['email']      = $request->email;
             $db['extract_id'] = $request->extract_id;
             $db['signdate']   = (new DateTimez("now"))->format('Y-m-d H:i:s');
-            $db->table($tables->member)->insert();
+            $db->table(R::tables('member'))->insert();
         }catch(\Exception $e){
             Log::e($e->getMessage());
         }
@@ -173,7 +171,7 @@ class Notice
         # output
         return [
             "result" => 'true',
-            "msg"    => $sysmsg->v_insert
+            "msg"    => R::sysmsg('v_insert')
         ];
     }
 
@@ -192,25 +190,26 @@ class Notice
 
         # resource
         R::tables();
-        // R::array();
-        $sysmsg = R::dic(R::$sysmsg[R::$language]);
-        $tables = R::dic(R::$tables[R::$language]);
-        // $array  = R::dic(R::$array[R::$language]);
+        R::array();
 
         # Database
         $db = new DbMySqli();
 
         # 데이터 체크
         $data = new Model(
-            $db->table($tables->member)->where('id',$request->id)->query()->fetch_assoc()
+            $db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
         );
         if(!isset($data->id)){
-            return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>$sysmsg->e_db_unenabled];
+            return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
+
+        #r
+        $r = R::select(['array'=>"is_push,random_params"]);
 
         # output
         return [
             "result" => 'true',
+            'r'      => $r,
             "msg"    => $data->fetch()
         ];
     }
@@ -219,6 +218,9 @@ class Notice
     {
         # request
         $request = (object)(new Request())->post()->fetch();
+
+        # resource
+        R::tables();
 
         # Form Validation
         try{
@@ -230,22 +232,15 @@ class Notice
             return json_decode($e->getMessage(),true);
         }
 
-        # resource
-        R::tables();
-        // R::array();
-        $sysmsg = R::dic(R::$sysmsg[R::$language]);
-        $tables = R::dic(R::$tables[R::$language]);
-        // $array  = R::dic(R::$array[R::$language]);
-
         # Database
         $db = new DbMySqli();
 
         # 데이터 체크
         $data = new Model(
-            $db->table($tables->member)->where('id',$request->id)->query()->fetch_assoc()
+            $db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
         );
         if(!isset($data->id)){
-            return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>$sysmsg->e_db_unenabled];
+            return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
 
         # update
@@ -253,7 +248,7 @@ class Notice
         try{
             $db['name']     = $request->name;
             $db['email']    = $request->email;
-            $db->table($tables->test)->where('id',$request->id)->update();
+            $db->table(R::tables('test'))->where('id',$request->id)->update();
         }catch(\Exception $e){
             Log::e($e->getMessage());
         }
@@ -262,7 +257,7 @@ class Notice
         # output
         return [
             "result" => 'true',
-            "msg"    => $sysmsg->v_update
+            "msg"    => R::sysmsg('v_update')
         ];
     }
 
@@ -281,24 +276,22 @@ class Notice
 
         # resource
         R::tables();
-        $sysmsg = R::dic(R::$sysmsg[R::$language]);
-        $tables = R::dic(R::$tables[R::$language]);
 
         # Database
         $db = new DbMySqli();
 
         # 데이터 체크
         $data = new Model(
-            $db->table($tables->member)->where('id',$request->id)->query()->fetch_assoc()
+            $db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
         );
         if(!isset($data->id)){
-            return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>$sysmsg->e_db_unenabled];
+            return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
 
         # update
         $db->autocommit(FALSE);
         try{
-            $db->table($tables->test)->where('id',$request->id)->delete();
+            $db->table(R::tables('test'))->where('id',$request->id)->delete();
         }catch(\Exception $e){
             Log::e($e->getMessage());
         }
@@ -307,7 +300,7 @@ class Notice
         # output
         return [
             "result" => 'true',
-            "msg"    => $sysmsg->v_delete
+            "msg"    => R::sysmsg('v_delete')
         ];
     }
 }

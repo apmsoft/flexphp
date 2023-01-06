@@ -25,14 +25,15 @@ Log::options([
 $request = (object)(new Request())->get()->fetch();
 
 # resource
-R::tables();
 R::array();
-$sysmsg = R::dic(R::$sysmsg[R::$language]);
-$array  = R::dic(R::$array[R::$language]);
+
+#r
+$r = R::select(['array'=>"is_push,random_params"]);
 
 # output
 return [
     "result" => 'true',
+    "r" => $r,
     "msg"    => [
         'extract_id' => (new TokenGenerateAtype( null,10 ))->generateHashKey('md5')->value;
     ]

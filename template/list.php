@@ -39,9 +39,6 @@ try{
 # resource
 R::tables();
 R::array();
-$sysmsg = R::dic(R::$sysmsg[R::$language]);
-$tables = R::dic(R::$tables[R::$language]);
-$array  = R::dic(R::$array[R::$language]);
 
 # Database
 $db = new DbMySqli();
@@ -55,14 +52,14 @@ $model->block_limit  = 2;
 $model->data         = [];
 
 # total record
-$model->total_record = $db->table($tables->member)->total();
+$model->total_record = $db->table(R::tables('member'))->total();
 
 # pageing
 $paging = new \Flex\Annona\Paging\Relation($model->total_record, $model->page);
 $relation = $paging->query( $model->page_count, $model->block_limit)->build()->paging();
 
 # query
-$rlt = $db->table($tables->member)->select('id','name','userid','cellphone','signdate')->where(
+$rlt = $db->table(R::tables('member'))->select('id','name','userid','cellphone','signdate')->where(
     (new WhereHelper)->
         begin('OR')
             ->case('name','LIKE',$request->q)
@@ -98,9 +95,13 @@ while($row = $rlt->fetch_assoc())
 $article--;
 }
 
+#r
+$r = R::select(['array'=>"is_push,random_params"]);
+
 # output
 return [
     "result"       => 'true',
+    "r" => $r,
     'total_page'   => $paging->totalPage,
     'total_record' => $paging->totalRecord,
     'page'         => $paging->page,

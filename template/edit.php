@@ -37,24 +37,25 @@ try{
 # resource
 R::tables();
 R::array();
-$sysmsg = R::dic(R::$sysmsg[R::$language]);
-$tables = R::dic(R::$tables[R::$language]);
-$array  = R::dic(R::$array[R::$language]);
 
 # Database
 $db = new DbMySqli();
 
 # 데이터 체크
 $data = new Model(
-    $db->table($tables->member)->where('id',$request->id)->query()->fetch_assoc()
+    $db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
 );
 if(!isset($data->id)){
-    return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>$sysmsg->e_db_unenabled];
+    return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
 }
+
+#r
+$r = R::select(['array'=>"is_push,random_params"]);
 
 # output
 return [
     "result" => 'true',
+    'r'      => $r,
     "msg"    => $data->fetch()
 ];
 ?>

@@ -34,24 +34,22 @@ try{
 
 # resource
 R::tables();
-$sysmsg = R::dic(R::$sysmsg[R::$language]);
-$tables = R::dic(R::$tables[R::$language]);
 
 # Database
 $db = new DbMySqli();
 
 # 데이터 체크
 $data = new Model(
-    $db->table($tables->member)->where('id',$request->id)->query()->fetch_assoc()
+    $db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
 );
 if(!isset($data->id)){
-    return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>$sysmsg->e_db_unenabled];
+    return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
 }
 
 # update
 $db->autocommit(FALSE);
 try{
-    $db->table($tables->test)->where('id',$request->id)->delete();
+    $db->table(R::tables('test'))->where('id',$request->id)->delete();
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
@@ -60,6 +58,6 @@ $db->commit();
 # output
 return [
     "result" => 'true',
-    "msg"    => $sysmsg->v_delete
+    "msg"    => R::sysmsg('v_delete')
 ];
 ?>
