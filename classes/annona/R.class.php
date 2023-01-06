@@ -84,7 +84,6 @@ final class R
         if(strtolower($query) == 'dic' && count($args)){
             return (object)$args[0];
         }else if($query == 'select' && count($args)){
-            Log::d("select---->");
             return self::selectR($args[0]);
         }else if(!self::is($query)){ #이미 로드된데이터인지체크
             self::id($query);
