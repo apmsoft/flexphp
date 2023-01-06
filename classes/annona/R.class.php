@@ -7,6 +7,7 @@ use Flex\Annona\Log;
 
 final class R
 {
+    const VERSEION = '2.2.1';
     public static $language = ''; // 국가코드
 
     # resource 값
@@ -50,30 +51,31 @@ final class R
         }
     }
 
-    public static function parserArray(string $resource_name, array $res_array) : void{
-        switch($resource_name){
-            case 'sysmsg'  : self::$sysmsg[self::$language]   = $res_array; break;
-            case 'strings' : self::$strings[self::$language]  = $res_array; break;
-            case 'integers': self::$integers[self::$language] = $res_array; break;
-            case 'floats'  : self::$floats[self::$language]   = $res_array; break;
-            case 'doubles' : self::$doubles[self::$language]  = $res_array; break;
-            case 'tables'  : self::$tables[self::$language]   = $res_array; break;
-            case 'array'   : self::$array[self::$language]    = $res_array; break;
-        }
+    # 특정 리소스 키에 해당하는 값 리턴
+    private static function get(string $query, string $fieldname){
+        $r_data = match((string)$query){
+            'sysmsg','strings','integers','floats','doubles','array','tables' => self::${$query}[self::$language][$fieldname],
+            default => self::$r->{$query}[self::$language][$fieldname]
+        };
+
+        return $r_data;
     }
 
-    public static function select(string $query, string $fieldname){
-        switch($query){
-            case 'sysmsg': return self::$sysmsg[self::$language][$fieldname]; break;
-            case 'strings': return  self::$strings[self::$language][$fieldname]; break;
-            case 'integers': return  self::$integers[self::$language][$fieldname]; break;
-            case 'floats': return  self::$floats[self::$language][$fieldname]; break;
-            case 'doubles': return  self::$doubles[self::$language][$fieldname]; break;
-            case 'array': return  self::$array[self::$language][$fieldname]; break;
-            case 'tables': return  self::$tables[self::$language][$fieldname]; break;
-            default :
-                return  self::$r->{$query}[self::$language][$fieldname]; break;
+    # 특정리소스의 키에 해당하는 값들을 배열로 돌려받기
+    private static function selectR(array $params) : array 
+    {
+        $argv = [];
+        foreach($params as $query => $fieldname){
+            $columns = [ $fieldname ];
+            if(strpos($fieldname,",") !==false){
+                $columns = explode(",", $fieldname);
+            }
+
+            foreach($columns as $columname){
+                $argv[] = self::get($query,$columname);
+            }
         }
+        return $argv;
     }
 
     public static function __callStatic(string $query, array $args=[]) 
@@ -81,69 +83,56 @@ final class R
         # 배열을 dictionary Object 
         if(strtolower($query) == 'dic' && count($args)){
             return (object)$args[0];
-        }else if(!self::isUpdated($query)){
+        }else if($query == 'select' && count($args)){
+            Log::d("select---->");
+            return self::selectR($args[0]);
+        }else if(!self::is($query)){ #이미 로드된데이터인지체크
             self::id($query);
-        }else if(isset($args[0]) && is_string($args[0])){
-            return self::select($query, $args[0]);
-        }else if(isset($args[0]) && is_array($args[0])){
-            self::setIdValues($query, $args[0]);
+        }else if(isset($args[0]) && is_string($args[0])){ # 해당하는 리소스 키값 리턴
+            return self::get($query, $args[0]);
+        }else if(isset($args[0]) && is_array($args[0])){ # 해당하는 리소스 데이터 병합
+            self::mergeData($query, $args[0]);
         }
     }
 
     # 배열값 추가 머지
-    private static function setIdValues(string $query, array $args) : void
+    private static function mergeData(string $query, array $args) : void
     {
-        switch($query){
-            case 'sysmsg': self::$sysmsg[self::$language] = array_merge(self::$sysmsg[self::$language], $args); break;
-            case 'strings': self::$strings[self::$language] = array_merge(self::$strings[self::$language], $args); break;
-            case 'integers': self::$integers[self::$language] = array_merge(self::$integers[self::$language], $args); break;
-            case 'floats': self::$floats[self::$language] = array_merge(self::$floats[self::$language], $args); break;
-            case 'doubles': self::$doubles[self::$language] = array_merge(self::$doubles[self::$language], $args); break;
-            case 'array': self::$array[self::$language] = array_merge(self::$array[self::$language], $args); break;
-            case 'tables': self::$tables[self::$language] = array_merge(self::$tables[self::$language], $args); break;
+        $r_array = match((string)$query){
+            'sysmsg','strings','integers','floats','doubles','array','tables' => self::${$query}[self::$language],
+            default => self::$r->{$query}[self::$language]
+        };
+
+        if(is_array($r_array)){
+            if(property_exists(__CLASS__,$query)){
+                self::${$query}[self::$language] = array_merge(self::${$query}[self::$language], $args);
+            }else{
+                self::$r->{$query}[self::$language] = array_merge(self::$r->{$query}[self::$language], $args);
+            }
         }
     }
 
     ## JSON 데이터를 ID로 빠르게 호출하여 사용
     private static function id(string $query) : void
     {
-        switch($query){
-            case 'sysmsg':
-            case 'strings':
-            case 'integers':
-            case 'floats':
-            case 'doubles': 
-            case 'array': 
-                self::parser(self::findLanguageFile(_ROOT_PATH_.'/'._VALUES_.'/'.$query.'.json'), $query);
-            break;
-            case 'tables':
-                self::parser(self::findLanguageFile(_ROOT_PATH_.'/'._QUERY_.'/'.$query.'.json'), $query);
-            break;
+        $define_dir = match((string)$query){
+            'sysmsg','strings','integers','floats','doubles','array' => _VALUES_,
+            'tables' => _QUERY_,
+            default => ''
+        };
+        if($define_dir){
+            $filename = self::findLanguageFile(_ROOT_PATH_.'/'.$define_dir.'/'.$query.'.json');
+            self::parser($filename, $query);
         }
     }
 
-    private static function isUpdated(string $query) : bool{
-        $result = false;
-        
-        if($query=='sysmsg' && isset( self::$sysmsg[self::$language] )){ 
-            $result =true;
-        }else if($query=='strings' && isset( self::$strings[self::$language] )){ 
-            $result =true;
-        }else if($query=='integers' && isset( self::$integers[self::$language] )){ 
-            $result =true;
-        }else if($query=='floats' && isset( self::$floats[self::$language] )){ 
-            $result =true;
-        }else if($query=='doubles' && isset( self::$doubles[self::$language] )){ 
-            $result =true;
-        }else if($query=='array' && isset( self::$array[self::$language] )){ 
-            $result =true;
-        }else if($query=='tables' && isset( self::$tables[self::$language] )){ 
-            $result =true;
-        }else{
-            if(isset( self::$r->{$query}[self::$language] )){ 
-                $result =true;
-            }
-        }
+    # 데이터 로딩된 상태인지 체크
+    private static function is(string $query) : bool{
+        $result = match((string)$query){
+            'sysmsg','strings','integers','floats','doubles','array','tables' => (isset(self::${$query}[self::$language])) ?? false,
+            default => (isset(self::$r->{$query}[self::$language])) ?? false
+        };
+        // Log::d('is', (string)$result);
 
     return $result;
     }
@@ -154,7 +143,7 @@ final class R
     {
         if(!$query) throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
 
-        if(!self::isUpdated($query))
+        if(!self::is($query))
         {
             $real_filename = self::findLanguageFile($filename);
             $storage_data  = '';
@@ -174,7 +163,7 @@ final class R
                 }
 
                 if(property_exists(__CLASS__,$query)){
-                    self::parserArray($query, $data);
+                    self::${$query}[self::$language] = $data;
                 }else{
                     self::$r->{$query}[self::$language] =&$data;
                 }
@@ -205,7 +194,7 @@ final class R
     }
 
     #@ return String
-    # XML 파일이 해당언어에 해당하는 파일이 있는지 체크
+    # 파일이 해당언어에 해당하는 파일이 있는지 체크
     public static function findLanguageFile(string $filename) : String{
         $real_filename   = $filename;
         $path_parts      = pathinfo($real_filename);
@@ -216,7 +205,7 @@ final class R
     return $real_filename;
     }
 
-    #@ void
+    #@ __destruct
     public function __destruct(){
         unset(self::$sysmsg);
         unset(self::$strings);
