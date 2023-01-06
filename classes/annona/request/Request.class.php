@@ -81,7 +81,7 @@ class Request
 
 		foreach($this->headers as $k =>$v){
 			if($name == $k){
-				$header_val = strtr($v,["\""=>'','\'=>']);
+				$header_val = strtr($v,["\""=>'','\\'=>'']);
 				break;
 			}
 		}

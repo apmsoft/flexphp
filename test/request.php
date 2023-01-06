@@ -31,5 +31,5 @@ Log::d('GET',$request->fetch());
 $headers_all = $request->getHeaders();
 Log::d($headers_all);
 
-Log::d('getHeaderLine',$request->getHeaderLine('Sec-Ch-Ua-Platform'));
+Log::d('getHeaderLine',$request->getHeaderLine('Accept-Language'));
 ?>
