@@ -7,7 +7,7 @@ use Flex\Annona\Log;
 
 final class R
 {
-    const VERSEION = '2.2.1';
+    const VERSEION = '2.2.2';
     public static $language = ''; // 국가코드
 
     # resource 값
@@ -72,7 +72,7 @@ final class R
             }
 
             foreach($columns as $columname){
-                $argv[] = self::get($query,$columname);
+                $argv[$columname] = self::get($query,$columname);
             }
         }
         return $argv;
