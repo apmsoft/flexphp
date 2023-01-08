@@ -57,6 +57,35 @@ class ArrayHelper
     return $this;
     }
 
+    # 멀티 키 => 밸류 값 찾기 OR
+    public function findWhere (array $params) : ArrayHelper 
+    {
+        $result = [];
+        foreach ($this->value as $key => $value)
+        {
+            foreach ($params as $fk => $fv) {
+                if (isset($value[$fk]) && $value[$fk] == $fv){
+                    $result[] = $value;
+                }
+            }
+        }
+
+        $this->value = $result;
+    return $this;
+    }
+
+    # 중복 데이터 제거
+    public function unique(string $column_name) : ArrayHelper
+    {
+        $result = [];
+        $fd_args = array_unique(array_column($this->value, $column_name));
+        foreach($fd_args as $idx => $val){
+            $result[] = $this->value[$idx];
+        }
+        $this->value = $result;
+    return $this;
+    }
+
     # 배열 끝에 추가
     public function append(array $args) : ArrayHelper
     {

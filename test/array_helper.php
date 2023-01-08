@@ -116,6 +116,18 @@ Log::d("find all 멀티 값 방법 1",$find_all);
 $find_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->findAll("productName","I","G")->value;
 Log::d("find all 멀티 값 방법 2", $find_all);
 
+# 멀티 키=>밸류에 해당하는 값 배열 모두 찾기 OR
+$find_where_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200])->value;
+Log::d("find where ", $find_where_all);
+
+# 특정키를 중심으로 중복 데이터 제거
+$unique_arg = (new \Flex\Annona\Array\ArrayHelper( $find_where_all ))->unique("rank")->value;
+Log::d("unique_arg ", $unique_arg);
+
+# 멀티키밸 찾기와 중복 제거 findWhere -> unique
+$findwhere_unique_arg = (new \Flex\Annona\Array\ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200])->unique("rank")->value;
+Log::d("findwhere_unique_arg ", $findwhere_unique_arg);
+
 // Log::d ("=================================");
 
 # 배열 끝에 추가
