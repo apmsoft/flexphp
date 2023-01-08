@@ -1,9 +1,12 @@
 <?php
 namespace Flex\Annona\Array;
 
+use \Flex\Annona\Log;
+
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
+    private $version = '0.6';
     public function __construct(
         private array $value
     ){return $this;}
@@ -32,12 +35,22 @@ class ArrayHelper
     }
 
     # 멀티배열 중 원하는 값의 전체를 찾아 낸다
-    public function findAll(string $key, mixed $val) : ArrayHelper
+    public function findAll(string $key,...$params) : ArrayHelper
     {
+        $values = $params;
+        
+        # 배열로 들어왔는지 체크
+        if(is_array($params[0])){
+            $values = $params[0];
+        }
+
         $result = [];
-        foreach($this->value as $a){
-            if($a[$key] == $val){
-                $result[] = $a;
+        $argv = array_column($this->value, $key);
+        foreach($argv as $idx => $val){
+            foreach($values as $fval){
+                if($val == $fval){
+                    $result[] = $this->value[$idx];
+                }
             }
         }
         $this->value = $result;

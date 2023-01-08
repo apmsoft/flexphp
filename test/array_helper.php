@@ -56,7 +56,7 @@ $data = '[
 	{
 		"rank": 8,
 		"lowPrice": 27200,
-		"productName": "H",
+		"productName": "G",
 		"purchaseCnt": 0
 	},
 	{
@@ -71,15 +71,15 @@ $data = '[
 $args = json_decode($data,true);
 
 # ASC 
-$arrays_asc = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','ASC')->value;
-foreach($arrays_asc as $asc)
-{
-    Log::d( 
-        $asc['rank'], 
-        (new TextUtil( $asc['lowPrice'] ))->numberf(',')->value, 
-        $asc['productName']
-    );
-}
+// $arrays_asc = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','ASC')->value;
+// foreach($arrays_asc as $asc)
+// {
+//     Log::d( 
+//         $asc['rank'], 
+//         (new TextUtil( $asc['lowPrice'] ))->numberf(',')->value, 
+//         $asc['productName']
+//     );
+// }
 
 Log::d ("=================================");
 
@@ -100,13 +100,21 @@ Log::d ("=================================");
 // $find_first_args = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->find("productName","I")->value;
 // Log::d('find_first_args ', $find_first_args);
 
-// # find index
-// $find_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findIndex("lowPrice",27200);
-// Log::d('find_index ', $find_index);
+# 첫번째로 발견된 배열 index 키값 돌려받기
+$find_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findIndex("lowPrice",27200);
+Log::d('find_index ', $find_index);
 
-// # 검색에 해당하는 전체 배열 받기
-// $find_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findAll("lowPrice",27200)->value;
-// Log::d('find_all ', $find_all);
+# 검색에 해당하는 전체 배열 받기 => (key, value)
+$find_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findAll("lowPrice",27200)->value;
+Log::d('find_all 싱글 값', $find_all);
+
+# 특정키에 해당하는 여러가지 값에 해당하는 배열값 찾기 - 방법 1 => (key, values)
+$find_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->findAll("productName",["I","G"])->value;
+Log::d("find all 멀티 값 방법 1",$find_all);
+
+# 특정키에 해당하는 여러가지 값에 해당하는 배열값 찾기 - 방법 2  => (key, values)
+$find_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->findAll("productName","I","G")->value;
+Log::d("find all 멀티 값 방법 2", $find_all);
 
 // Log::d ("=================================");
 
