@@ -6,7 +6,7 @@ use \Flex\Annona\Log;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.6';
+    private $version = '0.8';
     public function __construct(
         private array $value
     ){return $this;}
