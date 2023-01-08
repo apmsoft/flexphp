@@ -27,6 +27,15 @@ $request->b = 'b';
 $request->c = 'c';
 Log::d('GET',$request->fetch());
 
+# method
+Log::d('METHOD', $request->method);
+
+# ip
+Log::d('IP', $request->ip);
+
+# uri
+Log::d('URI_PATH', $request->uri_path);
+
 # headers
 $headers_all = $request->getHeaders();
 Log::d($headers_all);

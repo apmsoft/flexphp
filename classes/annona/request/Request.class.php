@@ -6,11 +6,17 @@ use Flex\Log\Log;
 # _POST, _GET, 값들을 제어 및 기본작업 수행
 class Request
 {
-	private array $params = [];
-	private array $headers = [];
+	private array $params    = [];
+	private array $headers   = [];
+	public string $ip       = '';
+	public string $uri_path = '';
+	public string $method   = '';
 
-	public function __construct(){ 
-    return $this; 
+	public function __construct(){
+		$this->ip       = $this->get_client_ip();
+		$this->uri_path = (isset($_SERVER['REQUEST_URI'])) ? (parse_url($_SERVER['REQUEST_URI']))['path'] : [];
+		$this->method   = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : '';
+    return $this;
     }
 
 	#@ void
@@ -56,7 +62,7 @@ class Request
 	{
 		if (function_exists('getallheaders')) {
 			$this->headers = getallheaders();
-		} else if (!function_exists('apache_request_headers')){
+		} else if (function_exists('apache_request_headers')){
 			$this->headers = apache_request_headers();
 		} else {
 			$headers = [];
@@ -92,9 +98,23 @@ class Request
 		return $this->params;
     }
 
-	public function __get($key){
-		if(isset($this->params[$key])){
-			return $this->params[$key];
+	private static function get_client_ip() : string
+    {
+        $result = '';
+        
+        if (isset($_SERVER['HTTP_CLIENT_IP'])) $result = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $result = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED'])) $result = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR'])) $result = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED'])) $result = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR'])) $result = $_SERVER['REMOTE_ADDR'];
+
+    return $result;
+    }
+
+	public function __get($propertyName){
+		if(isset($this->params[$propertyName])){
+			return $this->params[$propertyName];
 		}
 	}
 
