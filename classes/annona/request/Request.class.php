@@ -6,12 +6,12 @@ use Flex\Log\Log;
 # _POST, _GET, 값들을 제어 및 기본작업 수행
 class Request
 {
-	private array $params    = [];
-	private array $headers   = [];
+	private array $params   = [];
+	private array $headers  = [];
 	public string $ip       = '';
 	public string $uri_path = '';
 	public string $method   = '';
-	public string $port = '';
+	public string $port     = '';
 
 	public function __construct(){
 		$this->ip       = $this->get_client_ip();
