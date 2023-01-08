@@ -36,6 +36,9 @@ Log::d('IP', $request->ip);
 # uri
 Log::d('URI_PATH', $request->uri_path);
 
+# port
+Log::d('PORT', $request->port);
+
 # headers
 $headers_all = $request->getHeaders();
 Log::d($headers_all);

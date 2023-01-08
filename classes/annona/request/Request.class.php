@@ -11,11 +11,13 @@ class Request
 	public string $ip       = '';
 	public string $uri_path = '';
 	public string $method   = '';
+	public string $port = '';
 
 	public function __construct(){
 		$this->ip       = $this->get_client_ip();
-		$this->uri_path = (isset($_SERVER['REQUEST_URI'])) ? (parse_url($_SERVER['REQUEST_URI']))['path'] : [];
+		$this->uri_path = (isset($_SERVER['REQUEST_URI'])) ? (parse_url($_SERVER['REQUEST_URI']))['path'] : '';
 		$this->method   = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : '';
+		$this->port     = (isset($_SERVER['SERVER_PORT'])) ? $_SERVER['SERVER_PORT'] : '';
     return $this;
     }
 
