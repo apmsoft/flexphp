@@ -58,14 +58,29 @@ class ArrayHelper
     }
 
     # 멀티 키 => 밸류 값 찾기 OR
-    public function findWhere (array $params) : ArrayHelper 
+    public function findWhere (array $params, string $operator='AND') : ArrayHelper 
     {
         $result = [];
+        $find_mcnt = count($params);
+        $up_operator = strtoupper($operator);
         foreach ($this->value as $key => $value)
         {
-            foreach ($params as $fk => $fv) {
-                if (isset($value[$fk]) && $value[$fk] == $fv){
-                    $result[] = $value;
+            if($up_operator == 'AND'){
+                $find_cnt = 0;
+                foreach ($params as $fk => $fv) {
+                    if (isset($value[$fk]) && $value[$fk] == $fv){
+                        $find_cnt++;
+                    }
+
+                    if($find_cnt == $find_mcnt){
+                        $result[] = $value;
+                    }
+                }
+            }else{
+                foreach ($params as $fk => $fv) {
+                    if (isset($value[$fk]) && $value[$fk] == $fv){
+                        $result[] = $value;
+                    }
                 }
             }
         }
@@ -107,6 +122,33 @@ class ArrayHelper
             $sum = array_sum($result);
         }
     return $sum;
+    }
+
+    # union
+    public function union (array $params) : ArrayHelper
+    {
+        $temp = [];
+
+        # params columns
+        $columns = [];
+        foreach($params as $uikey => $pvalue){
+            $columns[$uikey] = explode(',', $pvalue);
+        }
+
+        $arr = [];
+        foreach($this->value as $uikey => $args)
+        {
+            $index = 0;
+            foreach($args as $cidx => $cargs)
+            {
+                foreach($columns[$uikey] as $column_name){
+                    $arr[$index][$column_name] = $cargs[$column_name];
+                }
+            $index++;
+            }
+        }
+        $this->value = $arr;
+    return $this;
     }
 
     # 특정 배열의 int 값의 평균 값
