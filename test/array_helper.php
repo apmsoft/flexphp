@@ -150,8 +150,8 @@ Log::d ("=================================");
 // Log::d("unique_arg ", $unique_arg);
 
 # 멀티키밸 찾기와 중복 제거 findWhere -> unique
-$findwhere_unique_arg = (new \Flex\Annona\Array\ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200],'OR')->value;
-Log::d("findwhere_unique_arg ", $findwhere_unique_arg);
+// $findwhere_unique_arg = (new \Flex\Annona\Array\ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200],'OR')->value;
+// Log::d("findwhere_unique_arg ", $findwhere_unique_arg);
 
 // Log::d ("=================================");
 
@@ -186,12 +186,12 @@ Log::d("findwhere_unique_arg ", $findwhere_unique_arg);
 // Log::d("find all 멀티 값 방법 2", $find_all);
 
 # union
-$union = (new \Flex\Annona\Array\ArrayHelper( ["b"=>$args2,"a"=>$args,"c"=>$args3] ))
-->union(["a"=>"muid,lowPrice,productName","b"=>"name,userid","c"=>"title"])->value;
-Log::d("union", $union);
+// $union = (new \Flex\Annona\Array\ArrayHelper( ["b"=>$args2,"a"=>$args,"c"=>$args3] ))
+// ->union(["a"=>"muid,lowPrice,productName","b"=>"name,userid","c"=>"title"])->value;
+// Log::d("union", $union);
 
 # union findWhere
 $union_findall = (new \Flex\Annona\Array\ArrayHelper( ["b"=>$args2,"a"=>$args,"c"=>$args3] ))
-->union(["a"=>"muid,lowPrice,productName","b"=>"name,userid","c"=>"title"])->findAll("muid",1)->value;
+->union(["a"=>"muid,lowPrice,productName","b"=>"name,userid","c"=>"title"])->findAll("muid",1)->sorting('lowPrice','DESC')->value;
 Log::d("union_findall", $union_findall);
 ?>
