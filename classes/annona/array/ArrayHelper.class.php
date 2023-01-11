@@ -89,6 +89,32 @@ class ArrayHelper
     return $this;
     }
 
+    # 멀티 키 => 밸류 값 찾기
+    public function findWhereIndex (array $params) : int 
+    {
+        $result = -1;
+        $find_mcnt = count($params);
+        foreach ($this->value as $key => $value)
+        {
+            $find_cnt = 0;
+            foreach ($params as $fk => $fv) {
+                if (isset($value[$fk]) && $value[$fk] == $fv){
+                    $find_cnt++;
+                }
+
+                if($find_cnt == $find_mcnt){
+                    $result = $key;
+                    break;
+                }
+            }
+        
+            if($result>-1){
+                break;
+            }
+        }
+    return $result;
+    }
+
     # 중복 데이터 제거
     public function unique(string $column_name) : ArrayHelper
     {
