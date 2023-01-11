@@ -195,9 +195,10 @@ Log::d ("=================================");
 // ->union(["a"=>"muid,lowPrice,productName","b"=>"name,userid","c"=>"title"])->findAll("muid",1)->sorting('lowPrice','DESC')->value;
 // Log::d("union_findall", $union_findall);
 
-#
+# 멀티 키=>값으로 배열 index 키 찾기
 $args = json_decode('[{"muid":"385","dvmac":"5CF2864123A7","module_id":"comkwatercj"},{"muid":"27","dvmac":"5CF2864123A7"},{"muid":"226","dvmac":"5CF28643850B"},{"muid":"27","dvmac":"5CF2864123E5","module_id":"comkwatercj"},{"muid":"25","dvmac":"5CF2864123E5"}]',true);
 Log::d($args);
+
 $find_where_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123A7']);
 Log::d($find_where_index);
 $find_where_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123E5']);
