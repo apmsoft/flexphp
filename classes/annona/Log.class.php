@@ -3,7 +3,7 @@ namespace Flex\Annona;
 
 final class Log
 {
-    const VERSEION = '1.0';
+    const VERSEION = '1.1';
     const MESSAGE_FILE   = 3; # 사용자 지정 파일에 저장
     const MESSAGE_ECHO   = 2; # 화면에만 출력
     const MESSAGE_SYSTEM = 0; # syslog 시스템 로그파일에 저장
@@ -47,7 +47,7 @@ final class Log
     }
 
     # debug
-    public static function d (string|array $message, ... $message2) : void
+    public static function d (string|array|object $message, ... $message2) : void
     {
         if(in_array('d', self::$debugs)){
             $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
@@ -56,7 +56,7 @@ final class Log
     }
 
     # success
-    public static function v (string|array $message, ... $message2) : void
+    public static function v (string|array|object $message, ... $message2) : void
     {
         if(in_array('v', self::$debugs)){
             $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
@@ -65,7 +65,7 @@ final class Log
     }
 
     # info
-    public static function i (string|array $message, ... $message2) : void
+    public static function i (string|array|object $message, ... $message2) : void
     {
         if(in_array('i', self::$debugs)){
             $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
@@ -74,7 +74,7 @@ final class Log
     }
 
     # warning
-    public static function w (string|array $message, ... $message2) : void
+    public static function w (string|array|object $message, ... $message2) : void
     {
         if(in_array('w', self::$debugs)){
             $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
@@ -83,7 +83,7 @@ final class Log
     }
 
     # error
-    public static function e (string|array $message, ... $message2) : void
+    public static function e (string|array|object $message, ... $message2) : void
     {
         if(in_array('e', self::$debugs)){
             $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
@@ -91,10 +91,11 @@ final class Log
         }
     }
 
-    private static function filterMessage ( string|array $message) : string
+    private static function filterMessage ( string|array|object $message) : string
     {
         $result = $message;
-        if(is_array($message)){
+        $typeof = gettype($message);
+        if($typeof == 'array' || $typeof == 'object'){
             $result = print_r($message,true);
         }
     return $result;
