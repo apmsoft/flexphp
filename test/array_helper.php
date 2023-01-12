@@ -1,6 +1,7 @@
 <?php
 use Flex\Annona\Log;
 use Flex\Annona\Text\TextUtil;
+use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -199,8 +200,8 @@ Log::d('find_index ', $find_index);
 $args = json_decode('[{"muid":"385","dvmac":"5CF2864123A7","module_id":"comkwatercj"},{"muid":"27","dvmac":"5CF2864123A7"},{"muid":"226","dvmac":"5CF28643850B"},{"muid":"27","dvmac":"5CF2864123E5","module_id":"comkwatercj"},{"muid":"25","dvmac":"5CF2864123E5"}]',true);
 Log::d($args);
 
-$find_where_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123A7']);
+$find_where_index = (new ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123A7']);
 Log::d($find_where_index);
-$find_where_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123E5']);
+$find_where_index = (new ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123E5']);
 Log::d($find_where_index);
 ?>
