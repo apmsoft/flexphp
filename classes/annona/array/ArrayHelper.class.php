@@ -197,8 +197,11 @@ class ArrayHelper
     # index key number
     public function findIndex(string $key, mixed $val) : int
     {
-        $index = array_search($val, array_column($this->value, $key));
-    return $index;
+        $result = -1;
+        if($index = array_search($val, array_column($this->value, $key)) !== false){
+            $result = $index;
+        }
+    return $result;
     }
 
     private function asc ($a, $b ): mixed {

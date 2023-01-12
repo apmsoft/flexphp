@@ -126,8 +126,8 @@ Log::d ("=================================");
 // Log::d('find_first_args ', $find_first_args);
 
 # 첫번째로 발견된 배열 index 키값 돌려받기
-// $find_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findIndex("lowPrice",27200);
-// Log::d('find_index ', $find_index);
+$find_index = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findIndex("lowPrice",0);
+Log::d('find_index ', $find_index);
 
 # 검색에 해당하는 전체 배열 받기 => (key, value)
 // $find_all = (new \Flex\Annona\Array\ArrayHelper( $args ))->sorting('lowPrice','DESC')->findAll("productName","I", "E")->value;
