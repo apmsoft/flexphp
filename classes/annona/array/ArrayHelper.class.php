@@ -6,7 +6,7 @@ use \Flex\Annona\Log;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.8';
+    private $version = '0.9.1';
     public function __construct(
         private array $value
     ){return $this;}
@@ -30,7 +30,9 @@ class ArrayHelper
     public function find(string $key, mixed $val) : ArrayHelper
     {
         $index = self::findIndex($key, $val);
-        $this->value = $this->value[$index];
+        if($index > -1){
+            $this->value = $this->value[$index];
+        }
     return $this;
     }
 
@@ -198,7 +200,8 @@ class ArrayHelper
     public function findIndex(string $key, mixed $val) : int
     {
         $result = -1;
-        if($index = array_search($val, array_column($this->value, $key)) !== false){
+        $index = array_search($val, array_column($this->value, $key));
+        if($index !== false){
             $result = $index;
         }
     return $result;
