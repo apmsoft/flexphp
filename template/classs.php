@@ -18,11 +18,10 @@ use Flex\Annona\Date\DateTimezPeriod;
 # classes/my/bbs/Notice.class.php
 class Notice 
 {
-    DbMySqli $db;
+    private $db;
 
-    public function __construct()
-	{
-        $db = new DbMySqli();
+    public function __construct(){
+        $this->db = new \Flex\Annona\Db\DbMySqli();
     }
 
     public function doList()
@@ -43,9 +42,6 @@ class Notice
         R::tables();
         R::array();
 
-        # Database
-        $db = new DbMySqli();
-
         # Model
         $model = new Model();
         $model->total_record = 0;
@@ -55,14 +51,14 @@ class Notice
         $model->data         = [];
 
         # total record
-        $model->total_record = $db->table(R::tables('member'))->total();
+        $model->total_record = $this->db->table(R::tables('member'))->total();
 
         # pageing
         $paging = new \Flex\Annona\Paging\Relation($model->total_record, $model->page);
         $relation = $paging->query( $model->page_count, $model->block_limit)->build()->paging();
 
         # query
-        $rlt = $db->table(R::tables('member'))->select('id','name','userid','cellphone','signdate')->where(
+        $rlt = $this->db->table(R::tables('member'))->select('id','name','userid','cellphone','signdate')->where(
             (new WhereHelper)->
                 begin('OR')
                     ->case('name','LIKE',$request->q)
@@ -152,26 +148,59 @@ class Notice
             return json_decode($e->getMessage(),true);
         }
 
-        # Database
-        $db = new DbMySqli();
-
         # insert
-        $db->autocommit(FALSE);
+        $this->db->autocommit(FALSE);
         try{
-            $db['name']       = $request->name;
-            $db['email']      = $request->email;
-            $db['extract_id'] = $request->extract_id;
-            $db['signdate']   = (new DateTimez("now"))->format('Y-m-d H:i:s');
-            $db->table(R::tables('member'))->insert();
+            $this->db['name']       = $request->name;
+            $this->db['email']      = $request->email;
+            $this->db['extract_id'] = $request->extract_id;
+            $this->db['signdate']   = (new DateTimez("now"))->format('Y-m-d H:i:s');
+            $this->db->table(R::tables('member'))->insert();
         }catch(\Exception $e){
             Log::e($e->getMessage());
         }
-        $db->commit();
+        $this->db->commit();
 
         # output
         return [
             "result" => 'true',
             "msg"    => R::sysmsg('v_insert')
+        ];
+    }
+
+    public function doView()
+    {
+        # request
+        $request = (object)(new Request())->get()->fetch();
+
+        # Form Validation
+        try{
+            (new FormValidation('id','식별번호',$request->id))->null()->number();
+        }catch(\Exception $e){
+            Log::e($e->getMessage());
+            return json_decode($e->getMessage(),true);
+        }
+
+        # resource
+        R::tables();
+        R::array();
+
+        # 데이터 체크
+        $data = new Model(
+            $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
+        );
+        if(!isset($data->id)){
+            return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
+        }
+
+        #r
+        $r = R::select(['array'=>"is_push,random_params"]);
+
+        # output
+        return [
+            "result" => 'true',
+            'r'      => $r,
+            "msg"    => $data->fetch()
         ];
     }
 
@@ -192,12 +221,9 @@ class Notice
         R::tables();
         R::array();
 
-        # Database
-        $db = new DbMySqli();
-
         # 데이터 체크
         $data = new Model(
-            $db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
+            $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
         );
         if(!isset($data->id)){
             return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
@@ -232,27 +258,24 @@ class Notice
             return json_decode($e->getMessage(),true);
         }
 
-        # Database
-        $db = new DbMySqli();
-
         # 데이터 체크
         $data = new Model(
-            $db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
+            $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
         );
         if(!isset($data->id)){
             return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
 
         # update
-        $db->autocommit(FALSE);
+        $this->db->autocommit(FALSE);
         try{
-            $db['name']     = $request->name;
-            $db['email']    = $request->email;
-            $db->table(R::tables('test'))->where('id',$request->id)->update();
+            $this->db['name']     = $request->name;
+            $this->db['email']    = $request->email;
+            $this->db->table(R::tables('test'))->where('id',$request->id)->update();
         }catch(\Exception $e){
             Log::e($e->getMessage());
         }
-        $db->commit();
+        $this->db->commit();
 
         # output
         return [
@@ -277,25 +300,22 @@ class Notice
         # resource
         R::tables();
 
-        # Database
-        $db = new DbMySqli();
-
         # 데이터 체크
         $data = new Model(
-            $db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
+            $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
         );
         if(!isset($data->id)){
             return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
 
         # update
-        $db->autocommit(FALSE);
+        $this->db->autocommit(FALSE);
         try{
-            $db->table(R::tables('test'))->where('id',$request->id)->delete();
+            $this->db->table(R::tables('test'))->where('id',$request->id)->delete();
         }catch(\Exception $e){
             Log::e($e->getMessage());
         }
-        $db->commit();
+        $this->db->commit();
 
         # output
         return [
