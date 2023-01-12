@@ -23,6 +23,9 @@ $model->age = 11;
 # model 데이터 전체 
 Log::d( $model->fetch() );
 
+# 갯수
+Log::d( 'Total ',$model->length());
+
 # iseet
 if(isset($model->name)){
     Log::d( 'model name  : true' , $model->name);
