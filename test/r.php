@@ -70,7 +70,7 @@ R::init( 'ko' );
 
 #==================================================
 # 이미 선언된 Defined 리소스 ID [ res/VALUES ]
-# parserRDefinedI 로 바로 불러들일 수 있는 리소스 명
+# parserRDefinedId 로 바로 불러들일 수 있는 리소스 명
 # array, sysmsg, strings, integers, floats, doubles, tables
 #--------------------------------------------------
 # array
@@ -132,6 +132,6 @@ Log::e ( $sysmsg->w_token_isnot_match );
 
 Log::d("===============================");
 # 리소스별 원하는 키에 해당하는 값들을 배열로 뽑아내기 [키 => 값] 중복키 덮여씀
-$r = R::select(["tables"=>"member", "array"=>"random_params,is_push"]);
+$r = R::select(["strings"=>"app_name", "sysmsg"=>"v_insert,v_update","attachments"=>"Upload"]);
 Log::d('select',$r);
 ?>
