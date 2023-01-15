@@ -84,16 +84,8 @@ $find_index = (new ArrayHelper( $args ))->sorting('lowPrice','DESC')->findIndex(
 Log::d('find_index ', $find_index);
 
 # 검색에 해당하는 전체 배열 받기 => (key, value)
-$find_all = (new ArrayHelper( $args ))->findAll("productName","A", "B")->value;
-Log::d($find_all);
-
-# 특정키에 해당하는 여러가지 값에 해당하는 배열값 찾기 - 방법 1 => (key, values)
-// $find_all = (new ArrayHelper( $args ))->findAll("productName",["I","G"])->value;
-// Log::d("find all 멀티 값 방법 1",$find_all);
-
-# 특정키에 해당하는 여러가지 값에 해당하는 배열값 찾기 - 방법 2  => (key, values)
-// $find_all = (new ArrayHelper( $args ))->findAll("productName","I","G")->value;
-// Log::d("find all 멀티 값 방법 2", $find_all);
+$find_all = (new ArrayHelper( $args ))->findAll("productName","A", "G")->value;
+Log::d('find_all',$find_all);
 
 # 멀티 키=>밸류에 해당하는 값 배열 모두 찾기 AND
 $find_where_all = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200])->value;
@@ -108,8 +100,8 @@ $unique_arg = (new ArrayHelper( $args ))->unique("muid")->value;
 Log::d("unique_arg ", $unique_arg);
 
 # 멀티키밸 찾기와 중복 제거 findWhere -> unique
-// $findwhere_unique_arg = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200],'OR')->value;
-// Log::d("findwhere_unique_arg ", $findwhere_unique_arg);
+$findwhere_unique_arg = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200],'OR')->value;
+Log::d("findwhere_unique_arg ", $findwhere_unique_arg);
 
 // Log::d ("=================================");
 
