@@ -3,6 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 
 use Flex\Annona\Request\Request;
+use Flex\Annona\Model;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -16,9 +17,15 @@ Log::init(Log::MESSAGE_ECHO);
 $get_data = (new Request())->get()->fetch();
 Log::d('GET',$get_data);
 
+# model +  get
+$request = new Model( (new Request())->get()->fetch() );
+
 # POST
 $post_data = (new Request())->post()->fetch();
 Log::d('GET',$post_data);
+
+# model + post|input
+$request = new Model( (new Request())->post()->fetch() );
 
 # 
 $request = new Request();

@@ -24,31 +24,25 @@ $where = $whereHelper
 ->begin('AND')
     ->case('name','IN','홍길동,유관순')
     ->case('price','>','0')
-    ->case('signdate','is not','NULL')
-    ->end()
+    ->case('signdate','is not','NULL')->end()
 ->begin('OR')
     ->case('price','IN',[1,2,3,4,5,6])
-    ->case('price_month','>=',7)
-    ->end()
+    ->case('price_month','>=',7)->end()
 ->begin('OR')
-    ->case('title','LIKE',['이순신','대통령'])
-    ->end()
-->fetch();
-// ->where;
+    ->case('title','LIKE',['이순신','대통령'])->end()
+// ->fetch();
+->where;
 Log::d( $where );
 
 # direct
 $where2 = (new \Flex\Annona\Db\WhereHelper())
 ->begin('AND')
-    ->case('price','>','0')
-    ->end()
+    ->case('price','>','0')->end()
 ->begin('OR')
-    ->case('price_month','>=',7)
-    ->end()
+    ->case('price_month','>=',7)->end()
 ->begin('OR')
-    ->case('title','LIKE',['이순신','대통령'])
-    ->end()
-->fetch();
-// ->where;
+    ->case('title','LIKE',['이순신','대통령'])->end()
+// ->fetch();
+->where;
 Log::d( $where2 );
 ?>

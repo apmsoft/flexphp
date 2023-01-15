@@ -27,46 +27,46 @@ $tables = R::dic(R::$tables[R::$language]);
 
 $db = new DbMySqli();
 
-// $query = $db->table($tables->member)->query;
+// $query = $db->table( R::tables('member') )->query;
 // Log::d($query);
-// $data = $db->table($tables->member)->query()->fetch_assoc();
+// $data = $db->table( R::tables('member') )->query()->fetch_assoc();
 // Log::d($data);
 
-$rlt = $db->table($tables->member)->query();
+$rlt = $db->table( R::tables('member') )->query();
 while($row = $rlt->fetch_assoc()){
     Log::d($row);
 }
 $rlt->free();
 
-$query = $db->table($tables->member)->select('id','name','userid')->query;
+$query = $db->table( R::tables('member') )->select('id','name','userid')->query;
 Log::d($query);
-$data = $db->table($tables->member)->select('id','name','userid')->query()->fetch_assoc();
+$data = $db->table( R::tables('member') )->select('id','name','userid')->query()->fetch_assoc();
 Log::d('instance',$data);
 $db->free();
 
-$rlt = (new DbMySqli())->table($tables->member)->select('id','name','userid')->limit(10)->query();
+$rlt = (new DbMySqli())->table( R::tables('member') )->select('id','name','userid')->limit(10)->query();
 while($row = $rlt->fetch_assoc()){
     print_r($row);
 }
 $rlt->free();
 
-// $query = $db->table($tables->member)->where('id',1)->query;
+// $query = $db->table( R::tables('member') )->where('id',1)->query;
 // Log::d($query);
-// $data = $db->table($tables->member)->where('id',1)->query()->fetch_assoc();
+// $data = $db->table( R::tables('member') )->where('id',1)->query()->fetch_assoc();
 // Log::d($data);
-// Log::d('direct',(new DbMySqli())->table($tables->member)->where('id',1)->query()->fetch_assoc() );
+// Log::d('direct',(new DbMySqli())->table( R::tables('member') )->where('id',1)->query()->fetch_assoc() );
 
-// $query = $db->table($tables->member)->select('id','name','userid')->where('id','>',1)->query;
+// $query = $db->table( R::tables('member') )->select('id','name','userid')->where('id','>',1)->query;
 // Log::d($query);
-// $rlt = $db->table($tables->member)->select('id','name','userid')->where('id',1)->orderBy('id desc','name asc')->limit(3)->query();
+// $rlt = $db->table( R::tables('member') )->select('id','name','userid')->where('id',1)->orderBy('id desc','name asc')->limit(3)->query();
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
 // $rlt->free();
 
 # 총 레코드 수
-// $total = $db->table($tables->member)->total();
-// $total = $db->table($tables->member)->where('name','LIKE-R','김')->total();
+// $total = $db->table( R::tables('member') )->total();
+// $total = $db->table( R::tables('member') )->where('name','LIKE-R','김')->total();
 // Log::d('TOTAL',$total);
 
 # ================/==============
@@ -78,7 +78,7 @@ $rlt->free();
 # SELECT id, name,userid FROM flex_member WHERE (id IN (SELECT muid FROM flex_coupon_numbers))
 # tableSub
 #--------------
-$rlt = $db->table($tables->member)->select("id","name","userid")->where( 
+$rlt = $db->table( R::tables('member') )->select("id","name","userid")->where( 
     sprintf("id IN (%s)", $db->tableSub($tables->coupon_numbers)->select("muid")->query)
 )->query();
 while($row = $rlt->fetch_assoc()){
@@ -96,7 +96,7 @@ $rlt->free();
 ### tableSub in select, 
 ### tableSub in where
 ###
-$rlt = $db->table($tables->member)->select("id","name",
+$rlt = $db->table( R::tables('member') )->select("id","name",
     sprintf("(%s) as cnt", $db->tableSub($tables->coupon_numbers)->select("count(*)")->where('muid','>','0')->query)
 )->where(
     sprintf("id IN (%s)", $db->tableSub($tables->coupon_numbers)->select("muid")->query)
@@ -116,17 +116,17 @@ $rlt->free();
 # ===============================
 
 # Group By
-// $query = $db->table($tables->member)->selectGroupBy('id','name','signdate')->groupBy('`name`')->limit(0,10)->query;
+// $query = $db->table( R::tables('member') )->selectGroupBy('id','name','signdate')->groupBy('`name`')->limit(0,10)->query;
 // Log::d('Group By',$query);
-// $rlt = $db->table($tables->member)->selectGroupBy('id','name','signdate')->groupBy('`name`')->orderBy('name asc')->query();
+// $rlt = $db->table( R::tables('member') )->selectGroupBy('id','name','signdate')->groupBy('`name`')->orderBy('name asc')->query();
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
 
 # Group By HAVING
-// $query = $db->table($tables->member)->selectGroupBy('id','userid','count(id) as cnt','signdate')->groupBy('userid')->having('id','>','0')->query;
+// $query = $db->table( R::tables('member') )->selectGroupBy('id','userid','count(id) as cnt','signdate')->groupBy('userid')->having('id','>','0')->query;
 // Log::d('Group By HAVING',$query);
-// $rlt = $db->table($tables->member)->selectGroupBy('count(signdate) as cnt','signdate')->groupBy('signdate')->having('signdate','>','0')->query();
+// $rlt = $db->table( R::tables('member') )->selectGroupBy('count(signdate) as cnt','signdate')->groupBy('signdate')->having('signdate','>','0')->query();
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
 // }
@@ -139,12 +139,12 @@ $rlt->free();
 # ===============================
 
 # JOIN
-// $query = $db->table("{$tables->member} m", "{$tables->coupon_numbers} cn")
+// $query = $db->table("{ R::tables('member') } m", "{$tables->coupon_numbers} cn")
 // ->where('m.id','cn.muid')
 // ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')->query;
 // Log::d('join',$query);
 
-// $rlt = $db->table("{$tables->member} m","{$tables->coupon_numbers} cn")
+// $rlt = $db->table("{ R::tables('member') } m","{$tables->coupon_numbers} cn")
 // ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
 // ->where('m.id','cn.muid')
 // ->limit(3)
@@ -154,7 +154,7 @@ $rlt->free();
 // }
 
 # JOIN
-$rlt = $db->tableJoin("INNER","{$tables->member} m","{$tables->coupon_numbers} cn")
+$rlt = $db->tableJoin("INNER","{ R::tables('member') } m","{$tables->coupon_numbers} cn")
 ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
 ->on('m.id','cn.muid')
 ->limit(3)
@@ -166,14 +166,14 @@ while($row = $rlt->fetch_object()){
 
 # LEFT
 # INNER|LEFT|RIGHT|LEFT OUTTER|RIGHT OUTTER JOIN
-$query = $db->tableJoin("LEFT", "{$tables->member} m", "{$tables->coupon_numbers} cn")
+$query = $db->tableJoin("LEFT", "{ R::tables('member') } m", "{$tables->coupon_numbers} cn")
 ->on('m.id','cn.muid')
 ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
 ->query;
 Log::d('join',$query);
 
 # INNER
-$rlt = $db->tableJoin("INNER","{$tables->member} m","{$tables->coupon_numbers} cn")
+$rlt = $db->tableJoin("INNER","{ R::tables('member') } m","{$tables->coupon_numbers} cn")
 ->select('m.id','m.userid','cn.coupon_number','cn.id as cid')
 ->on('m.id','cn.muid')
 ->where("m.id", ">",30)
@@ -185,8 +185,8 @@ while($row = $rlt->fetch_assoc()){
 
 # UNION
 $rlt = $db->tableJoin("UNION",
-    $db->tableSub($tables->member)->select('id','name','userid')->query,
-    $db->tableSub($tables->member)->select('id','name','userid')->query
+    $db->tableSub( R::tables('member') )->select('id','name','userid')->query,
+    $db->tableSub( R::tables('member') )->select('id','name','userid')->query
 )->where('id', '>', 2)->limit(10)->query();
 // Log::d($rlt);
 while($row = $rlt->fetch_assoc()){
@@ -271,7 +271,7 @@ $rlt->free();
 // $data = $db->table($tables->test)->selectCrypt('id','name','signdate')->where($db->aes_decrypt('name'),'LIKE-R','유관순')->query()->fetch_assoc();
 // Log::d($data);
 
-// $query_string = $db->table($tables->member)->query;
+// $query_string = $db->table( R::tables('member') )->query;
 // $data2 = $db->query( $query_string )->fetch_assoc();
 // Log::d($data2);
 
@@ -281,7 +281,7 @@ $rlt->free();
 #######[ WhereHelper ] ##########
 # *******************************
 # ===============================
-$query = $db->table($tables->member)->select('id','name','userid')->where(
+$query = $db->table( R::tables('member') )->select('id','name','userid')->where(
     (new WhereHelper)->
         begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
         begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
@@ -289,7 +289,7 @@ $query = $db->table($tables->member)->select('id','name','userid')->where(
 )->query;
 Log::d($query);
 
-$rlt = $db->table($tables->member)->select('id','name','userid')->where(
+$rlt = $db->table( R::tables('member') )->select('id','name','userid')->where(
     (new WhereHelper)->
         begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
         begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
