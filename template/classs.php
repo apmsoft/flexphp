@@ -186,9 +186,7 @@ class Notice
         R::array();
 
         # 데이터 체크
-        $data = new Model(
-            $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
-        );
+        $data = (object) $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc();
         if(!isset($data->id)){
             return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
@@ -222,9 +220,7 @@ class Notice
         R::array();
 
         # 데이터 체크
-        $data = new Model(
-            $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
-        );
+        $data = (object) $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc();
         if(!isset($data->id)){
             return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
@@ -259,9 +255,7 @@ class Notice
         }
 
         # 데이터 체크
-        $data = new Model(
-            $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
-        );
+        $data = (object) $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc();
         if(!isset($data->id)){
             return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
@@ -301,9 +295,7 @@ class Notice
         R::tables();
 
         # 데이터 체크
-        $data = new Model(
-            $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc()
-        );
+        $data = (object) $this->db->table(R::tables('test'))->where('id',$request->id)->query()->fetch_assoc();
         if(!isset($data->id)){
             return ["result"=>"false","msg_code"=>"e_db_unenabled","msg"=>R::sysmsg('e_db_unenabled')];
         }
