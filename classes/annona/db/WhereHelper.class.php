@@ -4,7 +4,7 @@ namespace Flex\Annona\Db;
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class WhereHelper
 {
-	private $version = '1.6.1';
+	private $version = '1.6.2';
 	private $where = '';
 	private $where_group = [];
 	private $current_group = '';
@@ -82,12 +82,13 @@ class WhereHelper
 				$this->where_group[$this->current_group][] = sprintf("%s %s %s", $field_name, $condition, $value);
 			}
 			else{
-				// set
+				// set "a.name 형태인지 체크"
+				$pattern = "/^([a-zA-Z0-9]|_)+(\.)([a-zA-Z0-9]|_)/i";
 				$d_value = '';
-				if(strpos($in_value[0],'.') !==false){
+				if(preg_match($pattern, $in_value[0])){
 					$d_value = sprintf("%s %s %s", $field_name, $condition, $in_value[0]);
 				}else{
-					$__value__ = ($is_qutawrap)? sprintf("'%s'",$in_value[0]) : $in_value[0];
+					$__value__ = ($is_qutawrap) ? sprintf("'%s'",$in_value[0]) : $in_value[0];
 					$d_value = sprintf("%s %s %s", $field_name, $condition, $__value__);
 				}
 				$this->where_group[$this->current_group][] = $d_value;
