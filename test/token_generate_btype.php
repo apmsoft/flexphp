@@ -20,12 +20,12 @@ Log::options([
 $generate_string = null;
 
 # 랜덤 문자 생성 : 토큰 비교 불가
-$token = (new TokenGenerateBtype($generate_string,10))->value;
-Log::d($token);
+$random_string = (new TokenGenerateBtype($generate_string,10))->value;
+Log::d($random_string);
 
 # generate HashKey
-$token = (new TokenGenerateBtype($generate_string,10))->generateHashKey()->value;
-Log::d($token);
+$hashKey = (new TokenGenerateBtype($generate_string,10))->generateHashKey()->value;
+Log::d($hashKey);
 
 # generate Token
 $token = (new TokenGenerateBtype($generate_string,10))->generateHashKey()->generateToken()->value;

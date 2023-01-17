@@ -20,7 +20,7 @@ $authSession = new \Flex\Annona\Auth\Session( $session_types );
 # 세션에 추가할 키와 값
 $authSession->regiAuth([
     'id'     => 1,
-    'userid' => 'apmsoft@gmail.com',
+    'userid' => 'test@gmail.com',
     'level'  => 1
 ]);
 

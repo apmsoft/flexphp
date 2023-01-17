@@ -19,7 +19,7 @@ Log::options([
 ]);
 
 # class
-$module_id = 'comflexphp';
+$module_id = 'flexphp';
 
 Log::d("=========================");
 

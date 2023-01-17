@@ -26,7 +26,7 @@ $regs = [
 ];
 
 # 배열 중에서 랜덤 뽑기 10글자 : 기본 배열값중에서
-$random_text = (new \Flex\Annona\Random\Random( $regs ))->arrayRand( 20 );
+$random_text = (new \Flex\Annona\Random\Random( $regs ))->array( 20 );
 Log::d("====================================");
 Log::d('random_text', $random_text );
 Log::d("====================================");
