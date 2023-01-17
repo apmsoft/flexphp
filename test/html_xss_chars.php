@@ -73,7 +73,7 @@ $model->description = <<<EOF
 EOF;
 
 # auth
-$xssChars = new \Flex\Annona\Html\xssChars( $model->description );
+$xssChars = new \Flex\Annona\Html\XssChars( $model->description );
 
 # 태그 지우기
 Log::d('>>>>>>>> 태그 지우기');
@@ -90,17 +90,17 @@ Log::d('>>>>>>>> XSS 위험 태그 제거');
 Log::d($xssChars->cleanXssTags());
 
 # mail, href 자동 링크 만들기
-$xssChars = new \Flex\Annona\Html\xssChars( 'ex@gmail.com <br/> https://www.naver.com' );
+$xssChars = new \Flex\Annona\Html\XssChars( 'ex@gmail.com <br/> https://www.naver.com' );
 Log::d('>>>>>>>> mail, href 자동 링크 만들기');
 Log::d( $xssChars->setAutoLink() );
 
 # 웹사이트 주소에 http 있는지 체크 및 없으면 붙이기
-$xssChars = new \Flex\Annona\Html\xssChars( 'www.naver.com' );
+$xssChars = new \Flex\Annona\Html\XssChars( 'www.naver.com' );
 Log::d('>>>>>>>> 웹사이트 주소에 http 있는지 체크 및 없으면 붙이기');
 Log::d( $xssChars->setHttpUrl() );
 
 # HTML 에 하이라이트 만들기 (코드)
-$xssChars = new \Flex\Annona\Html\xssChars( '<a href="www.naver.com">네이버</a><br /><?php echo "dddd"; ?>' );
+$xssChars = new \Flex\Annona\Html\XssChars( '<a href="www.naver.com">네이버</a><br /><?php echo "dddd"; ?>' );
 Log::d('>>>>>>>> HTML 에 하이라이트 만들기 (코딩)');
 $xssChars->setAutoLink();
 Log::d( $xssChars->getXHtmlHighlight() );
@@ -109,27 +109,27 @@ Log::d( $xssChars->getXHtmlHighlight() );
 $model->contents = '<script>alert(1);</script> <span style="color:#000;"> 스판</span><p>한줄</p> <frameset>frameset</frameset><a href="www.naver.com">네이버</a><br /><?php echo "dddd"; ?>';
 
 # 본문을 TEXT 로만 출력
-$xssChars = new \Flex\Annona\Html\xssChars( (string)$model->contents );
+$xssChars = new \Flex\Annona\Html\XssChars( (string)$model->contents );
 Log::d('TEXT');
 Log::d( $xssChars->getContext('TEXT') );
 
 # 본문을 XSS 로만 출력
-$xssChars = new \Flex\Annona\Html\xssChars( $model->contents );
+$xssChars = new \Flex\Annona\Html\XssChars( $model->contents );
 Log::d('XSS');
 Log::d( $xssChars->getContext('XSS') );
 
 # 본문을 HTML 로만 출력
-$xssChars = new \Flex\Annona\Html\xssChars( $model->contents );
+$xssChars = new \Flex\Annona\Html\XssChars( $model->contents );
 Log::d('HTML');
 Log::d( $xssChars->getContext('HTML') );
 
 # 본문을 XHTML (코드) 로만 출력
-$xssChars = new \Flex\Annona\Html\xssChars( $model->contents );
+$xssChars = new \Flex\Annona\Html\XssChars( $model->contents );
 Log::d('XHTML');
 Log::d( $xssChars->getContext('XHTML') );
 
 # 본문을 XSS 로만 출력 : 허용태그
-$xssChars = new \Flex\Annona\Html\xssChars( $model->contents );
+$xssChars = new \Flex\Annona\Html\XssChars( $model->contents );
 Log::d('XSS : 이벤트 허용 태그');
 $xssChars->setAllowTags('<a>');
 $xssChars->setAllowTags('<frameset>');
