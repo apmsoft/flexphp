@@ -19,7 +19,7 @@ $text_value = (new TextUtil( '대한민국' ))->prepend( '반드시' )->append('
 Log::d( $text_value );
 
 # 문자를 지정된길이부터 특정 문자로 변경하기
-# 010-0000-7046 => 010-****-7046
+# 010-0000-1234 => 010-****-1234
 # startNumber : 시작위치(0~), endNumber : 길이, chgString : 변형될 문자
 $text_value2 = (new TextUtil( $text_value ))->replace(7, strlen($text_value), '*')->value;
 Log::d( $text_value2 );
