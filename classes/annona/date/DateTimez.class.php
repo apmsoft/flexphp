@@ -9,19 +9,24 @@ use Flex\Annona;
 
 class DateTimez extends DateTime
 {
+	const VERSEION = '1.2';
 	public DateTimeZone $dateTimeZone;
 	public string $timezone;
 	public array $location = [];
 	public array $abbreviations = [];
 
 	# time() || now || today || yesterday , Asia/Seoul
-	public function __construct(string|int $times="now", string $timezone='Asia/Seoul')
+	public function __construct(string|int $times="now", string $timezone='')
 	{
 		# timezone
-		$this->dateTimeZone = new \DateTimeZone($timezone);
-		$this->timezone      = $this->dateTimeZone->getName();
+		if(!$timezone && function_exists('date_default_timezone_get')){
+			$timezone = date_default_timezone_get();
+		}
+		$_timezone = $timezone ?? 'Asia/Seoul';
+		$this->dateTimeZone = new \DateTimeZone($_timezone);
+		$this->timezone     = $this->dateTimeZone->getName();
 		if(is_array($this->dateTimeZone->getLocation())){
-			$this->location      = $this->dateTimeZone->getLocation();
+			$this->location = $this->dateTimeZone->getLocation();
 		}
 		self::filterAbbreviations(DateTimeZone::listAbbreviations());
 

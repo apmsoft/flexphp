@@ -35,7 +35,7 @@ $model->timezone = 'Asia/Seoul';
 $dateTimez = new DateTimez(time(), $model->timezone);
 Log::d('TIMEZONE ', $dateTimez->timezone );
 Log::d('LOCATION ', $dateTimez->location );
-Log::d($dateTimez->format('Y-m-d H:i:s'));
+Log::d('DateTime ', $dateTimez->format('Y-m-d H:i:s'));
 
 Log::d ('=======================');
 
