@@ -4,12 +4,13 @@ namespace Flex\Annona\Image;
 # purpose : 이미지 효과주기
 class ImageGDS
 {
+	const VERSION = '1.2';
 	public $filename;
 
 	public $im;
 	private $quality = 100;
 	private $bgcolor = 0x7fffffff;
-	private $fontsrc, $fontangle=0, $fontcolor = [0,0,0], $fontsize = 20, $x=5, $y=5;
+	private $fontsrc, $fontangle=0, $color = [0,0,0], $fontsize = 20, $x=5, $y=5;
 
 	# 시작
 	public function __construct(string|null $filename=null){
@@ -82,7 +83,7 @@ class ImageGDS
 		self::setAlphablending($this->im);
 		self::setFilledrectangle($this->im,0,0,$width,$height,$this->bgcolor);
 
-		$fontcolor = self::setColorallocate($this->im,$this->fontcolor[0],$this->fontcolor[1],$this->fontcolor[2]);
+		$fontcolor = self::setColorallocate($this->im,$this->color[0],$this->color[1],$this->color[2]);
 		self::setFttext($this->im,$fontcolor,$text);
 		self::setSavealpha($this->im,true);
 	}
@@ -116,7 +117,7 @@ class ImageGDS
 	public function combineImageText(int $width, int $height, string $text, string|null $filename=null) : void{
 		$this->im = self::createTrueImage($width,$height);
 		self::setAntialias($this->im,true);
-		$fontcolor = self::setColorallocate($this->im,$this->fontcolor[0],$this->fontcolor[1],$this->fontcolor[2]);
+		$fontcolor = self::setColorallocate($this->im,$this->color[0],$this->color[1],$this->color[2]);
 
 		$filename = ($filename) ? $filename : $this->filename;
 		if(!$filename) throw new \Exception(__CLASS__,':'.__METHOD__.':'.__LINE__);

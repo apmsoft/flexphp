@@ -62,7 +62,7 @@ try{
     $imageGDS = new \Flex\Annona\Image\ImageGDS();
     $imageGDS->setBgColor(0x7fffffff);
     $imageGDS->setFont(_ROOT_PATH_.'/fonts/NanumMyeongjo-YetHangul.ttf');
-    $imageGDS->setFontColor([0,0,0]);
+    $imageGDS->setFontColor([213,213,213]);
     $imageGDS->setFontSize(20);
     $imageGDS->setXY(5,40);
     $imageGDS->writeTextImage(500,60,'의장, 설 앞두고 용산노인복지관');
@@ -96,6 +96,13 @@ try{
     $imageGDS->filterWatermarks($model->dir.'/gd_shadowtext.png', 3, 3, 'LB');
     $imageGDS->write($model->dir.'/gd_combine_showdowtext.png');
     Log::d($model->dir.'/gd_combine_showdowtext.png');
+
+
+    Log::d('타이틀 이미지와 합성');
+    $imageGDS = new \Flex\Annona\Image\ImageGDS($model->dir.'/gd_crop_500x150_x150_y100.jpg');
+    $imageGDS->filterWatermarks($model->dir.'/gd_title_image.png', 3, 3, 'LB');
+    $imageGDS->write($model->dir.'/gd_combine_gd_title.png');
+    Log::d($model->dir.'/gd_combine_gd_title.png');
 
 }catch(\Exception $e){
     Log::e($e->getMessage());
