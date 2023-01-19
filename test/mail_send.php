@@ -2,6 +2,8 @@
 use Flex\Annona\App;
 use Flex\Annona\Log;
 
+use Flex\Annona\Mail\MailSend;
+
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
@@ -9,12 +11,14 @@ require $path. '/config/config.inc.php';
 Log::init();
 Log::init(Log::MESSAGE_FILE, _ROOT_PATH_.'/'._DATA_.'/log.txt');
 
-$mailSend = new \Flex\Annona\Mail\MailSend();
-$mailSend->setFrom('webmaster@fancyupsoft.com', 'test');
-$mailSend->setDescription('메일전송 테스트 내용입니다.');
-$mailSend->setTo('나당', 'apmsoft@gmail.com');
-$mailSend->setTo('나당', 'ehomebuild@naver.com');
-if($mailSend->send('메일전송 테스트')){
-    Log::v('전송성공');
-}else Log::e('전송 실패');
+# 메일보내기
+try{
+    $mailSend = new MailSend();
+    $mailSend->setTo( '테스트님',  'test@naver.com');
+    $mailSend->setFrom( 'master@ddd.com', 'flexphp');
+    $mailSend->setTextPlain( "임시비밀번호 ㅇㅇㅇ" );
+    $mailSend->send( "비밀번호 찾기" );
+}catch(\Exception $e){
+    Log::e($e->getMessage());
+}
 ?>

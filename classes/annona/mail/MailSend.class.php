@@ -1,180 +1,99 @@
 <?php
-/** ======================================================
-// example
-$file_args[]=array(
-	'file_type'=>$file_row['file_type'],
-	'sfilename'=>$file_row['sfilename'],
-	'ofilename'=>$file_row['ofilename'],
-	'file_size'=>$file_row['file_size'],
-	'fullname'=>$_dir.'/'.$tables->talk.'/'.$date_dir.'/'.$file_row['sfilename']
-);
-
-$mailSend = new MailSend();
-$mailSend->setHeaderAttach($file_args);
-$mailSend->setFrom($is_member['email'], $is_member['name']);
-$mailSend->setDescription($_REQUEST['description']);
-$mailSend->setAttachmentFiles($file_args);
-$mailSend->setTo($emv, trim($emv));
-$mailSend->send($is_member['name'].'님이 글을 등록하였습니다');
-----------------------------------------------------------*/
 namespace Flex\Annona\Mail;
 
 class MailSend
 {
-	private $headers='', $description='';
+    private $to           = ['email'=>'', 'name'=>''];
+    private $from         = ['email'=>'', 'name'=>''];
+    private $headers_args = [];
+    private $message      = '';
+    private $content_type = '';
+    private $charset      = 'utf-8';
+    private $encoding     = '8bit';
+    private $boundary;
 
-	private $encoding='base64', $chrset='utf-8';
-	private $content_type = 'html';
-	private $boundary = '';
+    public function __construct(){
+        $this->boundary='=_Part_' . md5(rand() . microtime());
+        $this->headers = 'MIME-Version: 1.0' . "\r\n";
+    }
 
-	#수신자 등록
-	private array $to = [];
+    public function setTo($name,$email){
+        $this->to['email'] = $email;
+        $this->to['name'] = $name;
+    }
 
-	# 전송 인코딩 방식 설정
-	public function __construct(string $contype='', string $encoding='', string $chrset='')
-	{
-		# 인코딩 방식
-		if(!empty($encoding))
-			$this->encoding = $encoding;
+    public function setFrom($email, $name){
+        $this->from['email'] = $email;
+        $this->from['name'] = $name;
+    }
 
-		# 문자셋
-		if(!empty($chrset))
-			$this->chrset = $chrset;
+    public function setHeader($key, $value){
+        if(!isset($this->headers[$key])){
+            $this->headers_args[$key] = $value;
+        }
+    }
 
-		# Content-Type
-		if(strcmp($contype,'html') || empty($contype))
-			$this->content_type = 'plain';
+    public function setTextHtml($content){
+        $this->headers.= 'Content-Type: text/html; charset='. strtoupper($this->charset).'; format=flowed' ."\r\n";
+        $this->message.= self::encodeMessage($content) . "\r\n";
+    }
 
-		# 헤더 기본설정
-		$this->boundary= md5(uniqid(time()));
-		$this->headers = 'MIME-Version: 1.0' . "\r\n";
+    public function setTextPlain($content){
+        $this->headers.= 'Content-Type: text/plain; charset='. strtoupper($this->charset) ."\r\n";
+        $this->message.= self::encodeMessage($content) . "\r\n";
+    }
 
-	}
+    private function encodeMessage($message){
+        switch($this->encoding){
+            case 'base64':
+                $message = chunk_split(base64_encode(self::setCharet($message)));
+                $this->headers.= 'Content-Transfer-Encoding: '.$this->encoding."\n";
+            break;
+            default : $message = self::setCharet($message); break;
+        }
+    return $message;
+    }
 
-	public function setHeaderAttach(array|null $files) : void{
-		if(is_array($files) && count($files)>0)
-			$this->headers= 'Content-Type: multipart/mixed; '.'boundary="------=_Part_001_'. $this->boundary .'"'. "\r\n";
-		else
-			$this->headers.= 'Content-Type: multipart/mixed; '.'boundary="------=_Part_000_'. $this->boundary .'"'. "\r\n";
-	}
+    # 문자 출력 값이 utf-8인지 체크 후 변환하기
+    public function setCharet($msg){
+        if($this->charset=='euc-kr') return $this->isEuckrChg($msg);
+        return $this->isUTF8Chg($msg);
+    }
 
-	# 보내는 사람 이메일 주소 및 성명
-	public function setFrom($mail_addr, $name){
-		$this->headers.= 'From: '. $name .' <'. $mail_addr .'>' . "\r\n";
-	}
+    #@ return String
+    # utf-8 문자인지 체크 /--
+    public function isUTF8Chg($msg)
+    {
+        if(iconv("utf-8","utf-8",$msg)==$msg) return $msg;
+        else return iconv('euc-kr','utf-8',$msg);
+    }
 
-	# 추가헤더
-	# ex) "Reply-To: info@my_site.com" | "Return-Path: info@my_site.com"
-	public function setHeadersAppend(string $header_con){
-		$this->headers.= $header_con . "\r\n";
-	}
+    #@ return String
+    # euc-kr 문자인지 체크 /--
+    public function isEuckrChg($msg)
+    {
+        if(iconv("euc-kr","euc-kr",$msg)==$msg) return $msg;
+        else return iconv('utf-8','euc-kr',$msg);
+    }
 
-	# 메일 내용
-	public function setDescription(string $message){
-		$this->description = "\r\n";
-		$this->description.= '------=_Part_000_'.$this->boundary. "\r\n";
-		$this->description.= 'Content-Type: text/'.$this->content_type.'; charset='. strtoupper($this->chrset) ."\r\n";
-		$this->description.= 'Content-Transfer-Encoding:'. $this->encoding . "\r\n\r\n";
+    public function send($subject)
+    {
+        # to
+        $to = '=?'.strtoupper($this->charset).'?B?'.base64_encode(self::setCharet($this->to['name'])).'?= <'.$this->to['email'].'>'. "\n";
+        //$to = base64_encode(self::setCharet($this->to['name'])).'<'.$this->to['email'].'>';
+        //$this->headers .='To: '.$to. "\n";
 
-		switch($this->encoding){
-			case 'base64': $message = chunk_split(base64_encode(self::setCharet($message))); break;
-			default : $message = self::setCharet($message); break;
-		}
-		$this->description.= $message . "\r\n\r\n";
-		$this->description.= '------=_Part_000_'.$this->boundary.'--'. "\r\n";
-	}
+        # from
+        $this->headers .= 'From: =?'.strtoupper($this->charset).'?B?'.base64_encode(self::setCharet($this->from['name'])).'?= <'.$this->from['email'].'>'. "\n";
+        //$this->headers .= 'Reply-To: =?'.strtoupper($this->charset).'?B?'.base64_encode(self::setCharet($this->from['name'])).'?= <'.$this->from['email'].'>'."\n";
 
-	# 첨부파일
-	public function setAttachmentFiles(array $files) : void
-	{
-		$count = count($files);
-		for ($i=0; $i<=$count; $i++)
-		{
-			$full_filename	= $files[$i]['fullname'];
-			$filename		= $files[$i]['ofilename'];
-			$filetype		= $files[$i]['file_type'];
+        # subject
+        $subject= '=?'.strtoupper($this->charset).'?B?'.base64_encode(self::setCharet($subject)).'?=';
 
-			$tmp_contents = '';
-			if($fp = @fopen($full_filename, 'r'))
-			{
-				$tmp_contents = fread($fp, filesize($full_filename));
-				$boundary_cnt_num = '1';//($i+1);
-
-				# 파일 첨부 내용 덮입히기
-				$boundary_cnt = sprintf("%03d",$boundary_cnt_num);
-				$this->description.= '------=_Part_'.$boundary_cnt.'_'.$this->boundary. "\r\n";
-				$this->description.= 'Content-Type: '.$filetype.'; name="'.'=?'.$this->chrset.'?B?'.base64_encode($filename).'?='.'"'."\r\n";
-				$this->description.= 'Content-Disposition: inline; filename="'.'=?'.$this->chrset.'?B?'.base64_encode($filename).'?='.'"'."\r\n";
-				$this->description.= 'Content-Transfer-Encoding: base64'."\r\n\r\n";
-
-				$this->description.= chunk_split(base64_encode($tmp_contents));
-				$this->description.= "\r\n";
-
-				$this->description.= '------=_Part_'.$boundary_cnt.'_'.$this->boundary.'--'. "\r\n";
-			}
-		}
-	}
-
-	# @void
-	# 수신자 등록 및 중복 체크
-	public function setTo(string $name, string $email) : void
-	{
-		$bool = true;
-		if(is_array($this->to))
-		{
-			$count = count($this->to);
-			for($i=0; $i<$count; $i++){
-				if($this->to[$i]['email'] == $email){
-					$bool =true;
-					break;
-				}
-			}
-		}
-
-		if($bool)
-		{
-			$this->to[] = array(
-				'name' =>$name,
-				'email' => $email
-			);
-		}
-	}
-
-	# @return boolean
-	# 메일 전송
-	# ex) Mary <mary@example.com>, Kelly <kelly@example.com>
-	public function send(string $title) : bool
-	{
-		# 수신자 작업
-		$to = '';
-		$count = count($this->to);
-		for($i=0; $i<$count; $i++){
-			$to.= $this->to[$i]['name'].'<'.$this->to[$i]['email'].'>,';
-		}
-
-		if($to)
-		{
-			$to = substr($to,0,-1);
-			if(mail(
-				self::setCharet($to),														# to
-				'=?'.$this->chrset.'?B?'.base64_encode(self::setCharet($title)).'?=',		# title
-				$this->description,															# contents
-				$this->headers																# header
-			)){ return true; }
-			else return false;
-		}
-		else return false;
-	}
-
-	# 문자 출력 값이 utf-8인지 체크 후 변환하기
-	private function setCharet($msg) : string
-	{
-		# 전송된 값을 원하는 문자셋으로 변경
-		if(iconv($this->chrset,$this->chrset,$msg)==$msg){
-			return $msg;
-		}else{
-			return iconv($this->chrset, $this->chrset, $msg);
-		}
-	}
+        #send
+        if(mail($to,$subject,$this->message,$this->headers)){ return true; }else{
+            throw new \ErrorException('mail send error');
+        }
+    }
 }
 ?>
