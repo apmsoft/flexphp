@@ -54,7 +54,7 @@ try{
     // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'RB');
     // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'LB');
     // $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'LT');
-    $imageGDS->filterWatermarks($model->dir.'/thumb90100x100_j.jpeg', 5, 5, 'RT');
+    $imageGDS->filterWatermarks($model->dir.'/gd_cropthumb_120x100.jpg', 5, 5, 'RT');
     $imageGDS->write($model->dir.'/gd_watermarks.jpg');
     Log::d($model->dir.'/gd_watermarks.jpg');
 
@@ -65,7 +65,7 @@ try{
     $imageGDS->setFontColor([0,0,0]);
     $imageGDS->setFontSize(20);
     $imageGDS->setXY(5,40);
-    $imageGDS->writeTextImage(500,60,'김형오 의장, 설 앞두고 용산노인복지관');
+    $imageGDS->writeTextImage(500,60,'의장, 설 앞두고 용산노인복지관');
     $imageGDS->write($model->dir.'/gd_title_image.png');
     Log::d($model->dir.'/gd_title_image.png');
 
@@ -84,11 +84,18 @@ try{
     Log::d('그림자 텍스트 이미지');
     $imageGDS = new \Flex\Annona\Image\ImageGDS();
     $imageGDS->setFont(_ROOT_PATH_.'/fonts/NanumMyeongjo-YetHangul.ttf');
-    $imageGDS->setFontSize(20);
-    $imageGDS->setXY(5,50);
-    $imageGDS->writeShadowText(500,60,'연중돌봄학교로 ‘제2의 개교’ 맞는 고창성송초');
+    $imageGDS->setFontSize(18);
+    $imageGDS->setXY(5,33);
+    $imageGDS->writeShadowText(494,45,'연중돌봄학교로 ‘제2의 개교’ 맞는 고창성송초');
     $imageGDS->write($model->dir.'/gd_shadowtext.png');
     Log::d($model->dir.'/gd_shadowtext.png');
+
+
+    Log::d('이미지위에 그림자 텍스트 이미지 올리기');
+    $imageGDS = new \Flex\Annona\Image\ImageGDS($model->dir.'/gd_crop_500x150_x150_y100.jpg');
+    $imageGDS->filterWatermarks($model->dir.'/gd_shadowtext.png', 3, 3, 'LB');
+    $imageGDS->write($model->dir.'/gd_combine_showdowtext.png');
+    Log::d($model->dir.'/gd_combine_showdowtext.png');
 
 }catch(\Exception $e){
     Log::e($e->getMessage());
