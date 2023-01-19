@@ -46,7 +46,7 @@ class DirInfo
 	}
 
 	# 디렉토리인지 확인
-	public function isDir(string $dir) : bool{
+	protected function isDir(string $dir) : bool{
 		if(!is_dir($dir)) return false;
 	return true;
 	}

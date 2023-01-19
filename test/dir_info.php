@@ -2,6 +2,8 @@
 use Flex\Annona\App;
 use Flex\Annona\Log;
 
+use Flex\Annona\Dir\DirInfo;
+
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
@@ -13,14 +15,16 @@ Log::init(Log::MESSAGE_ECHO);
 $model = new \Flex\Annona\Model([]);
 $model->dir = sprintf("%s/%s",_ROOT_PATH_, _DATA_);
 
+Log::d($model->dir);
+
 # 하나의 디렉토리 경로 만들기
 try{
     # multi line
-    $dirInfo = new \Flex\Annona\Dir\DirInfo($model->dir);
+    $dirInfo = new DirInfo($model->dir);
     $dirInfo->makeDirectory( $model->dir.'/test1');
 
     # single line
-    (new \Flex\Annona\Dir\DirInfo($model->dir))->makeDirectory( $model->dir.'/test2');
+    (new DirInfo($model->dir))->makeDirectory( $model->dir.'/test2');
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
@@ -28,11 +32,11 @@ try{
 # 멀티 디렉토리 만들기
 try{
     # multi line
-    $dirInfo2 = new \Flex\Annona\Dir\DirInfo($model->dir.'/test1/m1/m2');
+    $dirInfo2 = new DirInfo($model->dir.'/test1/m1/m2');
     $dirInfo2->makesDir();
 
     # single line
-    (new \Flex\Annona\Dir\DirInfo($model->dir.'/test2/m1/m2'))->makesDir();
+    (new DirInfo($model->dir.'/test2/m1/m2'))->makesDir();
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
