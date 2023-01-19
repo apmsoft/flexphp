@@ -27,7 +27,7 @@ $model->{"csv_contents+"} = ['의적',date('Y-m-d H:i:s'),'홍길동'];
 $model->{"csv_contents+"} = ['애국자',date('Y-m-d H:i:s'),'유관순'];
 
 
-Log::d($model->fetch());
+Log::d($model->csv_contents);
 
 # SplFileObject 상속합니다
 # https://www.php.net/manual/en/class.splfileobject.php 

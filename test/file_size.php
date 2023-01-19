@@ -14,6 +14,7 @@ Log::setDebugs('d','e');
 $model = new \Flex\Annona\Model();
 $model->dir  = _ROOT_PATH_.'/'._UPLOAD_.'/imageadfesdfe';
 $model->picture = $model->dir.'/g0e6b3d364_640.jpg';
+Log::d($model->picture);
 
 # 파일로 파일 사이즈 구하기
 try{

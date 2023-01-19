@@ -19,6 +19,14 @@ Log::init(Log::MESSAGE_FILE, _ROOT_PATH_.'/'._DATA_.'/log.txt');
 
 Log::d('_FILES',$_FILES);
 
+#@ process : 파일업로드 명
+#@ filterExtension : 허용 파일 확장자
+#@ filterSize : 허용 최대 파일 사이즈 (단위 :M);
+#@ makeDirs : 업로드하고자 하는 디렉토리 확인 및 없을경우 자동 생성
+#@ save : 파일복사
+#@ filterOrientation : JPEG 사진 회원 바로 잡기
+#@ fetch : 업로드 파일 경로 배열로 돌려받기
+
 $upload_dir = _ROOT_PATH_.'/'._UPLOAD_.'/Upload';
 try{
     $upload_file_info = (new Upload( $upload_dir ))
