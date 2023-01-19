@@ -10,15 +10,20 @@ use \ErrorException;
 
 class DateTimezPeriod
 {
+    const VERSEION = '1.2';
     # Asia/Seoul
     public string $timezone = '';
     private array $relative_pos = [
         'year','month','day','hour','minute','second'
     ];
 
-	public function __construct(string $timezone='Asia/Seoul')
+	public function __construct(string $timezone='')
 	{
-		$this->timezone = $timezone;
+        # timezone
+		if(!$timezone && function_exists('date_default_timezone_get')){
+			$timezone = date_default_timezone_get();
+		}
+		$this->timezone = $timezone ?? 'Asia/Seoul';
     return $this;
 	}
 
