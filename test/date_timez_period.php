@@ -116,4 +116,8 @@ Log::d ('=======================','=======================');
  */
 $date_period = (new DateTimezPeriod($model->timezone))->period( date('Y-m-d'), $interval = 1, $days = 30);
 Log::d ( '시작날짜와 특정기간동안의 날짜 사이의 날짜',$date_period );
+
+
+$date_period = (new DateTimezPeriod($model->timezone))->period( date('Y-m-d'), $interval = 7, $days = 10);
+Log::d ( '시작날짜와 특정기간동안의 날짜 사이의 날짜',$date_period );
 ?>
