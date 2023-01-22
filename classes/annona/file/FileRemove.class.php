@@ -31,7 +31,7 @@ final class FileRemove extends DirObject
         if(count($this->list))
         {
             foreach($this->list as $filename){
-                Flex\Annona\Log::d($this->directory.'/'.$filename);
+                \Flex\Annona\Log::d($this->directory.'/'.$filename);
                 unlink($this->directory.'/'.$filename) or throw new ErrorException('e_file_deletion_failed');
             }
         }
