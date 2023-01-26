@@ -6,7 +6,7 @@ use \Flex\Annona\Log;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.3';
+    private $version = '0.9.5';
     public function __construct(
         private array $value
     ){return $this;}
@@ -129,6 +129,46 @@ class ArrayHelper
     return $this;
     }
 
+    # 빈데이터가 있는 배열 찾기
+    public function isnull() : ArrayHelper
+    {
+        $result = [];
+        foreach($this->value as $idx => $arg){
+            if(array_search(null, $arg)){
+                $result[$idx] = $arg;
+            }
+        }
+        $this->value = $result;
+    return $this;
+    }
+
+    # 빈데이터가 있는 배열 제거
+    public function dropnull() : ArrayHelper
+    {
+        $result = [];
+        foreach($this->value as $idx => $arg){
+            if(!in_array(null, $arg)){
+                $result[] = $arg;
+            }
+        }
+        $this->value = $result;
+    return $this;
+    }
+
+    # 빈데이터 있는 배열에 데이터 채우기
+    public function fillnull(array $filldata) : ArrayHelper
+    {
+        foreach($this->value as $idx => $arg){
+            $cur_keys = array_keys($arg,null);
+            foreach($cur_keys as $nkey){
+                if(isset($filldata[$nkey])){
+                    $this->value[$idx][$nkey] = $filldata[$nkey];
+                }
+            }
+        }
+    return $this;
+    }
+
     # 배열 끝에 추가
     public function append(array $args) : ArrayHelper
     {
@@ -137,19 +177,45 @@ class ArrayHelper
     }
 
     # 특정 배열의 int 값 sum 하기
-    public function sum(string $key) : int
+    public function sum(string $key = '') : int
     {
-        $result = [];
-        foreach($this->value as $a){
-            if(is_numeric($a[$key])){
-                $result[] = $a[$key];
-            }
-        }
-        $sum = 0;
-        if(count($result)){
-            $sum = array_sum($result);
-        }
+        $result = ($key) ? self::find_numeric($key) : $this->value;
+        $sum = ($key) ? array_sum($result) : count($result);
     return $sum;
+    }
+
+    # 특정 배열의 int 값 min 값
+    public function min(string $key = '') : int
+    {
+        $result = ($key) ? self::find_numeric($key) : array_keys($this->value);
+        $min = 0;
+        if(count($result)){
+            $min = min($result);
+        }
+    return $min;
+    }
+
+    # 특정 배열의 int 값 min 값
+    public function max(string $key = '') : int
+    {
+        $result = ($key) ? self::find_numeric($key) : array_keys($this->value);
+        $max = 0;
+        if(count($result)){
+            $max = max($result);
+        }
+    return $max;
+    }
+
+    # 특정 배열의 int 값의 평균 값
+    public function avg(string $key) : int
+    {
+        $result = self::find_numeric($key);
+        $avg = 0;
+        $cnt = count($result);
+        if($cnt>0){
+            $avg = array_sum($result) / $cnt;
+        }
+    return $avg;
     }
 
     # union
@@ -179,23 +245,6 @@ class ArrayHelper
     return $this;
     }
 
-    # 특정 배열의 int 값의 평균 값
-    public function avg(string $key) : int
-    {
-        $result = [];
-        foreach($this->value as $a){
-            if(is_numeric($a[$key])){
-                $result[] = $a[$key];
-            }
-        }
-        $avg = 0;
-        $cnt = count($result);
-        if($cnt>0){
-            $avg = array_sum($result) / $cnt;
-        }
-    return $avg;
-    }
-
     # index key number
     public function findIndex(string $key, mixed $val) : int
     {
@@ -203,6 +252,17 @@ class ArrayHelper
         $index = array_search($val, array_column($this->value, $key));
         if($index !== false){
             $result = $index;
+        }
+    return $result;
+    }
+
+    private function find_numeric (string $key) : array 
+    {
+        $result = [];
+        foreach($this->value as $a){
+            if(is_numeric($a[$key])){
+                $result[] = $a[$key];
+            }
         }
     return $result;
     }

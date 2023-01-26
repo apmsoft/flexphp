@@ -103,7 +103,7 @@ Log::d("unique_arg ", $unique_arg);
 $findwhere_unique_arg = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200],'OR')->value;
 Log::d("findwhere_unique_arg ", $findwhere_unique_arg);
 
-// Log::d ("=================================");
+Log::d ("=================================");
 
 # 배열 끝에 추가
 $append_args = [
@@ -130,6 +130,14 @@ Log::d('numeric_sum ', '총합  ', $numeric_sum);
 $numeric_avg = (new ArrayHelper( $args ))->avg('lowPrice');
 Log::d('numeric_avg ', '평균값', $numeric_avg);
 
+# 값이 [숫자]로 되어 있는 키의 MIN 값
+$numeric_min = (new ArrayHelper( $args ))->min('lowPrice');
+Log::d('numeric_sum ', 'MIN  ', $numeric_min);
+
+# 값이 [숫자]로 되어 있는 키의 MAX 값
+$numeric_max = (new ArrayHelper( $args ))->max('lowPrice');
+Log::d('numeric_sum ', 'MAX  ', $numeric_max);
+
 # union
 $a_args = [
 	["id"=>1,"name"=>"A","signdate"=>"20121100"],
@@ -145,9 +153,9 @@ $union = (new ArrayHelper( ["a"=>$a_args,"b"=>$b_args] ))
 Log::d("union", $union);
 
 # union findWhere
-// $union_findall = (new ArrayHelper( ["b"=>$args2,"a"=>$args,"c"=>$args3] ))
-// ->union(["a"=>"muid,lowPrice,productName","b"=>"name,userid","c"=>"title"])->findAll("muid",1)->sorting('lowPrice','DESC')->value;
-// Log::d("union_findall", $union_findall);
+$union_findall = (new ArrayHelper( ["b"=>$args2,"a"=>$args,"c"=>$args3] ))
+->union(["a"=>"muid,lowPrice,productName","b"=>"name,userid","c"=>"title"])->findAll("muid",1)->sorting('lowPrice','DESC')->value;
+Log::d("union_findall", $union_findall);
 
 # 멀티 키=>값으로 배열 index 키 찾기
 $args = json_decode('[{"muid":"385","dvmac":"5CF2864123A7","module_id":"comkwatercj"},{"muid":"27","dvmac":"5CF2864123A7"},{"muid":"226","dvmac":"5CF28643850B"},{"muid":"27","dvmac":"5CF2864123E5","module_id":"comkwatercj"},{"muid":"25","dvmac":"5CF2864123E5"}]',true);
@@ -155,6 +163,29 @@ Log::d($args);
 
 $find_where_index = (new ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123A7']);
 Log::d($find_where_index);
+
 $find_where_index = (new ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123E5']);
 Log::d($find_where_index);
+
+# 데이터값 중 빈값이 있는 배열만 찾기
+$test_empty = [
+	["no"=>1, "enumber"=>"201","eng"=>100, "math"=>90],
+	["no"=>'', "enumber"=>"202","eng"=>'', "math"=>100],
+	["no"=>3, "enumber"=>"203","eng"=>70, "math"=>90],
+];
+
+$fined_empty_args = (new ArrayHelper( $test_empty ))->isnull()->value;
+Log::d('fined_empty_args', $fined_empty_args);
+
+# 빈값이 있는 배열이 몇개 ?
+$fined_empty_cnt = (new ArrayHelper( $test_empty ))->isnull()->sum();
+Log::d('fined_empty_cnt', $fined_empty_cnt);
+
+# 빈값 제거 후 배열 돌려받기
+$fined_dropnull_args = (new ArrayHelper( $test_empty ))->dropnull()->value;
+Log::d('fined_dropnull_args', $fined_dropnull_args);
+
+# 빈값 데이터 채우기
+$fined_fillnull_args = (new ArrayHelper( $test_empty ))->fillnull(['no'=>0,'eng'=>0])->value;
+Log::d('fined_fillnull_args', $fined_fillnull_args);
 ?>
