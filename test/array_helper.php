@@ -152,9 +152,16 @@ $union = (new ArrayHelper( ["a"=>$a_args,"b"=>$b_args] ))
 ->value;
 Log::d("union", $union);
 
+
+# 하나의 배열에서 원하는 키로만 배열 구성하기
+$union = (new ArrayHelper( ["b"=>$b_args] ))
+->union(["b"=>"email,signdate"])
+->value;
+Log::d("union single", $union);
+
 # union findWhere
-$union_findall = (new ArrayHelper( ["b"=>$args2,"a"=>$args,"c"=>$args3] ))
-->union(["a"=>"muid,lowPrice,productName","b"=>"name,userid","c"=>"title"])->findAll("muid",1)->sorting('lowPrice','DESC')->value;
+$union_findall = (new ArrayHelper( ["b"=>$b_args,"a"=>$a_args] ))
+->union(["a"=>"id,name","b"=>"email"])->findAll("email","aa@gmail.com")->value;
 Log::d("union_findall", $union_findall);
 
 # 멀티 키=>값으로 배열 index 키 찾기
