@@ -156,13 +156,18 @@ class ArrayHelper
     }
 
     # 빈데이터 있는 배열에 데이터 채우기
-    public function fillnull(array $filldata) : ArrayHelper
+    public function fillnull(mixed $filldata) : ArrayHelper
     {
+        $is_arr = (is_array($filldata)) ? true : false;
         foreach($this->value as $idx => $arg){
             $cur_keys = array_keys($arg,null);
             foreach($cur_keys as $nkey){
-                if(isset($filldata[$nkey])){
-                    $this->value[$idx][$nkey] = $filldata[$nkey];
+                if($is_arr){
+                    if(isset($filldata[$nkey])){
+                        $this->value[$idx][$nkey] = $filldata[$nkey];
+                    }
+                }else{
+                    $this->value[$idx][$nkey] = $filldata;
                 }
             }
         }

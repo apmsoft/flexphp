@@ -185,7 +185,12 @@ Log::d('fined_empty_cnt', $fined_empty_cnt);
 $fined_dropnull_args = (new ArrayHelper( $test_empty ))->dropnull()->value;
 Log::d('fined_dropnull_args', $fined_dropnull_args);
 
+
 # 빈값 데이터 채우기
-$fined_fillnull_args = (new ArrayHelper( $test_empty ))->fillnull(['no'=>0,'eng'=>0])->value;
+$fined_fillnull_args = (new ArrayHelper( $test_empty ))->fillnull( 0 )->value;
+Log::d('fined_fillnull_args', $fined_fillnull_args);
+
+# 빈값 데이터 채우기 멀키 키별로 다르게 채우기
+$fined_fillnull_args = (new ArrayHelper( $test_empty ))->fillnull(['no'=>time(),'eng'=>0.1])->value;
 Log::d('fined_fillnull_args', $fined_fillnull_args);
 ?>
