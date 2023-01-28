@@ -3,6 +3,7 @@ namespace Flex\Annona;
 
 # purpose : php 코딩시 환경설정에 대한 값들을 관리하기 위함
 class Model{
+    private $version = '1.0.1';
     private $args = [];
 
     public function __construct(array $args=[]){
@@ -71,12 +72,8 @@ class Model{
                 preg_match_all("/({+)(.*?)(})/", $propertyName, $matches);
                 $sno = strpos($propertyName,'{');
                 $re_propertyname = substr($propertyName,0,$sno);
-
-                $pre_array =&$this->args[$re_propertyname];
-                foreach($matches[2] as $fieldName){
-                    $pre_array =&$pre_array[$fieldName];
-                }
-                $pre_array = $value;
+                $fieldName = $matches[2][0];
+                $this->args[$re_propertyname][$fieldName] = $value;
             }
             # 일반 키 => 값
             else{
