@@ -8,7 +8,7 @@ use \ErrorException;
 
 class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 {
-	private $version = '2.0.2';
+	private $version = '2.1';
 
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
@@ -40,25 +40,25 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 
 	#@ interface : ArrayAccess
 	# 사용법 : $obj["two"] = "A value";
-	public function offsetSet($offset, $value) {
+	public function offsetSet($offset, $value) : void {
 		$this->params[$offset] = $value;
 	}
 
 	#@ interface : ArrayAccess
 	# 사용법 : isset($obj["two"]); -> bool(true)
-	public function offsetExists($offset) {
+	public function offsetExists($offset) : bool{
 		return isset($this->params[$offset]);
 	}
 
 	#@ interface : ArrayAccess
 	# 사용법 : unset($obj["two"]); -> bool(false)
-	public function offsetUnset($offset) {
+	public function offsetUnset($offset) : void{
 		unset($this->params[$offset]);
 	}
 
 	#@ interface : ArrayAccess
 	# 사용법 : $obj["two"]; -> string(7) "A value"
-	public function offsetGet($offset) {
+	public function offsetGet($offset) : mixed{
 		return isset($this->params[$offset]) ? $this->params[$offset] : null;
 	}
 
@@ -264,7 +264,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
 	}
 
 	# @ interface : DBSwitch
-	public function query(string $query='', mixed $result_mode = MYSQLI_STORE_RESULT) : mixed{
+	public function query(string $query='', mixed $result_mode = MYSQLI_STORE_RESULT) : \mysqli_result|bool{
 		if(!$query) $query = $this->query = parent::get();
 
 		$result = parent::query($query, $result_mode);
