@@ -4,11 +4,11 @@ namespace Flex\Annona\Db;
 use \ArrayAccess;
 use \ErrorException;
 use Flex\Annona\Db\DbSqliteResult;
-use Flex\Annona\Db\DbInterface;
+use Flex\Annona\Db\DbSqliteInterface;
 
 # parnet : DBSqliteResult
 # purpose : sqlite 함수를 활용해 확장한다
-class DbSqlite extends DbSqliteResult implements DbInterface,ArrayAccess
+class DbSqlite extends DbSqliteResult implements DbSqliteInterface,ArrayAccess
 {
 	const CHARSET = 'utf-8';
 	private $host,$dbname;

@@ -3,10 +3,11 @@ namespace Flex\Annona\Db;
 
 use Flex\Annona\Db\QueryBuilderAbstract;
 use Flex\Annona\Request\Validation;
+use Flex\Annona\Db\DbMySqlInterface;
 use \ArrayAccess;
 use \ErrorException;
 
-class DbMySqli extends QueryBuilderAbstract implements DbInterface,ArrayAccess
+class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAccess
 {
 	private $version = '2.1';
 
