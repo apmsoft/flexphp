@@ -6,7 +6,7 @@ use \Flex\Annona\Log;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.5';
+    private $version = '0.9.6';
     public function __construct(
         private array $value
     ){return $this;}
@@ -63,15 +63,29 @@ class ArrayHelper
     public function findWhere (array $params, string $operator='AND') : ArrayHelper 
     {
         $result = [];
-        $find_mcnt = count($params);
+        $find_mcnt   = count($params);
         $up_operator = strtoupper($operator);
         foreach ($this->value as $key => $value)
         {
-            if($up_operator == 'AND'){
+            if($up_operator == 'AND')
+            {
                 $find_cnt = 0;
                 foreach ($params as $fk => $fv) {
-                    if (isset($value[$fk]) && $value[$fk] == $fv){
-                        $find_cnt++;
+                    if (isset($value[$fk])){
+                        if(is_array($fv)){
+                            $condition = $fv[0];
+                            $fvalue = $fv[1];
+                            switch($condition){
+                                case '>': if($value[$fk] > $fvalue) $find_cnt++;break;
+                                case '>=': if($value[$fk] >= $fvalue) $find_cnt++;break;
+                                case '<': if($value[$fk] < $fvalue) $find_cnt++; break;
+                                case '<=': if($value[$fk] <= $fvalue) $find_cnt++; break;
+                                case '=': if($value[$fk] = $fvalue) $find_cnt++;break;
+                                case '!=': if($value[$fk] != $fvalue) $find_cnt++;break;
+                            }
+                        }else if($value[$fk] == $fv){
+                            $find_cnt++;
+                        }
                     }
 
                     if($find_cnt == $find_mcnt){

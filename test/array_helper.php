@@ -103,6 +103,10 @@ Log::d("unique_arg ", $unique_arg);
 $findwhere_unique_arg = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200],'OR')->value;
 Log::d("findwhere_unique_arg ", $findwhere_unique_arg);
 
+# findWhere 옵션
+$find_where_allp = (new ArrayHelper( $args ))->findWhere(["lowPrice"=>[">",2000]])->value;
+Log::d("find where 비교연산자", $find_where_allp);
+
 Log::d ("=================================");
 
 # 배열 끝에 추가
