@@ -59,13 +59,12 @@ class Notice
 
         # query
         $rlt = $this->db->table(R::tables('member'))->select('id','name','userid','cellphone','signdate')->where(
-            (new WhereHelper)->
-                begin('OR')
+            (new WhereHelper))
+                ->begin('OR')
                     ->case('name','LIKE',$request->q)
                     ->case('userid','LIKE',$request->q)
-                    ->case('cellphone','LIKE',$request->q)
-                ->end()
-            ->where
+                    ->case('cellphone','LIKE',$request->q)->end()
+                ->where
         )->orderBy('id desc')->limit($paging->qLimitStart, $paging->qLimitEnd)->query();
 
         $article = ($model->total_record - $paging->pageLimit * ($paging->page - 1) ); // 순번
