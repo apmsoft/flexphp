@@ -6,7 +6,7 @@ use \Flex\Annona\Log;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.7';
+    private $version = '0.9.8';
     public function __construct(
         private array $value
     ){return $this;}
@@ -301,7 +301,7 @@ class ArrayHelper
     }
 
     private function asc ($a, $b ): mixed {
-        return ($a <=> $b) ? 1 : -1;
+        return ($a <=> $b) ? -1 : 1;
     }
 
     private function desc ($a, $b ): mixed {
