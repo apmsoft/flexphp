@@ -6,7 +6,7 @@ use \Flex\Annona\Log;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.6';
+    private $version = '0.9.7';
     public function __construct(
         private array $value
     ){return $this;}
@@ -273,6 +273,20 @@ class ArrayHelper
             $result = $index;
         }
     return $result;
+    }
+
+    # slice 배열 자르기
+    public function slice(...$params) : ArrayHelper {
+        $result = [];
+        if(count($params) > 1){
+            $result = array_slice($this->value, $params[0],$params[1]);
+        }else {
+            $result = array_slice($this->value, $params[0]);
+        }
+
+        $this->value = $result;
+
+    return $this;
     }
 
     private function find_numeric (string $key) : array 

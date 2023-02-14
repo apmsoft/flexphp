@@ -169,13 +169,13 @@ $union_findall = (new ArrayHelper( ["b"=>$b_args,"a"=>$a_args] ))
 Log::d("union_findall", $union_findall);
 
 # 멀티 키=>값으로 배열 index 키 찾기
-$args = json_decode('[{"muid":"385","dvmac":"5CF2864123A7","module_id":"comkwatercj"},{"muid":"27","dvmac":"5CF2864123A7"},{"muid":"226","dvmac":"5CF28643850B"},{"muid":"27","dvmac":"5CF2864123E5","module_id":"comkwatercj"},{"muid":"25","dvmac":"5CF2864123E5"}]',true);
-Log::d($args);
+$args2 = json_decode('[{"muid":"385","dvmac":"5CF2864123A7","module_id":"comkwatercj"},{"muid":"27","dvmac":"5CF2864123A7"},{"muid":"226","dvmac":"5CF28643850B"},{"muid":"27","dvmac":"5CF2864123E5","module_id":"comkwatercj"},{"muid":"25","dvmac":"5CF2864123E5"}]',true);
+Log::d($args2);
 
-$find_where_index = (new ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123A7']);
+$find_where_index = (new ArrayHelper( $args2 ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123A7']);
 Log::d($find_where_index);
 
-$find_where_index = (new ArrayHelper( $args ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123E5']);
+$find_where_index = (new ArrayHelper( $args2 ))->findWhereIndex(["muid"=>27,"dvmac"=>'5CF2864123E5']);
 Log::d($find_where_index);
 
 # 데이터값 중 빈값이 있는 배열만 찾기
@@ -204,4 +204,11 @@ Log::d('fined_fillnull_args', $fined_fillnull_args);
 # 빈값 데이터 채우기 멀키 키별로 다르게 채우기
 $fined_fillnull_args = (new ArrayHelper( $test_empty ))->fillnull(['no'=>time(),'eng'=>0.1])->value;
 Log::d('fined_fillnull_args', $fined_fillnull_args);
+
+# 배열 자르기 start,end index
+$slice_args1 = (new ArrayHelper( $args ))->slice(0,2)->value;
+Log::d($slice_args1);
+
+$slice_args2 = (new ArrayHelper( $args ))->slice(-1)->value;
+Log::d($slice_args2);
 ?>
