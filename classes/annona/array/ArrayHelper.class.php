@@ -196,7 +196,7 @@ class ArrayHelper
     }
 
     # 특정 배열의 int 값 sum 하기
-    public function sum(string $key = '') : int
+    public function sum(string $key = '') : int|float
     {
         $result = ($key) ? self::find_numeric($key) : $this->value;
         $sum = ($key) ? array_sum($result) : count($result);
@@ -204,7 +204,7 @@ class ArrayHelper
     }
 
     # 특정 배열의 int 값 min 값
-    public function min(string $key = '') : int
+    public function min(string $key = '') : int|float
     {
         $result = ($key) ? self::find_numeric($key) : array_keys($this->value);
         $min = 0;
@@ -215,7 +215,7 @@ class ArrayHelper
     }
 
     # 특정 배열의 int 값 min 값
-    public function max(string $key = '') : int
+    public function max(string $key = '') : int|float
     {
         $result = ($key) ? self::find_numeric($key) : array_keys($this->value);
         $max = 0;
