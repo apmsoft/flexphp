@@ -6,7 +6,7 @@ use \Flex\Annona\Log;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.8';
+    private $version = '0.9.9';
     public function __construct(
         private array $value
     ){return $this;}
@@ -226,7 +226,7 @@ class ArrayHelper
     }
 
     # 특정 배열의 int 값의 평균 값
-    public function avg(string $key) : int
+    public function avg(string $key) : int|float
     {
         $result = self::find_numeric($key);
         $avg = 0;
