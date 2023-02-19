@@ -4,6 +4,7 @@ namespace Flex\Annona\Http;
 use Flex\Annona\Log;
 
 class HttpRequest {
+    private $version = '1.0.1';
     private $urls = [];
     private $mch;
 
@@ -26,7 +27,7 @@ class HttpRequest {
         {
             $connet_url = $url["url"];
             if( isset($url['params']) ){
-                $connet_url = sprintf("%s/%s", $url['url'], $url['params'] );
+                $connet_url = sprintf("%s?%s", $url['url'], $url['params'] );
             }
 
             $ch[$idx] = curl_init($connet_url);
