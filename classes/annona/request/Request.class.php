@@ -6,7 +6,7 @@ use Flex\Log\Log;
 # _POST, _GET, 값들을 제어 및 기본작업 수행
 class Request
 {
-	private $version = '1.0.1';
+	private $version = '1.0.2';
 	private array $params   = [];
 	private array $headers  = [];
 	public string $ip       = '';
@@ -25,23 +25,19 @@ class Request
 	#@ void
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
 	public function post(bool $is_trim = true) : Request{
-		if (count($_POST)>0) { 
-			self::trimParams($_POST,$is_trim);
-		}else{
-			self::getInputContents();
-		}
+		self::trimParams($_POST,$is_trim);
     return $this;
 	}
 
 	#@ void
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
 	public function input(bool $is_trim = true) : Request{
-		self::getInputContents();
+		self::getInputContents($is_trim);
     return $this;
 	}
 
 	public function patch(bool $is_trim = true) : Request{
-		self::getInputContents();
+		self::getInputContents($is_trim);
     return $this;
 	}
 
@@ -71,7 +67,7 @@ class Request
 		}
 	}
 
-	private function getInputContents() : void 
+	private function getInputContents(bool $is_trim) : void 
 	{
 		if ($post_data = file_get_contents('php://input')) {
 			if ($post_json = json_decode($post_data, TRUE)) {
