@@ -25,31 +25,31 @@ class Request
 	#@ void
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
 	public function post(bool $is_trim = true) : Request{
-		self::trimParams($_POST,$is_trim);
+		$this->trimParams($_POST,$is_trim);
     return $this;
 	}
 
 	#@ void
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
 	public function input(bool $is_trim = true) : Request{
-		self::getInputContents($is_trim);
+		$this->getInputContents($is_trim);
     return $this;
 	}
 
 	public function patch(bool $is_trim = true) : Request{
-		self::getInputContents($is_trim);
+		$this->getInputContents($is_trim);
     return $this;
 	}
 
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
 	public function get(bool $is_trim = true) : Request{
-		self::trimParams($_GET,$is_trim);
+		$this->trimParams($_GET,$is_trim);
     return $this;
 	}
 
 	#@param boolean $is_trim [trim 앞뒤공백 비우기 함수 활성화]
 	public function delete(bool $is_trim = true) : Request{
-		self::trimParams($_GET,$is_trim);
+		$this->trimParams($_GET,$is_trim);
     return $this;
 	}
 
@@ -71,11 +71,11 @@ class Request
 	{
 		if ($post_data = file_get_contents('php://input')) {
 			if ($post_json = json_decode($post_data, TRUE)) {
-				self::trimParams($post_json,$is_trim);
+				$this->trimParams($post_json,$is_trim);
 			}else{
 				parse_str($post_data, $post_variables);
 				if (count($post_variables)>0){
-					self::trimParams($post_variables,$is_trim);
+					$this->trimParams($post_variables,$is_trim);
 				}
 			}
 		}
@@ -105,7 +105,7 @@ class Request
 	{
 		$header_val = '';
 		if(!count($this->headers)){
-			self::getHeaders();
+			$this->getHeaders();
 		}
 
 		foreach($this->headers as $k =>$v){
