@@ -19,7 +19,7 @@ Log::options([
 ]);
 
 # class
-$module_id = 'flexphp';
+$module_id = 'speeditem11';
 
 Log::d("=========================");
 
@@ -47,7 +47,7 @@ Log::d('md5   ','secret_key',$token_md5);
 Log::d("=========================");
 
 # 토큰만들기
-$token = (new TokenGenerateAtype( $module_id ))->generateHashKey('sha256')->generateToken(sprintf("%s.",$module_id))->value;
+$token = (new TokenGenerateAtype( $module_id ))->generateHashKey('md5')->generateToken(sprintf("%s.",$module_id))->value;
 Log::d('EnCrypt :',$token);
 
 # 토큰 디코딩

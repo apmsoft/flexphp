@@ -1,7 +1,7 @@
 <?php
 namespace Flex\Annona\Request;
 
-use Flex\Log\Log;
+use Flex\Annona\Log;
 
 # _POST, _GET, 값들을 제어 및 기본작업 수행
 class Request
