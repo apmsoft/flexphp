@@ -7,7 +7,7 @@ use Flex\Annona\Log;
 
 final class R
 {
-    const VERSEION = '2.2.2';
+    const VERSEION = '2.2.3';
     public static $language = ''; // 국가코드
 
     # resource 값
@@ -61,6 +61,15 @@ final class R
         return $r_data;
     }
 
+    private static function fetch(string $query): array{
+        $r_data = match((string)$query){
+            'sysmsg','strings','integers','floats','doubles','array','tables' => self::${$query}[self::$language],
+            default => self::$r->{$query}[self::$language]
+        };
+
+        return $r_data;
+    }
+
     # 특정리소스의 키에 해당하는 값들을 배열로 돌려받기
     private static function selectR(array $params) : array 
     {
@@ -83,6 +92,8 @@ final class R
         # 배열을 dictionary Object 
         if(strtolower($query) == 'dic' && count($args)){
             return (object)$args[0];
+        }else if(($query == 'fetch') && (isset($args[0]) && is_string($args[0])) ){
+            return self::fetch($args[0]);
         }else if($query == 'select' && count($args)){
             return self::selectR($args[0]);
         }else if(!self::is($query)){ #이미 로드된데이터인지체크
@@ -149,7 +160,7 @@ final class R
             $storage_data  = file_get_contents($real_filename);
             if($storage_data)
             {
-                $data = self::cleanJSON($storage_data,true);
+                $data = self::filterJSON($storage_data,true);
                 if(!is_array($data))
                 {
                     $e_msg = '';
@@ -171,7 +182,7 @@ final class R
     }
 
     # 버전별 AND CLEAN
-    public static function cleanJSON($json, $assoc = false, $depth = 512, $options = 0) : Array {
+    public static function filterJSON($json, $assoc = false, $depth = 512, $options = 0) : mixed {
         # // 주석제거
         $json=preg_replace('/(?<!\S)\/\/\s*[^\r\n]*/', '', $json);
         $json = strtr($json,array("\n"=>'',"\t"=>'',"\r"=>'')); 

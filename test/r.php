@@ -101,12 +101,17 @@ R::strings();
 R::sysmsg();
 // Log::d('sysmsg',R::$sysmsg);
 
+# fetch return array
+R::fetch('tables');
+Log::d('fetch function',R::fetch('tables'));
+
 # 예외 상황 체크 : 이미 선언된 Defined 리소스 ID 외의 것을 호출할 경우
 R::ddd();
 // Log::d('ddd',R::$ddd);
 
 # r
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/attachments.json', 'attachments');
+Log::d('fetch attachments',R::fetch('attachments'));
 
 Log::d("===============================");
 
