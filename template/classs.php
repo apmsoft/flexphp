@@ -2,7 +2,6 @@
 namespace Flex\My\BBS;
 # classes/my/bbs
 
-use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
@@ -37,10 +36,6 @@ class Notice
             Log::e($e->getMessage());
             return json_decode($e->getMessage(),true);
         }
-
-        # resource
-        R::tables();
-        R::array();
 
         # Model
         $model = new Model();
