@@ -18,7 +18,6 @@ class WhereHelper
 	{
 		$this->where = '';
 		self::init();
-	return $this;
 	}
 
 	# void

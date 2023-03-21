@@ -4,7 +4,6 @@ namespace Flex\Annona\Uuid;
 class UuidGenerator
 {
 	public function __construct(){
-	return $this;
 	}
 
 	#@ String

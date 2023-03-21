@@ -11,7 +11,6 @@ class Encrypt
 
 	public function __construct(string $str){
 		$this->encrypt_str = $str;
-	return $this;
 	}
 
 	# md5

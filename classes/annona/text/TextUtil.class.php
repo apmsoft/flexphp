@@ -8,7 +8,6 @@ class TextUtil
 
 	public function __construct(string $s){
 		$this->value = $s;
-	return $this;
 	}
 
 	# 기존문자에 문자 덮붙이기

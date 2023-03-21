@@ -20,7 +20,6 @@ class FileSize
 			$this->filename = $filenamez;
 			$this->filesize_bytes = filesize($this->filename);
 		}
-	return $this;
 	}
 
 	# 파일사이즈 등록

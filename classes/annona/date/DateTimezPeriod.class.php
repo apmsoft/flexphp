@@ -24,7 +24,6 @@ class DateTimezPeriod
 			$timezone = date_default_timezone_get();
 		}
 		$this->timezone = $timezone ?? 'Asia/Seoul';
-    return $this;
 	}
 
     /**

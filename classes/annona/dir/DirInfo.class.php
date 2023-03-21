@@ -10,8 +10,6 @@ class DirInfo
 	public function __construct(string $dir)
 	{
 		$this->directory = $dir;
-
-	return $this;
 	}
 
 	# 복수 폴더 만들기

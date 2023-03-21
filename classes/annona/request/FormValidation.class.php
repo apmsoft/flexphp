@@ -16,7 +16,6 @@ class FormValidation extends Validation
         $this->fieldName = $fieldName;
         $this->title = $title;
         parent::__construct($value);
-    return $this; 
     }
 
     # 필수 옵션

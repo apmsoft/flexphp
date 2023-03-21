@@ -9,7 +9,7 @@ class ArrayHelper
     private $version = '0.9.9';
     public function __construct(
         private array $value
-    ){return $this;}
+    ){}
 
     # 멀티배열 키의 값으로 소팅 [{},{}]
     # sort : asc | desc

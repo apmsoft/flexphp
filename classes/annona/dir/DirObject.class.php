@@ -7,7 +7,6 @@ use Flex\Annona\Dir\DirInfo;
 class DirObject extends DirInfo{
     public function __construct(string $dir){
         parent::__construct($dir);
-    return $this;
     }
 
     #@ return array

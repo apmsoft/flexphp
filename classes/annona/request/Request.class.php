@@ -19,7 +19,6 @@ class Request
 		$this->uri_path = (isset($_SERVER['REQUEST_URI'])) ? (parse_url($_SERVER['REQUEST_URI']))['path'] : '';
 		$this->method   = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : '';
 		$this->port     = (isset($_SERVER['SERVER_PORT'])) ? $_SERVER['SERVER_PORT'] : '';
-    return $this;
     }
 
 	#@ void

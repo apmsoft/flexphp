@@ -32,8 +32,6 @@ class DateTimez extends DateTime
 
 		# datetime
 		parent::__construct(self::chkTimestamp($times), $this->dateTimeZone);
-
-	return $this;
 	}
 
 	private function filterAbbreviations(array $args) : void 

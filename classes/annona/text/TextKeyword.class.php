@@ -23,7 +23,6 @@ class TextKeyword
 			$this->value = $keyword;
 			self::cleanWord();
 		}
-	return $this;
 	}
 
 	# 특수문자 제거 및 단어별 배열로 리턴

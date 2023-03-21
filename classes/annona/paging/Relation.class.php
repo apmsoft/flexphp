@@ -29,7 +29,6 @@ class Relation
 	public function __construct(int $totalRecord, int $page){
 		$this->totalRecord	= $totalRecord;
 		$this->page			= (!empty($page)) ? $page : 1;
-	return $this;
 	}
 
 	# 2 한페이지에 출력할 레코드 갯수

@@ -11,7 +11,6 @@ final class FileRemove extends DirObject
 
 	final function __construct(string $dir) {
         parent::__construct($dir);
-    return $this;
 	}
 
     # 디렉토리내 파일 찾기

@@ -16,7 +16,6 @@ class Storage extends SplFileObject
         if (parent::isFile()) {
             $this->file_name = parent::getRealPath();
         }
-    return $this;
     }
 
     #@ 파일쓰기

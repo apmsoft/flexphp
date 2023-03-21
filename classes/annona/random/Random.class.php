@@ -15,7 +15,6 @@ class Random {
 		if(is_array($regs) && count($regs)){
 			$this->regs = $regs;
 		}
-	return $this;
 	}
 
 	# 숫자로 정해진 범위의 숫자로 난수를 만드어 낸다

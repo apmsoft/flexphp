@@ -30,7 +30,6 @@ class Upload extends DirInfo
     public function __construct(string $directory)
 	{
         parent::__construct($directory);
-	return $this;
 	}
 
     # 2 첨부파일
