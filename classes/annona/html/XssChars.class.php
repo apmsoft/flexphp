@@ -119,7 +119,6 @@ class XssChars
 				$this->description = strtr($this->description,["\r\n"=>"\n"]);
 				$this->description = strtr($this->description,["\n"=>"<br>"]);
 				$this->description = strtr($this->description,["<br/>"=>"<br>"]);
-				$this->description = strtr($this->description,["<br><br>"=>"<br>"]);
 				$this->description = self::setAutoLink();
 				$this->description = self::cleanXssTags();
 				break;
