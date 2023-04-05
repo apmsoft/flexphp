@@ -50,7 +50,7 @@ class HttpRequest {
         {
             if(curl_getinfo($ch[$index], CURLINFO_HTTP_CODE) != 200){
                 throw new \Exception(
-                    'ERROR CODE : '.curl_getinfo($ch[$index], CURLINFO_HTTP_CODE).
+                    'HTTP status code : '.curl_getinfo($ch[$index], CURLINFO_HTTP_CODE).
                     " | URL : ".curl_getinfo($ch[$index], CURLINFO_EFFECTIVE_URL)
                 );
             }
@@ -92,7 +92,7 @@ class HttpRequest {
         {
             if(curl_getinfo($ch[$index], CURLINFO_HTTP_CODE) != 200){
                 throw new \Exception(
-                    'ERROR CODE : '.curl_getinfo($ch[$index], CURLINFO_HTTP_CODE).
+                    'HTTP status code : '.curl_getinfo($ch[$index], CURLINFO_HTTP_CODE).
                     " | URL : ".curl_getinfo($ch[$index], CURLINFO_EFFECTIVE_URL)
                 );
             }
