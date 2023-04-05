@@ -1,8 +1,6 @@
 <?php
 namespace Flex\Annona\Http;
 
-use Flex\Annona\Log;
-
 class HttpRequest {
     private $version = '1.0.2';
     private $urls = [];
