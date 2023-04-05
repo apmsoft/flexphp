@@ -4,14 +4,14 @@ namespace Flex\Annona\Http;
 use Flex\Annona\Log;
 
 class HttpRequest {
-    private $version = '1.0.1';
+    private $version = '1.0.2';
     private $urls = [];
     private $mch;
 
     # 생성자
     public function __construct($argv){
         if(!is_array($argv)){
-            throw new ErrorException(__CLASS__.' :: '.__LINE__.' is not array');
+            throw new \Exception(__CLASS__.' :: '.__LINE__.' is not array');
         }
         $this->urls = $argv;
         $this->mch = curl_multi_init();
@@ -46,8 +46,15 @@ class HttpRequest {
             curl_multi_select($this->mch);
         } while ($running > 0);
 
-        foreach(array_keys($ch) as $index){
-            #Log::d(curl_getinfo($ch[$index], CURLINFO_HTTP_CODE), curl_getinfo($ch[$index], CURLINFO_EFFECTIVE_URL));
+        foreach(array_keys($ch) as $index)
+        {
+            if(curl_getinfo($ch[$index], CURLINFO_HTTP_CODE) != 200){
+                throw new \Exception(
+                    'ERROR CODE : '.curl_getinfo($ch[$index], CURLINFO_HTTP_CODE).
+                    " | URL : ".curl_getinfo($ch[$index], CURLINFO_EFFECTIVE_URL)
+                );
+            }
+            
             $response[$index] = curl_multi_getcontent($ch[$index]);
             curl_multi_remove_handle($this->mch, $ch[$index]);
         }
@@ -81,8 +88,15 @@ class HttpRequest {
             curl_multi_select($this->mch);
         } while ($running > 0);
 
-        foreach(array_keys($ch) as $index){
-            #Log::d(curl_getinfo($ch[$index], CURLINFO_HTTP_CODE), curl_getinfo($ch[$index], CURLINFO_EFFECTIVE_URL));
+        foreach(array_keys($ch) as $index)
+        {
+            if(curl_getinfo($ch[$index], CURLINFO_HTTP_CODE) != 200){
+                throw new \Exception(
+                    'ERROR CODE : '.curl_getinfo($ch[$index], CURLINFO_HTTP_CODE).
+                    " | URL : ".curl_getinfo($ch[$index], CURLINFO_EFFECTIVE_URL)
+                );
+            }
+
             $response[$index] = curl_multi_getcontent($ch[$index]);
             curl_multi_remove_handle($this->mch, $ch[$index]);
         }
