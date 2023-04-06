@@ -1,5 +1,5 @@
 <?php 
-namespace Flex\Component;
+namespace Flex\Components\Schema;
 
 use Flex\Component\ColumnsEnum;
 

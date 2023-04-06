@@ -1,5 +1,5 @@
 <?php 
-namespace Flex\Component;
+namespace Flex\Components\Columns;
 
 interface ColumnsInterface {
     public function name() : string;

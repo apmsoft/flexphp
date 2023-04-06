@@ -1,8 +1,8 @@
 <?php 
-namespace Flex\Component;
+namespace Flex\Components\Columns;
 
-use Flex\Component\ColumnsInterface;
-use Flex\Component\EntryArrayTrait;
+use Flex\Components\Columns\ColumnsInterface;
+use Flex\Components\Columns\EntryArrayTrait;
 use Flex\Annona\R;
 use Flex\Annona\Log;
 
@@ -165,20 +165,6 @@ enum ColumnsEnum implements ColumnsInterface
         };
     }
 
-    static public function fetchByName(string $name) : array 
-    {
-        $NAME = strtoupper($name);
-        $enum = constant("self::{$NAME}");
-        $result = [
-            'name'         => $enum->name(),
-            'label'        => $enum->label(),
-            'valueType'    => $enum->valueType(),
-            'valueDefault' => $enum->valueDefault(),
-            'type'         => $enum->type(),
-            'length'       => $enum->length(),
-            'typeNull'     => $enum->typeNull()
-        ];
-    return $result;
-    }
+    
 }
 ?>

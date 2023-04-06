@@ -3,10 +3,10 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Component\Columns;
+use Flex\Components\Columns\ColumnsEnum;
 use Flex\Annona\Array\ArrayHelper;
 
-$path = dirname(__DIR__);
+$path = dirname(dirname(__DIR__));
 require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;
@@ -23,24 +23,24 @@ Log::options([
 R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns.json', 'columns');
 
 Log::d(
-    'column name : '.Columns::NAME->name(),
-    'column label : '.Columns::NAME->label(),
-    'column type : '.Columns::NAME->type(),
-    'column 길이 : '.Columns::NAME->length(),
-    '데이터 타입 : '.Columns::NAME->valueType()
+    'column name : '.ColumnsEnum::NAME->name(),
+    'column label : '.ColumnsEnum::NAME->label(),
+    'column type : '.ColumnsEnum::NAME->type(),
+    'column 길이 : '.ColumnsEnum::NAME->length(),
+    '데이터 타입 : '.ColumnsEnum::NAME->valueType()
 );
 
 # 전체 구조 출력
-Log::d(Columns::cases());
+Log::d(ColumnsEnum::cases());
 
 // # 이름만 배열로 받기
-Log::d( Columns::names());
+Log::d( ColumnsEnum::names());
 
 # 이름에 해당하는 name,type,length,valueType 배열로 받기
-Log::d( Columns::fetchByName('ID'));
+Log::d( ColumnsEnum::fetchByName('ID'));
 
 # 전체 타일
-foreach(Columns::names() as $_NAME) {
-    Log::d(Columns::fetchByName( $_NAME ));
+foreach(ColumnsEnum::names() as $_NAME) {
+    Log::d(ColumnsEnum::fetchByName( $_NAME ));
 }
 ?>

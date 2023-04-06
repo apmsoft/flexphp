@@ -1,5 +1,5 @@
 <?php 
-namespace Flex\Component;
+namespace Flex\Components\Validation;
 
 use Flex\Annona\Request\FormValidation;
 use Flex\Component\ColumnsEnum;
@@ -124,6 +124,16 @@ class Validation
         try{
             (new FormValidation(ColumnsEnum::EXTRACT_ID->name(), ColumnsEnum::EXTRACT_ID->label(),$value))
             ->null()->disliking(['_','-']);
+        }catch(\Exception $e){ throw new \Exception($e->getMessage());}
+
+    return $this;
+    }
+
+    public function extract_data (string $value) : Validation 
+    {
+        try{
+            (new FormValidation(ColumnsEnum::EXTRACT_DATA->name(), ColumnsEnum::EXTRACT_DATA->label(),$value))
+            ->null()->jsonf();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
     return $this;

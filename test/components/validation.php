@@ -5,7 +5,7 @@ use Flex\Annona\R;
 
 use Flex\Component\Validation;
 
-$path = dirname(__DIR__);
+$path = dirname(dirname(__DIR__));
 require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;
