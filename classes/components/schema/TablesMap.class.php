@@ -5,7 +5,7 @@ use Flex\Components\Schema\TablesEnum;
 use Flex\Components\Schema\Tables;
 use Flex\Annona\Model;
 
-class TablesModel extends Tables
+class TablesMap extends Tables
 {
     private Model $model;
     public function __construct(){
@@ -14,7 +14,7 @@ class TablesModel extends Tables
     }
 
     # 모델1
-    public function _basic1() : TablesModel {
+    public function _basic1() : TablesMap {
         $this->model->{"map+"} = parent::member();
         $this->model->{"map+"} = parent::member_point();
         $this->model->{"map+"} = parent::alarm();
@@ -26,7 +26,7 @@ class TablesModel extends Tables
     }
 
     # 쇼핑몰
-    public function _item() : TablesModel
+    public function _item() : TablesMap
     {
         $this->model->{"map+"} = parent::item_cart();
         $this->model->{"map+"} = parent::item_cart_buynow();

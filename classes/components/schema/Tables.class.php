@@ -3,58 +3,30 @@ namespace Flex\Components\Schema;
 
 use Flex\Components\Schema\SchemaGenerator;
 use Flex\Components\Schema\TablesEnum;
+use Flex\Components\Columns\ColumnsEnum;
 
 class Tables extends SchemaGenerator
 {
     public function __construct(){}
 
-    # 장바구니
-    public function item_cart() : string
-    {
-        parent::__construct(TablesEnum::ITEM_CART->value, TablesEnum::ITEM_CART->label());
-        $this->columns('id','cartid','item_id','muid','total','signdate','items');
-        $this->primaryKey('id');
-        $this->indexKey(['cartid'=>'cartid','item_id'=>'item_id','mitemid'=>'item_id,muid']);
-        return $this->create();
-    }
-
-    # 바로구매
-    public function item_cart_buynow() : string
-    {
-        parent::__construct(TablesEnum::ITEM_CART_BUYNOW->value, TablesEnum::ITEM_CART_BUYNOW->label());
-        $this->columns('id','cartid','item_id','muid','total','signdate','items');
-        $this->primaryKey('id');
-        $this->indexKey(['cartid'=>'cartid','item_id'=>'item_id','mitemid'=>'item_id,muid']);
-        return $this->create();
-    }
-
-    # 상품
-    public function item() : string
-    {
-        parent::__construct(TablesEnum::ITEM->value, TablesEnum::ITEM->label());
-        $this->columns('id','gid','signdate','muid','title','list_price','price','sale_price','point','sold_out','option1','option2','origin','delivery_fee','delivery_fee','is_after_delivery','individual_delivery','hashtags','description','extract_id','extract_data');
-        $this->primaryKey('id');
-        $this->indexKey(['gid'=>'gid']);
-        return $this->create();
-    }
-
-    # 상품그룹
-    public function item_group() : string
-    {
-        parent::__construct(TablesEnum::ITEM_GROUP->value, TablesEnum::ITEM_GROUP->label());
-        $this->columns('id','fid','title','reply_count','item_count','is_print');
-        $this->primaryKey('id');
-        $this->indexKey(['fid'=>'fid','is_print'=>'is_print','fidprint'=>'fid,is_print']);
-        return $this->create();
-    }
-
     # 관리자(매니저)
     public function manager() : string
     {
         parent::__construct(TablesEnum::MANAGER->value, TablesEnum::MANAGER->label());
-        $this->columns('id','signdate','recently_connect_date','logout_time','alarm_readdate','level','userid','passwd','name','ip');
-        $this->primaryKey('id');
-        $this->indexKey(['userid'=>'userid']);
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::RECENTLY_CONNECT_DATE->value,
+            ColumnsEnum::LOGOUT_TIME->value,
+            ColumnsEnum::ALARM_READDATE->value,
+            ColumnsEnum::LEVEL->value,
+            ColumnsEnum::USERID->value,
+            ColumnsEnum::PASSWD->value,
+            ColumnsEnum::NAME->value,
+            ColumnsEnum::IP->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey(['userid'=>ColumnsEnum::USERID->value]);
         return $this->create();
     }
 
@@ -62,9 +34,28 @@ class Tables extends SchemaGenerator
     public function member() : string
     {
         parent::__construct(TablesEnum::MEMBER->value, TablesEnum::MEMBER->label());
-        $this->columns('id','signdate','up_date','recently_connect_date','logout_time','alarm_readdate','userid','passwd','level','cellphone','name','introduce','authemailkey','is_push','point','recommand','extract_id','extract_data');
-        $this->primaryKey('id');
-        $this->indexKey(['userid'=>'userid']);
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::UP_DATE->value,
+            ColumnsEnum::RECENTLY_CONNECT_DATE->value,
+            ColumnsEnum::LOGOUT_TIME->value,
+            ColumnsEnum::ALARM_READDATE->value,
+            ColumnsEnum::USERID->value,
+            ColumnsEnum::PASSWD->value,
+            ColumnsEnum::LEVEL->value,
+            ColumnsEnum::CELLPHONE->value,
+            ColumnsEnum::NAME->value,
+            ColumnsEnum::INTRODUCE->value,
+            ColumnsEnum::AUTHEMAILKEY->value,
+            ColumnsEnum::IS_PUSH->value,
+            ColumnsEnum::POINT->value,
+            ColumnsEnum::RECOMMAND->value,
+            ColumnsEnum::EXTRACT_ID->value,
+            ColumnsEnum::EXTRACT_DATA->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey(['userid'=>ColumnsEnum::USERID->value]);
         return $this->create();
     }
 
@@ -72,9 +63,15 @@ class Tables extends SchemaGenerator
     public function member_point() : string
     {
         parent::__construct(TablesEnum::MEMBER_POINT->value, TablesEnum::MEMBER_POINT->label());
-        $this->columns('id','muid','point','signdate','title');
-        $this->primaryKey('id');
-        $this->indexKey(['muid'=>'muid']);
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::POINT->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::TITLE->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey(['muid'=>ColumnsEnum::MUID->value]);
         return $this->create();
     }
 
@@ -82,9 +79,19 @@ class Tables extends SchemaGenerator
     public function bbs_notice() : string
     {
         parent::__construct(TablesEnum::BBS_NOTICE->value, TablesEnum::BBS_NOTICE->label());
-        $this->columns('id','signdate','category','muid','headline','title','extract_id','extract_data','description');
-        $this->primaryKey('id');
-        $this->indexKey(['headline'=>'headline']);
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::CATEGORY->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::HEADLINE->value,
+            ColumnsEnum::TITLE->value,
+            ColumnsEnum::EXTRACT_ID->value,
+            ColumnsEnum::EXTRACT_DATA->value,
+            ColumnsEnum::DESCRIPTION->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey(['headline'=>ColumnsEnum::HEADLINE->value]);
         return $this->create();
     }
 
@@ -92,9 +99,19 @@ class Tables extends SchemaGenerator
     public function bbs_faq() : string
     {
         parent::__construct(TablesEnum::BBS_FAQ->value, TablesEnum::BBS_FAQ->label());
-        $this->columns('id','signdate','category','muid','headline','title','extract_id','extract_data','description');
-        $this->primaryKey('id');
-        $this->indexKey(['headline'=>'headline']);
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::CATEGORY->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::HEADLINE->value,
+            ColumnsEnum::TITLE->value,
+            ColumnsEnum::EXTRACT_ID->value,
+            ColumnsEnum::EXTRACT_DATA->value,
+            ColumnsEnum::DESCRIPTION->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey(['headline'=>ColumnsEnum::HEADLINE->value]);
         return $this->create();
     }
 
@@ -102,9 +119,24 @@ class Tables extends SchemaGenerator
     public function bbs_qna() : string
     {
         parent::__construct(TablesEnum::BBS_QNA->value, TablesEnum::BBS_QNA->label());
-        $this->columns('id','fid','signdate','muid','wid','headline','category','title','extract_id','extract_data','description');
-        $this->primaryKey('id');
-        $this->indexKey(['headline'=>'headline','fid'=>'fid']);
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::FID->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::WID->value,
+            ColumnsEnum::HEADLINE->value,
+            ColumnsEnum::CATEGORY->value,
+            ColumnsEnum::TITLE->value,
+            ColumnsEnum::EXTRACT_ID->value,
+            ColumnsEnum::EXTRACT_DATA->value,
+            ColumnsEnum::DESCRIPTION->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey([
+            'headline'=>ColumnsEnum::HEADLINE->value,
+            'fid'=>ColumnsEnum::FID->value
+        ]);
         return $this->create();
     }
 
@@ -112,9 +144,18 @@ class Tables extends SchemaGenerator
     public function alarm() : string
     {
         parent::__construct(TablesEnum::ALARM->value, TablesEnum::ALARM->label());
-        $this->columns('id','userid','message','signtimestamp','items');
-        $this->primaryKey('id');
-        $this->indexKey(['userid'=>'userid','signtimestamp'=>'signtimestamp']);
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::USERID->value,
+            ColumnsEnum::MESSAGE->value,
+            ColumnsEnum::SIGNTIMESTAMP->value,
+            ColumnsEnum::ITEMS->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey([
+            'userid'=>ColumnsEnum::USERID->value,
+            'signtimestamp'=>ColumnsEnum::SIGNTIMESTAMP->value
+        ]);
         return $this->create();
     }
 
@@ -122,9 +163,113 @@ class Tables extends SchemaGenerator
     public function popup() : string
     {
         parent::__construct(TablesEnum::POPUP->value, TablesEnum::POPUP->label());
-        $this->columns('id','start_date','end_date','view_count','title','extract_id','extract_data');
-        $this->primaryKey('id');
-        $this->indexKey(['start_date'=>'start_date,end_date']);
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::START_DATE->value,
+            ColumnsEnum::END_DATE->value,
+            ColumnsEnum::VIEW_COUNT->value,
+            ColumnsEnum::TITLE->value,
+            ColumnsEnum::EXTRACT_ID->value,
+            ColumnsEnum::EXTRACT_DATA->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey(['start_date'=>ColumnsEnum::START_DATE->value.','.ColumnsEnum::END_DATE->value]);
+        return $this->create();
+    }
+
+    # 장바구니
+    public function item_cart() : string
+    {
+        parent::__construct(TablesEnum::ITEM_CART->value, TablesEnum::ITEM_CART->label());
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::CARTID->value,
+            ColumnsEnum::ITEM_ID->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::TOTAL->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::ITEMS->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey([
+            'cartid'=>ColumnsEnum::CARTID->value,
+            'item_id'=>ColumnsEnum::ITEM_ID->value,
+            'mitemid'=>ColumnsEnum::ITEM_ID->value.','.ColumnsEnum::MUID->value
+        ]);
+        return $this->create();
+    }
+
+    # 바로구매
+    public function item_cart_buynow() : string
+    {
+        parent::__construct(TablesEnum::ITEM_CART_BUYNOW->value, TablesEnum::ITEM_CART_BUYNOW->label());
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::CARTID->value,
+            ColumnsEnum::ITEM_ID->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::TOTAL->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::ITEMS->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey([
+            'cartid'=>ColumnsEnum::CARTID->value,
+            'item_id'=>ColumnsEnum::ITEM_ID->value,
+            'mitemid'=>ColumnsEnum::ITEM_ID->value.','.ColumnsEnum::MUID->value
+        ]);
+        return $this->create();
+    }
+
+    # 상품
+    public function item() : string
+    {
+        parent::__construct(TablesEnum::ITEM->value, TablesEnum::ITEM->label());
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::GID->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::TITLE->value,
+            ColumnsEnum::LIST_PRICE->value,
+            ColumnsEnum::PRICE->value,
+            ColumnsEnum::SALE_PRICE->value,
+            ColumnsEnum::POINT->value,
+            ColumnsEnum::SOLD_OUT->value,
+            ColumnsEnum::OPTION1->value,
+            ColumnsEnum::OPTION2->value,
+            ColumnsEnum::ORIGIN->value,
+            ColumnsEnum::DELIVERY_FEE->value,
+            ColumnsEnum::IS_AFTER_DELIVERY->value,
+            ColumnsEnum::INDIVIDUAL_DELIVERY->value,
+            ColumnsEnum::HASHTAGS->value,
+            ColumnsEnum::DESCRIPTION->value,
+            ColumnsEnum::EXTRACT_ID->value,
+            ColumnsEnum::EXTRACT_DATA->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey(['gid'=>ColumnsEnum::GID->value]);
+        return $this->create();
+    }
+
+    # 상품그룹
+    public function item_group() : string
+    {
+        parent::__construct(TablesEnum::ITEM_GROUP->value, TablesEnum::ITEM_GROUP->label());
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::FID->value,
+            ColumnsEnum::TITLE->value,
+            ColumnsEnum::REPLY_COUNT->value,
+            ColumnsEnum::ITEM_COUNT->value,
+            ColumnsEnum::IS_PRINT->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey([
+            'fid'=>ColumnsEnum::FID->value,
+            'is_print'=>ColumnsEnum::IS_PRINT->value,
+            'fidprint'=>ColumnsEnum::FID->value.','.ColumnsEnum::IS_PRINT->value
+        ]);
         return $this->create();
     }
 }

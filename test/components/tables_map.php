@@ -3,7 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Components\Schema\TablesModel;
+use Flex\Components\Schema\TablesMap;
 use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(dirname(__DIR__));
@@ -23,8 +23,8 @@ Log::options([
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
 # default
-Log::d((new TablesModel())->_basic1()->fetchAll());
+Log::d((new TablesMap())->_basic1()->fetchAll());
 
 # shop
-// Log::d((new TablesModel())->_basic1()->_item()->fetchAll());
+// Log::d((new TablesMap())->_basic1()->_item()->fetchAll());
 ?>
