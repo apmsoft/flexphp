@@ -24,6 +24,7 @@ class SchemaType
             'EXTRACT_DATA'          => "json DEFAULT NULL",
             'DESCRIPTION'           => "longtext DEFAULT NULL",
             'SIGNDATE'              => "datetime NOT NULL",
+            'SIGNTIMESTAMP'         => "int(10) unsigned NOT NULL DEFAULT '0'",
             'POINT'                 => "int(11) NOT NULL DEFAULT '0'",
             'RECOMMAND'             => "varchar(50) DEFAULT NULL",
             'IS_PUSH'               => "enum('n','y') NOT NULL DEFAULT 'y'",
@@ -59,7 +60,13 @@ class SchemaType
             'DELIVERY_FEE'          => "int(10) unsigned NOT NULL DEFAULT '0'",
             'IS_AFTER_DELIVERY'     => "enum('n','y') NOT NULL DEFAULT 'n'",
             'INDIVIDUAL_DELIVERY'   => "enum('n','y') NOT NULL DEFAULT 'n'",
-            'HASHTAGS'              => "varchar(200) DEFAULT NULL"
+            'HASHTAGS'              => "varchar(200) DEFAULT NULL",
+            "FID"                   => "decimal(30,20) NOT NULL DEFAULT '0.00000000000000000000'",
+            "WID"                   => "varchar(14) DEFAULT NULL",
+            "MESSAGE"               => "varchar(250) NOT NULL",
+            "IS_PRINT"              => "enum('n','y') NOT NULL DEFAULT 'y'",
+            "REPLY_COUNT"           => "int(10) unsigned NOT NULL DEFAULT '0'",
+            "ITEM_COUNT"            => "int(10) unsigned NOT NULL DEFAULT '0'"
         };
     }
 

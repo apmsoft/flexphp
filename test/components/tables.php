@@ -22,5 +22,6 @@ Log::options([
 # resource
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
-Log::d((new Tables())->item_cart());
+Log::d((new Tables())->member_point());
+Log::d((new Tables())->bbs_notice());
 ?>

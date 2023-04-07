@@ -24,6 +24,7 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case EXTRACT_DATA          = 'extract_data';
     case DESCRIPTION           = 'description';
     case SIGNDATE              = 'signdate';
+    case SIGNTIMESTAMP         = 'signtimestamp';
     case POINT                 = 'point';
     case RECOMMAND             = 'recommand';
     case IS_PUSH               = 'is_push';
@@ -60,6 +61,12 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case IS_AFTER_DELIVERY     = "is_after_delivery";
     case INDIVIDUAL_DELIVERY   = "individual_delivery";
     case HASHTAGS              = "hashtags";
+    case FID                   = "fid";
+    case WID                   = "wid";
+    case MESSAGE               = "message";
+    case IS_PRINT              = 'is_print';
+    case REPLY_COUNT           = "reply_count";
+    case ITEM_COUNT            = 'item_count';
 
     #@ interface
     public function label() : string 
@@ -80,6 +87,7 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::EXTRACT_DATA => R::components('columns')['extract_data'],
             static::DESCRIPTION => R::components('columns')['description'],
             static::SIGNDATE => R::components('columns')['signdate'],
+            static::SIGNTIMESTAMP => R::components('columns')['signtimestamp'],
             static::POINT => R::components('columns')['point'],
             static::RECOMMAND => R::components('columns')['recommand'],
             static::IS_PUSH => R::components('columns')['is_push'],
@@ -115,7 +123,13 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::DELIVERY_FEE => R::components('columns')['delivery_fee'],
             static::IS_AFTER_DELIVERY => R::components('columns')['is_after_delivery'],
             static::INDIVIDUAL_DELIVERY => R::components('columns')['individual_delivery'],
-            static::HASHTAGS => R::components('columns')['hashtags']
+            static::HASHTAGS => R::components('columns')['hashtags'],
+            static::FID => R::components('columns')['fid'],
+            static::WID => R::components('columns')['wid'],
+            static::MESSAGE => R::components('columns')['message'],
+            static::IS_PRINT => R::components('columns')['is_print'],
+            static::REPLY_COUNT => R::components('columns')['is_print'],
+            static::ITEM_COUNT => R::components('columns')['is_print']
         };
     }
 }

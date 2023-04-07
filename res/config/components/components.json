@@ -15,8 +15,9 @@
         "extract_data"         : "파일데이터",
         "description"          : "내용",
         "signdate"             : "등록일",
+        "signtimestamp"        : "등록일(timestamp)",
         "point"                : "포인트",
-        "recommand"            : "추천인아이디",
+        "recommand"            : "추천인(아이디)",
         "is_push"              : "알람수신여부",
         "level"                : "등급",
         "cellphone"            : "휴대폰번호",
@@ -27,7 +28,7 @@
         "up_date"              : "정보수정일",
         "recently_connect_date": "최근접속일",
         "logout_time"          : "로그아웃시간",
-        "alarm_readdate"       : "새소식 최근 확인시간",
+        "alarm_readdate"       : "새소식(확인시간)",
         "introduce"            : "한줄자기소개",
         "authemailkey"         : "이메일인증키",
         "headline"             : "헤드라인",
@@ -50,15 +51,25 @@
         "delivery_fee"         : "배송료",
         "is_after_delivery"    : "착불",
         "individual_delivery"  : "개별배송리",
-        "hashtags"             : "해시태그"
-
+        "hashtags"             : "해시태그",
+        "fid"                  : "다단",
+        "wid"                  : "글쓴이(관리자:admin,유저회원번호)",
+        "message"              : "메세지",
+        "is_print"             : "출력여부",
+        "reply_count"          : "자식갯수",
+        "item_count"           : "상품갯수"
     },
     "tables" : {
-        "flex_member" : "회원",
-        "flex_member_point" : "회원포인트",
-        "flex_item_cart" : "장바구니",
-        "flex_item_cart_buynow" : "상품바로구매",
-        "flex_item" : "상품",
-        "flex_manager" : "관리자(매니저)"
+        "flex_member"          : "회원",
+        "flex_member_point"    : "회원포인트",
+        "flex_item_cart"       : "상품장바구니",
+        "flex_item_cart_buynow": "상품바로구매",
+        "flex_item"            : "상품",
+        "flex_item_group"      : "상품그룹",
+        "flex_manager"         : "관리자(매니저)",
+        "flex_bbs_notice"      : "공지사항",
+        "flex_bbs_faq"         : "자주하는질문",
+        "flex_bbs_qna"         : "Q&A",
+        "flex_alarm"           : "새소식"
     }
 }

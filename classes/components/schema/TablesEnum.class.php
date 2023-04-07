@@ -14,7 +14,12 @@ enum TablesEnum : string implements EntryEnumInterface
     case ITEM_CART        = 'flex_item_cart';
     case ITEM_CART_BUYNOW = 'flex_item_cart_buynow';
     case ITEM             = 'flex_item';
+    case ITEM_GROUP       = 'flex_item_group';
     case MANAGER          = 'flex_manager';
+    case BBS_NOTICE       = 'flex_bbs_notice';
+    case BBS_FAQ          = 'flex_bbs_faq';
+    case BBS_QNA          = 'flex_bbs_qna';
+    case ALARM            = 'flex_alarm';
 
     #@ interface
     public function label() : string 
@@ -25,7 +30,12 @@ enum TablesEnum : string implements EntryEnumInterface
             static::ITEM_CART => R::components('tables')['flex_item_cart'],
             static::ITEM_CART_BUYNOW => R::components('tables')['flex_item_cart_buynow'],
             static::ITEM => R::components('tables')['flex_item'],
-            static::MANAGER => R::components('tables')['flex_manager']
+            static::ITEM_GROUP => R::components('tables')['flex_item_group'],
+            static::MANAGER => R::components('tables')['flex_manager'],
+            static::BBS_NOTICE => R::components('tables')['flex_bbs_notice'],
+            static::BBS_FAQ => R::components('tables')['flex_bbs_faq'],
+            static::BBS_QNA => R::components('tables')['flex_bbs_qna'],
+            static::ALARM => R::components('tables')['flex_alarm']
         };
     }
 }

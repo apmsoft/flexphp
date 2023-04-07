@@ -22,5 +22,5 @@ Log::options([
 # resource
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
-Log::d((new TablesMap())->itemMap()->fetchAll());
+Log::d((new TablesMap())->_member()->_manager()->_bbs()->_item()->fetchAll());
 ?>
