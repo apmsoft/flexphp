@@ -70,6 +70,7 @@
         "flex_bbs_notice"      : "공지사항",
         "flex_bbs_faq"         : "자주하는질문",
         "flex_bbs_qna"         : "Q&A",
-        "flex_alarm"           : "새소식"
+        "flex_alarm"           : "새소식",
+        "flex_popup"           : "팝업"
     }
 }

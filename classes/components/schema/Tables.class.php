@@ -15,8 +15,7 @@ class Tables extends SchemaGenerator
         $this->columns('id','cartid','item_id','muid','total','signdate','items');
         $this->primaryKey('id');
         $this->indexKey(['cartid'=>'cartid','item_id'=>'item_id','mitemid'=>'item_id,muid']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 바로구매
@@ -26,8 +25,7 @@ class Tables extends SchemaGenerator
         $this->columns('id','cartid','item_id','muid','total','signdate','items');
         $this->primaryKey('id');
         $this->indexKey(['cartid'=>'cartid','item_id'=>'item_id','mitemid'=>'item_id,muid']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 상품
@@ -37,19 +35,17 @@ class Tables extends SchemaGenerator
         $this->columns('id','gid','signdate','muid','title','list_price','price','sale_price','point','sold_out','option1','option2','origin','delivery_fee','delivery_fee','is_after_delivery','individual_delivery','hashtags','description','extract_id','extract_data');
         $this->primaryKey('id');
         $this->indexKey(['gid'=>'gid']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 상품그룹
     public function item_group() : string
     {
-        parent::__construct(TablesEnum::ITEM->value, TablesEnum::ITEM->label());
+        parent::__construct(TablesEnum::ITEM_GROUP->value, TablesEnum::ITEM_GROUP->label());
         $this->columns('id','fid','title','reply_count','item_count','is_print');
         $this->primaryKey('id');
         $this->indexKey(['fid'=>'fid','is_print'=>'is_print','fidprint'=>'fid,is_print']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 관리자(매니저)
@@ -59,8 +55,7 @@ class Tables extends SchemaGenerator
         $this->columns('id','signdate','recently_connect_date','logout_time','alarm_readdate','level','userid','passwd','name','ip');
         $this->primaryKey('id');
         $this->indexKey(['userid'=>'userid']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 회원
@@ -70,8 +65,7 @@ class Tables extends SchemaGenerator
         $this->columns('id','signdate','up_date','recently_connect_date','logout_time','alarm_readdate','userid','passwd','level','cellphone','name','introduce','authemailkey','is_push','point','recommand','extract_id','extract_data');
         $this->primaryKey('id');
         $this->indexKey(['userid'=>'userid']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 회원 포인트
@@ -81,8 +75,7 @@ class Tables extends SchemaGenerator
         $this->columns('id','muid','point','signdate','title');
         $this->primaryKey('id');
         $this->indexKey(['muid'=>'muid']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 공지사항
@@ -92,8 +85,7 @@ class Tables extends SchemaGenerator
         $this->columns('id','signdate','category','muid','headline','title','extract_id','extract_data','description');
         $this->primaryKey('id');
         $this->indexKey(['headline'=>'headline']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 자주하는질문
@@ -103,30 +95,37 @@ class Tables extends SchemaGenerator
         $this->columns('id','signdate','category','muid','headline','title','extract_id','extract_data','description');
         $this->primaryKey('id');
         $this->indexKey(['headline'=>'headline']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # QnA
     public function bbs_qna() : string
     {
-        parent::__construct(TablesEnum::BBS_FAQ->value, TablesEnum::BBS_FAQ->label());
+        parent::__construct(TablesEnum::BBS_QNA->value, TablesEnum::BBS_QNA->label());
         $this->columns('id','fid','signdate','muid','wid','headline','category','title','extract_id','extract_data','description');
         $this->primaryKey('id');
         $this->indexKey(['headline'=>'headline','fid'=>'fid']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
     }
 
     # 새소식
     public function alarm() : string
     {
-        parent::__construct(TablesEnum::BBS_FAQ->value, TablesEnum::BBS_FAQ->label());
+        parent::__construct(TablesEnum::ALARM->value, TablesEnum::ALARM->label());
         $this->columns('id','userid','message','signtimestamp','items');
         $this->primaryKey('id');
         $this->indexKey(['userid'=>'userid','signtimestamp'=>'signtimestamp']);
-        $schema = $this->create();
-    return $schema;
+        return $this->create();
+    }
+
+    # 팝업
+    public function popup() : string
+    {
+        parent::__construct(TablesEnum::POPUP->value, TablesEnum::POPUP->label());
+        $this->columns('id','start_date','end_date','view_count','title','extract_id','extract_data');
+        $this->primaryKey('id');
+        $this->indexKey(['start_date'=>'start_date,end_date']);
+        return $this->create();
     }
 }
 ?>
