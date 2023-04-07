@@ -1,5 +1,5 @@
 <?php 
-namespace Flex\Components\Columns;
+namespace Flex\Components;
 
 trait EntryArrayTrait 
 {
@@ -25,16 +25,21 @@ trait EntryArrayTrait
     public static function fetchByName(string $name) : array 
     {
         $NAME = strtoupper($name);
-        $enum = constant("self::{$NAME}");
+        $column = constant("self::{$NAME}");
         $result = [
-            'name'         => $enum->name(),
-            'label'        => $enum->label(),
-            'valueType'    => $enum->valueType(),
-            'valueDefault' => $enum->valueDefault(),
-            'type'         => $enum->type(),
-            'length'       => $enum->length(),
-            'typeNull'     => $enum->typeNull()
+            'name'  => $column->name,
+            'value' => $column->value,
+            'label' => $column->label()
         ];
+    return $result;
+    }
+
+    public static function fetchAll() : array 
+    {
+        $result = [];
+        foreach(self::names() as $_NAME) {
+            $result[] = self::fetchByName( $_NAME );
+        }
     return $result;
     }
 }

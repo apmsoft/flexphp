@@ -3,7 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Component\Validation;
+use Flex\Components\Validation\Validation;
 
 $path = dirname(dirname(__DIR__));
 require $path. '/config/config.inc.php';
@@ -23,7 +23,7 @@ Log::options([
 R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns.json', 'columns');
 
 try{
-    (new Validation())->_name('홍길동')->_userid('apmsoft');
+    (new Validation())->name('홍길동')->userid('');
 }catch(\Exception $e) {
     Log::e($e->getFile(), $e->getLine(), $e->getMessage());
 }

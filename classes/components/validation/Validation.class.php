@@ -2,7 +2,7 @@
 namespace Flex\Components\Validation;
 
 use Flex\Annona\Request\FormValidation;
-use Flex\Component\ColumnsEnum;
+use Flex\Components\Columns\ColumnsEnum;
 
 class Validation
 {
@@ -12,8 +12,8 @@ class Validation
     public function id (int $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::ID->name(), ColumnsEnum::ID->label(),$value))
-            ->null()->number()
+            (new FormValidation(ColumnsEnum::ID->value, ColumnsEnum::ID->label(),$value))
+            ->null()->number();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
     return $this;
@@ -22,7 +22,7 @@ class Validation
     public function name (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::NAME->name(), ColumnsEnum::NAME->label(),$value))
+            (new FormValidation(ColumnsEnum::NAME->value, ColumnsEnum::NAME->label(),$value))
             ->null()->space()->disliking([]);
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -32,7 +32,7 @@ class Validation
     public function userid (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::USERID->name(), ColumnsEnum::USERID->label(),$value))
+            (new FormValidation(ColumnsEnum::USERID->value, ColumnsEnum::USERID->label(),$value))
             ->null()->length(4,16)->space()->disliking()->alnum();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -42,7 +42,7 @@ class Validation
     public function passwd (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::PASSWD->name(), ColumnsEnum::PASSWD->label(),$value))
+            (new FormValidation(ColumnsEnum::PASSWD->value, ColumnsEnum::PASSWD->label(),$value))
             ->null()->length(4,16)->space()->liking();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -52,7 +52,7 @@ class Validation
     public function email (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::EMAIL->name(), ColumnsEnum::EMAIL->label(),$value))
+            (new FormValidation(ColumnsEnum::EMAIL->value, ColumnsEnum::EMAIL->label(),$value))
             ->null()->space()->email();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -62,7 +62,7 @@ class Validation
     public function birthday (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::BIRTHDAY->name(), ColumnsEnum::BIRTHDAY->label(),$value))
+            (new FormValidation(ColumnsEnum::BIRTHDAY->value, ColumnsEnum::BIRTHDAY->label(),$value))
             ->null()->space()->datef();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -72,7 +72,7 @@ class Validation
     public function start_date (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::START_DATE->name(), ColumnsEnum::START_DATE->label(),$value))
+            (new FormValidation(ColumnsEnum::START_DATE->value, ColumnsEnum::START_DATE->label(),$value))
             ->null()->space()->datef();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -82,7 +82,7 @@ class Validation
     public function end_date (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::END_DATE->name(), ColumnsEnum::END_DATE->label(),$value))
+            (new FormValidation(ColumnsEnum::END_DATE->value, ColumnsEnum::END_DATE->label(),$value))
             ->null()->space()->datef();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -92,7 +92,7 @@ class Validation
     public function linkurl (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::LINKURL->name(), ColumnsEnum::LINKURL->label(),$value))
+            (new FormValidation(ColumnsEnum::LINKURL->value, ColumnsEnum::LINKURL->label(),$value))
             ->null()->space()->url();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -102,8 +102,8 @@ class Validation
     public function view_count (int $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::VIEW_COUNT->name(), ColumnsEnum::VIEW_COUNT->label(),$value))
-            ->null()->number()
+            (new FormValidation(ColumnsEnum::VIEW_COUNT->value, ColumnsEnum::VIEW_COUNT->label(),$value))
+            ->null()->number();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
     return $this;
@@ -112,8 +112,8 @@ class Validation
     public function title (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::TITLE->name(), ColumnsEnum::TITLE->label(),$value))
-            ->null()->number()
+            (new FormValidation(ColumnsEnum::TITLE->value, ColumnsEnum::TITLE->label(),$value))
+            ->null()->number();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
     return $this;
@@ -122,7 +122,7 @@ class Validation
     public function extract_id (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::EXTRACT_ID->name(), ColumnsEnum::EXTRACT_ID->label(),$value))
+            (new FormValidation(ColumnsEnum::EXTRACT_ID->value, ColumnsEnum::EXTRACT_ID->label(),$value))
             ->null()->disliking(['_','-']);
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 
@@ -132,7 +132,7 @@ class Validation
     public function extract_data (string $value) : Validation 
     {
         try{
-            (new FormValidation(ColumnsEnum::EXTRACT_DATA->name(), ColumnsEnum::EXTRACT_DATA->label(),$value))
+            (new FormValidation(ColumnsEnum::EXTRACT_DATA->value, ColumnsEnum::EXTRACT_DATA->label(),$value))
             ->null()->jsonf();
         }catch(\Exception $e){ throw new \Exception($e->getMessage());}
 

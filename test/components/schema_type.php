@@ -3,7 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Components\Columns\ColumnsEnum;
+use Flex\Components\Schema\SchemaType;
 use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(dirname(__DIR__));
@@ -22,26 +22,14 @@ Log::options([
 # resource
 R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns.json', 'columns');
 
-# 전체 구조 출력
-// Log::d(ColumnsEnum::cases());
-
-// # 이름만 배열로 받기
-Log::d( ColumnsEnum::names());
-Log::d( ColumnsEnum::values());
-Log::d( ColumnsEnum::array());
-Log::d("==========");
-
-Log::d(
-    'column name : '.ColumnsEnum::NAME->name,
-    'column name : '.ColumnsEnum::NAME->value,
-    'column label : '.ColumnsEnum::NAME->label()
-);
-Log::d("==========");
 
 # 이름에 해당하는 name,label 배열로 받기
-Log::d( ColumnsEnum::fetchByName('ID') );
-Log::d("==========");
+try {
+    Log::d((new SchemaType())->fetchByName('NAME'));
+} catch (UnexpectedValueException $e) {
+    echo $e->getMessage() . PHP_EOL;
+}
 
 # 전체
-Log::d( ColumnsEnum::fetchAll() );
+Log::d( (new SchemaType())->fetchAll() );
 ?>
