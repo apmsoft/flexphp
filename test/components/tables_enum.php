@@ -3,7 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Components\Schema\SchemaType;
+use Flex\Components\Schema\TablesEnum;
 use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(dirname(__DIR__));
@@ -22,13 +22,26 @@ Log::options([
 # resource
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
+# 전체 구조 출력
+// Log::d(ColumnsEnum::cases());
+
+// # 이름만 배열로 받기
+Log::d( TablesEnum::names());
+Log::d( TablesEnum::values());
+Log::d( TablesEnum::array());
+Log::d("==========");
+
+Log::d(
+    'column name : '.TablesEnum::MEMBER->name,
+    'column name : '.TablesEnum::MEMBER->value,
+    'column label : '.TablesEnum::MEMBER->label()
+);
+Log::d("==========");
+
 # 이름에 해당하는 name,label 배열로 받기
-try {
-    Log::d((new SchemaType())->fetchByName('NAME'));
-} catch (UnexpectedValueException $e) {
-    echo $e->getMessage() . PHP_EOL;
-}
+Log::d( TablesEnum::fetchByName('member') );
+Log::d("==========");
 
 # 전체
-Log::d( (new SchemaType())->fetchAll() );
+Log::d( TablesEnum::fetchAll() );
 ?>

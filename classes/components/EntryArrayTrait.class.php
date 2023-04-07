@@ -25,11 +25,11 @@ trait EntryArrayTrait
     public static function fetchByName(string $name) : array 
     {
         $NAME = strtoupper($name);
-        $column = constant("self::{$NAME}");
+        $enum = constant("self::{$NAME}");
         $result = [
-            'name'  => $column->name,
-            'value' => $column->value,
-            'label' => $column->label()
+            'name'  => $enum->name,
+            'value' => $enum->value,
+            'label' => $enum->label()
         ];
     return $result;
     }

@@ -3,7 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Components\Schema\SchemaMySql;
+use Flex\Components\Schema\SchemaGenerator;
 use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(dirname(__DIR__));
@@ -20,16 +20,15 @@ Log::init(Log::MESSAGE_ECHO);
 // ]);
 
 # resource
-R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns.json', 'columns');
-
+R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
 # 이름에 해당하는 name,label 배열로 받기
 try {
     Log::d(
-        (new SchemaMySql('testee', '공지사항'))
+        (new SchemaGenerator('notice', '공지사항'))
         ->columns('id','name','title','signdate','muid','description')
         ->primaryKey('id')
-        ->indexKey(['name'=>'name','muidsigndate'=>'muid,signdate'])
+        ->indexKey(['name'=>'name','ms'=>'muid,signdate'])
         // ->engine('InnoDB')
         // ->charset('utf8')
         // ->auto_increment(100)

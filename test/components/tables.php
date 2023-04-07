@@ -3,7 +3,8 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Components\Validation\Validation;
+use Flex\Components\Schema\Tables;
+use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(dirname(__DIR__));
 require $path. '/config/config.inc.php';
@@ -18,15 +19,8 @@ Log::options([
     'newline'    => true  # 개행문자 출력여부
 ]);
 
-
 # resource
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
-try{
-    (new Validation())->name('홍길동')->userid('');
-}catch(\Exception $e) {
-    Log::e($e->getFile(), $e->getLine(), $e->getMessage());
-}
-
-
+Log::d((new Tables())->item_cart());
 ?>

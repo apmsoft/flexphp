@@ -1,61 +1,121 @@
 <?php 
 namespace Flex\Components\Columns;
 
-use Flex\Components\Columns\ColumnsEnumInterface;
+use Flex\Components\EntryEnumInterface;
 use Flex\Components\EntryArrayTrait;
 use Flex\Annona\R;
 
-enum ColumnsEnum : string implements ColumnsEnumInterface
+enum ColumnsEnum : string implements EntryEnumInterface
 {
     use EntryArrayTrait;
 
-    case ID           = 'id';
-    case NAME         = 'name';
-    case USERID       = 'userid';
-    case PASSWD       = 'passwd';
-    case EMAIL        = 'email';
-    case BIRTHDAY     = 'birthday';
-    case START_DATE   = 'start_date';
-    case END_DATE     = 'end_date';
-    case LINKURL      = 'linkurl';
-    case VIEW_COUNT   = 'view_count';
-    case TITLE        = 'title';
-    case EXTRACT_ID   = 'extract_id';
-    case EXTRACT_DATA = 'extract_data';
-    case DESCRIPTION  = 'description';
-    case SIGNDATE     = 'signdate';
-    case POINT        = 'point';
-    case RECOMMAND    = 'recommand';
-    case IS_PUSH      = 'is_push';
-    case LEVEL        = 'level';
-    case CELLPHONE    = 'cellphone';
-    case MUID         = 'muid';
+    case ID                    = 'id';
+    case NAME                  = 'name';
+    case USERID                = 'userid';
+    case PASSWD                = 'passwd';
+    case EMAIL                 = 'email';
+    case BIRTHDAY              = 'birthday';
+    case START_DATE            = 'start_date';
+    case END_DATE              = 'end_date';
+    case LINKURL               = 'linkurl';
+    case VIEW_COUNT            = 'view_count';
+    case TITLE                 = 'title';
+    case EXTRACT_ID            = 'extract_id';
+    case EXTRACT_DATA          = 'extract_data';
+    case DESCRIPTION           = 'description';
+    case SIGNDATE              = 'signdate';
+    case POINT                 = 'point';
+    case RECOMMAND             = 'recommand';
+    case IS_PUSH               = 'is_push';
+    case LEVEL                 = 'level';
+    case CELLPHONE             = 'cellphone';
+    case MUID                  = 'muid';
+    case TOTAL                 = 'total';
+    case CARTID                = 'cartid';
+    case DVMAC                 = 'dvmac';
+    case UP_DATE               = 'up_date';
+    case RECENTLY_CONNECT_DATE = 'recently_connect_date';
+    case LOGOUT_TIME           = 'logout_time';
+    case ALARM_READDATE        = 'alarm_readdate';
+    case INTRODUCE             = 'introduce';
+    case AUTHEMAILKEY          = 'authemailkey';
+    case HEADLINE              = 'headline';
+    case CATEGORY              = 'category';
+    case IP                    = 'ip';
+    case USAGE_INT             = 'usage_int';
+    case ACCESS_TOKEN          = 'access_token';
+    case SECRET_KEY            = 'secret_key';
+    case MODULE_ID             = 'module_id';
+    case ITEM_ID               = 'item_id';
+    case ITEMS                 = 'items';
+    case GID                   = 'gid';
+    case LIST_PRICE            = "list_price";
+    case PRICE                 = "price";
+    case SALE_PRICE            = "sale_price";
+    case SOLD_OUT              = "sold_out";
+    case OPTION1               = "option1";
+    case OPTION2               = "option2";
+    case ORIGIN                = "origin";
+    case DELIVERY_FEE          = "delivery_fee";
+    case IS_AFTER_DELIVERY     = "is_after_delivery";
+    case INDIVIDUAL_DELIVERY   = "individual_delivery";
+    case HASHTAGS              = "hashtags";
 
     #@ interface
     public function label() : string 
     {
         return match($this){
-            static::ID => R::columns('id'),
-            static::NAME => R::columns('name'),
-            static::USERID => R::columns('userid'),
-            static::PASSWD => R::columns('passwd'),
-            static::EMAIL => R::columns('email'),
-            static::BIRTHDAY => R::columns('birthday'),
-            static::START_DATE => R::columns('start_date'),
-            static::END_DATE => R::columns('end_date'),
-            static::LINKURL => R::columns('linkurl'),
-            static::VIEW_COUNT => R::columns('view_count'),
-            static::TITLE => R::columns('title'),
-            static::EXTRACT_ID => R::columns('extract_id'),
-            static::EXTRACT_DATA => R::columns('extract_data'),
-            static::DESCRIPTION => R::columns('description'),
-            static::SIGNDATE => R::columns('signdate'),
-            static::POINT => R::columns('point'),
-            static::RECOMMAND => R::columns('recommand'),
-            static::IS_PUSH => R::columns('is_push'),
-            static::LEVEL => R::columns('level'),
-            static::CELLPHONE => R::columns('cellphone'),
-            static::MUID => R::columns('muid')
+            static::ID => R::components('columns')['id'],
+            static::NAME => R::components('columns')['name'],
+            static::USERID => R::components('columns')['userid'],
+            static::PASSWD => R::components('columns')['passwd'],
+            static::EMAIL => R::components('columns')['email'],
+            static::BIRTHDAY => R::components('columns')['birthday'],
+            static::START_DATE => R::components('columns')['start_date'],
+            static::END_DATE => R::components('columns')['end_date'],
+            static::LINKURL => R::components('columns')['linkurl'],
+            static::VIEW_COUNT => R::components('columns')['view_count'],
+            static::TITLE => R::components('columns')['title'],
+            static::EXTRACT_ID => R::components('columns')['extract_id'],
+            static::EXTRACT_DATA => R::components('columns')['extract_data'],
+            static::DESCRIPTION => R::components('columns')['description'],
+            static::SIGNDATE => R::components('columns')['signdate'],
+            static::POINT => R::components('columns')['point'],
+            static::RECOMMAND => R::components('columns')['recommand'],
+            static::IS_PUSH => R::components('columns')['is_push'],
+            static::LEVEL => R::components('columns')['level'],
+            static::CELLPHONE => R::components('columns')['cellphone'],
+            static::MUID => R::components('columns')['muid'],
+            static::TOTAL => R::components('columns')['total'],
+            static::CARTID => R::components('columns')['cartid'],
+            static::DVMAC => R::components('columns')['dvmac'],
+            static::UP_DATE => R::components('columns')['up_date'],
+            static::RECENTLY_CONNECT_DATE => R::components('columns')['recently_connect_date'],
+            static::LOGOUT_TIME => R::components('columns')['logout_time'],
+            static::ALARM_READDATE => R::components('columns')['alarm_readdate'],
+            static::INTRODUCE => R::components('columns')['introduce'],
+            static::AUTHEMAILKEY => R::components('columns')['authemailkey'],
+            static::HEADLINE => R::components('columns')['headline'],
+            static::CATEGORY => R::components('columns')['category'],
+            static::IP => R::components('columns')['ip'],
+            static::USAGE_INT => R::components('columns')['usage_int'],
+            static::ACCESS_TOKEN => R::components('columns')['access_token'],
+            static::SECRET_KEY => R::components('columns')['secret_key'],
+            static::MODULE_ID => R::components('columns')['module_id'],
+            static::ITEM_ID => R::components('columns')['item_id'],
+            static::ITEMS => R::components('columns')['items'],
+            static::GID => R::components('columns')['gid'],
+            static::LIST_PRICE => R::components('columns')['list_price'],
+            static::PRICE => R::components('columns')['price'],
+            static::SALE_PRICE => R::components('columns')['sale_price'],
+            static::SOLD_OUT => R::components('columns')['sold_out'],
+            static::OPTION1 => R::components('columns')['option1'],
+            static::OPTION2 => R::components('columns')['option2'],
+            static::ORIGIN => R::components('columns')['origin'],
+            static::DELIVERY_FEE => R::components('columns')['delivery_fee'],
+            static::IS_AFTER_DELIVERY => R::components('columns')['is_after_delivery'],
+            static::INDIVIDUAL_DELIVERY => R::components('columns')['individual_delivery'],
+            static::HASHTAGS => R::components('columns')['hashtags']
         };
     }
 }

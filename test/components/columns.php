@@ -20,7 +20,7 @@ Log::options([
 ]);
 
 # resource
-R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns.json', 'columns');
+R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
 # 전체 구조 출력
 // Log::d(ColumnsEnum::cases());
