@@ -20,7 +20,7 @@ class DataProcessing extends Model
         return match($name){
             "TITLE" => call_user_func_array( [new Title($value),$command[0]], $command[1] )->value,
             "DESCRIPTION" => call_user_func_array( [new Description($value),$command[0]], $command[1] ),
-            "PASSWD"=> (new Encrypt($value))->_md5(),
+            "PASSWD"=> (new Encrypt($value))->_md5_base64(),
             "FID"   => call_user_func_array( [new Fid($command[0]) , $command[1]], $command[2] ),
             default => $value
         };

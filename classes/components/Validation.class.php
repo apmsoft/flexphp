@@ -28,6 +28,8 @@ class Validation
             "LINKURL" => (new FormValidation($column['value'], $column['label'],$value))->null()->space()->url(),
             "EXTRACT_ID" => (new FormValidation($column['value'], $column['label'],$value))->null()->disliking(['_','-']),
             "EXTRACT_DATA" => (new FormValidation($column['value'], $column['label'],$value))->null()->jsonf(),
+            "PAGE" => (new FormValidation($column['value'], $column['label'],$value))->number(),
+            "Q" => (new FormValidation($column['value'], $column['label'],$value))->disliking(['-','.']),
             "SOLD_OUT",
             "IS_PRINT",
             "IS_PUSH",
@@ -40,7 +42,7 @@ class Validation
     {
         $NAME   = strtoupper($name);
         $column = ColumnsEnum::fetchByName($NAME);
-        $this->check($column, $resbody, );
+        $this->check($column, $resbody);
     return $this;
     }
 }

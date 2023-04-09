@@ -24,35 +24,29 @@ Log::options([
 # resource
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
-class TestList extends Actvity implements ListInterface 
+class TestList extends ListActivityAbstract
 {
     public function __construct(
-        private string $T
+        private string $T,
+        array $request_params
     ){
-        parent::__construct($this->T);
+        parent::__construct($this->T, $request_params);
     }
 
-    #@ ListInterface
+    #@ Abstract
     public function doList() : array
     {
-        # request
-
-        # validation
-
-        # query
-        $loop = [];
-        $result = parent::table($this->T)->query();
-        while( $row = $result->fetch_assoc())
-        {
-            $loop = (new DataProcessing($row))
-            ->put(ColumnsEnum::DESCRIPTION->name, $row[ColumnsEnum::DESCRIPTION->value], "view", ["HTML"])
-            ->fetchAll();
+        try{
+            Log::d(
+                parent::init()->validation()->totalRecord()->pageRelation()->runQuery("id,title,signdate","")->putOutData(["r" =>[]])->extract()
+            );
+        }catch (\UnexpectedValueException $e) {
+            throw new \UnexpectedValueException( $e->getMessage() );
+        }catch (\Exception $e) {
+            throw new \Exception( $e->getMessage() );
         }
-        $result->free();
-
-        # output
     }
 }
 
-$bbs_notice = (new TestList(TablesEnum::BBS_NOTICE->value))->doList();
+$bbs_notice = (new TestList( TablesEnum::BBS_NOTICE->value, (new Request())->get()->fetch() ) )->doList();
 ?>

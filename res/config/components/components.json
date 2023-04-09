@@ -4,6 +4,7 @@
         "name"                 : "이름",
         "userid"               : "아이디",
         "passwd"               : "비밀번호",
+        "re_passwd"            : "비밀번호확인",
         "email"                : "이메일",
         "birthday"             : "이메일",
         "start_date"           : "시작일",
@@ -57,7 +58,11 @@
         "message"              : "메세지",
         "is_print"             : "출력여부",
         "reply_count"          : "자식갯수",
-        "item_count"           : "상품갯수"
+        "item_count"           : "상품갯수",
+        "page"                 : "페이지",
+        "q"                    : "검색어",
+        "newpasswd"            : "새비밀번호",
+        "re_newpasswd"         : "새비밀번호확인"
     },
     "tables" : {
         "flex_member"          : "회원",

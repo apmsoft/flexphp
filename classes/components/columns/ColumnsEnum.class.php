@@ -13,6 +13,7 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case NAME                  = 'name';
     case USERID                = 'userid';
     case PASSWD                = 'passwd';
+    case RE_PASSWD             = 're_passwd';
     case EMAIL                 = 'email';
     case BIRTHDAY              = 'birthday';
     case START_DATE            = 'start_date';
@@ -67,6 +68,11 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case IS_PRINT              = 'is_print';
     case REPLY_COUNT           = "reply_count";
     case ITEM_COUNT            = 'item_count';
+    case Q                     = 'q';
+    case PAGE                  = 'page';
+    case NEWPASSWD             = 'newpasswd';
+    case RE_NEWPASSWD          = 're_newpasswd';
+
 
     #@ interface
     public function label() : string 
@@ -76,6 +82,7 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::NAME => R::components('columns')['name'],
             static::USERID => R::components('columns')['userid'],
             static::PASSWD => R::components('columns')['passwd'],
+            static::PASSWD => R::components('columns')['re_passwd'],
             static::EMAIL => R::components('columns')['email'],
             static::BIRTHDAY => R::components('columns')['birthday'],
             static::START_DATE => R::components('columns')['start_date'],
@@ -129,7 +136,11 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::MESSAGE => R::components('columns')['message'],
             static::IS_PRINT => R::components('columns')['is_print'],
             static::REPLY_COUNT => R::components('columns')['reply_count'],
-            static::ITEM_COUNT => R::components('columns')['item_count']
+            static::ITEM_COUNT => R::components('columns')['item_count'],
+            static::PAGE => R::components('columns')['page'],
+            static::Q => R::components('columns')['q'],
+            static::NEWPASSWD => R::components('columns')['newpasswd'],
+            static::RE_NEWPASSWD => R::components('columns')['re_newpasswd']
         };
     }
 }
