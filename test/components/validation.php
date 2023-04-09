@@ -25,7 +25,7 @@ R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
 try{
     (new Validation())
-    ->is(ColumnsEnum::ID->name, "1")
+    ->is(ColumnsEnum::ID->name, "1ddfsa")
     ->is(ColumnsEnum::NAME->name,"홍길동")
     ->is(ColumnsEnum::EMAIL->name,"홍길동");
 }catch(\Exception $e) {
