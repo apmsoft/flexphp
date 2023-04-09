@@ -22,6 +22,6 @@ Log::options([
 # resource
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
-Log::d((new Tables())->item_cart());
-Log::d((new Tables())->bbs_notice());
+echo (new Tables())->item_cart() .PHP_EOL.PHP_EOL;
+echo (new Tables())->bbs_notice() .PHP_EOL;
 ?>

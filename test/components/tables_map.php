@@ -23,7 +23,7 @@ Log::options([
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
 # default
-Log::d((new TablesMap())->_basic1()->fetchAll());
+print_r((new TablesMap())->_basic1()->fetchAll());
 
 # shop
 // Log::d((new TablesMap())->_basic1()->_item()->fetchAll());
