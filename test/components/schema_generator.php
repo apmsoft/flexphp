@@ -3,6 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
+use Flex\Components\Columns\ColumnsEnum;
 use Flex\Components\Schema\SchemaGenerator;
 use Flex\Annona\Array\ArrayHelper;
 

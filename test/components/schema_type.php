@@ -3,6 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
+use Flex\Components\Columns\ColumnsEnum;
 use Flex\Components\Schema\SchemaType;
 use Flex\Annona\Array\ArrayHelper;
 
@@ -24,11 +25,11 @@ R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
 # 이름에 해당하는 name,label 배열로 받기
 try {
-    Log::d((new SchemaType())->fetchByName('NAME'));
-} catch (UnexpectedValueException $e) {
-    echo $e->getMessage() . PHP_EOL;
+    Log::d((new SchemaType())->fetchByName(ColumnsEnum::NAME->value));
+} catch (\UnexpectedValueException $e) {
+    Log::e($e->getMessage() );
 }
 
 # 전체
-Log::d( (new SchemaType())->fetchAll() );
+// Log::d( (new SchemaType())->fetchAll() );
 ?>

@@ -128,8 +128,8 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::WID => R::components('columns')['wid'],
             static::MESSAGE => R::components('columns')['message'],
             static::IS_PRINT => R::components('columns')['is_print'],
-            static::REPLY_COUNT => R::components('columns')['is_print'],
-            static::ITEM_COUNT => R::components('columns')['is_print']
+            static::REPLY_COUNT => R::components('columns')['reply_count'],
+            static::ITEM_COUNT => R::components('columns')['item_count']
         };
     }
 }
