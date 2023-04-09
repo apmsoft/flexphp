@@ -17,9 +17,9 @@ class DataProcessing extends Model
     private function setValue(string $name, mixed $value, array $command) : mixed
     {
         return match($name){
-            "description" => call_user_func_array( [new Description($value),$command[0]], $command[1] ),
-            "passwd"=> (new Encrypt($value))->_md5(),
-            "fid"   => call_user_func_array( [new Fid($command[0]) , $command[1]], $command[2] ),
+            "DESCRIPTION" => call_user_func_array( [new Description($value),$command[0]], $command[1] ),
+            "PASSWD"=> (new Encrypt($value))->_md5(),
+            "FID"   => call_user_func_array( [new Fid($command[0]) , $command[1]], $command[2] ),
             default => $value
         };
     }
@@ -29,7 +29,7 @@ class DataProcessing extends Model
         try{
             $NAME   = strtoupper($name);
             $column = ColumnsEnum::fetchByName($NAME);
-            parent::__set($name, $this->setValue($name, $value, $command));
+            parent::__set($column['value'], $this->setValue($NAME, $value, $command));
         }catch (\UnexpectedValueException $e) {
             Log::e( $e->getMessage() );
         }catch (\Exception $e) {
@@ -45,7 +45,7 @@ class DataProcessing extends Model
         $result = [
             'name'  => $column['value'],
             'label' => $column['label'],
-            'value' => parent::__get($name)
+            'value' => parent::__get($column['value'])
         ];
     return $result;
     }

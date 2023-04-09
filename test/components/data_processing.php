@@ -25,10 +25,10 @@ R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 # 이름에 해당하는 name,label 배열로 받기
 Log::d(
     (new DataProcessing())
-    ->setByName(ColumnsEnum::NAME->value, '홍길동')
-    ->setByName(ColumnsEnum::ID->value, 1)
-    ->setByName(ColumnsEnum::PASSWD->value, "dafdsafa")
-    ->setByName(ColumnsEnum::DESCRIPTION->value, "dsafa$#%#<a href=\"https://m.naver.com\">네이버</a>", "view", ["HTML"])
+    ->setByName(ColumnsEnum::NAME->name, '홍길동')
+    ->setByName(ColumnsEnum::ID->name, 1)
+    ->setByName(ColumnsEnum::PASSWD->name, "dafdsafa")
+    ->setByName(ColumnsEnum::DESCRIPTION->name, "dsafa$#%#<a href=\"https://m.naver.com\">네이버</a>", "view", ["HTML"])
     ->fetchAll()
 );
 ?>
