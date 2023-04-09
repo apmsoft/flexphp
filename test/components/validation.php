@@ -4,7 +4,7 @@ use Flex\Annona\Log;
 use Flex\Annona\R;
 
 use Flex\Components\Columns\ColumnsEnum;
-use Flex\Components\Validation\Validation;
+use Flex\Components\Validation;
 
 $path = dirname(dirname(__DIR__));
 require $path. '/config/config.inc.php';
@@ -24,7 +24,10 @@ Log::options([
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
 try{
-    (new Validation())->name('홍길동')->userid('');
+    (new Validation())
+    ->is(ColumnsEnum::ID->name, "1")
+    ->is(ColumnsEnum::NAME->name,"홍길동")
+    ->is(ColumnsEnum::EMAIL->name,"홍길동");
 }catch(\Exception $e) {
     Log::e($e->getFile(), $e->getLine(), $e->getMessage());
 }

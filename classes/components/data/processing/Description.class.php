@@ -2,17 +2,14 @@
 namespace Flex\Components\Data\Processing;
 
 use Flex\Annona\Html\XssChars;
+use Flex\Annona\Text\TextUtil;
 
-final class Description
+final class Description extends XssChars
 {
     public function __construct(
         private string $description
-    ){}
-
-    # 보기모드
-    public function view(string $mode) : string 
-    {
-        return (new XssChars( $this->description ))->getContext($mode);
+    ){
+        parent::__construct($description);
     }
 
     # urldecode
@@ -23,6 +20,12 @@ final class Description
     # urlencode
     public function urlencode() : string {
         return urlencode($this->description);
+    }
+
+    # 내용자르기
+    public function cut(int $length) : string 
+    {
+        return (new TextUtil( $this->description ))->cut($length)->value;
     }
 }
 ?>
