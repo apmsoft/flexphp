@@ -11,7 +11,7 @@ use Flex\Annona\Log;
 class DataProcessing extends Model
 {
     public function __construct(){
-        parent::__construct();
+        parent::__construct([]);
     }
 
     private function setValue(string $name, mixed $value, array $command) : mixed
@@ -24,7 +24,7 @@ class DataProcessing extends Model
         };
     }
 
-    public function setByName(string $name, mixed $value, ...$command) : DataProcessing 
+    public function put(string $name, mixed $value, ...$command) : DataProcessing 
     {
         try{
             $NAME   = strtoupper($name);
