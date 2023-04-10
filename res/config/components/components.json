@@ -62,7 +62,8 @@
         "q"                    : "검색어",
         "page"                 : "페이지",
         "newpasswd"            : "새비밀번호",
-        "re_newpasswd"         : "새비밀번호확인"
+        "re_newpasswd"         : "새비밀번호확인",
+        "sale_state"           : "판매상태"
     },
     "tables" : {
         "flex_member"          : "회원",

@@ -34,6 +34,7 @@ class Validation
             "IS_PRINT",
             "IS_PUSH",
             "HEADLINE" => (new FormValidation($column['value'], $column['label'],$value))->null()->alphabet(),
+            "SALE_STATE" => (new FormValidation($column['value'], $column['label'],$value))->alphabet(),
             default => (new FormValidation($column['value'], $column['label'],$value))->null()
         };
     }

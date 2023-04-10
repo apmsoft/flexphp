@@ -72,6 +72,7 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case PAGE                  = 'page';
     case NEWPASSWD             = 'newpasswd';
     case RE_NEWPASSWD          = 're_newpasswd';
+    case SALE_STATE            = 'sale_state';
 
 
     #@ interface
@@ -140,7 +141,8 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::Q => R::components('columns')['q'],
             static::PAGE => R::components('columns')['page'],
             static::NEWPASSWD => R::components('columns')['newpasswd'],
-            static::RE_NEWPASSWD => R::components('columns')['re_newpasswd']
+            static::RE_NEWPASSWD => R::components('columns')['re_newpasswd'],
+            static::sale_state => R::components('columns')['sale_state']
         };
     }
 }
