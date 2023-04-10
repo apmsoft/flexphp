@@ -229,6 +229,7 @@ class Tables extends SchemaGenerator
             ColumnsEnum::ID->value,
             ColumnsEnum::GID->value,
             ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::SALE_STATE->value,
             ColumnsEnum::MUID->value,
             ColumnsEnum::TITLE->value,
             ColumnsEnum::LIST_PRICE->value,
@@ -248,7 +249,11 @@ class Tables extends SchemaGenerator
             ColumnsEnum::EXTRACT_DATA->value
         );
         $this->primaryKey(ColumnsEnum::ID->value);
-        $this->indexKey(['gid'=>ColumnsEnum::GID->value]);
+        $this->indexKey([
+            'gid'=>ColumnsEnum::GID->value,
+            "sale_state"=>ColumnsEnum::SALE_STATE->value,
+            "gidss"=>ColumnsEnum::GID->value.",".ColumnsEnum::SALE_STATE->value
+        ]);
         return $this->create();
     }
 
