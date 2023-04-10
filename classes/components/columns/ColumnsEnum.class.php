@@ -82,7 +82,7 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::NAME => R::components('columns')['name'],
             static::USERID => R::components('columns')['userid'],
             static::PASSWD => R::components('columns')['passwd'],
-            static::PASSWD => R::components('columns')['re_passwd'],
+            static::RE_PASSWD => R::components('columns')['re_passwd'],
             static::EMAIL => R::components('columns')['email'],
             static::BIRTHDAY => R::components('columns')['birthday'],
             static::START_DATE => R::components('columns')['start_date'],
@@ -137,8 +137,8 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::IS_PRINT => R::components('columns')['is_print'],
             static::REPLY_COUNT => R::components('columns')['reply_count'],
             static::ITEM_COUNT => R::components('columns')['item_count'],
-            static::PAGE => R::components('columns')['page'],
             static::Q => R::components('columns')['q'],
+            static::PAGE => R::components('columns')['page'],
             static::NEWPASSWD => R::components('columns')['newpasswd'],
             static::RE_NEWPASSWD => R::components('columns')['re_newpasswd']
         };

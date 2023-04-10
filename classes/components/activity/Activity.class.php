@@ -3,6 +3,7 @@ namespace Flex\Components\Activity;
 
 use Flex\Annona\Db\DbMySqli;
 use Flex\Annona\Db\WhereHelper;
+use Flex\Components\Validation;
 
 class Activity extends DbMySqli
 {

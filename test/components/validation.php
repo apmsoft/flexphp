@@ -31,6 +31,4 @@ try{
 }catch(\Exception $e) {
     Log::e($e->getFile(), $e->getLine(), $e->getMessage());
 }
-
-
 ?>

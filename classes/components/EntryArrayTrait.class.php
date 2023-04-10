@@ -38,6 +38,7 @@ trait EntryArrayTrait
     {
         $result = [];
         foreach(self::names() as $_NAME) {
+            // echo $_NAME.PHP_EOL;
             $result[] = self::fetchByName( $_NAME );
         }
     return $result;
