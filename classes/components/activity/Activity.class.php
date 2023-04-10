@@ -1,5 +1,5 @@
 <?php 
-namespace Flex\Components\Data;
+namespace Flex\Components\Activity;
 
 use Flex\Annona\Db\DbMySqli;
 use Flex\Annona\Db\WhereHelper;
@@ -7,9 +7,18 @@ use Flex\Annona\Db\WhereHelper;
 class Activity extends DbMySqli
 {
     public function __construct(
-        private string $T
+        public string $Table
     ){
         parent::__construct();
+    }
+
+    # 밸리데이션 체크
+    public function validation (array $params) : void 
+    {
+        $validation = new Validation();
+        foreach($params as $key => $v){
+            $validation->is($key, $v);
+        }
     }
 
     # 데이터 저장
@@ -20,7 +29,7 @@ class Activity extends DbMySqli
             foreach($params as $column_name => $column_value){
                 parent::offsetSet($column_name,$column_value);
             }
-            parent::table( $this->T )->insert();
+            parent::table( $this->Table )->insert();
         }catch(\Exception $e){
             throw new \Exception ( $e->getMessage());
         }
@@ -35,7 +44,7 @@ class Activity extends DbMySqli
             foreach($params as $column_name => $column_value){
                 parent::offsetSet($column_name,$column_value);
             }
-            parent::table( $this->T )->where($where)->update();
+            parent::table( $this->Table )->where($where)->update();
         }catch(\Exception $e){
             throw new \Exception ( $e->getMessage());
         }
