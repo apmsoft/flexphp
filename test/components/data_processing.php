@@ -28,12 +28,10 @@ try{
         'name' => '홍길동',
         'id' => 1
     ]))
-        ->put(ColumnsEnum::NAME->name, '홍길동')
-        ->put(ColumnsEnum::ID->name, 1)
+        ->put(ColumnsEnum::EXTRACT_DATA->name, ["id"=>"1"],"json_encode")
         ->put(ColumnsEnum::PASSWD->name, "dafdsafa")
         ->put(ColumnsEnum::TITLE->name, "대만민국 국제 올림픽 대화에서", "cut", [10])
         ->put(ColumnsEnum::DESCRIPTION->name, "dsafa$#%#<a href=\"https://m.naver.com\">네이버</a>", "getContext", ["HTML"])
-        // ->put(ColumnsEnum::DESCRIPTION->name, "dsafa$#%#<a href=\"https://m.naver.com\">네이버</a>", "cut", [30])
         ->fetchAll();
     
     Log::d($dataAll);

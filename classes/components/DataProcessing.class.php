@@ -3,9 +3,6 @@ namespace Flex\Components;
 
 use Flex\Components\Columns\ColumnsEnum;
 use Flex\Annona\Model;
-use Flex\Components\Data\Processing\Fid;
-use Flex\Components\Data\Processing\Description;
-use Flex\Components\Data\Processing\TITLE;
 use Flex\Annona\Cipher\Encrypt;
 use Flex\Annona\Log;
 
@@ -18,10 +15,11 @@ class DataProcessing extends Model
     private function setValue(string $name, mixed $value, array $command) : mixed
     {
         return match($name){
-            "TITLE" => call_user_func_array( [new Title($value),$command[0]], $command[1] )->value,
-            "DESCRIPTION" => call_user_func_array( [new Description($value),$command[0]], $command[1] ),
+            "TITLE" => call_user_func_array( [new \Flex\Components\Data\Processing\TITLE($value),$command[0]], $command[1] )->value,
+            "DESCRIPTION" => call_user_func_array( [new \Flex\Components\Data\Processing\Description($value),$command[0]], $command[1] ),
             "PASSWD"=> (new Encrypt($value))->_md5_base64(),
-            "FID"   => call_user_func_array( [new Fid($command[0]) , $command[1]], $command[2] ),
+            "EXTRACT_DATA" => call_user_func_array( [new \Flex\Components\Data\Processing\ExtractData($value),$command[0]], [] ),
+            "FID"   => call_user_func_array( [new \Flex\Components\Data\Processing\Fid($command[0]) , $command[1]], $command[2] ),
             default => $value
         };
     }
