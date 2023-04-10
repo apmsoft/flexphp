@@ -7,17 +7,15 @@ use Flex\Annona\Db\WhereHelper;
 
 final class Fid extends Activity
 {
-    public function __construct(
-        private string $T
-    ){
-        parent::__construct($this->T);
+    public function __construct(string $T){
+        parent::__construct($T);
     }
 
     # reple 하부메뉴 및 답글에 사용
     # 다단 fid > "9999999997.01%" AND fid < "9999999997.0199";
     public function createDepth(string $fid) : string 
     {
-        $fid_max = $this->table($this->T)->select(sprintf("max(%s)", ColumnsEnum::FID->value))->where(
+        $fid_max = $this->table($this->Table)->select(sprintf("max(%s)", ColumnsEnum::FID->value))->where(
             (new WhereHelper())->begin('AND')
                 ->case(ColumnsEnum::FID->value,'>',$fid)
                 ->case(ColumnsEnum::FID->value,'<',$fid.'99')
@@ -32,7 +30,7 @@ final class Fid extends Activity
     public function createFid() : string 
     {
         # 다단
-        $fid_row = $this->table( $this->T )->select(sprintf("min(%s)", ColumnsEnum::FID->value))->query()->fetch_row();
+        $fid_row = $this->table( $this->Table )->select(sprintf("min(%s)", ColumnsEnum::FID->value))->query()->fetch_row();
         $_fid = (isset($fid_row[0])) ? explode('.',$fid_row[0])[0] -1 : '9999999999';
         return sprintf("%s.",$_fid);
     }
