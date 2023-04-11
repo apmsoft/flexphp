@@ -15,7 +15,7 @@ class DataProcessing extends Model
     private function setValue(string $name, mixed $value, array $command) : mixed
     {
         return match($name){
-            "TITLE" => self::call( new \Flex\Components\Data\Processing\TITLE($value),$command[0], $command[1] )->value,
+            "TITLE" => self::call( new \Flex\Components\Data\Processing\Title($value),$command[0], $command[1] )->value,
             "DESCRIPTION" => self::call( new \Flex\Components\Data\Processing\Description($value),$command[0], $command[1] ),
             "PASSWD"=> (new Encrypt($value))->_md5_base64(),
             "EXTRACT_DATA" => self::call( new \Flex\Components\Data\Processing\ExtractData($value),$command[0], [] ),
