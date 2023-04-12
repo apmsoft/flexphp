@@ -32,6 +32,15 @@ class TablesMap extends Tables
         $this->model->{"map+"} = parent::item_cart_buynow();
         $this->model->{"map+"} = parent::item();
         $this->model->{"map+"} = parent::item_group();
+        self::_coupon();
+    return $this;
+    }
+
+    # 쿠폰
+    public function _coupon() : TablesMap
+    {
+        $this->model->{"map+"} = parent::coupon();
+        $this->model->{"map+"} = parent::coupon_number();
     return $this;
     }
 
