@@ -62,7 +62,11 @@ class SchemaType
             "REPLY_COUNT" => "int(10) unsigned NOT NULL DEFAULT '0'",
             "ITEM_COUNT"  => "int(10) unsigned NOT NULL DEFAULT '0'",
             "SALE_STATE"  => "char(2) NOT NULL DEFAULT '00'",
-            "NUMBER"  => "varchar(16) NOT NULL"
+            "NUMBER"  => "varchar(16) NOT NULL",
+            "ORDERER","SHIPPING","PROOF","SALEPOINT","PAYMENT" => "json DEFAULT NULL",
+            "TERM" => "tinyint(2) unsigned NOT NULL DEFAULT '0'",
+            "MEMO" => "text",
+            "ORDERCODE" => "varchar(12) NOT NULL"
         };
     }
 

@@ -62,26 +62,34 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case DELIVERY_FEE          = "delivery_fee";
     case IS_AFTER_DELIVERY     = "is_after_delivery";
     case INDIVIDUAL_DELIVERY   = "individual_delivery";
-    case HASHTAGS            = "hashtags";
-    case FID                 = "fid";
-    case WID                 = "wid";
-    case MESSAGE             = "message";
-    case IS_PRINT            = 'is_print';
-    case REPLY_COUNT         = "reply_count";
-    case ITEM_COUNT          = 'item_count';
-    case Q                   = 'q';
-    case PAGE                = 'page';
-    case NEWPASSWD           = 'newpasswd';
-    case RE_NEWPASSWD        = 're_newpasswd';
-    case SALE_STATE          = 'sale_state';
-    case REGIDATE            = 'regidate';
-    case NUMBER              = 'number';
-    case SP                  = 'sp';
-    case publications_number = 'publications_number';
-    case owners_number       = 'owners_number';
-    case uses_number         = 'uses_number';
-    case sp_unit             = 'sp_unit';
-    
+    case HASHTAGS              = "hashtags";
+    case FID                   = "fid";
+    case WID                   = "wid";
+    case MESSAGE               = "message";
+    case IS_PRINT              = 'is_print';
+    case REPLY_COUNT           = "reply_count";
+    case ITEM_COUNT            = 'item_count';
+    case Q                     = 'q';
+    case PAGE                  = 'page';
+    case NEWPASSWD             = 'newpasswd';
+    case RE_NEWPASSWD          = 're_newpasswd';
+    case SALE_STATE            = 'sale_state';
+    case REGIDATE              = 'regidate';
+    case NUMBER                = 'number';
+    case SP                    = 'sp';
+    case PUBLICATIONS_NUMBER   = 'publications_number';
+    case OWNERS_NUMBER         = 'owners_number';
+    case USES_NUMBER           = 'uses_number';
+    case SP_UNIT   = 'sp_unit';
+    case ORDERCODE = "ordercode";
+    case PAYMETHOD = "paymethod";
+    case PAYMENT   = "payment";
+    case TERM      = "term";
+    case MEMO      = "memo";
+    case ORDERER   = "orderer";
+    case SHIPPING  = "shipping";
+    case SALEPOINT = "salepoint";
+    case PROOF     = "proof";
 
 
     #@ interface
@@ -159,7 +167,16 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::PUBLICATIONS_NUMBER => R::components('columns')['publications_number'],
             static::OWNERS_NUMBER => R::components('columns')['owners_number'],
             static::USES_NUMBER => R::components('columns')['uses_number'],
-            static::SP_UNIT => R::components('columns')['sp_unit']
+            static::SP_UNIT => R::components('columns')['sp_unit'],
+            static::ORDERCODE => R::components('columns')['ordercode'],
+            static::PAYMETHOD => R::components('columns')['paymethod'],
+            static::PAYMENT => R::components('columns')['payment'],
+            static::TERM => R::components('columns')['term'],
+            static::MEMO => R::components('columns')['memo'],
+            static::ORDERER => R::components('columns')['orderer'],
+            static::SHIPPING => R::components('columns')['shipping'],
+            static::SALEPOINT => R::components('columns')['salepoint'],
+            static::PROOF => R::components('columns')['proof']
         };
     }
 }

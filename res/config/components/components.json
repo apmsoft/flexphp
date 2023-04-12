@@ -68,10 +68,19 @@
         "token"                : "토큰",
         "number"               : "번호",
         "sp"                   : "할인가및할인률",
-        "publications_number" : "발행수",
-        "owners_number"       : "소유자수",
-        "uses_number"         : "사용수",
-        "sp_unit"             : "할인unit[%,원]"
+        "publications_number"  : "발행수",
+        "owners_number"        : "소유자수",
+        "uses_number"          : "사용수",
+        "sp_unit"              : "할인unit[%,원]",
+        "ordercode"            : "주문번호",
+        "paymethod"            : "주문타입",
+        "payment"              : "결제상태",
+        "term"                 : "기간",
+        "memo"                 : "메모",
+        "orderer"              : "주문자정보",
+        "shipping"             : "배송지정보",
+        "salepoint"            : "할인정보",
+        "proof"                : "현금영수증/지출증빙정보"
     },
     "tables" : {
         "flex_member"          : "회원",
