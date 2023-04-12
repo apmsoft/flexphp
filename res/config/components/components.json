@@ -16,6 +16,7 @@
         "extract_data"         : "파일데이터",
         "description"          : "내용",
         "signdate"             : "등록일",
+        "signtime"             : "등록시간",
         "signtimestamp"        : "등록일(timestamp)",
         "point"                : "포인트",
         "recommand"            : "추천인(아이디)",
