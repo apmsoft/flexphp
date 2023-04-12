@@ -46,6 +46,7 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case IP                    = 'ip';
     case USAGE_INT             = 'usage_int';
     case ACCESS_TOKEN          = 'access_token';
+    case TOKEN                 = 'token';
     case SECRET_KEY            = 'secret_key';
     case MODULE_ID             = 'module_id';
     case ITEM_ID               = 'item_id';
@@ -61,18 +62,26 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case DELIVERY_FEE          = "delivery_fee";
     case IS_AFTER_DELIVERY     = "is_after_delivery";
     case INDIVIDUAL_DELIVERY   = "individual_delivery";
-    case HASHTAGS              = "hashtags";
-    case FID                   = "fid";
-    case WID                   = "wid";
-    case MESSAGE               = "message";
-    case IS_PRINT              = 'is_print';
-    case REPLY_COUNT           = "reply_count";
-    case ITEM_COUNT            = 'item_count';
-    case Q                     = 'q';
-    case PAGE                  = 'page';
-    case NEWPASSWD             = 'newpasswd';
-    case RE_NEWPASSWD          = 're_newpasswd';
-    case SALE_STATE            = 'sale_state';
+    case HASHTAGS            = "hashtags";
+    case FID                 = "fid";
+    case WID                 = "wid";
+    case MESSAGE             = "message";
+    case IS_PRINT            = 'is_print';
+    case REPLY_COUNT         = "reply_count";
+    case ITEM_COUNT          = 'item_count';
+    case Q                   = 'q';
+    case PAGE                = 'page';
+    case NEWPASSWD           = 'newpasswd';
+    case RE_NEWPASSWD        = 're_newpasswd';
+    case SALE_STATE          = 'sale_state';
+    case REGIDATE            = 'regidate';
+    case NUMBER              = 'number';
+    case SP                  = 'sp';
+    case publications_number = 'publications_number';
+    case owners_number       = 'owners_number';
+    case uses_number         = 'uses_number';
+    case sp_unit             = 'sp_unit';
+    
 
 
     #@ interface
@@ -142,7 +151,15 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::PAGE => R::components('columns')['page'],
             static::NEWPASSWD => R::components('columns')['newpasswd'],
             static::RE_NEWPASSWD => R::components('columns')['re_newpasswd'],
-            static::sale_state => R::components('columns')['sale_state']
+            static::SALE_STATE => R::components('columns')['sale_state'],
+            static::REGIDATE => R::components('columns')['regidate'],
+            static::TOKEN => R::components('columns')['token'],
+            static::NUMBER => R::components('columns')['number'],
+            static::SP => R::components('columns')['sp'],
+            static::PUBLICATIONS_NUMBER => R::components('columns')['publications_number'],
+            static::OWNERS_NUMBER => R::components('columns')['owners_number'],
+            static::USES_NUMBER => R::components('columns')['uses_number'],
+            static::SP_UNIT => R::components('columns')['sp_unit']
         };
     }
 }

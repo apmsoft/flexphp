@@ -19,7 +19,7 @@ class DataProcessing extends Model
             "DESCRIPTION" => self::call( new \Flex\Components\Data\Processing\Description($value),$command[0], $command[1] ),
             "PASSWD"=> (new Encrypt($value))->_md5_base64(),
             "EXTRACT_DATA" => self::call( new \Flex\Components\Data\Processing\ExtractData($value),$command[0], [] ),
-            "FID" => self::call( new \Flex\Components\Data\Processing\Fid($command[0]) , $command[1], $command[2] ),
+            "FID","GID" => self::call( new \Flex\Components\Data\Processing\Fid($command[0]) , $command[1], $command[2] ),
             default => $value
         };
     }

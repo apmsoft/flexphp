@@ -177,6 +177,53 @@ class Tables extends SchemaGenerator
         return $this->create();
     }
 
+    # 쿠폰
+    public function coupon() : string
+    {
+        parent::__construct(TablesEnum::COUPON->value, TablesEnum::COUPON->label());
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::TITLE->value,
+            ColumnsEnum::TOKEN->value,
+            ColumnsEnum::START_DATE->value,
+            ColumnsEnum::END_DATE->value,
+            ColumnsEnum::SP->value,
+            ColumnsEnum::PUBLICATIONS_NUMBER->value,
+            ColumnsEnum::OWNERS_NUMBER->value,
+            ColumnsEnum::USES_NUMBER->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::IS_PRINT->value,
+            ColumnsEnum::SP_UNIT->value,
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey([
+            'start_date'=>ColumnsEnum::START_DATE->value.','.ColumnsEnum::END_DATE->value
+        ]);
+        return $this->create();
+    }
+
+    # 쿠폰번호
+    public function coupon_number() : string
+    {
+        parent::__construct(TablesEnum::COUPON_NUMBER->value, TablesEnum::COUPON_NUMBER->label());
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::TOKEN->value,
+            ColumnsEnum::NUMBER->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::REGIDATE->value,
+            ColumnsEnum::SIGNDATE->value
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey([
+            'token' => ColumnsEnum::TOKEN->value,
+            'number' => ColumnsEnum::NUMBER->value,
+            'muid' => ColumnsEnum::MUID->value,
+            'cnmuid'=>ColumnsEnum::NUMBER->value.','.ColumnsEnum::MUID->value
+        ]);
+        return $this->create();
+    }
+
     # 장바구니
     public function item_cart() : string
     {
@@ -263,7 +310,7 @@ class Tables extends SchemaGenerator
         parent::__construct(TablesEnum::ITEM_GROUP->value, TablesEnum::ITEM_GROUP->label());
         $this->columns(
             ColumnsEnum::ID->value,
-            ColumnsEnum::FID->value,
+            ColumnsEnum::GID->value,
             ColumnsEnum::TITLE->value,
             ColumnsEnum::REPLY_COUNT->value,
             ColumnsEnum::ITEM_COUNT->value,
@@ -271,9 +318,9 @@ class Tables extends SchemaGenerator
         );
         $this->primaryKey(ColumnsEnum::ID->value);
         $this->indexKey([
-            'fid'=>ColumnsEnum::FID->value,
+            'Gid'=>ColumnsEnum::GID->value,
             'is_print'=>ColumnsEnum::IS_PRINT->value,
-            'fidprint'=>ColumnsEnum::FID->value.','.ColumnsEnum::IS_PRINT->value
+            'Gidprint'=>ColumnsEnum::GID->value.','.ColumnsEnum::IS_PRINT->value
         ]);
         return $this->create();
     }

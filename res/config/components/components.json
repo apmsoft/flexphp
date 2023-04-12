@@ -63,7 +63,15 @@
         "page"                 : "페이지",
         "newpasswd"            : "새비밀번호",
         "re_newpasswd"         : "새비밀번호확인",
-        "sale_state"           : "판매상태"
+        "sale_state"           : "판매상태",
+        "regidate"             : "등록일",
+        "token"                : "토큰",
+        "number"               : "번호",
+        "sp"                   : "할인가및할인률",
+        "publications_number" : "발행수",
+        "owners_number"       : "소유자수",
+        "uses_number"         : "사용수",
+        "sp_unit"             : "할인unit[%,원]"
     },
     "tables" : {
         "flex_member"          : "회원",
@@ -77,6 +85,8 @@
         "flex_bbs_faq"         : "자주하는질문",
         "flex_bbs_qna"         : "Q&A",
         "flex_alarm"           : "새소식",
-        "flex_popup"           : "팝업"
+        "flex_popup"           : "팝업",
+        "flex_coupon"          : "쿠폰",
+        "flex_coupon_number"   : "쿠폰발행번호"
     }
 }
