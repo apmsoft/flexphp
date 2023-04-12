@@ -23,6 +23,7 @@ enum TablesEnum : string implements EntryEnumInterface
     case POPUP            = 'flex_popup';
     case COUPON           = 'flex_coupon';
     case COUPON_NUMBER    = 'flex_coupon_number';
+    case ITEM_ORDER       = 'flex_item_order';
 
     #@ interface
     public function label() : string 
@@ -41,7 +42,8 @@ enum TablesEnum : string implements EntryEnumInterface
             static::ALARM => R::components('tables')['flex_alarm'],
             static::POPUP => R::components('tables')['flex_popup'],
             static::COUPON => R::components('tables')['flex_coupon'],
-            static::COUPON_NUMBER => R::components('tables')['flex_coupon_number']
+            static::COUPON_NUMBER => R::components('tables')['flex_coupon_number'],
+            static::ITEM_ORDER => R::components('tables')['flex_item_order']
         };
     }
 }

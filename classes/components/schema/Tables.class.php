@@ -318,9 +318,37 @@ class Tables extends SchemaGenerator
         );
         $this->primaryKey(ColumnsEnum::ID->value);
         $this->indexKey([
-            'Gid'=>ColumnsEnum::GID->value,
+            'gid'=>ColumnsEnum::GID->value,
             'is_print'=>ColumnsEnum::IS_PRINT->value,
-            'Gidprint'=>ColumnsEnum::GID->value.','.ColumnsEnum::IS_PRINT->value
+            'gidprint'=>ColumnsEnum::GID->value.','.ColumnsEnum::IS_PRINT->value
+        ]);
+        return $this->create();
+    }
+
+    # 주문정보
+    public function item_order() : string
+    {
+        parent::__construct(TablesEnum::ITEM_OEDER->value, TablesEnum::ITEM_OEDER->label());
+        $this->columns(
+            ColumnsEnum::ID->value,
+            ColumnsEnum::ORDERCODE->value,
+            ColumnsEnum::POINT->value,
+            ColumnsEnum::MUID->value,
+            ColumnsEnum::DELIVERY_FEE->value,
+            ColumnsEnum::TOTAL->value,
+            ColumnsEnum::SIGNDATE->value,
+            ColumnsEnum::SIGNTIME->value,
+            ColumnsEnum::ORDERER->value,
+            ColumnsEnum::SHIPPING->value,
+            ColumnsEnum::SALEPOINT->value,
+            ColumnsEnum::PAYMENT->value,
+            ColumnsEnum::PROOF->value,
+            ColumnsEnum::ITEMS->value,
+            ColumnsEnum::MEMO->value,
+        );
+        $this->primaryKey(ColumnsEnum::ID->value);
+        $this->indexKey([
+            'ordercode'=>ColumnsEnum::ORDERCODE->value
         ]);
         return $this->create();
     }

@@ -25,6 +25,7 @@ enum ColumnsEnum : string implements EntryEnumInterface
     case EXTRACT_DATA          = 'extract_data';
     case DESCRIPTION           = 'description';
     case SIGNDATE              = 'signdate';
+    case SIGNTIME              = 'signtime';
     case SIGNTIMESTAMP         = 'signtimestamp';
     case POINT                 = 'point';
     case RECOMMAND             = 'recommand';
