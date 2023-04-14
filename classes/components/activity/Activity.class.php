@@ -38,7 +38,7 @@ class Activity extends DbMySqli
     }
 
     # 데이터 업데이트
-    public function queryUpdate(array $params, array $where) : void 
+    public function queryUpdate(array $params, string $where) : void 
     {
         parent::autocommit(FALSE);
         try{
