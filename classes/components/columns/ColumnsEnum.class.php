@@ -177,7 +177,8 @@ enum ColumnsEnum : string implements EntryEnumInterface
             static::ORDERER => R::components('columns')['orderer'],
             static::SHIPPING => R::components('columns')['shipping'],
             static::SALEPOINT => R::components('columns')['salepoint'],
-            static::PROOF => R::components('columns')['proof']
+            static::PROOF => R::components('columns')['proof'],
+            default => ''
         };
     }
 }

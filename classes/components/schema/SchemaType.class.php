@@ -66,7 +66,8 @@ class SchemaType
             "ORDERER","SHIPPING","PROOF","SALEPOINT","PAYMENT" => "json DEFAULT NULL",
             "TERM" => "tinyint(2) unsigned NOT NULL DEFAULT '0'",
             "MEMO" => "text",
-            "ORDERCODE" => "varchar(12) NOT NULL"
+            "ORDERCODE" => "varchar(12) NOT NULL",
+            default => ''
         };
     }
 
@@ -74,11 +75,14 @@ class SchemaType
     {
         $NAME   = strtoupper($name);
         $column = ColumnsEnum::fetchByName($NAME);
-        $result = [
-            'name'  => $column['value'],
-            'label' => $column['label'],
-            'type'  => $this->type($NAME)
-        ];
+        $result = [];
+        if($this->type($NAME)){
+            $result = [
+                'name'  => $column['value'],
+                'label' => $column['label'],
+                'type'  => $this->type($NAME)
+            ];
+        }
     return $result;
     }
 
@@ -87,7 +91,10 @@ class SchemaType
         $result  = [];
         $columns = ColumnsEnum::values();
         foreach($columns as $column){
-            $result[] = $this->fetchByName($column);
+            $column_val = $this->fetchByName($column);
+            if(isset($column_val['name'])){
+                $result[] = $this->fetchByName($column);
+            }
         }
 
     return $result;
