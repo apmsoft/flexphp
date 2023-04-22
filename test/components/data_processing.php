@@ -32,7 +32,8 @@ try{
         ->put(ColumnsEnum::IP->name,"12.345.334.234")
         ->put(ColumnsEnum::PASSWD->name, "dafdsafa")
         ->put(ColumnsEnum::TITLE->name, "대만민국 국제 올림픽 대화에서", "cut", [10])
-        ->put(ColumnsEnum::DESCRIPTION->name, "dsafa$#%#<a href=\"https://m.naver.com\">네이버</a>", "getContext", ["HTML"])
+        // ->put(ColumnsEnum::DESCRIPTION->name, "dsafa$#%#<a href=\"https://m.naver.com\">네이버</a>", "getContext", ["HTML"])
+        ->put(ColumnsEnum::DESCRIPTION->name, "dsafa$#%#<a href=\"https://m.naver.com\">네이버</a>", "cut", [200])
         ->fetchAll();
     
     Log::d($dataAll);
