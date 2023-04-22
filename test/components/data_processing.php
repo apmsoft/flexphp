@@ -28,7 +28,7 @@ try{
         'name' => '홍길동',
         'id' => 1
     ]))
-        ->put(ColumnsEnum::EXTRACT_DATA->name, ["id"=>"1"],"json_encode")
+        ->put(ColumnsEnum::EXTRACT_DATA->name, json_encode(["id"=>"1"]))
         ->put(ColumnsEnum::IP->name,"12.345.334.234")
         ->put(ColumnsEnum::PASSWD->name, "dafdsafa")
         ->put(ColumnsEnum::TITLE->name, "대만민국 국제 올림픽 대화에서", "cut", [10])
