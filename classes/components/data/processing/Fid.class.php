@@ -5,7 +5,7 @@ use Flex\Components\Columns\ColumnsEnum;
 use Flex\Annona\Db\DbMySqli;
 use Flex\Annona\Db\WhereHelper;
 
-final class Fid extends Activity
+final class Fid extends ActivityMysql
 {
     public function __construct(string $T){
         parent::__construct($T);
