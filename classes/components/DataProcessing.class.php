@@ -5,6 +5,7 @@ use Flex\Components\Columns\ColumnsEnum;
 use Flex\Annona\Model;
 use Flex\Annona\Cipher\Encrypt;
 use Flex\Annona\Log;
+use \Flex\Components\Data\Processing as Dp;
 
 class DataProcessing extends Model
 {
@@ -15,12 +16,11 @@ class DataProcessing extends Model
     private function setValue(string $name, mixed $value, array $command) : mixed
     {
         return match($name){
-            "TITLE" => self::oop( new \Flex\Components\Data\Processing\Title($value), $command[0], $command[1])->value,
-            "DESCRIPTION" => self::oop( new \Flex\Components\Data\Processing\Description($value), $command[0], $command[1]),
+            "TITLE" => self::oop( new Dp\Title($value), $command[0], $command[1])->value,
+            "DESCRIPTION" => self::oop( new Dp\Description($value), $command[0], $command[1]),
             "PASSWD"=> (new Encrypt($value))->_md5_base64(),
-            "EXTRACT_DATA" => self::fun( $command[0], [$value] ),
-            "FID","GID" => self::oop( new \Flex\Components\Data\Processing\Fid($command[0]), $command[1], $command[2]),
-            default => $value
+            "FID","GID" => self::oop( new Dp\Fid($command[0]), $command[1], $command[2]),
+            default => (isset($command[0])) ? self::fun( $command[0], [$value] ) : $value
         };
     }
 
