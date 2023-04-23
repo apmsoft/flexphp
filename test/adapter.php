@@ -10,7 +10,7 @@ use Flex\Annona\Model;
 use Flex\Annona\Adapter\BaseAdapter;
 use Flex\Annona\Uuid\UuidGenerator;
 
-$path = dirname(dirname(__DIR__));
+$path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;;
@@ -26,7 +26,12 @@ Log::options([
 $baseAdapter = new BaseAdapter();
 
 $baseAdapter->add(Model::class, []);
+$baseAdapter->Model->a = 1;
 $baseAdapter->Model->b = 4;
+$baseAdapter->Model->data = [];
+$baseAdapter->Model->{"data+"} = 1;
+$baseAdapter->Model->{"data+"} = 2;
+$baseAdapter->Model->{"data+"} = 3;
 Log::d($baseAdapter->Model->fetch());
 
 $baseAdapter->add(ArrayHelper::class, [["a"=>"a"],["a"=>"b"]]);

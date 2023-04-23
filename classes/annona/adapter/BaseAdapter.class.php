@@ -5,8 +5,6 @@ class BaseAdapter extends \ReflectionClass
 {
     private string $version = '0.5';
     private array $instance = [];
-    public function __construct () {
-    }
 
     public function add(string $classname,mixed ...$argv) : void 
     {
