@@ -1,13 +1,10 @@
 <?php 
 namespace Flex\Components\Activity;
 
-use Flex\Components\Validation;
+use Flex\Annona\Adapter\BaseAdapter;
 
-class Activity
+class Activity extends BaseAdapter
 {
-    public function __construct(){
-    }
-
     # 밸리데이션 체크
     public function validation (array $params) : void 
     {
