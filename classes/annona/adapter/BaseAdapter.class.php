@@ -3,7 +3,7 @@ namespace Flex\Annona\Adapter;
 
 class BaseAdapter extends \ReflectionClass
 {
-    private string $version = '0.5';
+    private string $version = '0.5.1';
     private array $instance = [];
     public function __construct () {}
 
@@ -15,7 +15,7 @@ class BaseAdapter extends \ReflectionClass
         $this->instance[$shortname] = $instance;
     }
 
-    public function &getInstance(string $classname) : mixed {
+    public function &getInstant(string $classname) : mixed {
         return $this->instance[$classname];
     }
 
