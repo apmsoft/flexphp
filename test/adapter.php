@@ -39,7 +39,7 @@ Log::d($baseAdapter->ArrayHelper->sorting('a','DESC')->value);
 
 $baseAdapter->add(UuidGenerator::class);
 Log::d($baseAdapter->UuidGenerator->v4());
-Log::d($baseAdapter->getInstance('UuidGenerator')->v4());
+Log::d($baseAdapter->its('UuidGenerator')->v4());
 
 
 $baseAdapter->add('Flex\Annona\Paging\Relation', 1000,1);

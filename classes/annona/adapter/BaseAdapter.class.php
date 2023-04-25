@@ -15,7 +15,7 @@ class BaseAdapter extends \ReflectionClass
         $this->instance[$shortname] = $instance;
     }
 
-    public function &getInstant(string $classname) : mixed {
+    public function &its(string $classname) : mixed {
         return $this->instance[$classname];
     }
 
