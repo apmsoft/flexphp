@@ -25,24 +25,27 @@ Log::options([
 
 $baseAdapter = new BaseAdapter();
 
-$baseAdapter->add(Model::class, []);
-$baseAdapter->Model->a = 1;
-$baseAdapter->Model->b = 4;
-$baseAdapter->Model->data = [];
-$baseAdapter->Model->{"data+"} = 1;
-$baseAdapter->Model->{"data+"} = 2;
-$baseAdapter->Model->{"data+"} = 3;
-Log::d($baseAdapter->Model->fetch());
+$model = $baseAdapter->new(Model::class, []);
+$model->a = 1;
+$model->b = 4;
+$model->data = [];
+$model->{"data+"} = 1;
+$model->{"data+"} = 2;
+$model->{"data+"} = 3;
 
-$baseAdapter->add(ArrayHelper::class, [["a"=>"a"],["a"=>"b"]]);
+Log::d($model->fetch());
+
+$model2 = $baseAdapter->new(Model::class, ["a2"=>"a2"]);
+Log::d($model2->fetch());
+
+$baseAdapter->new(ArrayHelper::class, [["a"=>"a"],["a"=>"b"]]);
 Log::d($baseAdapter->ArrayHelper->sorting('a','DESC')->value);
 
-$baseAdapter->add(UuidGenerator::class);
+$baseAdapter->new(UuidGenerator::class);
 Log::d($baseAdapter->UuidGenerator->v4());
-Log::d($baseAdapter->its('UuidGenerator')->v4());
 
 
-$baseAdapter->add('Flex\Annona\Paging\Relation', 1000,1);
+$baseAdapter->new('Flex\Annona\Paging\Relation', 1000,1);
 Log::d($baseAdapter->Relation->query( 10, 10 )->build()->paging());
 
 Log::d($baseAdapter->fetchInstances());
