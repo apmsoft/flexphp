@@ -26,22 +26,23 @@ R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 // Log::d(ColumnsEnum::cases());
 
 // # 이름만 배열로 받기
-Log::d( ColumnsEnum::names());
-Log::d( ColumnsEnum::values());
-Log::d( ColumnsEnum::array());
+// Log::d( ColumnsEnum::names());
+// Log::d( ColumnsEnum::values());
+// Log::d( ColumnsEnum::array());
 Log::d("==========");
 
 Log::d(
     'column name : '.ColumnsEnum::NAME->name,
-    'column name : '.ColumnsEnum::NAME->value,
-    'column label : '.ColumnsEnum::NAME->label()
+    'column value : '.ColumnsEnum::NAME->value,
+    'column label : '.R::components('columns')[ColumnsEnum::NAME->value]
 );
 Log::d("==========");
 
 # 이름에 해당하는 name,label 배열로 받기
-Log::d( ColumnsEnum::fetchByName(ColumnsEnum::ID->name) );
+// Log::d( ColumnsEnum::fetchByName(ColumnsEnum::ID->name) );
 Log::d("==========");
 
 # 전체
-Log::d( ColumnsEnum::fetchAll() );
+// Log::d( ColumnsEnum::fetchAll() );
+
 ?>

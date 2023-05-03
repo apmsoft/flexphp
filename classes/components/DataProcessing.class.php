@@ -46,7 +46,6 @@ class DataProcessing extends Model
         $column = ColumnsEnum::fetchByName($NAME);
         $result = [
             'name'  => $column['value'],
-            'label' => $column['label'],
             'value' => parent::__get($column['value'])
         ];
     return $result;

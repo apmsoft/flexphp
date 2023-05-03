@@ -28,8 +28,7 @@ trait EntryArrayTrait
         $enum = constant("self::{$NAME}");
         $result = [
             'name'  => $enum->name,
-            'value' => $enum->value,
-            'label' => $enum->label()
+            'value' => $enum->value
         ];
     return $result;
     }
