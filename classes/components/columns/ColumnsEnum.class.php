@@ -1,9 +1,7 @@
 <?php 
 namespace Flex\Components\Columns;
 
-use Flex\Components\EntryEnumInterface;
 use Flex\Components\EntryArrayTrait;
-use Flex\Annona\R;
 
 enum ColumnsEnum : string
 {

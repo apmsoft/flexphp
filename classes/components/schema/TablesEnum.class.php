@@ -1,8 +1,12 @@
 <?php 
 namespace Flex\Components\Schema;
 
+use Flex\Components\EntryArrayTrait;
+
 enum TablesEnum : string
 {
+    use EntryArrayTrait;
+    
     case MEMBER           = 'flex_member';
     case MEMBER_POINT     = 'flex_member_point';
     case ITEM_CART        = 'flex_item_cart';
