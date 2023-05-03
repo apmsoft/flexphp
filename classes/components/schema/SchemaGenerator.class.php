@@ -22,10 +22,13 @@ class SchemaGenerator extends SchemaType
         'comment'        => ''
     ];
 
-    public function __construct(string $name,string $comment)
+    private array $labels = [];
+
+    public function __construct(string $name,string $comment, array $labels)
     {
         $this->schema_params['table'] = $name;
         $this->schema_params['comment'] = $comment;
+        $this->labels = $labels;
     }
 
     # PRIMARY KEY
@@ -53,7 +56,7 @@ class SchemaGenerator extends SchemaType
         $columns = [];
         foreach($params as $name){
             $column = parent::fetchByName($name);
-            $columns[] = sprintf("`%s` %s COMMENT '%s'", $column['name'], $column['type'], $column['label']);
+            $columns[] = sprintf("`%s` %s COMMENT '%s'", $column['name'], $column['type'], $this->labels[$column['name']]);
         }
         $this->schema_params['columns'] = implode(",\n", $columns);
 
