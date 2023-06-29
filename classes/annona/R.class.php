@@ -7,7 +7,7 @@ use Flex\Annona\Log;
 
 final class R
 {
-    const VERSEION = '2.2.3';
+    const VERSEION = '2.2.4';
     public static $language = ''; // 국가코드
 
     # resource 값
@@ -16,7 +16,7 @@ final class R
     public static $integers = [];
     public static $floats   = [];
     public static $doubles  = [];
-    public static $array    = [];
+    public static $arrays    = [];
     public static $tables   = [];
 
     public static $r = [];
@@ -54,7 +54,7 @@ final class R
     # 특정 리소스 키에 해당하는 값 리턴
     private static function get(string $query, string $fieldname){
         $r_data = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','array','tables' => self::${$query}[self::$language][$fieldname],
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => self::${$query}[self::$language][$fieldname],
             default => self::$r->{$query}[self::$language][$fieldname]
         };
 
@@ -63,7 +63,7 @@ final class R
 
     private static function fetch(string $query): array{
         $r_data = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','array','tables' => self::${$query}[self::$language],
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => self::${$query}[self::$language],
             default => self::$r->{$query}[self::$language]
         };
 
@@ -71,7 +71,7 @@ final class R
     }
 
     # 특정리소스의 키에 해당하는 값들을 배열로 돌려받기
-    private static function selectR(array $params) : array 
+    private static function selectR(array $params) : array
     {
         $argv = [];
         foreach($params as $query => $fieldname){
@@ -87,9 +87,9 @@ final class R
         return $argv;
     }
 
-    public static function __callStatic(string $query, array $args=[]) 
+    public static function __callStatic(string $query, array $args=[])
     {
-        # 배열을 dictionary Object 
+        # 배열을 dictionary Object
         if(strtolower($query) == 'dic' && count($args)){
             return (object)$args[0];
         }else if(($query == 'fetch') && (isset($args[0]) && is_string($args[0])) ){
@@ -109,7 +109,7 @@ final class R
     private static function mergeData(string $query, array $args) : void
     {
         $r_array = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','array','tables' => self::${$query}[self::$language],
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => self::${$query}[self::$language],
             default => self::$r->{$query}[self::$language]
         };
 
@@ -126,7 +126,7 @@ final class R
     private static function id(string $query) : void
     {
         $define_dir = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','array' => _VALUES_,
+            'sysmsg','strings','integers','floats','doubles','arrays' => _VALUES_,
             'tables' => _QUERY_,
             default => ''
         };
@@ -139,7 +139,7 @@ final class R
     # 데이터 로딩된 상태인지 체크
     private static function is(string $query) : bool{
         $result = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','array','tables' => (isset(self::${$query}[self::$language])) ?? false,
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => (isset(self::${$query}[self::$language])) ?? false,
             default => (isset(self::$r->{$query}[self::$language])) ?? false
         };
         // Log::d('is', (string)$result);
@@ -185,14 +185,14 @@ final class R
     public static function filterJSON($json, $assoc = false, $depth = 512, $options = 0) : mixed {
         # // 주석제거
         $json=preg_replace('/(?<!\S)\/\/\s*[^\r\n]*/', '', $json);
-        $json = strtr($json,array("\n"=>'',"\t"=>'',"\r"=>'')); 
+        $json = strtr($json,array("\n"=>'',"\t"=>'',"\r"=>''));
         $json = preg_replace('/([{,]+)(\s*)([^"]+?)\s*:/','$1"$3":',$json);
         if(version_compare(phpversion(), '5.4.0', '>=')) {
             $json = json_decode($json, $assoc, $depth, $options);
         }
         else if(version_compare(phpversion(), '5.3.0', '>=')) {
             $json = json_decode($json, $assoc, $depth);
-        } 
+        }
         else {
             $json = json_decode($json, $assoc);
         }
@@ -223,7 +223,7 @@ final class R
         unset(self::$floats);
         unset(self::$doubles);
         unset(self::$tables);
-        unset(self::$array);
+        unset(self::$arrays);
         unset(self::$r);
     }
 }

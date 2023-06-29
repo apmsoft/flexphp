@@ -22,6 +22,9 @@ Log::options([
 // strings_en.json     - 영어
 // strings_jp.json     - 일본어
 
+# 2.2.4
+# array -> arrays 로 변경
+
 Log::d("===============================");
 # 기본언어 설정
 R::init( App::$language );
@@ -55,11 +58,11 @@ R::parser(_ROOT_PATH_.'/'._CONFIG_.'/imageviewer.json', 'imageviewer2');
 # 기본 리소스 파일 호출 : parser
 #-----------------------
 R::init( 'ko' );
-# res/CONFIG 
+# res/CONFIG
 #R::parser(_ROOT_PATH_.'/'._CONFIG_.'/imageviewer.json', 'imageviewer');
 
 # res/VALUES
-#R::parser(_ROOT_PATH_.'/'._VALUES_.'/array.json', 'array');
+#R::parser(_ROOT_PATH_.'/'._VALUES_.'/arrays.json', 'arrays');
 
 # res/RAW
 #R::parser(_ROOT_PATH_.'/'._RAW_.'/holiday.json', 'holiday');
@@ -71,11 +74,11 @@ R::init( 'ko' );
 #==================================================
 # 이미 선언된 Defined 리소스 ID [ res/VALUES ]
 # parserRDefinedId 로 바로 불러들일 수 있는 리소스 명
-# array, sysmsg, strings, integers, floats, doubles, tables
+# arrays, sysmsg, strings, integers, floats, doubles, tables
 #--------------------------------------------------
-# array
-R::array();
-// Log::d('array',R::$array);
+# arrays
+R::arrays();
+// Log::d('arrays',R::$arrays);
 
 # tables
 R::tables();
