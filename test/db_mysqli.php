@@ -1,4 +1,4 @@
-<?php 
+<?php
 $path = dirname(__DIR__);
 require $path . '/config/config.inc.php';
 
@@ -78,7 +78,7 @@ $rlt->free();
 # SELECT id, name,userid FROM flex_member WHERE (id IN (SELECT muid FROM flex_coupon_numbers))
 # tableSub
 #--------------
-$rlt = $db->table( R::tables('member') )->select("id","name","userid")->where( 
+$rlt = $db->table( R::tables('member') )->select("id","name","userid")->where(
     sprintf("id IN (%s)", $db->tableSub($tables->coupon_numbers)->select("muid")->query)
 )->query();
 while($row = $rlt->fetch_assoc()){
@@ -92,8 +92,8 @@ while($row = $rlt->fetch_assoc()){
 }
 $rlt->free();
 
-### 
-### tableSub in select, 
+###
+### tableSub in select,
 ### tableSub in where
 ###
 $rlt = $db->table( R::tables('member') )->select("id","name",
@@ -118,6 +118,9 @@ $rlt->free();
 # Group By
 // $query = $db->table( R::tables('member') )->selectGroupBy('id','name','signdate')->groupBy('`name`')->limit(0,10)->query;
 // Log::d('Group By',$query);
+
+$query = $db->table( R::tables('member') )->selectGroupBy('id,name,signdate')->groupBy('name')->limit(0,10)->query;
+Log::d('Group By',$query);
 // $rlt = $db->table( R::tables('member') )->selectGroupBy('id','name','signdate')->groupBy('`name`')->orderBy('name asc')->query();
 // while($row = $rlt->fetch_assoc()){
 //     print_r($row);
@@ -281,21 +284,21 @@ $rlt->free();
 #######[ WhereHelper ] ##########
 # *******************************
 # ===============================
-$query = $db->table( R::tables('member') )->select('id','name','userid')->where(
-    (new WhereHelper)->
-        begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
-        begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
-    ->where
-)->query;
-Log::d($query);
+// $query = $db->table( R::tables('member') )->select('id','name','userid')->where(
+//     (new WhereHelper)->
+//         begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
+//         begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
+//     ->where
+// )->query;
+// Log::d($query);
 
-$rlt = $db->table( R::tables('member') )->select('id','name','userid')->where(
-    (new WhereHelper)->
-        begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
-        begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
-    ->where
-)->orderBy('id desc','name asc')->limit(3)->query();
-while($row = $rlt->fetch_assoc()){
-    print_r($row);
-}
+// $rlt = $db->table( R::tables('member') )->select('id','name','userid')->where(
+//     (new WhereHelper)->
+//         begin('OR')->case('name','LIKE','김')->case('userid', 'LIKE-L', '@gmail.com')->end()
+//         begin('AND')->case('signdate','>=','2002-12-12')->case('level', '>', '0')->end()
+//     ->where
+// )->orderBy('id desc','name asc')->limit(3)->query();
+// while($row = $rlt->fetch_assoc()){
+//     print_r($row);
+// }
 ?>

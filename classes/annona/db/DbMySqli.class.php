@@ -9,7 +9,7 @@ use \ErrorException;
 
 class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAccess
 {
-	private $version = '2.1.1';
+	private $version = '2.1.2';
 
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
@@ -35,6 +35,8 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 		# 문자셋
 		$chrset_is = parent::character_set_name();
 		if(strcmp($chrset_is,$chrset)) parent::set_charset($chrset);
+
+	return $this;
 	}
 
 	#@ interface : ArrayAccess
@@ -101,11 +103,11 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 		if($column_name && $column_name !='')
 		{
 			if(!$is_as){
-				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8)) as %s", 
+				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8)) as %s",
 					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES, $column_name
 				);
 			}else{
-				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8))", 
+				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8))",
 					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES
 				);
 			}
@@ -143,7 +145,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 				parent::setQueryTpl('UNINON');
 				$implode_join = sprintf(" %s ",$upcase);
 				break;
-			default : 
+			default :
 				parent::setQueryTpl('default');
 		}
 
@@ -162,6 +164,11 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 	# @ abstract : QueryBuilderAbstract
     public function selectGroupBy(...$columns) : DbMySqli{
 		$argv = [];
+		#복수인지 체크
+		if(count($columns)<2){
+			$columns = explode(',', $columns[0]);
+		}
+
 		foreach($columns as $name){
 			$argv[] = (strpos($name,'(') !==false) ? $name : sprintf("ANY_VALUE(%s) as %s",$name,$name);
 		}
@@ -171,12 +178,12 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 	}
 
 	# @ abstract : QueryBuilderAbstract
-	# select 암호화 -> 복호화 
+	# select 암호화 -> 복호화
 	public function selectCrypt(...$columns) : DbMySqli{
 		$argv = [];
 		foreach($columns as $name){
 			$validation = new Validation($name);
-			if($validation->isNumber()){ 
+			if($validation->isNumber()){
 				$argv[] = $name;
 			}else{
 				$argv[] = self::aes_decrypt($name,false);
@@ -335,7 +342,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 		$result = false;
 		$fieldkv = '';
 
-		if(count($this->params)<1) return $result;		
+		if(count($this->params)<1) return $result;
 		foreach($this->params as $k => $v)
 		{
 			$datav = '';
@@ -363,7 +370,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 		$result = false;
 		$fieldkv = '';
 
-		if(count($this->params)<1) return $result;		
+		if(count($this->params)<1) return $result;
 		foreach($this->params as $k => $v)
 		{
 			$datav = '';
