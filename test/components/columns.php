@@ -38,11 +38,7 @@ Log::d(
 );
 Log::d("==========");
 
-# 이름에 해당하는 name,label 배열로 받기
-// Log::d( ColumnsEnum::fetchByName(ColumnsEnum::ID->name) );
-Log::d("==========");
-
 # 전체
-// Log::d( ColumnsEnum::fetchAll() );
+Log::d( ColumnsEnum::fetchByName('name') );
 
 ?>

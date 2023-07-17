@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Flex\Components\Columns;
 
 use Flex\Components\EntryArrayTrait;
