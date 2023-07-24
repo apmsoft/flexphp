@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Flex\Components\Schema;
 
 use Flex\Components\Schema\TablesEnum;
@@ -45,7 +45,7 @@ class TablesMap extends Tables
     return $this;
     }
 
-    public function fetchAll() : array 
+    public function fetchAll() : array
     {
         return $this->model->map;
     }

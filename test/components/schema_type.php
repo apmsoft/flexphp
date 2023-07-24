@@ -23,13 +23,16 @@ Log::options([
 # resource
 R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
 
-# 이름에 해당하는 name,label 배열로 받기
+
 try {
-    Log::d((new SchemaType())->fetchByName(ColumnsEnum::NAME->name));
+    Log::d((new SchemaType( R::components('columns') ))->fetchByName(ColumnsEnum::NAME->name));
+    Log::d((new SchemaType( R::components('columns') ))->fetchByName(ColumnsEnum::SIGNDATE->name));
 } catch (\UnexpectedValueException $e) {
     Log::e($e->getMessage() );
 }
 
 # 전체
-Log::d( (new SchemaType())->fetchAll() );
+Log::d(
+    (new SchemaType( R::components('columns') ))->fetchAll()
+);
 ?>

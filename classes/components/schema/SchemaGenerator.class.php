@@ -1,10 +1,11 @@
-<?php 
+<?php
 namespace Flex\Components\Schema;
 
 use Flex\Components\Schema\SchemaType;
 
 class SchemaGenerator extends SchemaType
 {
+    private $version = '0.5';
     private string $schema_tpl = "
     CREATE TABLE `{table}` (
         {columns}{primary_key}{index_key}
@@ -29,6 +30,8 @@ class SchemaGenerator extends SchemaType
         $this->schema_params['table'] = $name;
         $this->schema_params['comment'] = $comment;
         $this->labels = $labels;
+
+        parent::__construct($labels);
     }
 
     # PRIMARY KEY
@@ -51,7 +54,7 @@ class SchemaGenerator extends SchemaType
     }
 
     # COLUMNS
-    public function columns (...$params) : SchemaGenerator 
+    public function columns (...$params) : SchemaGenerator
     {
         $columns = [];
         foreach($params as $name){
@@ -78,7 +81,7 @@ class SchemaGenerator extends SchemaType
     }
 
     # AUTO_INCREMENT
-    public function auto_increment(int $number) : SchemaGenerator 
+    public function auto_increment(int $number) : SchemaGenerator
     {
         $this->schema_params['auto_increment'] = sprintf("AUTO_INCREMENT=%u",$number);
     return $this;
@@ -105,7 +108,7 @@ class SchemaGenerator extends SchemaType
             };
         }
         $schema = trim(strtr($this->schema_tpl, $render_args));
-        
+
     return $schema;
     }
 }

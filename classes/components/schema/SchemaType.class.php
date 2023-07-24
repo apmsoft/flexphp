@@ -1,11 +1,16 @@
-<?php 
+<?php
 namespace Flex\Components\Schema;
 
 use Flex\Components\Columns\ColumnsEnum;
 
 class SchemaType
 {
-    public function __construct () {}
+    private $version = '0.5';
+    private array $labels = [];
+    public function __construct(array $labels){
+        $this->labels = $labels;
+    }
+
     private function type(string $NAME) : string
     {
         return match($NAME){
@@ -71,7 +76,7 @@ class SchemaType
         };
     }
 
-    public function fetchByName(string $name) : array 
+    public function fetchByName(string $name) : array
     {
         $NAME   = strtoupper($name);
         $column = ColumnsEnum::fetchByName($NAME);
@@ -79,14 +84,14 @@ class SchemaType
         if($this->type($NAME)){
             $result = [
                 'name'  => $column['value'],
-                'label' => $column['label'],
+                'label' => (isset($this->labels[$column['value']])) ? $this->labels[$column['value']] : '',
                 'type'  => $this->type($NAME)
             ];
         }
     return $result;
     }
 
-    public function fetchAll() : array 
+    public function fetchAll() : array
     {
         $result  = [];
         $columns = ColumnsEnum::values();
