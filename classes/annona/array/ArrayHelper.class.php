@@ -14,7 +14,7 @@ class ArrayHelper
     # 멀티배열 키의 값으로 소팅 [{},{}]
     # sort : asc | desc
     # key : 소팅 비교할 키네임
-    public function sorting(string $key, string $sorting = 'ASC') : ArrayHelper 
+    public function sorting(string $key, string $sorting = 'ASC') : ArrayHelper
     {
         $sorting = strtoupper($sorting);
         usort($this->value, function($a, $b) use ($key,$sorting) {
@@ -40,7 +40,7 @@ class ArrayHelper
     public function findAll(string $key,...$params) : ArrayHelper
     {
         $values = $params;
-        
+
         # 배열로 들어왔는지 체크
         if(is_array($params[0])){
             $values = $params[0];
@@ -60,7 +60,7 @@ class ArrayHelper
     }
 
     # 멀티 키 => 밸류 값 찾기 OR
-    public function findWhere (array $params, string $operator='AND') : ArrayHelper 
+    public function findWhere (array $params, string $operator='AND') : ArrayHelper
     {
         $result = [];
         $find_mcnt   = count($params);
@@ -106,7 +106,7 @@ class ArrayHelper
     }
 
     # 멀티 키 => 밸류 값 찾기
-    public function findWhereIndex (array $params) : int 
+    public function findWhereIndex (array $params) : int
     {
         $result = -1;
         $find_mcnt = count($params);
@@ -123,7 +123,7 @@ class ArrayHelper
                     break;
                 }
             }
-        
+
             if($result>-1){
                 break;
             }
@@ -289,7 +289,7 @@ class ArrayHelper
     return $this;
     }
 
-    private function find_numeric (string $key) : array 
+    private function find_numeric (string $key) : array
     {
         $result = [];
         foreach($this->value as $a){

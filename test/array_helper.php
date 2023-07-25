@@ -33,19 +33,25 @@ $data = '[
 	{
 		"muid":2,
 		"rank": 5,
-		"lowPrice": 27200,
+		"lowPrice": 105958,
 		"productName": "E"
 	},
 	{
 		"muid":3,
 		"rank": 7,
-		"lowPrice": 34120,
+		"lowPrice": 105959,
 		"productName": "G"
 	},
 	{
 		"muid":3,
 		"rank": 8,
-		"lowPrice": 27200,
+		"lowPrice": 110000,
+		"productName": "G"
+	},
+	{
+		"muid":4,
+		"rank": 8,
+		"lowPrice": 110001,
 		"productName": "G"
 	}
 ]';
@@ -53,20 +59,20 @@ $data = '[
 # array data
 $args = json_decode($data,true);
 
-# ASC 
+# ASC
 // $arrays_asc = (new ArrayHelper( $args ))->sorting('lowPrice','ASC')->value;
 // foreach($arrays_asc as $asc)
 // {
-//     Log::d( 
-//         $asc['rank'], 
-//         $asc['lowPrice'] , 
+//     Log::d(
+//         $asc['rank'],
+//         $asc['lowPrice'] ,
 //         $asc['productName']
 //     );
 // }
 
 // Log::d ("=================================");
 
-// # DESC 
+// # DESC
 // $arrays_desc = (new ArrayHelper( $args ))->sorting('lowPrice','DESC')->value;
 // foreach($arrays_desc as $desc)
 // {
@@ -212,6 +218,6 @@ $args = json_decode($data,true);
 // $slice_args2 = (new ArrayHelper( $args ))->slice(-1)->value;
 // Log::d($slice_args2);
 
-$slice_args3 = (new ArrayHelper( $args ))->sorting('lowPrice','ASC')->slice(0,3)->value;
+$slice_args3 = (new ArrayHelper( $args ))->sorting('lowPrice','ASC')->value;
 Log::d($slice_args3);
 ?>
