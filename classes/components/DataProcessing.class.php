@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Flex\Components;
 
 use Flex\Components\Columns\ColumnsEnum;
@@ -9,6 +9,7 @@ use \Flex\Components\Data\Processing as Dp;
 
 class DataProcessing extends Model
 {
+    private $version = '0.5.5';
     public function __construct(array $params = []){
         parent::__construct($params);
     }
@@ -25,14 +26,14 @@ class DataProcessing extends Model
     }
 
     # 클래스 실행
-    private function call(mixed $class, string $method, array $params) : mixed 
+    private function call(mixed $class, string $method, array $params) : mixed
     {
         if(is_object($class)){
             return call_user_func_array( [$class, $method] , $params );
         }
     }
 
-    public function put(string $name, mixed $value, ...$command) : DataProcessing 
+    public function put(string $name, mixed $value, ...$command) : DataProcessing
     {
         $NAME   = strtoupper($name);
         $column = ColumnsEnum::fetchByName($NAME);
@@ -40,7 +41,7 @@ class DataProcessing extends Model
     return $this;
     }
 
-    public function fetchByName(string $name) : array 
+    public function fetchByName(string $name) : array
     {
         $NAME   = strtoupper($name);
         $column = ColumnsEnum::fetchByName($NAME);
@@ -51,7 +52,7 @@ class DataProcessing extends Model
     return $result;
     }
 
-    public function fetchAll() : array 
+    public function fetchAll() : array
     {
         $result = parent::fetch();
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Flex\Components\Data\Processing;
 
 use Flex\Components\Columns\ColumnsEnum;
@@ -7,13 +7,14 @@ use Flex\Annona\Db\WhereHelper;
 
 final class Fid extends ActivityMysql
 {
+    private $version = '0.5.5';
     public function __construct(string $T){
         parent::__construct($T);
     }
 
     # reple 하부메뉴 및 답글에 사용
     # 다단 fid > "9999999997.01%" AND fid < "9999999997.0199";
-    public function createDepth(string $fid) : string 
+    public function createDepth(string $fid) : string
     {
         $fid_max = $this->table($this->Table)->select(sprintf("max(%s)", ColumnsEnum::FID->value))->where(
             (new WhereHelper())->begin('AND')
@@ -27,7 +28,7 @@ final class Fid extends ActivityMysql
     }
 
     # Insert 에 사용
-    public function createFid() : string 
+    public function createFid() : string
     {
         # 다단
         $fid_row = $this->table( $this->Table )->select(sprintf("min(%s)", ColumnsEnum::FID->value))->query()->fetch_row();
@@ -36,7 +37,7 @@ final class Fid extends ActivityMysql
     }
 
     # list
-    public function countDepth(string $fid) : int 
+    public function countDepth(string $fid) : int
     {
         # fid
         $fids = explode('.',$fid)[1];
@@ -45,7 +46,7 @@ final class Fid extends ActivityMysql
 
     # query
     # FID depth 정렬
-    public function orderBy() : string 
+    public function orderBy() : string
     {
         return sprintf("%s+0 ASC", ColumnsEnum::FID->value);
     }
