@@ -17,7 +17,7 @@ class Relation
 	private $blockEndPage   = 0;		# 블록 끝페이지
 	private $pageLimit      = 0;
 	private $totalRecord    = 0;		# 총레코드 수
-	
+
 	private $relation = ['first'=> 0,'pre'=> 0,'next'=> 0,'last'=> 0];
 	private $relation_current = [];
 
@@ -53,7 +53,7 @@ class Relation
 		if($this->totalBlock <=$this->blockCount) {
 			$this->blockEndPage = $this->totalPage;
 		}
-		
+
 		$this->pageLimit = $pagecount;
 	return $this;
 	}
