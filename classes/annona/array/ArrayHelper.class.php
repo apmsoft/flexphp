@@ -1,8 +1,6 @@
 <?php
 namespace Flex\Annona\Array;
 
-use \Flex\Annona\Log;
-
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
