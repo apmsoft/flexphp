@@ -3,7 +3,7 @@ namespace Flex\Annona\Strings;
 
 class StringTools
 {
-    private $version = '0.2';
+    private $version = '0.2.1';
     public function __construct(private string $data=''){}
 
     # convert 10진 to string
@@ -13,19 +13,19 @@ class StringTools
         {
             $cdata = '';
             $len = strlen($this->data);
-            for($i=0; $i<=$len ; $i++){
+            for($i=0; $i<=$len ; $i+=2){
                 $charno = substr($this->data,$i,2);
-                if($charno>=33 && $charno <= 99){ $cdata .= chr($charno); $i++;}
+                if($charno>=33 && $charno <= 99){ $cdata .= chr($charno); }
                 else {
                     $charno = substr($this->data,$i,3);
-                    if($charno >=100 && $charno <= 127){ $cdata .= chr($charno); $i+=2;}
+                    if($charno =100 && $charno <= 127){ $cdata .= chr($charno); $i++;}
                 }
             }
 
             $this->data = $cdata;
         }
 
-        return $this;
+    return $this;
     }
 
     # convert 16진 to 10진
