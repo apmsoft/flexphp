@@ -3,25 +3,49 @@ namespace Flex\Annona\Strings;
 
 class StringTools
 {
+    private $version = '0.2';
     public function __construct(private string $data=''){}
 
-    # convert ascii to string
-    public function convertAscii2String (string $ascii_sentence) : StringTools
+    # convert 10진 to string
+    public function ascii2String () : StringTools
     {
-        if(trim($ascii_sentence))
+        if(trim($this->data))
         {
-            $len = strlen($ascii_sentence);
+            $cdata = '';
+            $len = strlen($this->data);
             for($i=0; $i<=$len ; $i++){
-                $charno = substr($ascii_sentence,$i,2);
-                if($charno>=33 && $charno <= 99){ $this->data .= chr($charno); $i++;}
+                $charno = substr($this->data,$i,2);
+                if($charno>=33 && $charno <= 99){ $cdata .= chr($charno); $i++;}
                 else {
-                    $charno = substr($ascii_sentence,$i,3);
-                    if($charno >=100 && $charno <= 127){ $this->data .= chr($charno); $i+=2;}
+                    $charno = substr($this->data,$i,3);
+                    if($charno >=100 && $charno <= 127){ $cdata .= chr($charno); $i+=2;}
                 }
             }
+
+            $this->data = $cdata;
         }
 
         return $this;
+    }
+
+    # convert 16진 to 10진
+    public function hex2Ascii () : StringTools
+    {
+        if(trim($this->data))
+        {
+            $cdata = '';
+            $len = strlen($this->data)-1;
+            for ($i=0; $i < $len; $i+=2){
+                $v = base_convert($this->data[$i].$this->data[$i+1], 16, 10);
+                if($v != '0'){
+                    $cdata .= $v;
+                }
+            }
+
+            $this->data = $cdata;
+        }
+
+    return $this;
     }
 
     public function __get(string $propertyName) : mixed{

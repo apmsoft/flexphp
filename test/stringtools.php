@@ -9,8 +9,11 @@ use Flex\Annona\Strings\StringTools;
 Flex\Annona\Log::init();
 Flex\Annona\Log::init(Flex\Annona\Log::MESSAGE_ECHO);
 
-# ascii -> string
-$stringTools = new StringTools();
-$data = $stringTools->convertAscii2String( "9744984499441004410144102445455454950455756" )->data;
+# 10진 -> string
+$data = (new StringTools("9744984499441004410144102445455454950455756"))->ascii2String()->data;
+Log::d( $data );
+
+# 16진 -> 10진 -> string
+$data = (new StringTools( "612c31322c" ))->hex2Ascii( )->ascii2String()->data;
 Log::d( $data );
 ?>
