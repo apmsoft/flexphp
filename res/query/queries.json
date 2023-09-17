@@ -1,3 +1,0 @@
-{
-    "total_record": "SELECT count({columns}) as count FROM `{table}` {where}"
-}

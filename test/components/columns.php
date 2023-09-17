@@ -3,7 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Components\Columns\ColumnsEnum;
+use Flex\Columns\ColumnsEnum;
 use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(dirname(__DIR__));
@@ -13,32 +13,34 @@ require $path. '/config/config.inc.php';
 Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
-Log::options([
-    'datetime'   => false, # 날짜시간 출력여부
-    'debug_type' => true, # 디버그 타입 출력여부
-    'newline'    => true  # 개행문자 출력여부
-]);
+// Log::options([
+//     'datetime'   => false, # 날짜시간 출력여부
+//     'debug_type' => true, # 디버그 타입 출력여부
+//     'newline'    => true  # 개행문자 출력여부
+// ]);
 
 # resource
-R::parser(_ROOT_PATH_.'/'._CONFIG_.'/components/components.json', 'components');
+R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns/default.json', 'columns');
 
 # 전체 구조 출력
-// Log::d(ColumnsEnum::cases());
+// Log::d( "cases ==>", ColumnsEnum::cases());
 
 // # 이름만 배열로 받기
-// Log::d( ColumnsEnum::names());
-// Log::d( ColumnsEnum::values());
-// Log::d( ColumnsEnum::array());
-Log::d("==========");
+Log::d( 'names ==>',ColumnsEnum::names());
+Log::d( 'values ==>', ColumnsEnum::values());
+Log::d( 'array ==>',ColumnsEnum::array());
 
 Log::d(
     'column name : '.ColumnsEnum::NAME->name,
     'column value : '.ColumnsEnum::NAME->value,
-    'column label : '.R::components('columns')[ColumnsEnum::NAME->value]
+    'column label : '.R::columns(ColumnsEnum::NAME->value)
 );
-Log::d("==========");
+
 
 # 전체
-Log::d( ColumnsEnum::fetchByName('name') );
+Log::d(
+    ColumnsEnum::byName('name')['name'],
+    ColumnsEnum::byName('name')['value']
+);
 
 ?>

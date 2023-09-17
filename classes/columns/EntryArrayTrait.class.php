@@ -1,7 +1,7 @@
-<?php 
-namespace Flex\Components;
+<?php
+namespace Flex\Columns;
 
-trait EntryArrayTrait 
+trait EntryArrayTrait
 {
     public static function names(): array
     {
@@ -22,7 +22,7 @@ trait EntryArrayTrait
         }
     }
 
-    public static function fetchByName(string $name) : array 
+    public static function byName(string $name) : array
     {
         $NAME = strtoupper($name);
         $enum = constant("self::{$NAME}");
@@ -30,16 +30,6 @@ trait EntryArrayTrait
             'name'  => $enum->name,
             'value' => $enum->value
         ];
-    return $result;
-    }
-
-    public static function fetchAll() : array 
-    {
-        $result = [];
-        foreach(self::names() as $_NAME) {
-            // echo $_NAME.PHP_EOL;
-            $result[] = self::fetchByName( $_NAME );
-        }
     return $result;
     }
 }
