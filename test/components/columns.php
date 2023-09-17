@@ -20,7 +20,7 @@ Log::init(Log::MESSAGE_ECHO);
 // ]);
 
 # resource
-R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns/default.json', 'columns');
+R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns/columns.json', 'column');
 
 # 전체 구조 출력
 // Log::d( "cases ==>", Column::cases());
@@ -31,16 +31,20 @@ Log::d( 'values ==>', Column::values());
 Log::d( 'array ==>',Column::array());
 
 Log::d(
-    'column name : '.Column::NAME->name,
-    'column value : '.Column::NAME->value,
-    'column label : '.R::columns(Column::NAME->value)
+    'column->name : '.Column::NAME->name,
+    'column->value : '.Column::NAME->value,
+    'column->label : '.R::column(Column::NAME->value)
 );
 
 
 # 전체
 Log::d(
-    Column::byName('name')['name'],
-    Column::byName('name')['value']
+    Column::byName('name')
+);
+
+Log::d(
+    Column::byName('name')->name,
+    Column::byName('name')->value
 );
 
 ?>

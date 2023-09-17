@@ -22,7 +22,7 @@ trait EntryArrayTrait
         }
     }
 
-    public static function byName(string $name) : array
+    public static function byName(string $name) : object
     {
         $NAME = strtoupper($name);
         $enum = constant("self::{$NAME}");
@@ -30,7 +30,7 @@ trait EntryArrayTrait
             'name'  => $enum->name,
             'value' => $enum->value
         ];
-    return $result;
+    return (object)$result;
     }
 }
 ?>
