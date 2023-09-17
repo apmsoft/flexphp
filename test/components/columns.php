@@ -3,7 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Columns\ColumnsEnum;
+use Flex\Columns\ColumnsEnum as Column;
 use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(dirname(__DIR__));
@@ -23,24 +23,24 @@ Log::init(Log::MESSAGE_ECHO);
 R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns/default.json', 'columns');
 
 # 전체 구조 출력
-// Log::d( "cases ==>", ColumnsEnum::cases());
+// Log::d( "cases ==>", Column::cases());
 
 // # 이름만 배열로 받기
-Log::d( 'names ==>',ColumnsEnum::names());
-Log::d( 'values ==>', ColumnsEnum::values());
-Log::d( 'array ==>',ColumnsEnum::array());
+Log::d( 'names ==>',Column::names());
+Log::d( 'values ==>', Column::values());
+Log::d( 'array ==>',Column::array());
 
 Log::d(
-    'column name : '.ColumnsEnum::NAME->name,
-    'column value : '.ColumnsEnum::NAME->value,
-    'column label : '.R::columns(ColumnsEnum::NAME->value)
+    'column name : '.Column::NAME->name,
+    'column value : '.Column::NAME->value,
+    'column label : '.R::columns(Column::NAME->value)
 );
 
 
 # 전체
 Log::d(
-    ColumnsEnum::byName('name')['name'],
-    ColumnsEnum::byName('name')['value']
+    Column::byName('name')['name'],
+    Column::byName('name')['value']
 );
 
 ?>
