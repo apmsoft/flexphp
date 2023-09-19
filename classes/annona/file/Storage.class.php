@@ -28,16 +28,12 @@ class Storage extends SplFileObject
     }
 
     #@ 파일 읽기
-    public function read() : string|false{
-        $contents = '';
+    public function read() : array{
+        $contents = [];
         if(parent::isFile() && parent::isReadable())
         {
-            if(PHP_VERSION_ID>=505011){
-                $contents = parent::fread(parent::getSize());
-            }else{
-                while (!parent::eof()) {
-                    $contents .=parent::fgets();
-                }
+            while (!parent::eof()) {
+                $contents[] =parent::fgets();
             }
         }
     return $contents;
