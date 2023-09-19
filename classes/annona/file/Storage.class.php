@@ -6,6 +6,7 @@ use \SplFileObject;
 # 파일을 이용한 스토리지 데이타 관리
 class Storage extends SplFileObject
 {
+    public $version = '1.0.3';
     protected $file_name = '';
     private $open_mode;
 
