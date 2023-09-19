@@ -4,6 +4,7 @@ namespace Flex\Annona\Dir;
 # purpose : 디렉토리 관련
 class DirInfo
 {
+	public $version = '1.1.0';
 	public string $directory;
 	const permission	= 0707;
 
@@ -22,8 +23,9 @@ class DirInfo
 			if(is_array($dir_args)){
 				foreach($dir_args as $folder){
 					$current_dir = $current_dir.'/'.$folder;
-					if(!$this->makeDirectory($current_dir)){
-						throw new ErrorException('e_filenotfound');
+					if(!self::isDir($current_dir)){
+						if(!mkdir($current_dir,self::permission)) throw new ErrorException('e_filenotfound');
+						if(!chmod($current_dir,self::permission)) throw new ErrorException('e_filenotfound');
 					}
 				}
 			}
@@ -34,10 +36,11 @@ class DirInfo
 	public function makeDirectory(string $dir) : bool
 	{
 		$result = true;
+		$directory = $this->directory.'/'.$dir;
 		# compile_dirname 폴더 이전 경로 생성
-		if(!self::isDir($dir)){
-			if(!mkdir($dir,self::permission)) $result= false;
-			if(!chmod($dir,self::permission)) $result= false;
+		if(!self::isDir($directory)){
+			if(!mkdir($directory,self::permission)) $result= false;
+			if(!chmod($directory,self::permission)) $result= false;
 			#if(!@chown($chkpath,getmyuid())) $result= false; break;
 		}
 	return $result;

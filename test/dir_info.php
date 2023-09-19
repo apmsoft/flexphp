@@ -21,10 +21,10 @@ Log::d($model->dir);
 try{
     # multi line
     $dirInfo = new DirInfo($model->dir);
-    $dirInfo->makeDirectory( $model->dir.'/test1');
+    $dirInfo->makeDirectory( 'test111');
 
     # single line
-    (new DirInfo($model->dir))->makeDirectory( $model->dir.'/test2');
+    (new DirInfo($model->dir))->makeDirectory( 'test112');
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
@@ -32,20 +32,20 @@ try{
 # 멀티 디렉토리 만들기
 try{
     # multi line
-    $dirInfo2 = new DirInfo($model->dir.'/test1/m1/m2');
+    $dirInfo2 = new DirInfo($model->dir.'/test111/m1/m2');
     $dirInfo2->makesDir();
 
     # single line
-    (new DirInfo($model->dir.'/test2/m1/m2'))->makesDir();
+    (new DirInfo($model->dir.'/test112/m1/m2'))->makesDir();
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
 
-# 디렉토리 탐색
-try{
-    $find_dirs = (new \Flex\Annona\Dir\DirObject($model->dir))->findFolders();
-    Log::d ( $find_dirs );
-}catch(\Exception $e){
-    Log::e($e->getMessage());
-}
+// # 디렉토리 탐색
+// try{
+//     $find_dirs = (new \Flex\Annona\Dir\DirObject($model->dir))->findFolders();
+//     Log::d ( $find_dirs );
+// }catch(\Exception $e){
+//     Log::e($e->getMessage());
+// }
 ?>
