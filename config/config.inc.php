@@ -27,7 +27,7 @@ define('_DATA_','_data');           #파일업로드 및 캐슁파일 위치(707
 define('_UPLOAD_','_data/files');   #첨부파일등
 
 # 데이타베이스 정보
-include_once _ROOT_PATH_.'/config/config.db.php';
+// include_once _ROOT_PATH_.'/config/config.db.php';
 
 # 클래스 자동 인클루드 /--------------
 spl_autoload_register(function($class_name){
@@ -67,7 +67,7 @@ foreach($__autoload_helper_funs as $fun_name){
 }
 
 # 세션값 설정
-# 웹 세션 
+# 웹 세션
 $auth_type['service'] = [
     'id'     => 'auth_id',
     'userid' => 'auth_userid',

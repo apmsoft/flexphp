@@ -22,9 +22,13 @@ trait EntryArrayTrait
         }
     }
 
-    public static function byName(string $name) : object
+    /**
+     * name : 키
+     * upper : 대문자로변환 하기 true
+     */
+    public static function byName(string $name, bool $upper=true) : object
     {
-        $NAME = strtoupper($name);
+        $NAME = ($upper) ? strtoupper($name) : $name;
         $enum = constant("self::{$NAME}");
         $result = [
             'name'  => $enum->name,

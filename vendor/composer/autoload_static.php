@@ -46,6 +46,7 @@ class ComposerStaticInitb9eae466d1f286120ef4d62a7f1f96ad
         ),
         'F' => 
         array (
+            'Flex\\Annona\\Token\\' => 18,
             'Fig\\Http\\Message\\' => 17,
             'FastRoute\\' => 10,
         ),
@@ -111,6 +112,10 @@ class ComposerStaticInitb9eae466d1f286120ef4d62a7f1f96ad
         'Laravel\\SerializableClosure\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/serializable-closure/src',
+        ),
+        'Flex\\Annona\\Token\\' => 
+        array (
+            0 => '/classes/annona/token/TokenGenerateAtype.class.php',
         ),
         'Fig\\Http\\Message\\' => 
         array (

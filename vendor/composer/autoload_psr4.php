@@ -21,6 +21,7 @@ return array(
     'React\\Async\\' => array($vendorDir . '/react/async/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Laravel\\SerializableClosure\\' => array($vendorDir . '/laravel/serializable-closure/src'),
+    'Flex\\Annona\\Token\\' => array('/classes/annona/token/TokenGenerateAtype.class.php'),
     'Fig\\Http\\Message\\' => array($vendorDir . '/fig/http-message-util/src'),
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
 );
