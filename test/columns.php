@@ -39,6 +39,7 @@ Log::d( 'array ==>',Column::array());
 
 # 전체
 Log::d(
+    "key => value",
     Column::byName('name')
 );
 

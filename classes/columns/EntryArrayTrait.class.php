@@ -26,10 +26,10 @@ trait EntryArrayTrait
      * name : 키
      * case : 대문자로변환 upper, 소문자변환 lower, 변환없음 upper,lower 외 모든 문자
      */
-    public static function byName(string $name, string $case='upper') : ?object
+    public static function byName(string $name, string $case='UPPER') : ?object
     {
-        $NAME = ($case == strtoupper('UPPER')) ? strtoupper($name) :
-                (($case == strtoupper('LOWER')) ? strtolower($name) : $name);
+        $NAME = ('UPPER' == strtoupper($case))  ? strtoupper($name) :
+                (('LOWER' == strtoupper($case)) ? strtolower($name) : $name);
 
         if (!defined("self::{$NAME}")) {
             return null; // or throw an exception
