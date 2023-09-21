@@ -6,7 +6,7 @@ use Flex\Annona\R;
 use Flex\Columns\ColumnsEnum as Column;
 use Flex\Annona\Array\ArrayHelper;
 
-$path = dirname(dirname(__DIR__));
+$path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;
@@ -30,11 +30,11 @@ Log::d( 'names ==>',Column::names());
 Log::d( 'values ==>', Column::values());
 Log::d( 'array ==>',Column::array());
 
-Log::d(
-    'column->name : '.Column::NAME->name,
-    'column->value : '.Column::NAME->value,
-    'column->label : '.R::column(Column::NAME->value)
-);
+// Log::d(
+//     'column->name : '.Column::NAME->name,
+//     'column->value : '.Column::NAME->value,
+//     'column->label : '.R::column(Column::NAME->value)
+// );
 
 
 # 전체
@@ -43,8 +43,27 @@ Log::d(
 );
 
 Log::d(
+    "default",
     Column::byName('name')->name,
     Column::byName('name')->value
+);
+
+Log::d(
+    "대문자",
+    Column::byName('name',case:'upper')->name,
+    Column::byName('name',case:'upper')->value
+);
+
+Log::d(
+    "소문자",
+    Column::byName('muid',case:'lower')->name,
+    Column::byName('muid',case:'lower')->value
+);
+
+Log::d(
+    "변환없음",
+    Column::byName('Total',case:'none')->name,
+    Column::byName('Total',case:'none')->value
 );
 
 ?>

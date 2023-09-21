@@ -24,11 +24,17 @@ trait EntryArrayTrait
 
     /**
      * name : 키
-     * upper : 대문자로변환 하기 true
+     * case : 대문자로변환 upper, 소문자변환 lower, 변환없음 upper,lower 외 모든 문자
      */
-    public static function byName(string $name, bool $upper=true) : object
+    public static function byName(string $name, string $case='upper') : ?object
     {
-        $NAME = ($upper) ? strtoupper($name) : $name;
+        $NAME = ($case == strtoupper('UPPER')) ? strtoupper($name) :
+                (($case == strtoupper('LOWER')) ? strtolower($name) : $name);
+
+        if (!defined("self::{$NAME}")) {
+            return null; // or throw an exception
+        }
+
         $enum = constant("self::{$NAME}");
         $result = [
             'name'  => $enum->name,
