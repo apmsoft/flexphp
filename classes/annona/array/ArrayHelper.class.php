@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.10';
+    private $version = '0.9.2';
     public function __construct(
         private array $value
     ){}
@@ -260,6 +260,13 @@ class ArrayHelper
         }
         $this->value = $arr;
     return $this;
+    }
+
+    # union All
+    public function unionAll(...$params) : ArrayHelper
+    {
+        $this->value = call_user_func_array('array_merge', $params);
+        return $this;
     }
 
     # index key number

@@ -220,4 +220,34 @@ $args = json_decode($data,true);
 
 $slice_args3 = (new ArrayHelper( $args ))->sorting('lowPrice','ASC')->value;
 Log::d($slice_args3);
+
+# unionAll 멀티 배열을 하나의 배열로 합치기
+$a = [
+    ["a"=>1,"b"=>2],
+	["a"=>7,"b"=>2]
+];
+$b = [
+   ["a"=>2,"b"=>3,"c"=>0]
+];
+
+$c = [
+   ["a"=>2,"b"=>4]
+];
+
+$unionAll = (new ArrayHelper( [] ))->unionAll($a, $b, $c)->value;
+Log::d("unionAll", $unionAll);
+
+$a1 = [
+    0,1,2,3
+];
+$b2 = [
+   0,4,5,6
+];
+
+$c3 = [
+   7,8,9
+];
+
+$unionAll2 = (new ArrayHelper( [] ))->unionAll($a1, $b2, $c3)->value;
+Log::d("unionAll", $unionAll2);
 ?>
