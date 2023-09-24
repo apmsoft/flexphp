@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.2';
+    private $version = '0.9.11';
     public function __construct(
         private array $value
     ){}

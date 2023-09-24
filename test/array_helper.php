@@ -250,4 +250,20 @@ $c3 = [
 
 $unionAll2 = (new ArrayHelper( [] ))->unionAll($a1, $b2, $c3)->value;
 Log::d("unionAll", $unionAll2);
+
+
+$a1 = [
+    [0,1,2,3],
+	[0,2,3,3],
+];
+$b2 = [
+   [0,4,5,6]
+];
+
+$c3 = [
+   7,8,9
+];
+
+$unionAll3 = (new ArrayHelper( [] ))->unionAll($a1, $b2, $c3)->value;
+Log::d("unionAll", $unionAll3);
 ?>
