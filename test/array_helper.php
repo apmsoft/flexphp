@@ -238,7 +238,6 @@ $c = [
 $unionAll = (new ArrayHelper( [] ))->unionAll($a, $b, $c)->value;
 Log::d("unionAll", $unionAll);
 
-print_r(array_chunk($unionAll, 2 ));
 
 // $a1 = [
 //     0,1,2,3
