@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.12';
+    private $version = '0.9.13';
     public function __construct(
         private array $value
     ){}
@@ -183,6 +183,19 @@ class ArrayHelper
                 }
             }
         }
+    return $this;
+    }
+
+    # fill
+    public function fill(int $start=0, ?int $length=null, mixed $value=null) : ArrayHelper
+    {
+        if ($length === null || $length < $start) {
+            $length = $start;
+        }
+
+        // 원래의 배열 값을 유지하면서 새로운 범위만 변경
+        $args = array_fill($start, $length, $value);
+        $this->value = $this->value + $args;
     return $this;
     }
 

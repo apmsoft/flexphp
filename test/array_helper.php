@@ -274,4 +274,15 @@ Log::d("unionAll", $unionAll3);
 # split
 $split_data = (new ArrayHelper( $unionAll3 ))->split( length: 2)->value;
 Log::d( $split_data );
+
+
+
+$fill_data1 = (new ArrayHelper( [] ))->fill( start:0, length: 3, value:["price"=>0, "deliveryFee"=>0,"total"=>0])->value;
+Log::d($fill_data1);
+
+$fill_data2 = (new ArrayHelper( [] ))->fill( start:0, length: 3, value:"abc")->value;
+Log::d($fill_data2);
+
+$fill_data2 = (new ArrayHelper( [["c"=>"씨","d"=>1]] ))->fill( start:0, length: 5, value:["a"=>0, "b"=>"비"])->value;
+Log::d($fill_data2);
 ?>
