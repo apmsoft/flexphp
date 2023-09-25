@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.11';
+    private $version = '0.9.12';
     public function __construct(
         private array $value
     ){}
@@ -278,6 +278,12 @@ class ArrayHelper
             $result = $index;
         }
     return $result;
+    }
+
+    # split 배열 여러개씩 잘라서 묶음으로 배열화 하기
+    public function split(int $length = 2) : ArrayHelper {
+        $this->value = array_chunk($this->value, $length );
+    return $this;
     }
 
     # slice 배열 자르기

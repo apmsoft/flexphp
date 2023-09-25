@@ -218,8 +218,8 @@ $args = json_decode($data,true);
 // $slice_args2 = (new ArrayHelper( $args ))->slice(-1)->value;
 // Log::d($slice_args2);
 
-$slice_args3 = (new ArrayHelper( $args ))->sorting('lowPrice','ASC')->value;
-Log::d($slice_args3);
+// $slice_args3 = (new ArrayHelper( $args ))->sorting('lowPrice','ASC')->value;
+// Log::d($slice_args3);
 
 # unionAll 멀티 배열을 하나의 배열로 합치기
 $a = [
@@ -231,25 +231,28 @@ $b = [
 ];
 
 $c = [
-   ["a"=>2,"b"=>4]
+   ["a"=>2,"b"=>4],
+   ["a"=>0,"b"=>1]
 ];
 
 $unionAll = (new ArrayHelper( [] ))->unionAll($a, $b, $c)->value;
 Log::d("unionAll", $unionAll);
 
-$a1 = [
-    0,1,2,3
-];
-$b2 = [
-   0,4,5,6
-];
+print_r(array_chunk($unionAll, 2 ));
 
-$c3 = [
-   7,8,9
-];
+// $a1 = [
+//     0,1,2,3
+// ];
+// $b2 = [
+//    0,4,5,6
+// ];
 
-$unionAll2 = (new ArrayHelper( [] ))->unionAll($a1, $b2, $c3)->value;
-Log::d("unionAll", $unionAll2);
+// $c3 = [
+//    7,8,9
+// ];
+
+// $unionAll2 = (new ArrayHelper( [] ))->unionAll($a1, $b2, $c3)->value;
+// Log::d("unionAll", $unionAll2);
 
 
 $a1 = [
@@ -266,4 +269,9 @@ $c3 = [
 
 $unionAll3 = (new ArrayHelper( [] ))->unionAll($a1, $b2, $c3)->value;
 Log::d("unionAll", $unionAll3);
+
+
+# split
+$split_data = (new ArrayHelper( $unionAll3 ))->split( length: 2)->value;
+Log::d( $split_data );
 ?>
