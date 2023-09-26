@@ -318,10 +318,11 @@ class ArrayHelper
     {
         $result = [];
 
-        $arrKeys = (isset($keys[0])) ? array_values($keys[0]) : array_values($keys);
+        # key 만 뽑기
+        $arrKeys = (isset($keys[0]) && is_array($keys[0])) ? array_values($keys[0]) : array_values($keys);
 
         # 키배열크기와 값크기가 일치하는지 체크
-        if(count($arrKeys) != array_values($this->value[0]))
+        if(count($arrKeys) != count($this->value[0]))
             return null;
 
         # change keys

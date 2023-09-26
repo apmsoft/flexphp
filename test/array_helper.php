@@ -290,6 +290,9 @@ $a3 = [
     [0,1,2,3],
 	[0,2,3,3],
 ];
-$changeKeysData = (new ArrayHelper( $a3 ))->changeKeys( ['a','b','c'])?->value;
-Log::d($changeKeysData);
+$changeKeysData = (new ArrayHelper( $a3 ))->changeKeys(['a','b','c','d'])?->value;
+// Log::d($changeKeysData);
+
+$changeKeysData2 = (new ArrayHelper( $a3 ))->changeKeys('a1','b1','c1','d1')?->value;
+// Log::d($changeKeysData2 );
 ?>
