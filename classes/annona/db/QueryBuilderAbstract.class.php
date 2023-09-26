@@ -35,7 +35,7 @@ abstract class QueryBuilderAbstract extends mysqli
     abstract public function having(...$columns) : mixed;
     abstract public function total(string $column_name) : int;
 
-    public function init(string $type = 'main') : void 
+    public function init(string $type = 'main') : void
     {
         $this->query_mode = strtoupper($type);
 
@@ -92,7 +92,7 @@ abstract class QueryBuilderAbstract extends mysqli
     return $this->query;
     }
 
-    public function buildWhere(...$w) : string 
+    public function buildWhere(...$w) : string
     {
         $result = '';
         $length = (isset($w[0])) ? count($w[0]) : 0;

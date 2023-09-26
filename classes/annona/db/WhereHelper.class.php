@@ -33,7 +33,7 @@ class WhereHelper
 			$is_append = true;
 		}
 
-		# where 문을 그룹별로 묶기		
+		# where 문을 그룹별로 묶기
 		if($is_append)
 		{
 			$in_value = [];
@@ -59,7 +59,7 @@ class WhereHelper
 						'LIKE-L' => sprintf("%s LIKE '%%%s'", $field_name, $_word),
 					};
 				}
-			} 
+			}
 			else if($_uppper_condition == 'IN'){
 				if(strpos($in_value[0],'.') !==false){
 					$in_value_str = implode ( ",", $in_value );
@@ -104,7 +104,7 @@ class WhereHelper
 				$this->where = (count($this->where_groups_data)) ? "(" . implode ( ") AND (", $this->where_groups_data ) . ")" : '';
 				self::init();
 			}
-			
+
 			return $this->{$propertyName};
 		}
 	}
