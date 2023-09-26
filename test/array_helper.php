@@ -284,4 +284,12 @@ Log::d($fill_data2);
 
 $fill_data2 = (new ArrayHelper( [["c"=>"씨","d"=>1]] ))->fill( start:0, length: 5, value:["a"=>0, "b"=>"비"])->value;
 Log::d($fill_data2);
+
+### 키를 다른 키로 대체하기
+$a3 = [
+    [0,1,2,3],
+	[0,2,3,3],
+];
+$changeKeysData = (new ArrayHelper( $a3 ))->changeKeys( ['a','b','c'])?->value;
+Log::d($changeKeysData);
 ?>

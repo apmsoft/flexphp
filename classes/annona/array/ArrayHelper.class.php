@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    private $version = '0.9.13';
+    private $version = '0.9.14';
     public function __construct(
         private array $value
     ){}
@@ -308,6 +308,26 @@ class ArrayHelper
             $result = array_slice($this->value, $params[0]);
         }
 
+        $this->value = $result;
+
+    return $this;
+    }
+
+    # 모든배열의 키를 새롭게 바꿈
+    public function changeKeys (...$keys) : ArrayHelper | null
+    {
+        $result = [];
+
+        $arrKeys = (isset($keys[0])) ? array_values($keys[0]) : array_values($keys);
+
+        # 키배열크기와 값크기가 일치하는지 체크
+        if(count($arrKeys) != array_values($this->value[0]))
+            return null;
+
+        # change keys
+        foreach($this->value as $index => $args){
+            $result[] = array_combine($arrKeys, array_values($args));
+        }
         $this->value = $result;
 
     return $this;
