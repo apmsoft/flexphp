@@ -321,9 +321,17 @@ class ArrayHelper
         # key 만 뽑기
         $arrKeys = (isset($keys[0]) && is_array($keys[0])) ? array_values($keys[0]) : array_values($keys);
 
-        # 키배열크기와 값크기가 일치하는지 체크
-        if(count($arrKeys) != count($this->value[0]))
-            return null;
+        # 키배열크기와 값크기가 일치하는지 체크 및 부족한 키 밸류키에서 넣기
+        $kCnt = count($arrKeys);
+        $vCnt = count($this->value[0]);
+        $valueKeys = array_keys($this->value[0]);
+        if($kCnt < $vCnt){
+            for($i=$kCnt; $i < $vCnt; $i++){
+                $arrKeys[] = $valueKeys[$i];
+            }
+        }else if($kCnt > $vCnt){
+            $arrKeys = array_slice($arrKeys,0,$vCnt);
+        }
 
         # change keys
         foreach($this->value as $index => $args){
