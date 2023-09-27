@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 # reactphp ServerRequestInterface 용 확장 클래스
 class Requested
 {
-    private string $version = '0.5';
+    private string $version = '0.6';
 	private array $params   = [];
 
 	public function __construct(
@@ -38,6 +38,20 @@ class Requested
         }
 
 		return $result;
+	}
+
+	public function getServerParams() : array{
+		return $this->request->getServerParams();
+	}
+
+	public function getUriPath() : string
+	{
+		return $this->$request->getUri()->getPath();
+	}
+
+	public function getMethod(): string
+	{
+		return $this->request->getMethod();
 	}
 
     public function fetch() : array{
