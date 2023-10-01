@@ -3,7 +3,7 @@ namespace Flex\Annona;
 
 final class Log
 {
-    const VERSEION = '1.2';
+    const VERSEION = '1.2.1';
     const MESSAGE_FILE   = 3; # 사용자 지정 파일에 저장
     const MESSAGE_ECHO   = 2; # 화면에만 출력
     const MESSAGE_SYSTEM = 0; # syslog 시스템 로그파일에 저장
@@ -20,20 +20,27 @@ final class Log
 
     # init
     public static function init(int $message_type = -1, string $logfile = null){
-        self::$message_type = ($message_type > -1) ? $message_type : self::MESSAGE_FILE;
+        self::$message_type = ($message_type > -1) ? $message_type : self::MESSAGE_ECHO;
         self::$logfile = $logfile ?? 'log.txt';
     }
 
     # 출력 옵션 설정
-    public static function options (array $options) : void 
+    public static function options (array $options=[], bool $datetime=true, bool $debug_type=true, bool $newline=true) : void
     {
-        if(is_array($options)){
-            self::$options = array_merge(self::$options, $options);
+        $_options = [];
+        if(is_array($options) && count($options)){
+            $_options = $options;
+        }else{
+            $_options = [
+                'datetime' => $datetime,  'debug_type' => $debug_type, 'newline' => $newline
+            ];
         }
+
+        self::$options = array_merge(self::$options, $_options);
     }
 
     # 출력하고자 하는 옵션 선택
-    public static function setDebugs(string|array $m1, ...$mores): void 
+    public static function setDebugs(string|array $m1, ...$mores): void
     {
         $debug_modes = [];
         $debug_modes[] = $m1;
@@ -113,8 +120,8 @@ final class Log
             echo sprintf("%s%s%s%s", $out_datetime, $out_debug_type, addslashes($message), $out_newline);
         }else{
             error_log (
-                sprintf("%s%s%s%s", $out_datetime, $out_debug_type, addslashes($message), $out_newline), 
-                    self::$message_type, 
+                sprintf("%s%s%s%s", $out_datetime, $out_debug_type, addslashes($message), $out_newline),
+                    self::$message_type,
                         $logfile
             );
         }
