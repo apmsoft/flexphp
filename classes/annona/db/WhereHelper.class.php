@@ -4,7 +4,7 @@ namespace Flex\Annona\Db;
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class WhereHelper
 {
-	private $version = '1.6.2';
+	private $version = '1.7';
 	private $where = '';
 	private $where_group = [];
 	private $current_group = '';
@@ -25,7 +25,7 @@ class WhereHelper
 	# @where_str : name='홍길동'
 	# @condition : [=,!=,<,>,<=,>=,IN,LIKE-R=dd%,LIKE-L=%dd,LIKE=%dd%]
 	# @value : NULL | VALUE | % | Array
-	public function case(string $field_name, string $condition ,mixed $value, bool $is_qutawrap=true) : WhereHelper
+	public function case(string $field_name, string $condition ,mixed $value, bool $is_qutawrap=true, bool $join_detection=true) : WhereHelper
 	{
 		$is_append = false;
 		if($value == "0") $is_append = true;
@@ -82,14 +82,16 @@ class WhereHelper
 			}
 			else{
 				// set "a.name 형태인지 체크"
-				$pattern = "/^([a-zA-Z0-9]|_)+(\.)([a-zA-Z0-9]|_)/i";
-				$d_value = '';
-				if(preg_match($pattern, $in_value[0])){
-					$d_value = sprintf("%s %s %s", $field_name, $condition, $in_value[0]);
-				}else{
-					$__value__ = ($is_qutawrap) ? sprintf("'%s'",$in_value[0]) : $in_value[0];
-					$d_value = sprintf("%s %s %s", $field_name, $condition, $__value__);
+				$__value__ = ($is_qutawrap) ? sprintf("'%s'",$in_value[0]) : $in_value[0];
+				$d_value = sprintf("%s %s %s", $field_name, $condition, $__value__);
+				if($join_detection)
+				{
+					$pattern = "/^([a-zA-Z0-9]|_)+(\.)([a-zA-Z0-9]|_)/i";
+					if(preg_match($pattern, $in_value[0])){
+						$d_value = sprintf("%s %s %s", $field_name, $condition, $in_value[0]);
+					}
 				}
+
 				$this->where_group[$this->current_group][] = $d_value;
 			}
 		}
@@ -125,7 +127,8 @@ class WhereHelper
 	}
 
 	# where 그룹묶기 시작
-	public function begin(string $coord) : WhereHelper{
+	public function begin(string $coord) : WhereHelper
+	{
 		$groupname = strtr(microtime(),[' '=>'','0.'=>'w']);
 		$this->where_group[$groupname] = [];
 

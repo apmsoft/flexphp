@@ -49,10 +49,20 @@ Log::options([
 // Log::d( $where2 );
 
 $whereHelper = new WhereHelper();
-$whereHelper->begin('AND')->case('userid', '=', 'test@ddd.com',true)->end();
-Log::d($whereHelper->where);
+$whereHelper->begin('AND')->case('userid', '=', 'test@ddd.com')->end();
+Log::d('is_qutawrap : true ->' , $whereHelper->where);
 
 $whereHelper = new WhereHelper();
-$whereHelper->begin('AND')->case('userid', '=', 'a2_.com_23',true)->end();
-Log::d($whereHelper->where);
+$whereHelper->begin('AND')->case('userid', '=', 'test@ddd.com', is_qutawrap: false)->end();
+Log::d('is_qutawrap : false ->' , $whereHelper->where);
+
+# join detected 옵션 테스트 : true (기본)
+$whereHelper = new WhereHelper();
+$whereHelper->begin('AND')->case('userid', '=', 'a2_.com_23')->end();
+Log::d('is_qutawrap: true | join_detection : true ->',$whereHelper->where);
+
+# join detected 옵션 테스트 : false
+$whereHelper = new WhereHelper();
+$whereHelper->begin('AND')->case('userid', '=', 'a2_.com_23',join_detection: false)->end();
+Log::d('join_detection : false ->', $whereHelper->where);
 ?>
