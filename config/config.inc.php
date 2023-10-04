@@ -19,6 +19,7 @@ define('_LIBS_','libs');            #PHP 외부라이브러리
 define('_RES_','res');
 define('_CONFIG_','res/config');     #설정
 define('_QUERY_','res/query');       #테이블명 및 쿼리문
+define('_COLUMNS_','res/query/columns');       #퀄럼명
 define('_VALUES_','res/values');     #데이터 타입이 확실한
 define('_RAW_','res/raw');           #가공되지 않은 원천 내용
 
