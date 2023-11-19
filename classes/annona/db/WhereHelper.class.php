@@ -68,7 +68,7 @@ class WhereHelper
 				}
 
 				// append
-				$this->where_group[$this->current_group][] = sprintf("%s %s (%s)", $field_name, $$_uppper_condition, $in_value_str);
+				$this->where_group[$this->current_group][] = sprintf("%s %s (%s)", $field_name, $_uppper_condition, $in_value_str);
 			}
 			else if($_uppper_condition == 'JSON_CONTAINS'){
 				$in_value_str = json_encode($in_value, JSON_UNESCAPED_UNICODE);
