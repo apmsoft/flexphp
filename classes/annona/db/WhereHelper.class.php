@@ -4,7 +4,7 @@ namespace Flex\Annona\Db;
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class WhereHelper
 {
-	private $version = '1.7.1';
+	private $version = '1.7.2';
 	private $where = '';
 	private $where_group = [];
 	private $current_group = '';
@@ -60,7 +60,7 @@ class WhereHelper
 					};
 				}
 			}
-			else if($_uppper_condition == 'IN'){
+			else if($_uppper_condition == 'IN' || $_uppper_condition == 'NOT IN'){
 				if(strpos($in_value[0],'.') !==false){
 					$in_value_str = implode ( ",", $in_value );
 				}else{
@@ -68,7 +68,7 @@ class WhereHelper
 				}
 
 				// append
-				$this->where_group[$this->current_group][] = sprintf("%s IN (%s)", $field_name, $in_value_str);
+				$this->where_group[$this->current_group][] = sprintf("%s %s (%s)", $field_name, $$_uppper_condition, $in_value_str);
 			}
 			else if($_uppper_condition == 'JSON_CONTAINS'){
 				$in_value_str = json_encode($in_value, JSON_UNESCAPED_UNICODE);
