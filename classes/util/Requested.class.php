@@ -35,10 +35,7 @@ class Requested
 
 		if($this->request->getHeaderLine($headline_key)) {
             $result = $this->request->getHeaderLine($headline_key);
-        }else{
-			$low_headline_key = strtolower($headline_key);
-			$result = $this->request->getHeaders($low_headline_key)[0];
-		}
+        }
 
 		return $result;
 	}
