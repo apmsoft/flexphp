@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 # reactphp ServerRequestInterface 용 확장 클래스
 class Requested
 {
-    private string $version = '0.6.1';
+    private string $version = '0.6.2';
 	private array $params   = [];
 
 	public function __construct(
@@ -34,8 +34,11 @@ class Requested
 		$result = '';
 
 		if($this->request->getHeaderLine($headline_key)) {
-            $header_value = $this->request->getHeaderLine($headline_key);
-        }
+            $result = $this->request->getHeaderLine($headline_key);
+        }else{
+			$low_headline_key = strtolower($headline_key);
+			$result = $this->request->getHeaders($low_headline_key)[0];
+		}
 
 		return $result;
 	}
