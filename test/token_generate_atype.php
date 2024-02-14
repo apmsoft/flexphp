@@ -19,7 +19,7 @@ Log::options([
 ]);
 
 # class
-$module_id = '1C3EF2PRS1';
+$module_id = 'krhanwooorg';
 
 Log::d("=========================");
 
@@ -33,25 +33,31 @@ Log::d('module_id ',$token);
 Log::d("=========================");
 
 # sha256
-$token_256 = (new TokenGenerateAtype( $module_id ))->generateHashKey('sha256')->value;
+$token_256 = (new TokenGenerateAtype( $random_moduleid ))->generateHashKey('sha256')->value;
 Log::d('sha256','secret_key',$token_256);
 
 # sha512
-$token_512 = (new TokenGenerateAtype( $module_id ))->generateHashKey('sha512')->value;
-Log::d('sha512','secret_key',$token_512);
+#$token_512 = (new TokenGenerateAtype( $random_moduleid ))->generateHashKey('sha512')->value;
+#Log::d('sha512','secret_key',$token_512);
 
 # md5
-$token_md5 = (new TokenGenerateAtype( $module_id ))->generateHashKey('md5')->value;
-Log::d('md5   ','secret_key',$token_md5);
-
+#$token_md5 = (new TokenGenerateAtype( $random_moduleid ))->generateHashKey('md5')->value;
+#Log::d('md5   ','secret_key',$token_md5);
 Log::d("=========================");
 
+$hash_key = (new TokenGenerateAtype( $token_256 ))->generateHashKey('md5')->value;
+Log::d('md5','secret_key->hash_key',$hash_key);
+
+Log::d("=========================");
 # 토큰만들기
-$token = (new TokenGenerateAtype( $module_id ))->generateHashKey('md5')->generateToken(sprintf("%s.",$module_id))->value;
+$token = (new TokenGenerateAtype( $token_256 ))->generateHashKey('md5')->generateToken(sprintf("%s.",$module_id))->value;
+$token = strtr($token,['%3D'=>'_']);
 Log::d('EnCrypt :',$token);
 
 # 토큰 디코딩
 $token = (new TokenGenerateAtype( $module_id ))->decodeToken($token)->value;
 Log::d('DeCrypt :',$token);
 Log::d(explode('.', $token));
+
+
 ?>
