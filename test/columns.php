@@ -67,4 +67,7 @@ Log::d(
     Column::byName('Total',case:'none')->value
 );
 
+Log::d('name',  Column::getName('Total',case:'none'));
+Log::d('value', Column::getValue('Total',case:'none'));
+
 ?>
