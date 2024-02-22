@@ -43,18 +43,9 @@ trait EntryArrayTrait
     return $result;
     }
 
-    # value
-    public static function getName(string $name, string $case='UPPER') : string
+    public static function __callStatic(string $name, array $args=[]) : string
     {
-        $result = self::byName($name, $case);
-    return (is_null($result)) ? '' : $result->name;
-    }
-
-    # name
-    public static function getValue(string $name, string $case='UPPER') : string
-    {
-        $result = self::byName($name, $case);
-    return (is_null($result)) ? '' : $result->value;
+        return (self::byName($name,(isset($args[0]) ? $args[0] : 'UPPER')))->value;
     }
 }
 ?>
