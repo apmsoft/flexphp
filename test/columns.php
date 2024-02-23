@@ -23,18 +23,18 @@ Log::init(Log::MESSAGE_ECHO);
 R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns/columns.json', 'column');
 
 # 전체 구조 출력
-// Log::d( "cases ==>", Column::cases());
+Log::d( "cases ==>", Column::cases());
 
-// # 이름만 배열로 받기
+# 이름만 배열로 받기
 Log::d( 'names ==>',Column::names());
 Log::d( 'values ==>', Column::values());
 Log::d( 'array ==>',Column::array());
 
-// Log::d(
-//     'column->name : '.Column::NAME->name,
-//     'column->value : '.Column::NAME->value,
-//     'column->label : '.R::column(Column::NAME->value)
-// );
+Log::d(
+    'column->name : '.Column::NAME->name,
+    'column->value : '.Column::NAME->value,
+    'column->label : '.R::column(Column::NAME->value)
+);
 Log::d('>>>>>****',Column::ID());
 
 # 전체
@@ -65,6 +65,22 @@ Log::d(
     "변환없음",
     Column::byName('Total',case:'none')->name,
     Column::byName('Total',case:'none')->value
+);
+
+
+Log::d(
+    "#대문자",
+    Column::NAME('upper')
+);
+
+Log::d(
+    "#소문자",
+    Column::muid('lower')
+);
+
+Log::d(
+    "#변환없음",
+    Column::Total('none')
 );
 
 ?>
