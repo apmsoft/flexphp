@@ -1,5 +1,5 @@
 <?php
-namespace Flex\Components\Data;
+namespace Flex\Components\Data\Mgmt;
 
 use Flex\Annona\Db\DbMySqli;
 use Flex\Annona\Model;

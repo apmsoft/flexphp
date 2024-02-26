@@ -1,5 +1,5 @@
 <?php
-namespace Flex\Components\Action;
+namespace Flex\Components\Data\Action;
 
 interface PostInterface{
     public function doPost(?array $params=[]) : array;

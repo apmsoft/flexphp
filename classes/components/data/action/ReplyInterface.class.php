@@ -1,5 +1,5 @@
 <?php
-namespace Flex\Components\Action;
+namespace Flex\Components\Data\Action;
 
 interface ReplyInterface{
     public function doReply(?array $params=[]) : array;

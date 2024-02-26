@@ -1,5 +1,5 @@
 <?php
-namespace Flex\Components\Action;
+namespace Flex\Components\Data\Actions;
 
 interface ListInterface{
     public function doList(?array $params=[]) : array;
