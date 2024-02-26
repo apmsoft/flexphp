@@ -2,7 +2,6 @@
 namespace Flex\Components\Data\Mgmt;
 
 use Flex\Annona\Db\DbMySqli;
-use Flex\Annona\Model;
 
 # 스트링 다단 처리
 class Fid
