@@ -2,7 +2,6 @@
 namespace Flex\Annona\Date;
 
 use Flex\Annona\Date\DateTimez;
-use Flex\Annona;
 use \DateTimeImmutable;
 use \DateInterval;
 use \DatePeriod;
