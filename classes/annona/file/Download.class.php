@@ -5,18 +5,20 @@ use Flex\Annona;
 use Flex\Annona\File\FileSize;
 use \ErrorException;
 
-# parnet : 
+# parnet :
 # purpose : 파일다운로드
 final class Download extends FileSize
 {
+	const __VERSION = '1.1';
+
 	# 다운로드 허용 확장자
 	private array $allowed_filetypes = ['pdf','xls','xlsx','doc','docx','zip','hwp','ppt','pptx','jpg','jpeg','png','gif'];
-	public string $file_extension = '';
-	private array $headers = [
-		'Content-type:application/octet-stream',
-		"Cache-control: private",
-		"Content-Transfer-Encoding:binary",
-		"Pragma:no-cache"
+	public string $file_extension    = '';
+	private array $headers           = [
+		'Content-type'              => 'application/octet-stream',
+		'Cache-control'             => 'private',
+		"Content-Transfer-Encoding" => "binary",
+		"Pragma"                    => "no-cache"
 	];
 
 	final public function __construct(string $filenamez){
@@ -50,18 +52,55 @@ final class Download extends FileSize
 		return file_get_contents($this->filename);
     }
 
-	public function download(string $title, array $headers = []) : void
+	public function __get(string $propertyName) : mixed
+	{
+		$result = [];
+		if(property_exists(__CLASS__,$propertyName)){
+			if($propertyName == 'headers' || $propertyName == 'allowed_filetypes'){
+				$result = $this->{$propertyName};
+			}
+		}
+	return $result;
+	}
+
+	# header 값 추가 및 변경
+	public function __set(string $propertyName, string $propertyValue) : void
+	{
+		if(property_exists(__CLASS__,$propertyName)){
+			if($propertyName == 'headers'){
+				$this->headers[$propertyName] = $propertyValue;
+			}
+		}
+	}
+
+	# HEADER 값 삭제
+	public function __unset(string $name) : void{
+		unset($this->headers[$name]);
+	}
+
+	# 다운로드파일명 설정
+	public function setFileName (string $title) : Download {
+		$this->headers['Content-Disposition'] = sprintf('attachment;filename="%s"', $title);
+	return $this;
+	}
+
+	public function download() : void
 	{
 		# file contents
 		$file_contents = self::getContents ();
 
 		# header
-        header(sprintf('Content-Disposition:attachment;filename="%s"', $title));
-		if(count($headers)){
-			foreach($headers as $hv){
-				array_push($this->headers, $hv);
-			}
+		$headers = [];
+		foreach($this->headers as $hkey => $hval)
+		{
+			# header content
+			$headerstring = sprintf("%s:%s", $hkey, $hval);
+
+			# append
+			$headers[] = $headerstring;
 		}
+
+		# output
 		foreach($this->headers as $_header){
 			header($_header);
 		}
