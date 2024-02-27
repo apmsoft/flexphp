@@ -14,6 +14,7 @@ final class Download extends FileSize
 	# 다운로드 허용 확장자
 	private array $allowed_filetypes = ['pdf','xls','xlsx','doc','docx','zip','hwp','ppt','pptx','jpg','jpeg','png','gif'];
 	public string $file_extension    = '';
+	private string $title = '';
 	private array $headers           = [
 		'Content-type'              => 'application/octet-stream',
 		'Cache-control'             => 'private',
@@ -56,7 +57,9 @@ final class Download extends FileSize
 	{
 		$result = [];
 		if(property_exists(__CLASS__,$propertyName)){
-			if($propertyName == 'headers' || $propertyName == 'allowed_filetypes'){
+			if($propertyName == 'headers' 
+				|| $propertyName == 'allowed_filetypes'
+				|| $propertyName == 'title'){
 				$result = $this->{$propertyName};
 			}
 		}
@@ -77,6 +80,7 @@ final class Download extends FileSize
 
 	# 다운로드파일명 설정
 	public function setFileName (string $title) : Download {
+		$this->title = $title;
 		$this->headers['Content-Disposition'] = sprintf('attachment;filename="%s"', $title);
 	return $this;
 	}

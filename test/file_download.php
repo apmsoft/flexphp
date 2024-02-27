@@ -49,9 +49,10 @@ try{
     $fileDownload->headers = ['Content-Length' => $fileDownload->size()];
     Log::d($fileDownload->headers);
 
-    // Log::d('file 확장자', $file_extension);
-    // Log::d('file bytes', $bytes);
-    // Log::d('file size', $size);
+    Log::d('file 확장자', $file_extension);
+    Log::d('file bytes', $bytes);
+    Log::d('file size', $size);
+    Log::d('file 다운로드 저장 파일명', $fileDownload->title);
     // Log::d('file contents', $file_contents);
     
     # 파일 다운로드 실행 (이전에 어떠한 문자도 출력이 되어선 안됨)
