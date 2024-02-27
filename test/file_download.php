@@ -37,11 +37,16 @@ try{
     $file_contents  = $fileDownload->getContents();
 
     # 다운로드 헤더 값 받기
-    $file_download_headers = $fileDownload->headers;
-    Log::d($file_download_headers);
+    Log::d($fileDownload->headers);
 
     # 다운로드 파일명 설정
     $fileDownload->setFileName(sprintf("테스트.%s",$fileDownload->file_extension));
+    Log::d($fileDownload->headers);
+
+    # 새로운 헤더 추가 및 덮어쓰기
+    $fileDownload->headers = ['Cache-control' => 'public'];
+    $fileDownload->headers = ['Expires' => '0'];
+    $fileDownload->headers = ['Content-Length' => $fileDownload->size()];
     Log::d($fileDownload->headers);
 
     // Log::d('file 확장자', $file_extension);

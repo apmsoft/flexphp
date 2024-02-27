@@ -64,18 +64,15 @@ final class Download extends FileSize
 	}
 
 	# header 값 추가 및 변경
-	public function __set(string $propertyName, string $propertyValue) : void
+	public function __set(string $propertyName, mixed $propertyValue) : void
 	{
 		if(property_exists(__CLASS__,$propertyName)){
 			if($propertyName == 'headers'){
-				$this->headers[$propertyName] = $propertyValue;
+				if(is_array($propertyValue)){
+					$this->headers = array_merge($this->headers, $propertyValue);
+				}
 			}
 		}
-	}
-
-	# HEADER 값 삭제
-	public function __unset(string $name) : void{
-		unset($this->headers[$name]);
 	}
 
 	# 다운로드파일명 설정
