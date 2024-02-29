@@ -22,7 +22,7 @@ class Fid
     public function createChildFid(string $fid) : string
     {
         # 해당 fid 중 가장 큰값 찾기
-        $fid_max = $this->table($this->T)
+        $fid_max = $this->db->table($this->T)
             ->select(sprintf("max(%s)", $this->column_name))
             ->where([$this->column_name,'>',$fid],[$this->column_name,'<',$fid.'99'])
             ->query()->fetch_row();
@@ -38,7 +38,7 @@ class Fid
     public function createParentFid() : string
     {
         # fid min 값 가져오기
-        $fid_row = $this->table( $this->T )
+        $fid_row = $this->db->table( $this->T )
             ->select(sprintf("min(%s)", $this->column_name))->query()->fetch_row();
 
         # make fid
