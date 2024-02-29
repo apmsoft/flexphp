@@ -6,6 +6,7 @@ use Flex\Annona\Db\DbMySqli;
 # 스트링 다단 처리
 class Fid
 {
+    const __VERSION = "1.0";
     /**
      * @ T : table
      * @ db : 디비 클래스 인스턴스
@@ -50,7 +51,7 @@ class Fid
     public function getDepthCount(string $fid) : int
     {
         # fid
-        $fids = explode('.',$fid)[1];
+        $fids = (strpos($fid,".") !==false) ? explode('.',$fid)[1] : '';
         return (int) (strlen($fids) / 2);
     }
 
