@@ -2,11 +2,12 @@
 namespace Flex\Components\Data\Mgmt;
 
 use Flex\Annona\Db\DbMySqli;
+use Flex\Annona\Log;
 
 # 스트링 다단 처리
 class Fid
 {
-    const __VERSION = "1.0";
+    const __VERSION = "1.1";
     /**
      * @ T : table
      * @ db : 디비 클래스 인스턴스
@@ -19,7 +20,7 @@ class Fid
     ){}
 
     # reple 하부메뉴 및 답글에 사용
-    # 다단 fid > "9999999997.01%" AND fid < "9999999997.0199";
+    # 다단 fid > "9999999997.01" AND fid < "9999999997.0199";
     public function createChildFid(string $fid) : string
     {
         # 해당 fid 중 가장 큰값 찾기
@@ -53,6 +54,28 @@ class Fid
         # fid
         $fids = (strpos($fid,".") !==false) ? explode('.',$fid)[1] : '';
         return (int) (strlen($fids) / 2);
+    }
+
+    # depth 깊이 만큼 가계 뽑아주기
+    public function getFidGenealogy(string $fid) : array
+    {
+        # result
+        $result = [];
+
+        # depth
+        $depth = $this->getDepthCount($fid);
+
+        # category argv
+        $root_pos = strpos($fid,".");
+        if($root_pos !==false){
+            $start_pos = $root_pos + 1;
+            for($i=0; $i<=$depth; $i++){
+                $end_pos = $start_pos + ($i*2);
+                $result[] = substr($fid, 0, $end_pos);
+            }
+        }
+
+    return $result;
     }
 
     # list query
