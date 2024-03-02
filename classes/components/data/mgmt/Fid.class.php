@@ -7,7 +7,7 @@ use Flex\Annona\Log;
 # 스트링 다단 처리
 class Fid
 {
-    const __VERSION = "1.2.1";
+    const __VERSION = "1.3";
     /**
      * @ T : table
      * @ db : 디비 클래스 인스턴스
@@ -147,7 +147,7 @@ class Fid
 
         return [
             'cur_fids' => $cur_fids,
-            'pre_fids' => $pre_fids
+            'ano_fids' => $pre_fids
         ];
     }
 
@@ -200,8 +200,67 @@ class Fid
 
         return [
             'cur_fids' => $cur_fids,
-            'nxt_fids' => $nxt_fids
+            'ano_fids' => $nxt_fids
         ];
+    }
+
+    # 데이터베이스의 fid 값 변경 하기
+    public function changeSortFid (array $cur_fids, array $ano_fids, string $using_where_key='id') : array
+    {
+        $result = [];
+        # fid change
+        if(count($cur_fids) && count($ano_fids))
+        {
+            # change cur -> ano
+            $ano_root_fid = $ano_fids[0][$this->column_name];
+            $ano_depth = $this->getDepthCount($ano_root_fid);
+            // Log::d('ano', $ano_root_fid, $ano_depth);
+            $ano_parent_fid = ($ano_depth<1) ? (explode('.',$ano_root_fid))[0]."." : $ano_root_fid;
+
+            # db update
+            $this->db->autocommit(FALSE);
+            foreach($cur_fids as $cur_fid)
+            {
+                $this_fid = $cur_fid[$this->column_name];
+                $cur_depth = $this->getDepthCount($this_fid);
+                $cur_update_fid = ($ano_depth ==$cur_depth) ? $ano_parent_fid: sprintf("%s%s",$ano_parent_fid,substr($this_fid,($cur_depth-$ano_depth)*-2));
+                // Log::d('cur -> ano', $this_fid,'->',$cur_update_fid);
+                $result[] = sprintf("cur => ano : %s -> %s", $this_fid,$cur_update_fid);
+                try{
+                    $this->db[$this->column_name] = $cur_update_fid;
+                    $this->db->table($this->T)->where("`{$using_where_key}`",$cur_fid[$using_where_key])->update();
+                }catch(\Exception $e){
+                    Log::e($e->getMessage());
+                }
+            }
+            $this->db->commit();
+
+            # change ano -> cur
+            $cur_root_fid = $cur_fids[0][$this->column_name];
+            $cur_depth = $this->getDepthCount($cur_root_fid);
+            // Log::d('cur', $cur_root_fid, $cur_depth);
+            $cur_parent_fid = ($cur_depth<1) ? (explode('.',$cur_root_fid))[0]."." : $cur_root_fid;
+
+            # db update
+            $this->db->autocommit(FALSE);
+            foreach($ano_fids as $ano_fid)
+            {
+                $this_fid = $ano_fid[$this->column_name];
+                $ano_depth = $this->getDepthCount($this_fid);
+                $ano_update_fid = ($cur_depth ==$ano_depth) ? $cur_parent_fid: sprintf("%s%s",$cur_parent_fid,substr($this_fid,($ano_depth-$cur_depth)*-2));
+                // Log::d('ano -> cur', $this_fid,'->',$ano_update_fid);
+                $result[] = sprintf("ano => cur : %s -> %s", $this_fid,$ano_update_fid);
+                try{
+                    $this->db[$this->column_name] = $ano_update_fid;
+                    $this->db->table($this->T)->where("`{$using_where_key}`",$ano_fid[$using_where_key])->update();
+                }catch(\Exception $e){
+                    Log::e($e->getMessage());
+                }
+            }
+            $this->db->commit();
+        }
+
+    return $result;
     }
 }
 ?>
