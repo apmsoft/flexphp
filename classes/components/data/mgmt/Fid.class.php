@@ -7,7 +7,7 @@ use Flex\Annona\Log;
 # 스트링 다단 처리
 class Fid
 {
-    const __VERSION = "1.2";
+    const __VERSION = "1.2.1";
     /**
      * @ T : table
      * @ db : 디비 클래스 인스턴스
@@ -97,7 +97,6 @@ class Fid
         while($cur_row = $cur_rlt->fetch_assoc()){
             $cur_fids[] = $cur_row;
         }
-        // Log::d('cur_fids',$cur_fids);
 
         # < fid array
         $pre_fids = [];
@@ -128,10 +127,10 @@ class Fid
             {
                 # pre_fid
                 $pre_fid = $pre_row[$this->column_name];
-                $pre_depth = $this->getDepthCount($nxt_fid);
+                $pre_depth = $this->getDepthCount($pre_fid);
                 // Log::d('pre_fid', $pre_fid,'pre_depth',$pre_depth);
 
-                if($depth == $nxt_depth)
+                if($depth == $pre_depth)
                 {
                     # query
                     $pre_rlt = $this->db->table($this->T)
