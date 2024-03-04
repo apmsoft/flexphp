@@ -2,12 +2,11 @@
 namespace Flex\Annona;
 
 use \ArrayObject;
-use \ErrorException;
-use Flex\Annona\Log;
+use \Exception;
 
 final class R
 {
-    const VERSEION = '2.2.4';
+    const VERSEION = '2.2.5';
     public static $language = ''; // 국가코드
 
     # resource 값
@@ -142,7 +141,6 @@ final class R
             'sysmsg','strings','integers','floats','doubles','arrays','tables' => (isset(self::${$query}[self::$language])) ?? false,
             default => (isset(self::$r->{$query}[self::$language])) ?? false
         };
-        // Log::d('is', (string)$result);
 
     return $result;
     }
@@ -151,7 +149,7 @@ final class R
     # R::parser(_ROOT_PATH_.'/'._QUERY_.'/tables.json', 'tables');
     public static function parser(string $filename, string $query) : void
     {
-        if(!$query) throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
+        if(!$query) throw new Exception(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
 
         if(!self::is($query))
         {
@@ -169,7 +167,7 @@ final class R
                         case JSON_ERROR_CTRL_CHAR: $e_msg = 'Unexpected control character found';break;
                         case JSON_ERROR_SYNTAX: $e_msg = 'Syntax error, malformed JSON';break;
                     }
-                    throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.$real_filename.' / '.$e_msg);
+                    throw new Exception(__CLASS__.' :: '.__LINE__.' '.$real_filename.' / '.$e_msg);
                 }
 
                 if(property_exists(__CLASS__,$query)){
