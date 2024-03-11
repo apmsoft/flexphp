@@ -1,18 +1,10 @@
 <?php
 session_start();
 
-# set error reporting
-#@ini_set('display_error', 'On');
-#error_reporting(E_ERROR | E_WARNING | E_PARSE);
-#error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-#error_reporting(E_ALL & ~E_NOTICE);
-#error_reporting(E_ALL);
-
 # $path 경로 설정 필요 및 설정
 define('_ROOT_PATH_',$path);
 
 # 기본 설정
-define('_SRC_','src');              #PHP 파일 프로그램 폴더
 define('_LIBS_','libs');            #PHP 외부라이브러리
 
 # 리소스
@@ -31,7 +23,8 @@ define('_UPLOAD_','_data/files');   #첨부파일등
 # 클래스 자동 인클루드 /--------------
 spl_autoload_register(function($class_name){
     $paths =explode('\\',preg_replace('/([a-z0-9])([A-Z.])/',"$1$2",$class_name));
-    if(!strcmp($paths[0],'Flex')){
+    if(!strcmp($paths[0],'Flex'))
+    {
         $cnt = count($paths)-1;
         $cut = $cnt-1;
         $class_package   = implode('/',array_map('strtolower',array_slice($paths,1,$cut)));
@@ -49,10 +42,10 @@ spl_autoload_register(function($class_name){
 # 기본 선언 클래스 /-------------------
 Flex\Annona\App::init();
 
-# resource XML 자동 로드 /---------------
+# resource JSON 자동 로드 /---------------
 Flex\Annona\R::init(Flex\Annona\App::$language);
 Flex\Annona\R::__autoload_resource([
-    _VALUES_  => ['sysmsg','strings','integers']
+    _VALUES_  => ['sysmsg','strings','integers','arrays']
 ]);
 
 # 함수 자동 인클루드 /----------------
