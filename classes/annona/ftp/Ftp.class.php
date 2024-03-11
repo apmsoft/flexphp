@@ -5,6 +5,7 @@ use Flex\Annona\Ftp\FtpObject;
 
 final class Ftp extends FtpObject
 {
+    public const __version = '1.1';
     private $ascii_type = [
         'txt','htm','html','phtml','php','php3','php4',
         'inc','ini','asp','aspx','jsp','css','js'

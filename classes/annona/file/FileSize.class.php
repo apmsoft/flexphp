@@ -6,6 +6,7 @@ use \ErrorException;
 # 파일 용량을 알아보기 쉽도록 변환
 class FileSize
 {
+	public const __version = '1.0';
 	protected string $filename;
 	protected $filesize_bytes = 0;
 	private array $convert_type = array('B', 'Kb', 'MB', 'GB', 'TB', 'PB');

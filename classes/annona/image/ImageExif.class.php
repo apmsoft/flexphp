@@ -4,6 +4,7 @@ namespace Flex\Annona\Image;
 # purpose : 카메라 촬영 정보
 class ImageExif 
 {
+	public const __version = '0.9';
 	private $exifargs = [];
 
 	# computed : 넓이,높이,조리개,촬영거리,CCD

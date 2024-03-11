@@ -9,6 +9,7 @@ use \Exception;
 
 class Upload extends DirInfo
 {
+    public const __version = '2.0';
     public string $file_extension = '';
 	public string $mimeType;
 	public string $basename;

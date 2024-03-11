@@ -3,6 +3,7 @@ namespace Flex\Annona\Ftp;
 
 class FtpObject
 {
+    public const __version = '1.1';
     public $conn;
 
     public function __construct(string $ftp_url, int $port, bool $is_ssl, int $time){

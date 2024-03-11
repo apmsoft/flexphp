@@ -4,6 +4,7 @@ namespace Flex\Annona\Db;
 # purpose : oci 함수를 활용해 확장한다
 class DbOCIResult
 {
+	public const __version = '0.5';
 	protected $resultHandle;
 	protected $num_rows;		# 쿼리 레코드 갯수
     

@@ -1,4 +1,39 @@
 {
+    "langs":{
+        "en": "영어",
+        "ko": "한국어",
+        "ja": "일본어",
+        "zh": "중국어",
+        "de": "독일어",
+        "ar": "아랍어",
+        "fr": "프랑스어",
+        "nl": "네덜란드어"
+    },
+    "Upload" : {
+        "file_extension": "jpg,jpeg,png,ppt,pptx,pdf,zip,doc,docx,xls,xlsx,hwp",
+        "file_maxsize": 10
+    },
+    "file_extension": ["gif","jpg","jpeg","png"],
+    "compression":{"c9" : 90,
+        "c8" : 80,
+        "c7" : 70,
+        "c6" : 60,
+        "c5" : 50,
+        "c4" : 40,
+        "c3" : 30,
+        "c2" : 20,
+        "c1" : 10
+    },
+    "image_size" : {
+        "xs" : "100x100",
+        "sm" : "293x293",
+        "md" : "320x320",
+        "lg" : "480x480",
+        "xl" : "640x640",
+        "2xl": "720x720",
+        "3xl": "1024x1024",
+        "4xl": "1280x1280"
+    },
     "random_params": ["A", 1, "B", 2, "C", 3, "D", 4, "E", 5, "F", 6, "G", 7, "H", 8, "A", 9, "J", 9, "K", 1, "L", 2, "M", 3, "N", 4, "A", 5, "P", 6, "Q", 7, "R", 8, "S", 9, "T", 7, "U", 1, "V", 2, "X", 3, "Y", 4, "Z"],
     "is_push": {
         "n": "수신거절",

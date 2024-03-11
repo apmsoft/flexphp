@@ -4,6 +4,7 @@ namespace Flex\Annona\Text;
 # purpose : 문자을 변경하거나 더하거나 등 가공하는 역할을 한다.
 class TextUtil
 {
+	public const __version = '1.1';
 	private string $value;
 
 	public function __construct(string $s){

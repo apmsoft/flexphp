@@ -3,6 +3,7 @@ namespace Flex\Annona\Out;
 
 final class OutPane
 {
+	public const __version = '2.2';
 	public static string $chrset = 'utf-8';
 
 	# 메세지 출력 및 지정 경로로 이동

@@ -5,11 +5,12 @@ use Flex\Annona\Date\DateTimez;
 use \DateTimeImmutable;
 use \DateInterval;
 use \DatePeriod;
-use \ErrorException;
+use \Exception;
 
 class DateTimezPeriod
 {
-    const VERSEION = '1.2';
+    public const __version = '1.2';
+
     # Asia/Seoul
     public string $timezone = '';
     private array $relative_pos = [

@@ -4,6 +4,7 @@ namespace Flex\Annona\Db;
 # purpose : sqlite 함수를 활용해 확장한다
 class SqliteResult
 {
+	public const __version = '1.2';
 	protected $resultHandle;
 	protected $num_rows;		# 쿼리 레코드 갯수
     

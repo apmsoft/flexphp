@@ -3,7 +3,7 @@ namespace Flex\Annona\Http;
 
 class HttpUrlFilter
 {
-    private $version = '0.5';
+    public const __version = '0.5';
     public function __construct(
         private string $url
     )

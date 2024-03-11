@@ -6,6 +6,7 @@ use Flex\Annona\Token\TokenAbstract;
 
 class TokenGenerateBtype extends TokenAbstract
 {
+    public const __version = '1.1';
     private string $value = '';
 
     # 랜덤 : AE68A9MPVZ

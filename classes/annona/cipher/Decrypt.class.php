@@ -1,11 +1,12 @@
 <?php
 namespace Flex\Annona\Cipher;
 
-use \ErrorException;
+use \Exception;
 
 # 문자 복호화하기
 class Decrypt
 {
+	public const __version = '1.1';
 	private $decrypt_str = '';
 
 	public function __construct(string $str){
@@ -14,7 +15,7 @@ class Decrypt
 
 	#@ return String
 	public function _base64_urldecode() : string{
-		$result = base64_decode(urldecode($this->decrypt_str)) ?? throw new ErrorException($e->getMessage(),__LINE__);
+		$result = base64_decode(urldecode($this->decrypt_str)) ?? throw new Exception($e->getMessage(),__LINE__);
 	return $result;
 	}
 }

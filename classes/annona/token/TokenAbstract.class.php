@@ -5,6 +5,7 @@ use Flex\Annona\Random\Random;
 
 abstract class TokenAbstract
 {
+    public const __version = '1.1';
     protected function cleanEtcWords(string $token){
         return preg_replace("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",'',$token);
     }

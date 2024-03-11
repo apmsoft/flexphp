@@ -3,6 +3,8 @@ namespace Flex\Annona\Auth;
 
 final class Session
 {
+    public const __version = '1.1';
+
     # 세션 항목
     private $auth_args = [];
     private $authinfo = [];

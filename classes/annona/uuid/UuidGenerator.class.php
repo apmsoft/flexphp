@@ -3,11 +3,12 @@ namespace Flex\Annona\Uuid;
 
 class UuidGenerator
 {
+	public const __version = '1.1';
 	public function __construct(){
 	}
 
 	#@ String
-	public function v3($uuid, $keyname)
+	public function v3(string $uuid, string $keyname) : mixed
 	{
 		if(!self::is_valid($uuid)) return false;
 
@@ -43,7 +44,7 @@ class UuidGenerator
 	}
 
 	#@ String
-	public function v5($uuid, $keyname)
+	public function v5(string $uuid, string $keyname) : mixed
 	{
 		if(!self::is_valid($uuid)) return false;
 
@@ -66,7 +67,7 @@ class UuidGenerator
 	}
 
 	#@ String
-	public function is_valid($uuid) {
+	public function is_valid(string $uuid) : mixed {
 		return preg_match('/^\{?[0-9a-f]{8}\-?[0-9a-f]{4}\-?[0-9a-f]{4}\-?'.'[0-9a-f]{4}\-?[0-9a-f]{12}\}?$/i', $uuid) === 1;
 	}
 }

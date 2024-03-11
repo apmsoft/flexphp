@@ -4,7 +4,7 @@ namespace Flex\Annona\Request;
 # purpose : 문자를 체크(Ascii 문자 코드를 활용하여) 한다 / preg,ereg 정규식 보다 훨 빠름
 class Validation
 {
-	const VERSEION = '2.0';
+	public const __version = '2.0';
 	public string $str;
 	public int $len = 0;
 

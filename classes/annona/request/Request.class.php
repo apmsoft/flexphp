@@ -6,7 +6,7 @@ use Flex\Annona\Log;
 # _POST, _GET, 값들을 제어 및 기본작업 수행
 class Request
 {
-	private $version = '1.0.3';
+	public const __version = '1.0.3';
 	private array $params   = [];
 	private array $headers  = [];
 	public string $ip       = '';

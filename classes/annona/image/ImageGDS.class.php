@@ -4,7 +4,7 @@ namespace Flex\Annona\Image;
 # purpose : 이미지 효과주기
 class ImageGDS
 {
-	const VERSION = '1.2';
+	public const __version = '1.2';
 	public $filename;
 
 	public $im;

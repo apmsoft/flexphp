@@ -4,7 +4,10 @@ namespace Flex\Annona\Dir;
 use Flex\Annona\Dir\DirInfo;
 
 # 디렉토리 목록 및 디렉토리에 해달하는 파일 가져오기
-class DirObject extends DirInfo{
+class DirObject extends DirInfo
+{
+    public const __version = '1.2';
+
     public function __construct(string $dir){
         parent::__construct($dir);
     }

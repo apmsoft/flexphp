@@ -4,11 +4,11 @@ namespace Flex\Annona\Date;
 use \DateTime;
 use \DateTimeZone;
 use \DateInterval;
-use \ErrorException;
+use \Exception;
 
 class DateTimez extends DateTime
 {
-	const VERSEION = '1.2';
+	public const __version = '1.2';
 	public DateTimeZone $dateTimeZone;
 	public string $timezone;
 	public array $location = [];

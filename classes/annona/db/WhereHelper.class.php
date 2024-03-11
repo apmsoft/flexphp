@@ -4,7 +4,7 @@ namespace Flex\Annona\Db;
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class WhereHelper
 {
-	private $version = '1.7.2';
+	public const __version = '1.7.2';
 	private $where = '';
 	private $where_group = [];
 	private $current_group = '';

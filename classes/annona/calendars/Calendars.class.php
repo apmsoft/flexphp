@@ -6,6 +6,7 @@ use \DateTime;
 # Parent Class : DateTime::';
 class Calendars extends DateTime
 {
+	public const __version = '2.5';
 	# 년
 	private $year = 0;
 

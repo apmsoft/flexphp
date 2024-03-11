@@ -10,6 +10,7 @@ use Flex\Annona\Db\DbOCIInterface;
 # purpose : oci 함수를 활용해 확장한다
 class DbOCI extends OCIResult implements DbOCIInterface,ArrayAccess
 {
+	public const __version = '0.5'
 	const CHARSET = 'utf-8';
 	private $host,$dbname;
 	private $handle;

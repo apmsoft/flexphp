@@ -7,7 +7,7 @@ use Flex\Annona\Token\TokenAbstract;
 
 class TokenGenerateAtype extends TokenAbstract
 {
-    const TAG = 'TokenGenerateAtype::';
+    public const __version = '1.1';
     public string $value = '';
 
     public function __construct(string|null $generate_string, int $length=50){

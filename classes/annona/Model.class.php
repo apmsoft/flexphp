@@ -3,7 +3,7 @@ namespace Flex\Annona;
 
 # purpose : php 코딩시 환경설정에 대한 값들을 관리하기 위함
 class Model{
-    private $version = '1.0.3';
+    public const __version = '1.0.3';
     private $args = [];
 
     public function __construct(?array $args=[]){

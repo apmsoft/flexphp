@@ -32,7 +32,7 @@ $model->end_date   = '';
 // }
 
 # DateTimez
-$model->end_date = (new DateTimez($model->start_date, $model->timezone))->formatter("P1M20DT2H30M30S")->format('Y-m-d H:i:s');
+$model->end_date = (new DateTimez($model->start_date, $model->timezone))->formatter("PT2H30M00S")->format('Y-m-d H:i:s');
 Log::d('start-date',$model->start_date);
 Log::d('end-date',$model->end_date);
 

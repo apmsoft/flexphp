@@ -5,7 +5,7 @@ use Flex\Annona;
 
 class Relation
 {
-	public $version  = '2.0';
+	public const __version  = '2.0';
 	private $page           = 1;		# 현제 페이지
 	private $totalPage      = 0;		# 총페이지
 	private $qLimitStart    = 0;		# query LIMIT [0],[]

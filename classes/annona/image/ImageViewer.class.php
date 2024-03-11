@@ -8,6 +8,8 @@ use \Exception;
 # 이미지 뷰어
 final class ImageViewer extends ImageGDS
 {
+	public const __version = '2.0';
+
 	# 이미지 경로
 	public string $file_extension = '';
 	public string $mimeType;

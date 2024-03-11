@@ -9,7 +9,7 @@ use \ErrorException;
 
 class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAccess
 {
-	private $version = '2.1.2';
+	public const __version = '2.1.2';
 
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES

@@ -10,6 +10,7 @@ use Flex\Annona\Db\DbSqliteInterface;
 # purpose : sqlite 함수를 활용해 확장한다
 class DbSqlite extends DbSqliteResult implements DbSqliteInterface,ArrayAccess
 {
+	public const __version = '1.1';
 	const CHARSET = 'utf-8';
 	private $host,$dbname;
 	private $handle;

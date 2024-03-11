@@ -3,13 +3,13 @@ namespace Flex\Annona\File;
 
 use Flex\Annona;
 use Flex\Annona\File\FileSize;
-use \ErrorException;
+use \Exception;
 
 # parnet :
 # purpose : 파일다운로드
 final class Download extends FileSize
 {
-	const __VERSION = '1.1';
+	public const __version = '1.1';
 
 	# 다운로드 허용 확장자
 	private array $allowed_filetypes = ['pdf','xls','xlsx','doc','docx','zip','hwp','ppt','pptx','jpg','jpeg','png','gif'];
@@ -47,7 +47,7 @@ final class Download extends FileSize
 	{
 		# 다운로드 허용 파일인지 체크
 		if(!in_array($this->file_extension,$this->allowed_filetypes)){
-			throw new \ErrorException( 'e_extension_not_allowed');
+			throw new \Exception( 'e_extension_not_allowed');
 		}
 
 		return file_get_contents($this->filename);

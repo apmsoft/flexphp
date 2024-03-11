@@ -6,6 +6,7 @@ use Flex\Annona\Log;
 
 class FcmMessage extends HttpRequest
 {
+	public const __version = '1.1';
 	private string $url            = '';
 	private string $serverApiKey   = '';
 	private array $devices         = [];

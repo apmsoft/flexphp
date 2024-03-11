@@ -60,10 +60,10 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
     Log::i($client_ip, $method, $uri_path);
 
     return React\Async\waterfall(
-    [    
+    [
         # Router
         function ($params=[]) use ($dispatcher,$request,$method,$uri_path)
-        {            
+        {
             return new Promise(function ($resolve) use ($dispatcher, $request, $method, $uri_path)
             {
                 # headers
@@ -81,7 +81,7 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
                         break;
                     case FastRoute\Dispatcher::FOUND:
                         $handler = $routeInfo[1];
-    
+
                         $data = $handler($request);
                         $resolve($data);
                         break;

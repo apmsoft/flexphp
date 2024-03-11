@@ -2,7 +2,7 @@
 namespace Flex\Annona\Http;
 
 final class HttpResponse {
-    const __VERSION = '0.5';
+    public const __version = '0.5';
 
     public function __construct(
         private int $code,

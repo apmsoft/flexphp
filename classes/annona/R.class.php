@@ -6,7 +6,7 @@ use \Exception;
 
 final class R
 {
-    const VERSEION = '2.2.5';
+    public const __version = '2.2.6';
     public static $language = ''; // 국가코드
 
     # resource 값
@@ -149,7 +149,7 @@ final class R
     # R::parser(_ROOT_PATH_.'/'._QUERY_.'/tables.json', 'tables');
     public static function parser(string $filename, string $query) : void
     {
-        if(!$query) throw new Exception(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
+        if(!$query) throw new \Exception(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
 
         if(!self::is($query))
         {
@@ -167,7 +167,7 @@ final class R
                         case JSON_ERROR_CTRL_CHAR: $e_msg = 'Unexpected control character found';break;
                         case JSON_ERROR_SYNTAX: $e_msg = 'Syntax error, malformed JSON';break;
                     }
-                    throw new Exception(__CLASS__.' :: '.__LINE__.' '.$real_filename.' / '.$e_msg);
+                    throw new \Exception(__CLASS__.' :: '.__LINE__.' '.$real_filename.' / '.$e_msg);
                 }
 
                 if(property_exists(__CLASS__,$query)){
@@ -185,14 +185,24 @@ final class R
         $json=preg_replace('/(?<!\S)\/\/\s*[^\r\n]*/', '', $json);
         $json = strtr($json,array("\n"=>'',"\t"=>'',"\r"=>''));
         $json = preg_replace('/([{,]+)(\s*)([^"]+?)\s*:/','$1"$3":',$json);
-        if(version_compare(phpversion(), '5.4.0', '>=')) {
-            $json = json_decode($json, $assoc, $depth, $options);
-        }
-        else if(version_compare(phpversion(), '5.3.0', '>=')) {
+
+        if (version_compare(phpversion(), '8.0.0', '>='))
+        {
+            $options |= JSON_THROW_ON_ERROR;
+            try {
+                $json = json_decode($json, $assoc, $depth, $options);
+            } catch (\JsonException $e) {
+                return $e->getMessage();
+            }
+        } else if (version_compare(phpversion(), '7.0.0', '>=')) {
+            $options |= JSON_ERROR_EXCEPTION;
+            try {
+                $json = json_decode($json, $assoc, $depth, $options);
+            } catch (\Exception $e) {
+                return $e->getMessage();
+            }
+        } else {
             $json = json_decode($json, $assoc, $depth);
-        }
-        else {
-            $json = json_decode($json, $assoc);
         }
 
         if (json_last_error() !== JSON_ERROR_NONE) {

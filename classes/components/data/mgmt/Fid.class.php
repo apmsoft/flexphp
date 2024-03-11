@@ -7,7 +7,7 @@ use Flex\Annona\Log;
 # 스트링 다단 처리
 class Fid
 {
-    const __VERSION = "1.3";
+    public const __version = "1.3";
     /**
      * @ T : table
      * @ db : 디비 클래스 인스턴스

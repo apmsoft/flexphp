@@ -7,6 +7,8 @@ use Flex\Annona\Dir\DirObject;
 # purpose : 파일삭제
 final class FileRemove extends DirObject
 {
+    public const __version = '1.1';
+
     public array $list = [];
 
 	final function __construct(string $dir) {
@@ -15,10 +17,10 @@ final class FileRemove extends DirObject
 
     # 디렉토리내 파일 찾기
 	public function find (string $pattern, array $nothing=['html','md','php']) : FileRemove
-	{		
+	{
         # 디렉토리인지 체크
         if($this->isDir($this->directory)){
-            $this->list = $this->findFiles($pattern,$nothing);            
+            $this->list = $this->findFiles($pattern,$nothing);
         }
 
     return $this;

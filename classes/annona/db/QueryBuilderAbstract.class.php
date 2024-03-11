@@ -8,7 +8,7 @@ use Flex\Annona\Log;
 # purpose : 각종 SQL 관련 디비를 통일성있게  작성할 수 있도록 틀을 제공
 abstract class QueryBuilderAbstract extends mysqli
 {
-    private string $version = '1.5.3';
+    public const __version = '1.5.3';
     private string $query_mode;
     protected array $query_params;
     private array $sub_query_params;

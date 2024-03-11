@@ -2,7 +2,7 @@
 namespace Flex\Annona\Http;
 
 class HttpRequest {
-    private $version = '1.0.2';
+    public const __version = '1.0.2';
     private $urls = [];
     private $mch;
 

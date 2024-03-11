@@ -4,7 +4,7 @@ namespace Flex\Annona\Dir;
 # purpose : 디렉토리 관련
 class DirInfo
 {
-	public $version = '1.1.0';
+	public const __version = '1.1.0';
 	public string $directory;
 	const permission	= 0707;
 

@@ -4,6 +4,7 @@ namespace Flex\Annona;
 # 접속에 따른 디바이스|브라우저등 정보
 final class App
 {
+    public const __version      = '1.1';
     public static $platform     = 'Nan';
     public static $browser      = 'Nan';
     public static $host;
@@ -83,7 +84,7 @@ final class App
     public static function get_client_ip() : string
     {
         $result = '';
-        
+
         if (isset($_SERVER['HTTP_CLIENT_IP'])) $result = $_SERVER['HTTP_CLIENT_IP'];
         else if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $result = $_SERVER['HTTP_X_FORWARDED_FOR'];
         else if(isset($_SERVER['HTTP_X_FORWARDED'])) $result = $_SERVER['HTTP_X_FORWARDED'];

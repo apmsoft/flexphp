@@ -3,7 +3,7 @@ namespace Flex\Annona;
 
 final class Log
 {
-    const VERSEION = '1.2.1';
+    public const __version = '1.2.1';
     const MESSAGE_FILE   = 3; # 사용자 지정 파일에 저장
     const MESSAGE_ECHO   = 2; # 화면에만 출력
     const MESSAGE_SYSTEM = 0; # syslog 시스템 로그파일에 저장

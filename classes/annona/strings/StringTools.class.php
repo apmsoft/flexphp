@@ -3,7 +3,7 @@ namespace Flex\Annona\Strings;
 
 class StringTools
 {
-    private $version = '0.2.1';
+    public const __version = '0.2.1';
     public function __construct(private string $data=''){}
 
     # convert 10진 to string

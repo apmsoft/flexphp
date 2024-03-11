@@ -7,7 +7,7 @@ use Flex\Annona\Request\Validation;
 # 폼체크
 class FormValidation extends Validation
 {
-	const VERSEION = '2.0.1';
+	public const __version = '2.0.1';
     private string $fieldName;
     private string $title;
     private bool $required = false;

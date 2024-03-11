@@ -2,6 +2,6 @@
 namespace Flex\Components\Data\Action;
 
 interface ListInterface{
-    public function doList(?array $params=[]) : array;
+    public function doList(?array $params=[]) : ?array;
 }
 ?>

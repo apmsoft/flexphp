@@ -3,6 +3,7 @@ namespace Flex\Annona\Mail;
 
 class MailSend
 {
+    public const __version = '0.1';
     private $to           = ['email'=>'', 'name'=>''];
     private $from         = ['email'=>'', 'name'=>''];
     private $headers_args = [];
