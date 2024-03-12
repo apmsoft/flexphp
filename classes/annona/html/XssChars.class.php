@@ -4,9 +4,9 @@ namespace Flex\Annona\Html;
 # purpose : xss 방지 및
 class XssChars
 {
-	public const __version = '1.9';
-	private $description;
-	private $allow_tags = array();
+	public const __version = '1.9.1';
+	private string $description;
+	private array $allow_tags = [];
 
 	public function __construct(string $description){
 		$this->description = $description;
@@ -86,7 +86,7 @@ class XssChars
 	# url 링크에 http가 있는지 확인후 붙여서 리턴해 주기
 	public function setHttpUrl() : string
 	{
-		if($this->description) 
+		if($this->description)
 			$this->description = trim($this->description);
 
 		if (strpos($this->description, 'http') ===false) {
@@ -96,7 +96,7 @@ class XssChars
 	}
 
 	# code html highlight
-	public function getXHtmlHighlight() : string 
+	public function getXHtmlHighlight() : string
 	{
 		$str = highlight_string($this->description, true);
 		$str = preg_replace('#<font color="([^\']*)">([^\']*)</font>#', '<span style="color: \\1">\\2</span>', $str);
@@ -135,5 +135,23 @@ class XssChars
 		}
 	return $this->description;
 	}
+
+	public static function __call(string $query, array $args=[]) : mixed
+    {
+		$_query = strtolower($query);
+
+        # 배열을 dictionary Object
+        if($_query == 'gettext'){
+            return $this->getContext('TEXT');
+        }else if($_query == 'getxss'){
+            return $this->getContext('XSS');
+        }else if($_query == 'gethtml'){
+            return $this->getContext('HTML');
+        }else if($_query == 'getxhtml'){
+            return $this->getContext('XHTML');
+        }else {
+			return null;
+		}
+    }
 }
 ?>
