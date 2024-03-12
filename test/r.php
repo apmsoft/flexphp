@@ -48,12 +48,6 @@ Log::d("===============================");
 R::init( 'en' );
 Log::d('R :: language >> ', R::$language);
 
-# res/config : 영어 파일이 있음
-R::parser(_ROOT_PATH_.'/'._CONFIG_.'/imageviewer.json', 'imageviewer2');
-// Log::d ( '영어파일 있음 : ',R::$r->imageviewer2 );
-
-# //----------------------------------
-
 #============================
 # 기본 리소스 파일 호출 : parser
 #-----------------------
@@ -113,8 +107,8 @@ R::ddd();
 // Log::d('ddd',R::$ddd);
 
 # r
-R::parser(_ROOT_PATH_.'/'._CONFIG_.'/attachments.json', 'attachments');
-Log::d('fetch attachments',R::fetch('attachments'));
+// R::parser(_ROOT_PATH_.'/config/attachments.json', 'attachments');
+// Log::d('fetch attachments',R::fetch('attachments'));
 
 Log::d("===============================");
 
@@ -122,7 +116,7 @@ Log::d("===============================");
 Log::d('strings',R::strings('app_name'));
 Log::d('tables',R::tables('member'));
 Log::d('sysmsg',R::sysmsg('w_duplicate_nickname'));
-Log::d('r',R::attachments('Upload')['file_extension']);
+// Log::d('r',R::attachments('Upload')['file_extension']);
 
 Log::d("===============================");
 
@@ -140,6 +134,11 @@ Log::e ( $sysmsg->w_token_isnot_match );
 
 Log::d("===============================");
 # 리소스별 원하는 키에 해당하는 값들을 배열로 뽑아내기 [키 => 값] 중복키 덮여씀
-$r = R::select(["strings"=>"app_name", "sysmsg"=>"v_insert,v_update","attachments"=>"Upload"]);
+$r = R::select(["strings"=>"app_name", "sysmsg"=>"v_insert,v_update"]);
 Log::d('select',$r);
+
+Log::d("===============================");
+Log::d('데이터 한꺼번에 등록 및 바꾸기');
+R::set('tables', ["test_db" => "test_db_v2"]);
+Log::d(R::fetch('tables'));
 ?>

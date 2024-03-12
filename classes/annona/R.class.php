@@ -6,7 +6,7 @@ use \Exception;
 
 final class R
 {
-    public const __version = '2.2.6';
+    public const __version = '2.2.7';
     public static $language = ''; // 국가코드
 
     # resource 값
@@ -58,6 +58,14 @@ final class R
         };
 
         return $r_data;
+    }
+
+    # 특정 리소스에 전체 값 바꾸기
+    public static function set(string $query, array $data) : void{
+        $r_data = match((string)$query){
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => self::${$query}[self::$language] = $data,
+            default => self::$r->{$query}[self::$language] = $data
+        };
     }
 
     private static function fetch(string $query): array{
