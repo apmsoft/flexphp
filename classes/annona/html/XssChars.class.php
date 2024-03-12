@@ -136,7 +136,7 @@ class XssChars
 	return $this->description;
 	}
 
-	public static function __call(string $query, array $args=[]) : mixed
+	public function __call(string $query, array $args=[]) : mixed
     {
 		$_query = strtolower($query);
 

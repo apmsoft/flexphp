@@ -114,26 +114,31 @@ $model->contents = '<script>alert(1);</script> <span style="color:#000;"> 스판
 # 본문을 TEXT 로만 출력
 $xssChars = new XssChars( (string)$model->contents );
 Log::d('TEXT');
-Log::d( $xssChars->getContext('TEXT') );
+// Log::d( $xssChars->getContext('TEXT') );
+Log::d( $xssChars->getText() );
 
 # 본문을 XSS 로만 출력
 $xssChars = new XssChars( $model->contents );
 Log::d('XSS');
-Log::d( $xssChars->getContext('XSS') );
+// Log::d( $xssChars->getContext('XSS') );
+Log::d( $xssChars->getXss() );
 
 # 본문을 HTML 로만 출력
 $xssChars = new XssChars( $model->contents );
 Log::d('HTML');
-Log::d( $xssChars->getContext('HTML') );
+// Log::d( $xssChars->getContext('HTML') );
+Log::d( $xssChars->getHtml() );
 
 # 본문을 XHTML (코드) 로만 출력
 $xssChars = new XssChars( $model->contents );
 Log::d('XHTML');
-Log::d( $xssChars->getContext('XHTML') );
+// Log::d( $xssChars->getContext('XHTML') );
+Log::d( $xssChars->getXHtml() );
 
 # 본문을 XSS 로만 출력 : 허용태그
 $xssChars = new XssChars( $model->contents );
 Log::d('XSS : 이벤트 허용 태그');
 $xssChars->setAllowTags('<frameset>');
-Log::d( $xssChars->getContext('XSS') );
+// Log::d( $xssChars->getContext('XSS') );
+Log::d( $xssChars->getXss() );
 ?>
