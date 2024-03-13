@@ -18,7 +18,8 @@ try{
 
     Log::d('CacheMem Version',CacheMem::__version);
     Log::d('Memcache Version',$cacheMem->getVersion());
-    Log::d('Status', $cacheMem->getStats());
+    // Log::d('Status', $cacheMem->getStats());
+    Log::d('서버 상태정보', $cacheMem->_serverStatus() ? '정상' : '서버 에러');
 
     $data = ["a","b","c"];
     $cache_data = $cacheMem('mc')->_get() ?? $cacheMem->_set($data, 60)->_get();
