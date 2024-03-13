@@ -22,7 +22,7 @@ try{
     Log::d('서버 상태정보', $cacheMem->_serverStatus() ? '정상' : '서버 에러');
 
     $data = ["a","b","c"];
-    $cache_data = $cacheMem('mc')->_get() ?? $cacheMem->_set($data, 60)->_get();
+    $cache_data = $cacheMem('mc')->_get() ?? $cacheMem('mc')->_set($data, 60)->_get();
     Log::d($cache_data);
 }catch(\Exception $e){
     Log::e($e->getMessage());
