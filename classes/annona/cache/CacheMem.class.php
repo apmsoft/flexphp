@@ -5,7 +5,7 @@ use \Memcache;
 
 class CacheMem
 {
-    public const __version = '0.5';
+    public const __version = '0.5.1';
     private string $cache_key;
 
     private Memcache $memcache;
@@ -43,7 +43,7 @@ class CacheMem
     }
 
     # 서버 상태 체크 : 서버가 실패하면 0, 그렇지 않으면 0이 아님
-    public function _server_status() : mixed
+    public function _serverStatus() : mixed
     {
         if(empty($this->memcache->getServerStatus($this->host, $this->port))){
             return null;
