@@ -5,16 +5,50 @@ use \Memcache;
 
 class CacheMem
 {
-    public const __version = '0.1';
+    public const __version = '0.5';
     private string $cache_key;
 
     private Memcache $memcache;
 
-    public function __construct(string $cache_key, string $host='localhost', int $port=11211) 
+    public function __construct(
+        private string $host='localhost',
+        private int $port=11211
+    ){
+        $this->memcache = new Memcache;
+        if(!$this->memcache->connect($this->host, $this->port)){
+            throw new \Exception("Memcache connect fail...");
+        }
+    }
+
+    public function __invoke(string $cache_key): CacheMem
     {
         $this->cache_key = $cache_key;
-        $this->memcache = new Memcache;
-        $this->memcache->connect($host, $port);
+
+        return $this;
+    }
+
+    public function __call(string $method,array $params) : mixed
+    {
+        if(method_exists($this->memcache,$method))
+        {
+            $is_flag = match($method){
+                'set','get','delete','flush','close' => false,
+                default => true
+            };
+            return ($is_flag) ?
+                call_user_func_array(array($this->memcache,$method),$params) :
+                    throw new \Exception("Memcache not exists method: {$method}");
+        } else throw new \Exception("Memcache not exists method: {$method}");
+
+    }
+
+    # 서버 상태 체크 : 서버가 실패하면 0, 그렇지 않으면 0이 아님
+    public function _server_status() : mixed
+    {
+        if(empty($this->memcache->getServerStatus($this->host, $this->port))){
+            return null;
+        }
+    return true;
     }
 
     /**
@@ -23,7 +57,7 @@ class CacheMem
      * @param mixed $data 캐싱될 데이터
      * @param int $expiration 캐시 만료 시간 = 0 - 만료되지 않음, 초 단위 >0
      */
-    public function setCache(mixed $data, int $expiration = 0): CacheMem
+    public function _set(mixed $data, int $expiration = 0): CacheMem
     {
         if (!$this->memcache->set($this->cache_key, $data, 0, $expiration)) {
             throw new \Exception("Memcache set failed for key: {$this->cache_key}");
@@ -32,7 +66,7 @@ class CacheMem
     }
 
     # 캐시에서 값을 가져오기
-    public function getCache(): mixed
+    public function _get(): mixed
     {
         $data = $this->memcache->get($this->cache_key);
         if ($data === false) {
@@ -43,7 +77,7 @@ class CacheMem
     }
 
     # 캐시에서 키를 삭제
-    public function deleteCache(int $time = 0): void
+    public function _delete(int $time = 0): void
     {
         if(!$this->memcache->delete($this->cache_key, $time)){
             throw new \Exception("Memcache delete failed for key: {$this->cache_key}");
@@ -51,11 +85,24 @@ class CacheMem
     }
 
     # 캐시 비우기
-    public function clear(): void
+    public function _clear(): void
     {
         if(!$this->memcache->flush()){
             throw new \Exception('Memcache clear failed');
         }
+    }
+
+    # 캐시 접속 종료
+    public function _close() : void
+    {
+        if(!$this->memcache->close()){
+            throw new \Exception('Memcache close failed');
+        }
+    }
+
+    # 자동소멸
+    public function __destruct(){
+        $this->_close();
     }
 }
 
