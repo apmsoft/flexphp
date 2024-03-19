@@ -16,43 +16,50 @@ $data = '[
 		"muid":1,
 		"rank": 1,
 		"lowPrice": 1000,
-		"productName": "A"
+		"productName": "A",
+		"title": "홍길동"
 	},
 	{
 		"muid":1,
 		"rank": 2,
 		"lowPrice": 2000,
-		"productName": "B"
+		"productName": "B",
+		"title":"유관순"
 	},
 	{
 		"muid":2,
 		"rank": 4,
 		"lowPrice": 5000,
-		"productName": "D"
+		"productName": "D",
+		"title":"세종대왕"
 	},
 	{
 		"muid":2,
 		"rank": 5,
 		"lowPrice": 105958,
-		"productName": "E"
+		"productName": "E",
+		"title":"김만배"
 	},
 	{
 		"muid":3,
 		"rank": 7,
 		"lowPrice": 105959,
-		"productName": "G"
+		"productName": "G",
+		"title":"이순신"
 	},
 	{
 		"muid":3,
 		"rank": 8,
 		"lowPrice": 110000,
-		"productName": "G"
+		"productName": "G",
+		"title":"김호준"
 	},
 	{
 		"muid":4,
 		"rank": 8,
 		"lowPrice": 110001,
-		"productName": "G"
+		"productName": "G",
+		"title":"박땡이"
 	}
 ]';
 
@@ -96,6 +103,15 @@ $args = json_decode($data,true);
 // # 멀티 키=>밸류에 해당하는 값 배열 모두 찾기 AND
 // $find_where_all = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200])->value;
 // Log::d("find where AND", $find_where_all);
+
+$find_where_like = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE","만"]])->value;
+Log::d("find where %LIKE% AND", $find_where_like);
+
+$find_where_like_r = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE-R","이순"]])->value;
+Log::d("find where LIKE% AND", $find_where_like_r);
+
+$find_where_like_l = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE-L","신"]])->value;
+Log::d("find where %LIKE AND", $find_where_like_l);
 
 // # 멀티 키=>밸류에 해당하는 값 배열 모두 찾기 OR
 // $find_where_all = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200], 'OR')->value;
@@ -222,21 +238,21 @@ $args = json_decode($data,true);
 // Log::d($slice_args3);
 
 # unionAll 멀티 배열을 하나의 배열로 합치기
-$a = [
-    ["a"=>1,"b"=>2],
-	["a"=>7,"b"=>2]
-];
-$b = [
-   ["a"=>2,"b"=>3,"c"=>0]
-];
+// $a = [
+//     ["a"=>1,"b"=>2],
+// 	["a"=>7,"b"=>2]
+// ];
+// $b = [
+//    ["a"=>2,"b"=>3,"c"=>0]
+// ];
 
-$c = [
-   ["a"=>2,"b"=>4],
-   ["a"=>0,"b"=>1]
-];
+// $c = [
+//    ["a"=>2,"b"=>4],
+//    ["a"=>0,"b"=>1]
+// ];
 
-$unionAll = (new ArrayHelper( [] ))->unionAll($a, $b, $c)->value;
-Log::d("unionAll", $unionAll);
+// $unionAll = (new ArrayHelper( [] ))->unionAll($a, $b, $c)->value;
+// Log::d("unionAll", $unionAll);
 
 
 // $a1 = [
@@ -254,48 +270,48 @@ Log::d("unionAll", $unionAll);
 // Log::d("unionAll", $unionAll2);
 
 
-$a1 = [
-    [0,1,2,3],
-	[0,2,3,3],
-];
-$b2 = [
-   [0,4,5,6]
-];
+// $a1 = [
+//     [0,1,2,3],
+// 	[0,2,3,3],
+// ];
+// $b2 = [
+//    [0,4,5,6]
+// ];
 
-$c3 = [
-   7,8,9
-];
+// $c3 = [
+//    7,8,9
+// ];
 
-$unionAll3 = (new ArrayHelper( [] ))->unionAll($a1, $b2, $c3)->value;
-Log::d("unionAll", $unionAll3);
-
-
-# split
-$split_data = (new ArrayHelper( $unionAll3 ))->split( length: 2)->value;
-Log::d( $split_data );
+// $unionAll3 = (new ArrayHelper( [] ))->unionAll($a1, $b2, $c3)->value;
+// Log::d("unionAll", $unionAll3);
 
 
+// # split
+// $split_data = (new ArrayHelper( $unionAll3 ))->split( length: 2)->value;
+// Log::d( $split_data );
 
-$fill_data1 = (new ArrayHelper( [] ))->fill( start:0, length: 3, value:["price"=>0, "deliveryFee"=>0,"total"=>0])->value;
-Log::d($fill_data1);
 
-$fill_data2 = (new ArrayHelper( [] ))->fill( start:0, length: 3, value:"abc")->value;
-Log::d($fill_data2);
 
-$fill_data2 = (new ArrayHelper( [["c"=>"씨","d"=>1]] ))->fill( start:0, length: 5, value:["a"=>0, "b"=>"비"])->value;
-Log::d($fill_data2);
+// $fill_data1 = (new ArrayHelper( [] ))->fill( start:0, length: 3, value:["price"=>0, "deliveryFee"=>0,"total"=>0])->value;
+// Log::d($fill_data1);
+
+// $fill_data2 = (new ArrayHelper( [] ))->fill( start:0, length: 3, value:"abc")->value;
+// Log::d($fill_data2);
+
+// $fill_data2 = (new ArrayHelper( [["c"=>"씨","d"=>1]] ))->fill( start:0, length: 5, value:["a"=>0, "b"=>"비"])->value;
+// Log::d($fill_data2);
 
 ### 키를 다른 키로 대체하기
-$a3 = [
-    [0,1,2,3],
-	[0,2,3,3],
-];
-$changeKeysData = (new ArrayHelper( $a3 ))->changeKeys(['a','b','c','d'])->value;
-Log::d($changeKeysData);
+// $a3 = [
+//     [0,1,2,3],
+// 	[0,2,3,3],
+// ];
+// $changeKeysData = (new ArrayHelper( $a3 ))->changeKeys(['a','b','c','d'])->value;
+// Log::d($changeKeysData);
 
-$changeKeysData2 = (new ArrayHelper( $a3 ))->changeKeys('a1','b1','c1')->value;
-Log::d($changeKeysData2 );
+// $changeKeysData2 = (new ArrayHelper( $a3 ))->changeKeys('a1','b1','c1')->value;
+// Log::d($changeKeysData2 );
 
-$changeKeysData3 = (new ArrayHelper( $a3 ))->changeKeys('a1','b1','c1','d4','e4')->value;
-Log::d($changeKeysData3 );
+// $changeKeysData3 = (new ArrayHelper( $a3 ))->changeKeys('a1','b1','c1','d4','e4')->value;
+// Log::d($changeKeysData3 );
 ?>

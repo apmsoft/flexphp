@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    public const __version = '0.9.14';
+    public const __version = '1.0';
     public function __construct(
         private array $value
     ){}
@@ -80,6 +80,15 @@ class ArrayHelper
                                 case '<=': if($value[$fk] <= $fvalue) $find_cnt++; break;
                                 case '=': if($value[$fk] = $fvalue) $find_cnt++;break;
                                 case '!=': if($value[$fk] != $fvalue) $find_cnt++;break;
+                                case 'LIKE': 
+                                    if(strpos($value[$fk],$fvalue) !==false) $find_cnt++;
+                                    break;
+                                case 'LIKE-R':
+                                    if (preg_match('/^' . preg_quote($fvalue, '/') . '/', $value[$fk])) { $find_cnt++; }
+                                    break;
+                                case 'LIKE-L':
+                                    if (preg_match('/^.*' . preg_quote($fvalue, '/') . '$/', $value[$fk])) { $find_cnt++; }
+                                    break;
                             }
                         }else if($value[$fk] == $fv){
                             $find_cnt++;
