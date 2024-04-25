@@ -7,7 +7,7 @@ use \Exception;
 # _hash함수추가
 class Encrypt
 {
-	public const __version = '1.1';
+	public const __version = '1.1.1';
 	private $encrypt_str = '';
 
 	public function __construct(string $str){
@@ -53,6 +53,16 @@ class Encrypt
 	# 디코드 가능한 인코딩
 	public function _base64_urlencode() : string{
 		$result = urlencode(base64_encode($this->encrypt_str)) ?? throw new Exception($e->getMessage(),__LINE__);
+	return $result;
+	}
+
+	# AES 256
+	public function _aes256_encrypt(string $secret_key, string $secret_iv, string $encrypt_method='AES-256-CBC') : string 
+	{
+		$hash_key = hash('sha256', $secret_key);
+		$iv = substr(hash('sha256',$secret_iv), 0, 16);
+
+		$result = openssl_encrypt($this->encrypt_str, $encrypt_method, $hash_key, 0, $iv);
 	return $result;
 	}
 }
