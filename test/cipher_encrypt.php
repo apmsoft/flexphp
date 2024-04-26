@@ -59,4 +59,10 @@ Log::d( $_encrypt );
 
 $_encrypt = (new Encrypt($random_text))->_base64_urlencode();
 Log::d( $_encrypt );
+
+# aes 256
+$secret_key = "testdd";
+$secret_iv = "ivddd";
+$_encrypt = (new Encrypt("23D46G899K12M45TU3#%"))->_aes256_encrypt($secret_key,$secret_iv);
+Log::d( 'aes encrypt',$_encrypt );
 ?>

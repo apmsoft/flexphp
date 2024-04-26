@@ -40,6 +40,12 @@ try{
     # 복호화 ===========================
     $_decrypt = (new Decrypt($_encrypt))->_base64_urldecode();
     Log::d( '복호화',$_decrypt );
+
+    # aes 복호화
+    $secret_key = "testdd";
+    $secret_iv = "ivddd";
+    $_decrypt = (new Decrypt("90DrvosFq7IUXbX2+KR48pyb2INGg58EDHozHpu/RJ4="))->_aes256_decrypt($secret_key,$secret_iv);
+    Log::d( 'aes 복호화',$_decrypt );
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }
