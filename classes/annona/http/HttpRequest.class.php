@@ -2,12 +2,12 @@
 namespace Flex\Annona\Http;
 
 class HttpRequest {
-    public const __version = '1.0.2';
+    public const __version = '1.0.3';
     private $urls = [];
     private $mch;
 
     # 생성자
-    public function __construct($argv){
+    public function __construct(array $argv = []){
         if(!is_array($argv)){
             throw new \Exception(__CLASS__.' :: '.__LINE__.' is not array');
         }
@@ -15,11 +15,23 @@ class HttpRequest {
         $this->mch = curl_multi_init();
     }
 
+    public function set(string $url, string $params, array $headers = []) : HttpRequest
+    {
+        if(trim($url)){
+            $this->urls[] = [
+                "url"     => $url,
+                "params"  => $params,
+                "headers" => $headers
+            ];
+        }
+    return $this;
+    }
+
     /**
      * callback : 콜백함수
      */
     public function get(callable $callback)
-    {#
+    {
         $response = [];
         foreach($this->urls as $idx => $url)
         {
@@ -38,7 +50,7 @@ class HttpRequest {
             curl_setopt($ch[$idx], CURLOPT_RETURNTRANSFER, true );
             curl_multi_add_handle($this->mch,$ch[$idx]);
         }
-        
+
         do {
             curl_multi_exec($this->mch, $running);
             curl_multi_select($this->mch);
@@ -52,7 +64,7 @@ class HttpRequest {
                     " | URL : ".curl_getinfo($ch[$index], CURLINFO_EFFECTIVE_URL)
                 );
             }
-            
+
             $response[$index] = curl_multi_getcontent($ch[$index]);
             curl_multi_remove_handle($this->mch, $ch[$index]);
         }
@@ -80,7 +92,7 @@ class HttpRequest {
             }
             curl_multi_add_handle($this->mch,$ch[$idx]);
         }
-        
+
         do {
             curl_multi_exec($this->mch, $running);
             curl_multi_select($this->mch);

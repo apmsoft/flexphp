@@ -14,7 +14,7 @@ require $path. '/config/config.inc.php';
 Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
-
+Log::d('http ->', (new HttpUrlFilter('test2.com'))->httpPrefix( )->url);
 
 Log::d('http ->', (new HttpUrlFilter('test.com'))->httpPrefix( glue: 'http')->url);
 
