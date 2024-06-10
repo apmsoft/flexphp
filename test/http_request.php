@@ -27,7 +27,7 @@ $urls[] = [
     'params' => json_encode(["token"=>"dafdas"]),
     'headers'=> [
         "Content-Type: application/json"
-        "Content-Type: application/x-www-form-urlencoded"
+        // "Content-Type: application/x-www-form-urlencoded"
     ]
 ];
 try{

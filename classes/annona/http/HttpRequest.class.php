@@ -2,7 +2,7 @@
 namespace Flex\Annona\Http;
 
 class HttpRequest {
-    public const __version = '1.0.3';
+    public const __version = '1.0.4';
     private $urls = [];
     private $mch;
 
@@ -87,9 +87,7 @@ class HttpRequest {
             curl_setopt($ch[$idx], CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch[$idx], CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch[$idx], CURLOPT_RETURNTRANSFER, true );
-            if(isset($url['params'])){
-                curl_setopt($ch[$idx], CURLOPT_POSTFIELDS, $url['params'] );
-            }
+            curl_setopt($ch[$idx], CURLOPT_POSTFIELDS, $url['params'] );
             curl_multi_add_handle($this->mch,$ch[$idx]);
         }
 
