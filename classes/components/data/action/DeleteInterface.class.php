@@ -2,6 +2,6 @@
 namespace Flex\Components\Data\Action;
 
 interface DeleteInterface{
-    public function doDelete(?array $params=[]) : ?array;
+    public function doDelete(?array $params=[]) : ?string;
 }
 ?>
