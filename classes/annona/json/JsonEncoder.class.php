@@ -1,7 +1,7 @@
 <?php
-namespace Flex\Annona\Out;
+namespace Flex\Annona\Json;
 
-final class JsonTransformer
+final class JsonEncoder
 {
 	public const __version = '0.1.1';
 
