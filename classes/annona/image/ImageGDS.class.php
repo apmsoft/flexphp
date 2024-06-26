@@ -4,7 +4,7 @@ namespace Flex\Annona\Image;
 # purpose : 이미지 효과주기
 class ImageGDS
 {
-	public const __version = '1.2';
+	public const __version = '1.3';
 	public $filename;
 
 	public $im;
@@ -293,6 +293,49 @@ class ImageGDS
 		}
 	return 0.0;
 	}
+
+	# image data base64 이미지 소스 읽기
+	public function readImageFromBase64(string $base64)
+    {
+        $data = explode(',', $base64);
+        $data = base64_decode($data[1]);
+        $image = imagecreatefromstring($data);
+        if (!$image) {
+            throw new \Exception("Invalid base64 image data");
+        }
+        return $image;
+    }
+
+	# image data base64 이미지 쓰기
+	public function writeImageToBase64(): string
+    {
+        ob_start();
+        imagepng($this->im);
+        $image_data = ob_get_contents();
+        ob_end_clean();
+        return 'data:image/png;base64,' . base64_encode($image_data);
+    }
+
+	# image data base64 이미지 크기 변경하기
+	public function resizeBase64Image(string $base64, int $width, int $height): string
+    {
+        $this->im = self::readImageFromBase64($base64);
+        $imgsize = imagesx($this->im);
+        $imgheight = imagesy($this->im);
+
+        if ($imgsize > $imgheight) {
+            $height = ceil(($imgheight * $width) / $imgsize);
+        } else if ($imgsize < $imgheight || $imgsize == $imgheight) {
+            $width = ceil(($imgsize * $height) / $imgheight);
+        }
+
+        $resized = self::createTrueImage($width, $height);
+        if (self::copyResampled($resized, $this->im, 0, 0, 0, 0, $width, $height, $imgsize, $imgheight) === false)
+            throw new \Exception(__METHOD__, __LINE__);
+
+        $this->im = $resized;
+        return self::writeImageToBase64();
+    }
 
 	# 이미지 사이즈
 	public function getImageSize(string|null $filename=null){
