@@ -6,19 +6,21 @@ use Psr\Http\Message\ServerRequestInterface;
 # reactphp ServerRequestInterface 용 확장 클래스
 class Requested
 {
-    public const __version = '0.6.2';
+    public const __version = '0.7';
 	private array $params   = [];
 
 	public function __construct(
         private ServerRequestInterface $request
-	){}
+	){
+		$this->params = [];
+	}
 
 	public function post() : Requested
 	{
 		if ($this->request->getHeaderLine('Content-Type') == 'application/json') {
-            $this->params = json_decode($this->request->getBody()->getContents(),true);
+            $this->params = array_merge($this->params,json_decode($this->request->getBody()->getContents(),true) ?? []);
         }else {
-            $this->params = $this->request->getParsedBody();
+            $this->params = array_merge($this->params,$this->request->getParsedBody());
         }
     return $this;
 	}
@@ -58,8 +60,13 @@ class Requested
 		return $this->params;
     }
 
+	public function getUploadedFiles() : array{
+		return $this->request->getUploadedFiles();
+	}
+
 	public function __get($propertyName) : mixed
 	{
+		echo '>>>'.$propertyName.PHP_EOL;
 		if(isset($this->params[$propertyName])){
 			return $this->params[$propertyName];
 		}
