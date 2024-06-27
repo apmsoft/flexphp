@@ -3,6 +3,7 @@
 ## [1.2]
 ### - 2024-06-27
 - Requested util class update
+- UploadProcess util class update
 
 ### - 2024-06-26
 - ImageGDS.class image base64 소스 크기 읽기 쓰기 크기리사이즈 기능 추가
