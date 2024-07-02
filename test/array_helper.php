@@ -314,4 +314,8 @@ Log::d("find where %LIKE AND", $find_where_like_l);
 
 // $changeKeysData3 = (new ArrayHelper( $a3 ))->changeKeys('a1','b1','c1','d4','e4')->value;
 // Log::d($changeKeysData3 );
+
+### 원하는 키값만 뽑아서 1차원 배열로 받기
+$extractValues = (new ArrayHelper( $args ))->extractValues("title")->value;
+Log::d("extractValues", $extractValues);
 ?>
