@@ -34,11 +34,12 @@ Log::init(Log::MESSAGE_ECHO);
  * email     : 이메일 데이터인지 체크
  * url       : http:: url 데이터인지 체크
  * floatf    : 소수형 데이터 인지 체크
+ * enum      : 배열 데이터 중에 있는 값인지 체크
  ************************************************8*/
 
 # set
 $request = new \Flex\Annona\Request\Request();
-$request->addr       = '주소 달 서구 대박동 120-4 번지 / 대충빌딩 (2층)+++';
+$request->addr       = '주소 달 서구 대박동 120-4 번지 / 대충빌딩 (2층)';
 $request->userid     = 'sfdsafda';
 $request->passwd     = 'passwd#';
 $request->secure_passwd = 'dsl123safdsa_';
@@ -53,6 +54,7 @@ $request->end_date   = '2012-01-04';
 $request->authnumber = 'FlexPHP';
 $request->point      = '23.7';
 $request->key        = 'dsdf_23_7';
+$request->enum       = 'z';
 // $request->linkurl    = 'http://flexvue.fancyupsoft.com';
 
 
@@ -71,6 +73,7 @@ try{
     (new FormValidation('point', '[소수]값',$request->point))->null()->space()->floatf();
     (new FormValidation('key', '영어+숫자+_ 만허용',$request->key))->null()->space()->disliking(['_'])->alnum();
     (new FormValidation('linkurl', 'http 주소타입인지 체크',$request->linkurl))->space()->url();
+    (new FormValidation('enum', 'enum',$request->enum))->null()->enum(["a","b","c"]);
 }catch(\Exception $e){
     Log::e(json_decode($e->getMessage(),true));
     exit;
