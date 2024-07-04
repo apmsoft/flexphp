@@ -1,6 +1,12 @@
 # Changelog
 
 ## [1.2]
+
+### - 2024-07-04
+- WhereHelper class v1.8 업데이트
+ - end() 함수 선언하지 않아도 자동으로 닫기 기능 실행 
+ - 전체 그룹을 AND 또는 OR 로 묶음할 수 있는 기능 추가
+
 ### - 2024-06-27
 - Requested util class update
 - UploadProcess util class update

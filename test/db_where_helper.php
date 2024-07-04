@@ -65,4 +65,20 @@ Log::d('is_qutawrap: true | join_detection : true ->',$whereHelper->where);
 $whereHelper = new WhereHelper();
 $whereHelper->begin('AND')->case('userid', '=', 'a2_.com_23',join_detection: false)->end();
 Log::d('join_detection : false ->', $whereHelper->where);
+
+
+# auto end test
+$auto_end_where1 = (new \Flex\Annona\Db\WhereHelper('OR'))
+->begin('AND')->case('price','>','0')
+->begin('OR')->case('price_month','>=',7)
+->begin('OR')->case('title','LIKE',['이순신','대통령'])
+->where;
+Log::d( 'auto_end_where1',$auto_end_where1 );
+
+# auto 전체 루트 coord 
+$auto_end_where1 = (new \Flex\Annona\Db\WhereHelper('AND'))
+->begin('OR')->case('category','=','dp00')->case('category','=','dp01')
+->begin('AND')->case('title','LIKE',['이순신','대통령'])
+->where;
+Log::d( 'auto_end_where2',$auto_end_where1 );
 ?>

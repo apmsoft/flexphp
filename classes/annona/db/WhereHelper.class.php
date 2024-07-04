@@ -4,19 +4,21 @@ namespace Flex\Annona\Db;
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
 class WhereHelper
 {
-	public const __version = '1.7.2';
-	private $where = '';
-	private $where_group = [];
-	private $current_group = '';
-	private $current_coord = '';
-	private $where_groups_data = [];
+	public const __version = '1.8';
+	private string $where = '';
+	private array $where_group = [];
+	private string $current_group = '';
+	private string $current_coord = '';
+	private array $where_groups_data = [];
+	private string $coord = 'AND'; # 전체 그룹을 마지막으로 묶을 coord
 
 	# void
 	# @fields : name+category+area 복수필드
 	# @coord : [AND | OR]
-	public function __construct()
+	public function __construct(string $coord = 'AND')
 	{
 		$this->where = '';
+		$this->coord = $coord;
 		self::init();
 	}
 
@@ -103,7 +105,11 @@ class WhereHelper
 		if(property_exists(__CLASS__,$propertyName))
 		{
 			if($propertyName == 'where'){
-				$this->where = (count($this->where_groups_data)) ? "(" . implode ( ") AND (", $this->where_groups_data ) . ")" : '';
+				#아직 종료되지 않은 begin end가 있는지 체크
+				if($this->current_group){
+					$this->end();
+				}
+				$this->where = (count($this->where_groups_data)) ? "(" . implode ( ") {$this->coord} (", $this->where_groups_data ) . ")" : '';
 				self::init();
 			}
 
@@ -111,8 +117,8 @@ class WhereHelper
 		}
 	}
 
+	# 초기화
 	private function init() : void {
-		// reset
 		$this->current_group = '';
 		$this->current_coord = '';
 		$this->where_group   = [];
@@ -131,6 +137,11 @@ class WhereHelper
 	{
 		$groupname = strtr(microtime(),[' '=>'','0.'=>'w']);
 		$this->where_group[$groupname] = [];
+
+		# end 자동닫기
+		if($this->current_group){
+			$this->end();
+		}
 
 		# 현재그룹 시작
 		$this->current_group = $groupname;
@@ -152,11 +163,11 @@ class WhereHelper
 	}
 
 	public function __destruct(){
-		$this->where         = '';
-		$this->current_group = '';
-		$this->current_coord = '';
-		$this->where_group   = [];
-		$this->where_groups_data = [];
+		$this->where             = '';
+		$this->current_group     = '';
+		$this->current_coord     = '';
+		$this->where_group       = [];
+		$this->where_groups_data =  [];
 	}
 }
 ?>
