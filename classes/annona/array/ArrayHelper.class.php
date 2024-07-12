@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    public const __version = '1.1';
+    public const __version = '1.2';
     public function __construct(
         private array $value
     ){}
@@ -151,12 +151,25 @@ class ArrayHelper
     }
 
     # 빈데이터가 있는 배열 찾기
-    public function isnull() : ArrayHelper
+    public function isnull(...$params) : ArrayHelper
     {
         $result = [];
-        foreach($this->value as $idx => $arg){
-            if(array_search(null, $arg)){
-                $result[$idx] = $arg;
+
+        # 지정된 키들이 있는지 체크
+        if(count($params) > 0){
+            foreach($this->value as $idx => $arg){
+                foreach ($params as $key) {
+                    if (isset($arg[$key]) && ($arg[$key] === '' || $arg[$key] === null)) {
+                        $result[$idx] = $arg;
+                        break;
+                    }
+                }
+            }
+        }else{
+            foreach($this->value as $idx => $arg){
+                if (in_array('', $arg, true) || in_array(null, $arg, true)) {
+                    $result[$idx] = $arg;
+                }
             }
         }
         $this->value = $result;
@@ -164,12 +177,24 @@ class ArrayHelper
     }
 
     # 빈데이터가 있는 배열 제거
-    public function dropnull() : ArrayHelper
+    public function dropnull(...$params) : ArrayHelper
     {
         $result = [];
-        foreach($this->value as $idx => $arg){
-            if(!in_array(null, $arg)){
-                $result[] = $arg;
+        # 지정된 키들이 있는지 체크
+        if(count($params) > 0){
+            foreach($this->value as $idx => $arg){
+                foreach ($params as $key) {
+                    if (isset($arg[$key]) && ($arg[$key] !== '' || $arg[$key] !== null)) {
+                        $result[] = $arg;
+                        break;
+                    }
+                }
+            }
+        }else{
+            foreach($this->value as $idx => $arg){
+                if (!in_array('', $arg, true) || !in_array(null, $arg, true)) {
+                    $result[] = $arg;
+                }
             }
         }
         $this->value = $result;
