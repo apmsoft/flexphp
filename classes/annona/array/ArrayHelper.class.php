@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    public const __version = '1.2';
+    public const __version = '1.3';
     public function __construct(
         private array $value
     ){}
@@ -55,6 +55,16 @@ class ArrayHelper
         }
         $this->value = $result;
     return $this;
+    }
+
+    # select 여러키 중에서 원하는 키만 뽑아서 배열에 담기
+    public function select(...$keys) : ArrayHelper 
+    {
+        $this->value = array_map(function($item) use ($keys) {
+            return array_intersect_key($item, array_flip($keys));
+        }, $this->value);
+
+        return $this;
     }
 
     # 멀티 키 => 밸류 값 찾기 OR

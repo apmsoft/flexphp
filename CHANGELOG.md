@@ -2,6 +2,10 @@
 
 ## [1.2]
 
+### - 2024-07-18
+- ArrayHelper class v1.3 업데이트
+- ArrayHelper select 메소드 추가 : 원하는 키로만 배열을 구성하는 기능
+
 ### - 2024-07-12
 - ArrayHelper class v1.2 업데이트
  -  빈데이터가 있는 배열 찾기 

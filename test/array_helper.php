@@ -110,7 +110,7 @@ Log::d("find where %LIKE% AND", $find_where_like);
 $find_where_like_r = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE-R","이순"]])->value;
 Log::d("find where LIKE% AND", $find_where_like_r);
 
-$find_where_like_l = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE-L","신"]])->value;
+$find_where_like_l = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE-L","신"]])->select("muid","title")->value;
 Log::d("find where %LIKE AND", $find_where_like_l);
 
 // # 멀티 키=>밸류에 해당하는 값 배열 모두 찾기 OR
