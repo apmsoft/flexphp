@@ -2,6 +2,10 @@
 
 ## [1.2]
 
+### - 2024-07-23
+- Model class v2.0 업데이트
+- Model class 기존 복잡한 방식 버리고 사용자 php 코딩 스타일 일치 시킴
+
 ### - 2024-07-18
 - ArrayHelper class v1.3 업데이트
 - ArrayHelper select 메소드 추가 : 원하는 키로만 배열을 구성하는 기능

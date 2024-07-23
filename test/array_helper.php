@@ -104,14 +104,16 @@ $args = json_decode($data,true);
 // $find_where_all = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200])->value;
 // Log::d("find where AND", $find_where_all);
 
-$find_where_like = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE","만"]])->value;
-Log::d("find where %LIKE% AND", $find_where_like);
+// $find_where_like = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE","만"]])->value;
+// Log::d("find where %LIKE% AND", $find_where_like);
 
-$find_where_like_r = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE-R","이순"]])->value;
-Log::d("find where LIKE% AND", $find_where_like_r);
+// $find_where_like_r = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE-R","이순"]])->value;
+// Log::d("find where LIKE% AND", $find_where_like_r);
 
-$find_where_like_l = (new ArrayHelper( $args ))->findWhere(["title"=>["LIKE-L","신"]])->select("muid","title")->value;
+$find_where_like_l = (new ArrayHelper( $args ))->select("muid","title")->value;
 Log::d("find where %LIKE AND", $find_where_like_l);
+
+// Log::d('sum',(new ArrayHelper( $args ))->avg("lowPrice"));
 
 // # 멀티 키=>밸류에 해당하는 값 배열 모두 찾기 OR
 // $find_where_all = (new ArrayHelper( $args ))->findWhere(["productName"=>'G',"lowPrice"=>27200], 'OR')->value;
@@ -316,6 +318,6 @@ Log::d("find where %LIKE AND", $find_where_like_l);
 // Log::d($changeKeysData3 );
 
 ### 원하는 키값만 뽑아서 1차원 배열로 받기
-$extractValues = (new ArrayHelper( $args ))->extractValues("title")->value;
+$extractValues = (new ArrayHelper( $args ))->extractValues("muid")->value;
 Log::d("extractValues", $extractValues);
 ?>
