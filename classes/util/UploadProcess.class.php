@@ -39,7 +39,7 @@ class UploadProcess extends DirInfo
     {
         # 값이 정상적인지 체크
         if(!isset($_files[$process_id])){
-            self::exceptionsErrorHandler(4);
+            $this->exceptionsErrorHandler(4);
         }
 
         $this->process = $_files[$process_id];
@@ -52,12 +52,12 @@ class UploadProcess extends DirInfo
 
         # 기초에러
         if($this->process->getError() > 0){
-            self::exceptionsErrorHandler($this->process->getError());
+            $this->exceptionsErrorHandler($this->process->getError());
         }
 
         # 업로드 된 파일인지 체크
-        // if(!self::is_upload_files()){
-        //     self::exceptionsErrorHandler(9);
+        // if(!$this->is_upload_files()){
+        //     $this->exceptionsErrorHandler(9);
         // }
 
     return $this;
@@ -66,9 +66,9 @@ class UploadProcess extends DirInfo
     # 3 업로드 허용된 파일 인치 체크
     public function filterExtension(array $allowe_extension=['jpg','jpeg','png','gif']) : Upload
 	{
-        self::getExtName();
+        $this->getExtName();
         if(!in_array($this->file_extension,$allowe_extension)){
-			self::exceptionsErrorHandler(5);
+			$this->exceptionsErrorHandler(5);
         }
     return $this;
     }
@@ -78,7 +78,7 @@ class UploadProcess extends DirInfo
     {
         $maxsize = (int)(1024 * 1024 * $size);
         if($this->process->getSize() >= $maxsize){
-            self::exceptionsErrorHandler(2);
+            $this->exceptionsErrorHandler(2);
         }
     return $this;
     }
@@ -109,7 +109,7 @@ class UploadProcess extends DirInfo
             file_put_contents($fullname, $bodyContent);
         } catch (\Exception $e) {
             Log::e(__LINE__, $e->getMessage());
-            self::exceptionsErrorHandler(7);
+            $this->exceptionsErrorHandler(7);
         }
 
     return $this;
@@ -152,7 +152,7 @@ class UploadProcess extends DirInfo
         return [
             'filesize'  => $this->process->getSize(),
             'mimeType'  => $this->mimeType,
-            'ofilename' => self::cleansEtcWords($this->process->getClientFilename()),
+            'ofilename' => $this->cleansEtcWords($this->process->getClientFilename()),
             'sfilename' => $this->savefilename
         ];
     }

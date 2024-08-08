@@ -15,37 +15,33 @@ trait EntryArrayTrait
 
     public static function array(): array
     {
-        if(count(self::names()) == count(self::values())){
+        if (count(self::names()) == count(self::values())) {
             return array_combine(self::names(), self::values());
-        }else{
+        } else {
             return [];
         }
     }
 
-    /**
-     * name : 키
-     * case : 대문자로변환 upper, 소문자변환 lower, 변환없음 upper,lower 외 모든 문자
-     */
-    public static function byName(string $name, string $case='UPPER') : mixed
+    public static function byName(string $name, string $case = 'UPPER'): mixed
     {
-        $NAME = ('UPPER' == strtoupper($case))  ? strtoupper($name) :
+        $NAME = ('UPPER' == strtoupper($case)) ? strtoupper($name) :
                 (('LOWER' == strtoupper($case)) ? strtolower($name) : $name);
 
-        if (!defined("self::{$NAME}")) {
+        if (!defined(self::class . "::{$NAME}")) {
             return null; // or throw an exception
         }
 
-        $enum = constant("self::{$NAME}");
+        $enum = constant(self::class . "::{$NAME}");
         $result = (object)[
             'name'  => $enum->name,
             'value' => $enum->value
         ];
-    return $result;
+        return $result;
     }
 
-    public static function __callStatic(string $name, array $args=[]) : string
+    public static function __callStatic(string $name, array $args = []): string
     {
-        return (self::byName($name,(isset($args[0]) ? $args[0] : 'UPPER')))->value;
+        return (self::byName($name, $args[0] ?? 'UPPER'))->value;
     }
 }
 ?>
