@@ -19,7 +19,7 @@ class WhereHelper
 	{
 		$this->where = '';
 		$this->coord = $coord;
-		self::init();
+		$this->init();
 	}
 
 	# void
@@ -110,7 +110,7 @@ class WhereHelper
 					$this->end();
 				}
 				$this->where = (count($this->where_groups_data)) ? "(" . implode ( ") {$this->coord} (", $this->where_groups_data ) . ")" : '';
-				self::init();
+				$this->init();
 			}
 
 			return $this->{$propertyName};
@@ -128,7 +128,7 @@ class WhereHelper
 	public function fetch() : array
 	{
 		$result = $this->where_group;
-		self::init();
+		$this->init();
 	return $result;
 	}
 

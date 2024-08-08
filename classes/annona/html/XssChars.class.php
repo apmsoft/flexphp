@@ -111,7 +111,7 @@ class XssChars
 			case 'TEXT':
 				$this->description = strtr($this->description, ["&nbsp;"=>' ']);
 				$this->description = strtr($this->description,["\r\n"=>"\n"]);
-				$this->description = self::setAutoLink($this->description);
+				$this->description = $this->setAutoLink($this->description);
 				$this->allow_tags  = ['<a>'];
 				$this->description = $this->cleanTags();
 				break;
@@ -119,18 +119,18 @@ class XssChars
 				$this->description = strtr($this->description,["\r\n"=>"\n"]);
 				$this->description = strtr($this->description,["\n"=>"<br>"]);
 				$this->description = strtr($this->description,["<br/>"=>"<br>"]);
-				$this->description = self::setAutoLink();
-				$this->description = self::cleanXssTags();
+				$this->description = $this->setAutoLink();
+				$this->description = $this->cleanXssTags();
 				break;
 			case 'HTML':
 				$this->description = strtr($this->description,["\r\n"=>"\n"]);
 				$this->description = strtr($this->description,["\n"=>"<br>"]);
-				$this->description = self::setAutoLink($this->description);
+				$this->description = $this->setAutoLink($this->description);
 				$this->description = htmlspecialchars($this->description);
 				break;
 			case 'XHTML' :
-				$this->description = self::getXHtmlHighlight($this->description);
-				$this->description = self::setAutoLink();
+				$this->description = $this->getXHtmlHighlight($this->description);
+				$this->description = $this->setAutoLink();
 				break;
 		}
 	return $this->description;

@@ -75,11 +75,11 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 
 		# encryption_mode 확인
 		$encryption_mode_qry = sprintf("SELECT @@session.block_encryption_mode as em");
-		$encryption_row = self::get_record_assoc($encryption_mode_qry);
+		$encryption_row = $this->get_record_assoc($encryption_mode_qry);
 		if(isset($encryption_row['em'])){
 			if($encryption_row['em'] != $encryption_mode){
 				$set_encrypt_qry = sprintf("SET @@session.block_encryption_mode = '%s'", self::BLOCK_ENCRYPTION_MODE);
-				self::query($set_encrypt_qry);
+				$this->query($set_encrypt_qry);
 			}
 		}
 	}
@@ -186,7 +186,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 			if($validation->isNumber()){
 				$argv[] = $name;
 			}else{
-				$argv[] = self::aes_decrypt($name,false);
+				$argv[] = $this->aes_decrypt($name,false);
 			}
 		}
 		$value = implode(',', $argv);

@@ -36,21 +36,21 @@ class MailSend
 
     public function setTextHtml($content){
         $this->headers.= 'Content-Type: text/html; charset='. strtoupper($this->charset).'; format=flowed' ."\r\n";
-        $this->message.= self::encodeMessage($content) . "\r\n";
+        $this->message.= $this->encodeMessage($content) . "\r\n";
     }
 
     public function setTextPlain($content){
         $this->headers.= 'Content-Type: text/plain; charset='. strtoupper($this->charset) ."\r\n";
-        $this->message.= self::encodeMessage($content) . "\r\n";
+        $this->message.= $this->encodeMessage($content) . "\r\n";
     }
 
     private function encodeMessage($message){
         switch($this->encoding){
             case 'base64':
-                $message = chunk_split(base64_encode(self::setCharet($message)));
+                $message = chunk_split(base64_encode($this->setCharet($message)));
                 $this->headers.= 'Content-Transfer-Encoding: '.$this->encoding."\n";
             break;
-            default : $message = self::setCharet($message); break;
+            default : $message = $this->setCharet($message); break;
         }
     return $message;
     }
@@ -80,16 +80,16 @@ class MailSend
     public function send($subject)
     {
         # to
-        $to = '=?'.strtoupper($this->charset).'?B?'.base64_encode(self::setCharet($this->to['name'])).'?= <'.$this->to['email'].'>'. "\n";
-        //$to = base64_encode(self::setCharet($this->to['name'])).'<'.$this->to['email'].'>';
+        $to = '=?'.strtoupper($this->charset).'?B?'.base64_encode($this->setCharet($this->to['name'])).'?= <'.$this->to['email'].'>'. "\n";
+        //$to = base64_encode($this->setCharet($this->to['name'])).'<'.$this->to['email'].'>';
         //$this->headers .='To: '.$to. "\n";
 
         # from
-        $this->headers .= 'From: =?'.strtoupper($this->charset).'?B?'.base64_encode(self::setCharet($this->from['name'])).'?= <'.$this->from['email'].'>'. "\n";
-        //$this->headers .= 'Reply-To: =?'.strtoupper($this->charset).'?B?'.base64_encode(self::setCharet($this->from['name'])).'?= <'.$this->from['email'].'>'."\n";
+        $this->headers .= 'From: =?'.strtoupper($this->charset).'?B?'.base64_encode($this->setCharet($this->from['name'])).'?= <'.$this->from['email'].'>'. "\n";
+        //$this->headers .= 'Reply-To: =?'.strtoupper($this->charset).'?B?'.base64_encode($this->setCharet($this->from['name'])).'?= <'.$this->from['email'].'>'."\n";
 
         # subject
-        $subject= '=?'.strtoupper($this->charset).'?B?'.base64_encode(self::setCharet($subject)).'?=';
+        $subject= '=?'.strtoupper($this->charset).'?B?'.base64_encode($this->setCharet($subject)).'?=';
 
         #send
         if(mail($to,$subject,$this->message,$this->headers)){ return true; }else{

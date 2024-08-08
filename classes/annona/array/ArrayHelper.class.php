@@ -17,8 +17,8 @@ class ArrayHelper
         $sorting = strtoupper($sorting);
         usort($this->value, function($a, $b) use ($key,$sorting) {
             return match($sorting){
-                'DESC' => self::desc($a[$key],$b[$key]),
-                'ASC'  => self::asc($a[$key],$b[$key])
+                'DESC' => $this->desc($a[$key],$b[$key]),
+                'ASC'  => $this->asc($a[$key],$b[$key])
             };
         });
     return $this;
@@ -27,7 +27,7 @@ class ArrayHelper
     # 멀티배열 중 원하는 값의 첫번째 키를 찾아낸다
     public function find(string $key, mixed $val) : ArrayHelper
     {
-        $index = self::findIndex($key, $val);
+        $index = $this->findIndex($key, $val);
         if($index > -1){
             $this->value = $this->value[$index];
         }else $this->value = [];
@@ -253,7 +253,7 @@ class ArrayHelper
     # 특정 배열의 int 값 sum 하기
     public function sum(string $key = '') : int|float
     {
-        $result = ($key) ? self::find_numeric($key) : $this->value;
+        $result = ($key) ? $this->find_numeric($key) : $this->value;
         $sum = ($key) ? array_sum($result) : count($result);
     return $sum;
     }
@@ -261,7 +261,7 @@ class ArrayHelper
     # 특정 배열의 int 값 min 값
     public function min(string $key = '') : int|float
     {
-        $result = ($key) ? self::find_numeric($key) : array_keys($this->value);
+        $result = ($key) ? $this->find_numeric($key) : array_keys($this->value);
         $min = 0;
         if(count($result)){
             $min = min($result);
@@ -272,7 +272,7 @@ class ArrayHelper
     # 특정 배열의 int 값 min 값
     public function max(string $key = '') : int|float
     {
-        $result = ($key) ? self::find_numeric($key) : array_keys($this->value);
+        $result = ($key) ? $this->find_numeric($key) : array_keys($this->value);
         $max = 0;
         if(count($result)){
             $max = max($result);
@@ -283,7 +283,7 @@ class ArrayHelper
     # 특정 배열의 int 값의 평균 값
     public function avg(string $key) : int|float
     {
-        $result = self::find_numeric($key);
+        $result = $this->find_numeric($key);
         $avg = 0;
         $cnt = count($result);
         if($cnt>0){

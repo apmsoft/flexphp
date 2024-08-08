@@ -20,7 +20,7 @@ final class ImageViewer extends ImageGDS
 
 	final public function __construct(string $filenamez){
 		$this->filename = $filenamez;
-		self::getExtName();
+		$this->getExtName();
 	}
 
 	# 파일 확장자 추출
@@ -94,7 +94,7 @@ final class ImageViewer extends ImageGDS
 			'filename'  => $this->basename,
 			'mimeType'  => $this->mimeType,
 			'extension' => $this->file_extension,
-			'contents'  => self::getContents()
+			'contents'  => $this->getContents()
 		];
 
 	return $result;

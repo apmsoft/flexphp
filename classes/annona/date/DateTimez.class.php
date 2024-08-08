@@ -27,10 +27,10 @@ class DateTimez extends DateTime
 		if(is_array($this->dateTimeZone->getLocation())){
 			$this->location = $this->dateTimeZone->getLocation();
 		}
-		self::filterAbbreviations(DateTimeZone::listAbbreviations());
+		$this->filterAbbreviations(DateTimeZone::listAbbreviations());
 
 		# datetime
-		parent::__construct(self::chkTimestamp($times), $this->dateTimeZone);
+		parent::__construct($this->chkTimestamp($times), $this->dateTimeZone);
 	}
 
 	private function filterAbbreviations(array $args) : void 

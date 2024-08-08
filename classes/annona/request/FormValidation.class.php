@@ -23,7 +23,7 @@ class FormValidation extends Validation
     {
         $this->required = true;
         if(parent::isNull()) {
-            self::error_report($this->fieldName, 'e_null', sprintf("%s %s", $this->title, R::sysmsg('e_null')));
+            $this->error_report($this->fieldName, 'e_null', sprintf("%s %s", $this->title, R::sysmsg('e_null')));
         }
     return $this;
     }
@@ -33,7 +33,7 @@ class FormValidation extends Validation
     {
         if($this->str && !parent::isStringLength([$min, $max])){
             $err_msg =sprintf( R::sysmsg('e_string_length'), $min, $max );
-            self::error_report($this->fieldName, 'e_string_length', sprintf("%s %s", $this->title, $err_msg));
+            $this->error_report($this->fieldName, 'e_string_length', sprintf("%s %s", $this->title, $err_msg));
         }
     return $this;
     }
@@ -52,7 +52,7 @@ class FormValidation extends Validation
             if(!parent::isEtcString()){
                 $etc_msg = (count($arguments)) ? '['.implode(',',$arguments).']' : '';
                 $err_msg = sprintf(R::sysmsg('e_etc_string'),$etc_msg);
-                self::error_report($this->fieldName, 'e_etc_string', sprintf("%s %s", $this->title, $err_msg));
+                $this->error_report($this->fieldName, 'e_etc_string', sprintf("%s %s", $this->title, $err_msg));
             }
         }
     return $this;
@@ -62,7 +62,7 @@ class FormValidation extends Validation
     public function liking (array $arguments=[]) : FormValidation
     {
         if($this->str && parent::isEtcString()){
-            self::error_report($this->fieldName, 'e_chk_etc_string', sprintf("%s %s", $this->title, R::sysmsg('e_chk_etc_string')));
+            $this->error_report($this->fieldName, 'e_chk_etc_string', sprintf("%s %s", $this->title, R::sysmsg('e_chk_etc_string')));
         }
     return $this;
     }
@@ -71,7 +71,7 @@ class FormValidation extends Validation
     public function space () : FormValidation
     {
         if($this->str && !parent::isSpace()){
-            self::error_report($this->fieldName, 'e_spaces', sprintf("%s %s", $this->title,R::sysmsg('e_spaces')));
+            $this->error_report($this->fieldName, 'e_spaces', sprintf("%s %s", $this->title,R::sysmsg('e_spaces')));
         }
     return $this;
     }
@@ -81,7 +81,7 @@ class FormValidation extends Validation
     {
         if($this->str){
             if(array_search($this->str, $arguments) === false)
-            self::error_report($this->fieldName, 'e_enum', sprintf("%s %s", $this->title,R::sysmsg('e_enum')));
+            $this->error_report($this->fieldName, 'e_enum', sprintf("%s %s", $this->title,R::sysmsg('e_enum')));
         }
     return $this;
     }
@@ -90,7 +90,7 @@ class FormValidation extends Validation
     public function alnum () : FormValidation
     {
         if($this->str && !ctype_alnum($this->str)){
-            self::error_report($this->fieldName, 'e_ctype_alnum', sprintf("%s %s", $this->title,R::sysmsg('e_ctype_alnum')));
+            $this->error_report($this->fieldName, 'e_ctype_alnum', sprintf("%s %s", $this->title,R::sysmsg('e_ctype_alnum')));
         }
     return $this;
     }
@@ -100,7 +100,7 @@ class FormValidation extends Validation
     {
         if($this->str && !parent::isSameRepeatString($max)){
             $err_msg = sprintf(R::sysmsg('e_same_repeat_string'), $max);
-            self::error_report($this->fieldName, 'e_same_repeat_string', sprintf("%s %s", $this->title,$err_msg));
+            $this->error_report($this->fieldName, 'e_same_repeat_string', sprintf("%s %s", $this->title,$err_msg));
         }
     }
 
@@ -108,7 +108,7 @@ class FormValidation extends Validation
     public function number() : FormValidation
     {
         if($this->str && !parent::isNumber()){
-            self::error_report($this->fieldName, 'e_number', sprintf("%s %s", $this->title,R::sysmsg('e_number')));
+            $this->error_report($this->fieldName, 'e_number', sprintf("%s %s", $this->title,R::sysmsg('e_number')));
         }
     return $this;
     }
@@ -117,7 +117,7 @@ class FormValidation extends Validation
     public function alphabet () : FormValidation
     {
         if($this->str && !parent::isAlphabet()){
-            self::error_report($this->fieldName, 'e_alphabet', sprintf("%s %s", $this->title,R::sysmsg('e_alphabet')));
+            $this->error_report($this->fieldName, 'e_alphabet', sprintf("%s %s", $this->title,R::sysmsg('e_alphabet')));
         }
     return $this;
     }
@@ -126,7 +126,7 @@ class FormValidation extends Validation
     public function upal () : FormValidation
     {
         if($this->str && !parent::isUpAlphabet()){
-            self::error_report($this->fieldName, 'e_up_alphabet', sprintf("%s %s", $this->title,R::sysmsg('e_up_alphabet')));
+            $this->error_report($this->fieldName, 'e_up_alphabet', sprintf("%s %s", $this->title,R::sysmsg('e_up_alphabet')));
         }
     return $this;
     }
@@ -135,7 +135,7 @@ class FormValidation extends Validation
     public function lowal () : FormValidation
     {
         if($this->str && !parent::isLowAlphabet()){
-            self::error_report($this->fieldName, 'e_low_alphabet', sprintf("%s %s", $this->title,R::sysmsg('e_low_alphabet')));
+            $this->error_report($this->fieldName, 'e_low_alphabet', sprintf("%s %s", $this->title,R::sysmsg('e_low_alphabet')));
         }
     return $this;
     }
@@ -144,7 +144,7 @@ class FormValidation extends Validation
     public function firstal () : FormValidation
     {
         if($this->str && !parent::isFirstAlphabet()){
-            self::error_report($this->fieldName, 'e_first_alphabet', sprintf("%s %s", $this->title,R::sysmsg('e_first_alphabet')));
+            $this->error_report($this->fieldName, 'e_first_alphabet', sprintf("%s %s", $this->title,R::sysmsg('e_first_alphabet')));
         }
     return $this;
     }
@@ -153,7 +153,7 @@ class FormValidation extends Validation
     public function jsonf() :FormValidation
     {
         if($this->str && !parent::isJSON()){
-            self::error_report($this->fieldName, 'e_json', sprintf("%s %s", $this->title,R::sysmsg('e_json')));
+            $this->error_report($this->fieldName, 'e_json', sprintf("%s %s", $this->title,R::sysmsg('e_json')));
         }
     return $this;
     }
@@ -162,7 +162,7 @@ class FormValidation extends Validation
     public function datef() :FormValidation
     {
         if($this->str && !parent::chkDate()){
-            self::error_report($this->fieldName,'e_date', sprintf("%s %s", $this->title,R::sysmsg('e_date')));
+            $this->error_report($this->fieldName,'e_date', sprintf("%s %s", $this->title,R::sysmsg('e_date')));
         }
     return $this;
     }
@@ -171,7 +171,7 @@ class FormValidation extends Validation
     public function timef() :FormValidation
     {
         if($this->str && !parent::chkTime()){
-            self::error_report($this->fieldName,'e_time', sprintf("%s %s", $this->title,R::sysmsg('e_time')));
+            $this->error_report($this->fieldName,'e_time', sprintf("%s %s", $this->title,R::sysmsg('e_time')));
         }
     return $this;
     }
@@ -182,7 +182,7 @@ class FormValidation extends Validation
         if($this->str){
             $this->str = $this->str.','.$end_date;
             if(!parent::chkDatePeriod_()){
-                self::error_report($this->fieldName, 'e_date_period',sprintf("%s %s", $this->title,R::sysmsg('e_date_period')));
+                $this->error_report($this->fieldName, 'e_date_period',sprintf("%s %s", $this->title,R::sysmsg('e_date_period')));
             }
         }
     return $this;
@@ -194,7 +194,7 @@ class FormValidation extends Validation
         if($this->str){
             $this->str = $this->str.','.$value;
             if(!parent::equals()){
-                self::error_report($this->fieldName, 'e_equals', sprintf("%s %s", $this->title,R::sysmsg('e_equals')));
+                $this->error_report($this->fieldName, 'e_equals', sprintf("%s %s", $this->title,R::sysmsg('e_equals')));
             }
         }
     return $this;
@@ -204,7 +204,7 @@ class FormValidation extends Validation
     public function email () : FormValidation
     {
         if($this->str && !filter_var($this->str, FILTER_VALIDATE_EMAIL)){
-            self::error_report($this->fieldName, 'e_formality', sprintf("%s %s", $this->title,R::sysmsg('e_formality')));
+            $this->error_report($this->fieldName, 'e_formality', sprintf("%s %s", $this->title,R::sysmsg('e_formality')));
         }
     return $this;
     }
@@ -213,7 +213,7 @@ class FormValidation extends Validation
     public function url () : FormValidation
     {
         if($this->str && !filter_var($this->str, FILTER_VALIDATE_URL)){
-            self::error_report($this->fieldName, 'e_link_url', sprintf("%s %s", $this->title,R::sysmsg('e_link_url')));
+            $this->error_report($this->fieldName, 'e_link_url', sprintf("%s %s", $this->title,R::sysmsg('e_link_url')));
         }
     return $this;
     }
@@ -222,7 +222,7 @@ class FormValidation extends Validation
     public function floatf () : FormValidation
     {
         if($this->str && !is_float(floatval($this->str))){
-            self::error_report($this->fieldName, 'e_float', sprintf("%s %s", $this->title,R::sysmsg('e_float')));
+            $this->error_report($this->fieldName, 'e_float', sprintf("%s %s", $this->title,R::sysmsg('e_float')));
         }
     return $this;
     }

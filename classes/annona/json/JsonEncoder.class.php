@@ -8,7 +8,7 @@ final class JsonEncoder
 	# 배열을 json string utf8
 	final public static function toJson(array $data, array $except_numberic_keys = [], int $options=JSON_UNESCAPED_UNICODE) : string
 	{
-		$data = self::applyNumericExceptions($data, $except_numberic_keys);
+		$data = JsonEncoder::applyNumericExceptions($data, $except_numberic_keys);
         return json_encode($data, $options);
 
 	}
@@ -18,7 +18,7 @@ final class JsonEncoder
     {
         foreach ($data as $key => &$value) {
             if (is_array($value)) {
-                $value = self::applyNumericExceptions($value, $exceptNumericKeys);
+                $value = JsonEncoder::applyNumericExceptions($value, $exceptNumericKeys);
             } elseif (is_numeric($value) && in_array($key, $exceptNumericKeys)) {
                 $value = (string) $value;
             } elseif (is_numeric($value)) {

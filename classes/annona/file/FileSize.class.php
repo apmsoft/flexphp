@@ -53,8 +53,8 @@ class FileSize
         }
 
 		$result = match($method){
-			'bytes'  => self::bytes(),
-			'size' => self::size()
+			'bytes'  => $this->bytes(),
+			'size' => $this->size()
 		};
 
 	return $result;

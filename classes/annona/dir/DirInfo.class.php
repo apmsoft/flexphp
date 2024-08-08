@@ -23,7 +23,7 @@ class DirInfo
 			if(is_array($dir_args)){
 				foreach($dir_args as $folder){
 					$current_dir = $current_dir.'/'.$folder;
-					if(!self::isDir($current_dir)){
+					if(!$this->isDir($current_dir)){
 						if(!mkdir($current_dir,self::permission)) throw new ErrorException('e_filenotfound');
 						if(!chmod($current_dir,self::permission)) throw new ErrorException('e_filenotfound');
 					}
@@ -38,7 +38,7 @@ class DirInfo
 		$result = true;
 		$directory = $this->directory.'/'.$dir;
 		# compile_dirname 폴더 이전 경로 생성
-		if(!self::isDir($directory)){
+		if(!$this->isDir($directory)){
 			if(!mkdir($directory,self::permission)) $result= false;
 			if(!chmod($directory,self::permission)) $result= false;
 			#if(!@chown($chkpath,getmyuid())) $result= false; break;

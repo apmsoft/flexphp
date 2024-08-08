@@ -28,10 +28,10 @@ final class R
             $language = (defined('_LANG_')) ? _LANG_ : 'ko';
         }
 
-        self::$language = $language;
+        R::$language = $language;
 
         # resource 객체화 시키기
-        self::$r = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
+        R::$r = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
     }
 
     #@ void
@@ -43,7 +43,7 @@ final class R
             foreach($resources as $resource_path => $resouces_args){
                 foreach($resouces_args as $resource_name){
                     if(property_exists(__CLASS__,$resource_name)){
-                        self::parser(self::findLanguageFile(_ROOT_PATH_.'/'.$resource_path.'/'.$resource_name.'.json'), $resource_name);
+                        R::parser(R::findLanguageFile(_ROOT_PATH_.'/'.$resource_path.'/'.$resource_name.'.json'), $resource_name);
                     }
                 }
             }
@@ -53,8 +53,8 @@ final class R
     # 특정 리소스 키에 해당하는 값 리턴
     private static function get(string $query, string $fieldname){
         $r_data = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','arrays','tables' => self::${$query}[self::$language][$fieldname],
-            default => self::$r->{$query}[self::$language][$fieldname]
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => R::${$query}[R::$language][$fieldname],
+            default => R::$r->{$query}[R::$language][$fieldname]
         };
 
         return $r_data;
@@ -63,15 +63,15 @@ final class R
     # 특정 리소스에 전체 값 바꾸기
     public static function set(string $query, array $data) : void{
         $r_data = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','arrays','tables' => self::${$query}[self::$language] = $data,
-            default => self::$r->{$query}[self::$language] = $data
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => R::${$query}[R::$language] = $data,
+            default => R::$r->{$query}[R::$language] = $data
         };
     }
 
     private static function fetch(string $query): array{
         $r_data = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','arrays','tables' => self::${$query}[self::$language],
-            default => self::$r->{$query}[self::$language]
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => R::${$query}[R::$language],
+            default => R::$r->{$query}[R::$language]
         };
 
         return $r_data;
@@ -88,7 +88,7 @@ final class R
             }
 
             foreach($columns as $columname){
-                $argv[$columname] = self::get($query,$columname);
+                $argv[$columname] = R::get($query,$columname);
             }
         }
         return $argv;
@@ -100,15 +100,15 @@ final class R
         if(strtolower($query) == 'dic' && count($args)){
             return (object)$args[0];
         }else if(($query == 'fetch') && (isset($args[0]) && is_string($args[0])) ){
-            return self::fetch($args[0]);
+            return R::fetch($args[0]);
         }else if($query == 'select' && count($args)){
-            return self::selectR($args[0]);
-        }else if(!self::is($query)){ #이미 로드된데이터인지체크
-            self::id($query);
+            return R::selectR($args[0]);
+        }else if(!R::is($query)){ #이미 로드된데이터인지체크
+            R::id($query);
         }else if(isset($args[0]) && is_string($args[0])){ # 해당하는 리소스 키값 리턴
-            return self::get($query, $args[0]);
+            return R::get($query, $args[0]);
         }else if(isset($args[0]) && is_array($args[0])){ # 해당하는 리소스 데이터 병합
-            self::mergeData($query, $args[0]);
+            R::mergeData($query, $args[0]);
         }
     }
 
@@ -116,15 +116,15 @@ final class R
     private static function mergeData(string $query, array $args) : void
     {
         $r_array = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','arrays','tables' => self::${$query}[self::$language],
-            default => self::$r->{$query}[self::$language]
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => R::${$query}[R::$language],
+            default => R::$r->{$query}[R::$language]
         };
 
         if(is_array($r_array)){
             if(property_exists(__CLASS__,$query)){
-                self::${$query}[self::$language] = array_merge(self::${$query}[self::$language], $args);
+                R::${$query}[R::$language] = array_merge(R::${$query}[R::$language], $args);
             }else{
-                self::$r->{$query}[self::$language] = array_merge(self::$r->{$query}[self::$language], $args);
+                R::$r->{$query}[R::$language] = array_merge(R::$r->{$query}[R::$language], $args);
             }
         }
     }
@@ -138,16 +138,16 @@ final class R
             default => ''
         };
         if($define_dir){
-            $filename = self::findLanguageFile(_ROOT_PATH_.'/'.$define_dir.'/'.$query.'.json');
-            self::parser($filename, $query);
+            $filename = R::findLanguageFile(_ROOT_PATH_.'/'.$define_dir.'/'.$query.'.json');
+            R::parser($filename, $query);
         }
     }
 
     # 데이터 로딩된 상태인지 체크
     private static function is(string $query) : bool{
         $result = match((string)$query){
-            'sysmsg','strings','integers','floats','doubles','arrays','tables' => (isset(self::${$query}[self::$language])) ?? false,
-            default => (isset(self::$r->{$query}[self::$language])) ?? false
+            'sysmsg','strings','integers','floats','doubles','arrays','tables' => (isset(R::${$query}[R::$language])) ?? false,
+            default => (isset(R::$r->{$query}[R::$language])) ?? false
         };
 
     return $result;
@@ -159,14 +159,14 @@ final class R
     {
         if(!$query) throw new \Exception(__CLASS__.' :: '.__LINE__.' '.$query.' is null',0,0,'e_null');
 
-        if(!self::is($query))
+        if(!R::is($query))
         {
-            $real_filename = self::findLanguageFile($filename);
+            $real_filename = R::findLanguageFile($filename);
             $storage_data  = '';
             $storage_data  = file_get_contents($real_filename);
             if($storage_data)
             {
-                $data = self::filterJSON($storage_data,true);
+                $data = R::filterJSON($storage_data,true);
                 if(!is_array($data))
                 {
                     $e_msg = '';
@@ -179,9 +179,9 @@ final class R
                 }
 
                 if(property_exists(__CLASS__,$query)){
-                    self::${$query}[self::$language] = $data;
+                    R::${$query}[R::$language] = $data;
                 }else{
-                    self::$r->{$query}[self::$language] =&$data;
+                    R::$r->{$query}[R::$language] =&$data;
                 }
             }
         }
@@ -224,7 +224,7 @@ final class R
     public static function findLanguageFile(string $filename) : String{
         $real_filename   = $filename;
         $path_parts      = pathinfo($real_filename);
-        $nation_filename = $path_parts['dirname'].'/'.$path_parts['filename'].'_'.self::$language.'.'.$path_parts['extension'];
+        $nation_filename = $path_parts['dirname'].'/'.$path_parts['filename'].'_'.R::$language.'.'.$path_parts['extension'];
         if(file_exists($nation_filename)){
             $real_filename = $nation_filename;
         }
@@ -233,14 +233,14 @@ final class R
 
     #@ __destruct
     public function __destruct(){
-        unset(self::$sysmsg);
-        unset(self::$strings);
-        unset(self::$integers);
-        unset(self::$floats);
-        unset(self::$doubles);
-        unset(self::$tables);
-        unset(self::$arrays);
-        unset(self::$r);
+        unset(R::$sysmsg);
+        unset(R::$strings);
+        unset(R::$integers);
+        unset(R::$floats);
+        unset(R::$doubles);
+        unset(R::$tables);
+        unset(R::$arrays);
+        unset(R::$r);
     }
 }
 ?>

@@ -22,7 +22,7 @@ class TextKeyword
 				$this->allow_tags = $allow_tags;
 			}
 			$this->value = $keyword;
-			self::cleanWord();
+			$this->cleanWord();
 		}
 	}
 
@@ -89,14 +89,14 @@ class TextKeyword
 			$s = strtr($w, $this->filter_words);
 			if($s && $s !='')
 			{
-				$es = mb_substr($s, -1, NULL, self::CHARSET);
+				$es = mb_substr($s, -1, NULL, TextKeyword::CHARSET);
 				if (in_array($es, $this->filter_end_words)) {
-					$elen = mb_strlen($s, self::CHARSET) - 1;
-					$data[] = mb_substr($w, 0, $elen, self::CHARSET);
+					$elen = mb_strlen($s, TextKeyword::CHARSET) - 1;
+					$data[] = mb_substr($w, 0, $elen, TextKeyword::CHARSET);
 				}else{
 					$data[] = $s;
 				}
-			}			
+			}
 		}
 		if(count($data)>0){
 			$this->value = array_unique($data);

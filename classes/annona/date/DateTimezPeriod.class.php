@@ -62,13 +62,12 @@ class DateTimezPeriod
                 }
             }
         }
-        
 
         # 시간이 큰것만 우선 순위 출력 약 시간 표시용
         # 약 1분전, 약 1시간전, 약10일전
         if($formatter['format'] == 'top')
         {
-            $relative_timef = self::aboutTopTime ($result);
+            $relative_timef = $this->aboutTopTime ($result);
             if($relative_timef){
                 $result = $relative_timef;
             }

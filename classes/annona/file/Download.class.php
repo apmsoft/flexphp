@@ -24,7 +24,7 @@ final class Download extends FileSize
 
 	final public function __construct(string $filenamez){
 		parent::__construct($filenamez);
-		self::getExtName();
+		$this->getExtName();
 	}
 
 	# 파일 확장자 추출
@@ -88,7 +88,7 @@ final class Download extends FileSize
 	public function download() : void
 	{
 		# file contents
-		$file_contents = self::getContents ();
+		$file_contents = $this->getContents ();
 
 		# header
 		$headers = [];

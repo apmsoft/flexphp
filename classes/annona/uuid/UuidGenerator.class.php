@@ -10,7 +10,7 @@ class UuidGenerator
 	#@ String
 	public function v3(string $uuid, string $keyname) : mixed
 	{
-		if(!self::is_valid($uuid)) return false;
+		if(!$this->is_valid($uuid)) return false;
 
         $nhex = str_replace(array('-','{','}'), '', $uuid);
         $nstr = '';
@@ -46,7 +46,7 @@ class UuidGenerator
 	#@ String
 	public function v5(string $uuid, string $keyname) : mixed
 	{
-		if(!self::is_valid($uuid)) return false;
+		if(!$this->is_valid($uuid)) return false;
 
 		$nhex = str_replace(array('-','{','}'), '', $uuid);
 		$nstr = '';

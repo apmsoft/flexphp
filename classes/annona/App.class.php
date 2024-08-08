@@ -22,45 +22,45 @@ final class App
 
         # platform
         if (preg_match('/(Linux|Android|Macintosh|Mac os x|Windows|Win32|iPod|iPhone|Windows Phone|lgtelecom|Windows CE)/i', $agent)) {
-            if(stristr($agent,'Linux')) self::$platform='Linux';
-            else if(stristr($agent,'iPod')) self::$platform='iPod';
-            else if(stristr($agent,'iPhone')) self::$platform='iPhone';
-            else if(stristr($agent,'iPad')) self::$platform='iPad';
-            else if(stristr($agent,'Windows Phone')) self::$platform='Windows Phone';
-            else if(stristr($agent,'Windows CE')) self::$platform='Windows CE';
-            else if(stristr($agent,'lgtelecom')) self::$platform='lgtelecom';
-            else if(stristr($agent,'Android')) self::$platform='Android';
-            else if(stristr($agent,'Macintosh')) self::$platform='Mac';
-            else if(stristr($agent,'mac os x')) self::$platform='Mac';
-            else if(stristr($agent,'Windows')) self::$platform='Windows';
-            else if(stristr($agent,'Win32')) self::$platform='Windows';
+            if(stristr($agent,'Linux')) App::$platform='Linux';
+            else if(stristr($agent,'iPod')) App::$platform='iPod';
+            else if(stristr($agent,'iPhone')) App::$platform='iPhone';
+            else if(stristr($agent,'iPad')) App::$platform='iPad';
+            else if(stristr($agent,'Windows Phone')) App::$platform='Windows Phone';
+            else if(stristr($agent,'Windows CE')) App::$platform='Windows CE';
+            else if(stristr($agent,'lgtelecom')) App::$platform='lgtelecom';
+            else if(stristr($agent,'Android')) App::$platform='Android';
+            else if(stristr($agent,'Macintosh')) App::$platform='Mac';
+            else if(stristr($agent,'mac os x')) App::$platform='Mac';
+            else if(stristr($agent,'Windows')) App::$platform='Windows';
+            else if(stristr($agent,'Win32')) App::$platform='Windows';
         }
 
         #브라우저
         if (preg_match('/(MSIE|Opera|Firefox|Chrome|Safari|Opera|Netscape)/i', $agent)) {
-            if(stristr($agent,'MSIE') && !stristr($agent,'Opera')) self::$browser='Explorer';
-            else if(stristr($agent,'Firefox')) self::$browser='Firefox';
-            else if(stristr($agent,'Chrome')) self::$browser='Chrome';
-            else if(stristr($agent,'Safari')) self::$browser='Safari';
-            else if(stristr($agent,'Opera')) self::$browser='Opera';
-            else if(stristr($agent,'Netscape')) self::$browser='Netscape';
+            if(stristr($agent,'MSIE') && !stristr($agent,'Opera')) App::$browser='Explorer';
+            else if(stristr($agent,'Firefox')) App::$browser='Firefox';
+            else if(stristr($agent,'Chrome')) App::$browser='Chrome';
+            else if(stristr($agent,'Safari')) App::$browser='Safari';
+            else if(stristr($agent,'Opera')) App::$browser='Opera';
+            else if(stristr($agent,'Netscape')) App::$browser='Netscape';
         }
 
         # 이전 접속경로
         if(isset($_SERVER['HTTP_REFERER']) && !is_null($_SERVER['HTTP_REFERER'])){
-            self::$http_referer = $_SERVER['HTTP_REFERER'];
+            App::$http_referer = $_SERVER['HTTP_REFERER'];
         }
 
         # 언어
         if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $hal = explode(',',strtr($_SERVER['HTTP_ACCEPT_LANGUAGE'],[';'=>',','-'=>'_']));
             foreach($hal as $v){
-                if(strpos($v,self::$language.'_') !==false){
-                    self::$locale = $v;
+                if(strpos($v,App::$language.'_') !==false){
+                    App::$locale = $v;
                     break;
                 }
             }
-            self::$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
+            App::$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
         }
 
         # http | https
@@ -70,13 +70,13 @@ final class App
         }
 
         # host
-        self::$host = '';
+        App::$host = '';
         if(isset($_SERVER['HTTP_HOST'])){
-            self::$host = sprintf("%s://%s",$https,$_SERVER['HTTP_HOST']);
+            App::$host = sprintf("%s://%s",$https,$_SERVER['HTTP_HOST']);
         }
 
         # request METHOD
-        self::$ip_address = self::get_client_ip();
+        App::$ip_address = App::get_client_ip();
     }
 
     #@ return string

@@ -79,13 +79,13 @@ class ImageGDS
 
 	# 텍스트 이미지 만들기
 	public function writeTextImage(int $width, int $height, string $text) : void{
-		$this->im = self::createTrueImage($width,$height);
-		self::setAlphablending($this->im);
-		self::setFilledrectangle($this->im,0,0,$width,$height,$this->bgcolor);
+		$this->im = $this->createTrueImage($width,$height);
+		$this->setAlphablending($this->im);
+		$this->setFilledrectangle($this->im,0,0,$width,$height,$this->bgcolor);
 
-		$fontcolor = self::setColorallocate($this->im,$this->color[0],$this->color[1],$this->color[2]);
-		self::setFttext($this->im,$fontcolor,$text);
-		self::setSavealpha($this->im,true);
+		$fontcolor = $this->setColorallocate($this->im,$this->color[0],$this->color[1],$this->color[2]);
+		$this->setFttext($this->im,$fontcolor,$text);
+		$this->setSavealpha($this->im,true);
 	}
 
 	public function setAntialias(mixed $image,bool $boolean=false): void {
@@ -99,32 +99,32 @@ class ImageGDS
 	# 그림자 입체 텍스트 쓰기
 	public function writeShadowText(int $width, int $height,string $text,array $bgRGB=[255,255,255], array $mdRGB=[128,128,128], array $frontRGB=[0,0,0]) :void
 	{
-		$this->im = self::createTrueImage($width,$height);
+		$this->im = $this->createTrueImage($width,$height);
 
-		$bg     = self::setColorallocate($this->im,$bgRGB[0],$bgRGB[1],$bgRGB[2]);
-		$middle = self::setColorallocate($this->im, $mdRGB[0],$mdRGB[1],$mdRGB[2]);
-		$front  = self::setColorallocate($this->im, $frontRGB[0],$frontRGB[1],$frontRGB[2]);
-		self::setFilledrectangle($this->im,0,0,$width-1,$height-1,$bg);
+		$bg     = $this->setColorallocate($this->im,$bgRGB[0],$bgRGB[1],$bgRGB[2]);
+		$middle = $this->setColorallocate($this->im, $mdRGB[0],$mdRGB[1],$mdRGB[2]);
+		$front  = $this->setColorallocate($this->im, $frontRGB[0],$frontRGB[1],$frontRGB[2]);
+		$this->setFilledrectangle($this->im,0,0,$width-1,$height-1,$bg);
 
 		// Add some shadow to the text
-		self::setTTFText($this->im,$this->fontsize,$this->x,$this->y,$middle,$text);
+		$this->setTTFText($this->im,$this->fontsize,$this->x,$this->y,$middle,$text);
 
 		// Add the text
-		self::setTTFText($this->im,$this->fontsize, ($this->x - 1), ($this->y - 1),$front,$text);
+		$this->setTTFText($this->im,$this->fontsize, ($this->x - 1), ($this->y - 1),$front,$text);
 	}
 
 	# 이미지 위에 텍스트 쓰기
 	public function combineImageText(int $width, int $height, string $text, string|null $filename=null) : void{
-		$this->im = self::createTrueImage($width,$height);
-		self::setAntialias($this->im,true);
-		$fontcolor = self::setColorallocate($this->im,$this->color[0],$this->color[1],$this->color[2]);
+		$this->im = $this->createTrueImage($width,$height);
+		$this->setAntialias($this->im,true);
+		$fontcolor = $this->setColorallocate($this->im,$this->color[0],$this->color[1],$this->color[2]);
 
 		$filename = ($filename) ? $filename : $this->filename;
 		if(!$filename) throw new \Exception(__CLASS__,':'.__METHOD__.':'.__LINE__);
 		
-		$image = self::readImage($filename);
-		self::copy($this->im,$image,0,0,0,0,$width,$height);
-		self::setTTFText($this->im,$this->fontsize,$this->x,$this->y,$fontcolor,$text);
+		$image = $this->readImage($filename);
+		$this->copy($this->im,$image,0,0,0,0,$width,$height);
+		$this->setTTFText($this->im,$this->fontsize,$this->x,$this->y,$fontcolor,$text);
 	}
 
 	# margin_x : 가로 여백, margin_y : 세로 여백
@@ -134,9 +134,9 @@ class ImageGDS
 		if(!file_exists($marksfilename))
 			throw new \Exception(__CLASS__.':'.__METHOD__.':'.$marksfilename);
 
-		$this->im = self::readImage($this->filename);
-		self::setAntialias($this->im,true);
-		$image = self::readImage($marksfilename);
+		$this->im = $this->readImage($this->filename);
+		$this->setAntialias($this->im,true);
+		$image = $this->readImage($marksfilename);
 
 		$width  = imagesx($image);
 		$height = imagesy($image);
@@ -163,21 +163,21 @@ class ImageGDS
 				break;
 		}
 
-		self::copy($this->im,$image,$im_x,$im_y,0,0,$width,$height);
+		$this->copy($this->im,$image,$im_x,$im_y,0,0,$width,$height);
 	}
 
 	# void 이미지 자르기 int width,height,x,y
 	public function cropImage(int $width,int $height, int $x, int $y) : void{
-		$this->im = self::createTrueImage($width,$height);
-		$image = self::readImage($this->filename);
-		if(self::copy($this->im,$image,0,0,$x,$y,$width,$height) === false)
+		$this->im = $this->createTrueImage($width,$height);
+		$image = $this->readImage($this->filename);
+		if($this->copy($this->im,$image,0,0,$x,$y,$width,$height) === false)
 			throw new \Exception(__METHOD__,__LINE__);
 	}
 
 	# void 이미지 자르기 (center) int width,height
 	public function cropThumbnailImage(int $width, int $height) : void
 	{
-		$imgsize = self::getImageSize($this->filename);
+		$imgsize = $this->getImageSize($this->filename);
 
 		# 조정
 		$im_x    = 0;
@@ -200,16 +200,16 @@ class ImageGDS
 			$im_y        = $half_height - $h_height;
 		}
 
-		$this->im = self::createTrueImage($width,$height);
-		$image = self::readImage($this->filename);
-		if(self::copyResampled($this->im,$image,$im_x,$im_y,$image_x,$image_y,$width,$height,$imgsize->width,$imgsize->height) === false)
+		$this->im = $this->createTrueImage($width,$height);
+		$image = $this->readImage($this->filename);
+		if($this->copyResampled($this->im,$image,$im_x,$im_y,$image_x,$image_y,$width,$height,$imgsize->width,$imgsize->height) === false)
 			throw new \Exception(__METHOD__,__LINE__);
 	}
 
 	# 썸네일 이미지 만들기 int width, height
 	public function thumbnailImage(int $width, int $height) : void
 	{
-		$imgsize = self::getImageSize($this->filename);
+		$imgsize = $this->getImageSize($this->filename);
 
 		# 썸네일 사진 사이즈 설정
 		if($imgsize->width>$imgsize->height){
@@ -219,9 +219,9 @@ class ImageGDS
 			$width= ceil(($imgsize->width*$height)/$imgsize->height);
 		}
 
-		$this->im = self::createTrueImage($width,$height);
-		$image = self::readImage($this->filename);
-		if(self::copyResampled($this->im, $image, 0,0,0,0,$width,$height,$imgsize->width,$imgsize->height) ===false)
+		$this->im = $this->createTrueImage($width,$height);
+		$image = $this->readImage($this->filename);
+		if($this->copyResampled($this->im, $image, 0,0,0,0,$width,$height,$imgsize->width,$imgsize->height) ===false)
 			throw new \Exception(__METHOD__,__LINE__);
 	}
 
@@ -319,7 +319,7 @@ class ImageGDS
 	# image data base64 이미지 크기 변경하기
 	public function resizeBase64Image(string $base64, int $width, int $height): string
     {
-        $this->im = self::readImageFromBase64($base64);
+        $this->im = $this->readImageFromBase64($base64);
         $imgsize = imagesx($this->im);
         $imgheight = imagesy($this->im);
 
@@ -329,12 +329,12 @@ class ImageGDS
             $width = ceil(($imgsize * $height) / $imgheight);
         }
 
-        $resized = self::createTrueImage($width, $height);
-        if (self::copyResampled($resized, $this->im, 0, 0, 0, 0, $width, $height, $imgsize, $imgheight) === false)
+        $resized = $this->createTrueImage($width, $height);
+        if ($this->copyResampled($resized, $this->im, 0, 0, 0, 0, $width, $height, $imgsize, $imgheight) === false)
             throw new \Exception(__METHOD__, __LINE__);
 
         $this->im = $resized;
-        return self::writeImageToBase64();
+        return $this->writeImageToBase64();
     }
 
 	# 이미지 사이즈
@@ -350,7 +350,7 @@ class ImageGDS
 	}
 
 	public function __destruct(){
-		self::destroy();
+		$this->destroy();
     }
 }
 ?>

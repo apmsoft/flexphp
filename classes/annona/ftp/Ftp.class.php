@@ -19,7 +19,7 @@ final class Ftp extends FtpObject
     # 파일 내용 읽어 오기
     public function open_file_read(string $tmpfile, string $remote_file) : string
     {
-        if(!$this->ftp_get($tmpfile, $remote_file, self::chk_open_mode($remote_file)))
+        if(!$this->ftp_get($tmpfile, $remote_file, $this->chk_open_mode($remote_file)))
             return false;
 
         $fp=fopen($tmpfile,'r');
@@ -31,7 +31,7 @@ final class Ftp extends FtpObject
 
     public function open_file_write(string $tmpfile, string $remote_file, string $contents) : bool
     {
-        if(!self::isExists($tmpfile)){
+        if(!$this->isExists($tmpfile)){
             return false;
         }
 
@@ -41,7 +41,7 @@ final class Ftp extends FtpObject
         $fp = fopen($tmpfile, 'w');
         fwrite($fp, $contents);
         fclose($fp);
-        if(!$this->ftp_put($remote_file, $tmpfile, self::chk_open_mode($remote_file)))
+        if(!$this->ftp_put($remote_file, $tmpfile, $this->chk_open_mode($remote_file)))
             return false;
 
         @unlink($tmpfile);
@@ -71,7 +71,7 @@ final class Ftp extends FtpObject
     #@ return int
     private function chk_open_mode(string $filename) : int
     {
-        $extention = strtolower(self::getExtention($filename));
+        $extention = strtolower($this->getExtention($filename));
 
         if(!in_array($extention, $this->ascii_type)) return FTP_ASCII;
         else return FTP_BINARY;

@@ -12,7 +12,7 @@ final class OutPane
 		$outmsg = '';
 		if($msg) $outmsg= 'window.alert("'.$msg.'");'."\n";
 		$outmsg.= 'window.location="'.$url.'";'."\n";
-		self::error_report_prints($outmsg);
+		OutPane::error_report_prints($outmsg);
 	}
 
 	# 메세지 출력 후 뒤로 가기
@@ -20,7 +20,7 @@ final class OutPane
 	{
 		$outmsg= 'window.alert("'.$msg.'");'."\n";
 		$outmsg.= 'history.go('.$num.');'."\n";
-		self::error_report_prints($outmsg);
+		OutPane::error_report_prints($outmsg);
 	}
 
 	# 메세지 출력 후 팝업창 자신 닫기
@@ -29,7 +29,7 @@ final class OutPane
 		$outmsg = '';
 		if($msg) $outmsg= 'window.alert("'.$msg.'");'."\n";
 		$outmsg.= 'top.close();'."\n";
-		self::error_report_prints($outmsg);
+		OutPane::error_report_prints($outmsg);
 	}
 
 	# 팝업 창에서 본페이지 이동 시키기
@@ -37,7 +37,7 @@ final class OutPane
 	{
 		$outmsg.= 'opener.location.href="'.$url.'";'."\n";
 		$outmsg.= 'window.close();';
-		self::error_report_prints($outmsg);
+		OutPane::error_report_prints($outmsg);
 	}
 
 	# 자바스크립트 prompt 창을 통해 데이타 값 받기
@@ -50,7 +50,7 @@ final class OutPane
 		$outmsg.= 'var inputmsg;'."\n";
 		$outmsg.= 'inputmsg = prompt("'.$title.'","'.$defaultval.'");'."\n";
 		$outmsg.= 'document.write(inputmsg);'."\n";
-		self::error_report_prints($outmsg);
+		OutPane::error_report_prints($outmsg);
 	}
 
 	# 자바스크립트 confirm 창을 통해 true/false 값 받기
@@ -71,22 +71,22 @@ final class OutPane
 		}
 
 		$outmsg.= '}';
-		self::error_report_prints($outmsg);
+		OutPane::error_report_prints($outmsg);
 	}
 
 	# 문자 출력 값이 utf-8인지 체크 후 변환하기
 	final public static function checkSetCharet(string $msg) : string 
 	{
 		# 전송된 값을 원하는 문자셋으로 변경
-		if(iconv(self::$chrset,self::$chrset,$msg)==$msg)
+		if(iconv(OutPane::$chrset,OutPane::$chrset,$msg)==$msg)
 			return $msg;
 		else
-			return iconv('euc-kr',self::$chrset,$msg);
+			return iconv('euc-kr',OutPane::$chrset,$msg);
 	}
 
 	final public static function error_report_prints($outmsg) : void
 	{
-		$printMsg = '<meta http-equiv="Content-Type" content="text/html; charset='.self::$chrset.'" />'."\n";
+		$printMsg = '<meta http-equiv="Content-Type" content="text/html; charset='.OutPane::$chrset.'" />'."\n";
 		$printMsg .= '<script type="text/javascript" language="javascript">'."\n";
 		$printMsg .= $outmsg;
 		$printMsg .= '</script>';

@@ -261,7 +261,7 @@ class Calendars extends DateTime
 	# Y-m-d H:i:s
 	public function __construct($times){
 		parent::__construct($times);
-		self::resetTodayDate();
+		$this->resetTodayDate();
 	}
 
 	#@ void
@@ -272,8 +272,8 @@ class Calendars extends DateTime
 		$this->month = $ymd_args[1];
 		$this->day   = $ymd_args[2];
 
-		self::fromJd();
-		self::set_pre_next_date();
+		$this->fromJd();
+		$this->set_pre_next_date();
 	}
 
 	#@ void
@@ -336,26 +336,26 @@ class Calendars extends DateTime
 				if($m['smtype']=='m'){ # 음력
 					switch($m['repeat']){
 						case 'y' :
-							self::set_memorials_holiday(self::get_moon2sun($this_int_date), $m['holiday'], $m['title'], $holiday_plus);
+							$this->set_memorials_holiday($this->get_moon2sun($this_int_date), $m['holiday'], $m['title'], $holiday_plus);
 							break;
 						case 'm':
 							for($si=1; $si<13; $si++)
-								self::set_memorials_holiday(self::get_moon2sun($date_args[0].sprintf("%02d",$si).$date_args[2]), $m['holiday'], $m['title'],$holiday_plus);
+								$this->set_memorials_holiday($this->get_moon2sun($date_args[0].sprintf("%02d",$si).$date_args[2]), $m['holiday'], $m['title'],$holiday_plus);
 							break;
 						default :
-							self::set_memorials_holiday(self::get_moon2sun($int_date), $m['holiday'], $m['title'],$holiday_plus);
+							$this->set_memorials_holiday($this->get_moon2sun($int_date), $m['holiday'], $m['title'],$holiday_plus);
 					}
 				}else{ # 양력
 					switch($m['repeat']){
 						case 'y' :
-							self::set_memorials_holiday($this_int_date, $m['holiday'], $m['title'], $holiday_plus);
+							$this->set_memorials_holiday($this_int_date, $m['holiday'], $m['title'], $holiday_plus);
 							break;
 						case 'm':
 							for($si=1; $si<13; $si++)
-								self::set_memorials_holiday($this->year.sprintf("%02d",$si).$date_args[2], $m['holiday'], $m['title'],$holiday_plus);
+								$this->set_memorials_holiday($this->year.sprintf("%02d",$si).$date_args[2], $m['holiday'], $m['title'],$holiday_plus);
 							break;
 						default:
-							self::set_memorials_holiday($this_int_date, $m['holiday'], $m['title'],$holiday_plus);
+							$this->set_memorials_holiday($this_int_date, $m['holiday'], $m['title'],$holiday_plus);
 					}
 				}
 			}
@@ -413,7 +413,7 @@ class Calendars extends DateTime
 			#10일에 한번씩 [음력날짜] 계산 및 표기
 			$moon_date='';
 			if($j%10==0){
-				$moon_date = self::get_sun2moon($int_date);
+				$moon_date = $this->get_sun2moon($int_date);
 				$moon_date = substr($moon_date,4,2).'.'.substr($moon_date,-2);
 			}
 
@@ -493,19 +493,19 @@ class Calendars extends DateTime
 	# 날짜수정 DAY
 	public function modifyDay(int|string $day) : void{
 		$this->modify($day." day");
-		self::resetTodayDate();
+		$this->resetTodayDate();
 	}
 
 	# 날짜수정 WEEK
 	public function modifyWeek(int|string $week) : void{
 		$this->modify($week." week");
-		self::resetTodayDate();
+		$this->resetTodayDate();
 	}
 
 	# 날짜수정 MONTH
 	public function modifyMonth(int|string $month) : void{
 		$this->modify($month." month");
-		self::resetTodayDate();
+		$this->resetTodayDate();
 	}
 
 	#이전주에 해당하는 마지막일을 가지고 온다
@@ -562,12 +562,12 @@ class Calendars extends DateTime
 	# 양력->음력
 	# intdate : 20101020
 	public function get_sun2moon($intdate) : int{
-		return self::date_binary_search($this->sunargs,$this->moonargs,$intdate);
+		return $this->date_binary_search($this->sunargs,$this->moonargs,$intdate);
 	}
 
 	# 음력->양력
 	public function get_moon2sun($intdate) : int{
-		return self::date_binary_search($this->moonargs,$this->sunargs,$intdate);
+		return $this->date_binary_search($this->moonargs,$this->sunargs,$intdate);
 	}
 
 	# 음<->양 계산메소드

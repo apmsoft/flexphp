@@ -10,7 +10,7 @@ class Validation
 
 	public function __construct($s){
 		$this->str = trim($s);
-		if(!self::isNull()){
+		if(!$this->isNull()){
 			$this->len = strlen($s);
 		}
 	}

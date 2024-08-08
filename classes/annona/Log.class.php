@@ -20,8 +20,8 @@ final class Log
 
     # init
     public static function init(int $message_type = -1, string $logfile = null){
-        self::$message_type = ($message_type > -1) ? $message_type : self::MESSAGE_ECHO;
-        self::$logfile = $logfile ?? 'log.txt';
+        Log::$message_type = ($message_type > -1) ? $message_type : Log::MESSAGE_ECHO;
+        Log::$logfile = $logfile ?? 'log.txt';
     }
 
     # 출력 옵션 설정
@@ -36,7 +36,7 @@ final class Log
             ];
         }
 
-        self::$options = array_merge(self::$options, $_options);
+        Log::$options = array_merge(Log::$options, $_options);
     }
 
     # 출력하고자 하는 옵션 선택
@@ -50,51 +50,51 @@ final class Log
             }
         }
 
-        self::$debugs = $debug_modes;
+        Log::$debugs = $debug_modes;
     }
 
     # debug
     public static function d (mixed $message, ... $message2) : void
     {
-        if(in_array('d', self::$debugs)){
-            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
-            self::print_('D', $output);
+        if(in_array('d', Log::$debugs)){
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            Log::print_('D', $output);
         }
     }
 
     # success
     public static function v (mixed $message, ... $message2) : void
     {
-        if(in_array('v', self::$debugs)){
-            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
-            self::print_('V', $output);
+        if(in_array('v', Log::$debugs)){
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            Log::print_('V', $output);
         }
     }
 
     # info
     public static function i (mixed $message, ... $message2) : void
     {
-        if(in_array('i', self::$debugs)){
-            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
-            self::print_('I', $output);
+        if(in_array('i', Log::$debugs)){
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            Log::print_('I', $output);
         }
     }
 
     # warning
     public static function w (mixed $message, ... $message2) : void
     {
-        if(in_array('w', self::$debugs)){
-            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
-            self::print_('W', $output);
+        if(in_array('w', Log::$debugs)){
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            Log::print_('W', $output);
         }
     }
 
     # error
     public static function e (mixed $message, ... $message2) : void
     {
-        if(in_array('e', self::$debugs)){
-            $output = self::filterMessage($message).' | '.implode(' | ',array_map('self::filterMessage',$message2));
-            self::print_('E', $output);
+        if(in_array('e', Log::$debugs)){
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            Log::print_('E', $output);
         }
     }
 
@@ -111,17 +111,17 @@ final class Log
     # print
     private static function print_ (string $debug_type, string $message) : void
     {
-        $logfile = (self::$message_type == self::MESSAGE_FILE ) ? self::$logfile : null;
-        $out_datetime   = (self::$options['datetime']) ? date('Y-m-d H:i:s').' ' : '';
-        $out_debug_type = (self::$options['debug_type']) ? '>> '.$debug_type.' : ' : '';
-        $out_newline    = (self::$options['newline']) ? PHP_EOL : '';
+        $logfile = (Log::$message_type == Log::MESSAGE_FILE ) ? Log::$logfile : null;
+        $out_datetime   = (Log::$options['datetime']) ? date('Y-m-d H:i:s').' ' : '';
+        $out_debug_type = (Log::$options['debug_type']) ? '>> '.$debug_type.' : ' : '';
+        $out_newline    = (Log::$options['newline']) ? PHP_EOL : '';
 
-        if(self::$message_type == self::MESSAGE_ECHO){
+        if(Log::$message_type == Log::MESSAGE_ECHO){
             echo sprintf("%s%s%s%s", $out_datetime, $out_debug_type, addslashes($message), $out_newline);
         }else{
             error_log (
                 sprintf("%s%s%s%s", $out_datetime, $out_debug_type, addslashes($message), $out_newline),
-                    self::$message_type,
+                    Log::$message_type,
                         $logfile
             );
         }
