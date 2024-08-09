@@ -8,7 +8,7 @@ use \Exception;
 # 이미지 뷰어
 final class ImageViewer extends ImageGDS
 {
-	public const __version = '2.0';
+	public const __version = '2.0.1';
 
 	# 이미지 경로
 	public string $file_extension = '';
@@ -16,7 +16,7 @@ final class ImageViewer extends ImageGDS
 	public string $basename;
 	public string $directory;
 	public int $compression;
-	public array $viewseize = [];
+	public array $viewsize = [];
 
 	final public function __construct(string $filenamez){
 		$this->filename = $filenamez;
