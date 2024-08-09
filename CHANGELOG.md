@@ -4,6 +4,7 @@
 
 ### - 2024-08-09
 - ImageViewer 버그 패치
+- Calendars 클래스 버그 패치
 
 ### - 2024-07-23
 - Model class v2.0 업데이트
