@@ -8,6 +8,7 @@ use Flex\Annona\Cipher\AES256Hash;
 use Flex\Annona\Cipher\Base64UrlEncoder;
 use Flex\Annona\Cipher\HashEncoder;
 use Flex\Annona\Cipher\PasswordHash;
+use Flex\Annona\Cipher\ROT13Encoder;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -82,16 +83,7 @@ Log::i("Complex Result", $complexDecrypted === $complexData ? "PASS" : "FAIL");
 Log::d('');
 Log::d('');
 
-// 6. 나의 새로운 암호화 클래스 추가
-// class ROT13Encoder {
-//     public function encode($str) {
-//         return str_rot13($str);
-//     }
-//     public function decode($str) {
-//         return str_rot13($str);
-//     }
-// }
-use Flex\Annona\Cipher\ROT13Encoder;
+// 6. ROT13Encoder 클래스
 try {
     CipherGeneric::addProcessor(ROT13Encoder::class);
     $rot13Cipher = new CipherGeneric(new ROT13Encoder());
@@ -108,9 +100,63 @@ try {
 }
 
 // 7. 허용된 프로세서 목록 출력
-Log::d("\n=== Allowed Processors ===");
+Log::d("=== 미리등록된 암호화 관련 클래스 목록 ===");
 $allowedProcessors = CipherGeneric::getAllowedProcessors();
 foreach ($allowedProcessors as $processor) {
     Log::d($processor);
 }
+
+
+// 8. 나의 암호화 클래스 추가해서 사용하기
+class MorseCodeConverter
+{
+    private $morseAlphabet = [
+        'A' => '.-', 'B' => '-...', 'C' => '-.-.', 'D' => '-..', 'E' => '.', 'F' => '..-.',
+        'G' => '--.', 'H' => '....', 'I' => '..', 'J' => '.---', 'K' => '-.-', 'L' => '.-..',
+        'M' => '--', 'N' => '-.', 'O' => '---', 'P' => '.--.', 'Q' => '--.-', 'R' => '.-.',
+        'S' => '...', 'T' => '-', 'U' => '..-', 'V' => '...-', 'W' => '.--', 'X' => '-..-',
+        'Y' => '-.--', 'Z' => '--..', '0' => '-----', '1' => '.----', '2' => '..---',
+        '3' => '...--', '4' => '....-', '5' => '.....', '6' => '-....', '7' => '--...',
+        '8' => '---..', '9' => '----.'
+    ];
+
+    public function encode($text)
+    {
+        $text = strtoupper($text);
+        $result = [];
+        foreach (str_split($text) as $char) {
+            if (isset($this->morseAlphabet[$char])) {
+                $result[] = $this->morseAlphabet[$char];
+            } elseif ($char === ' ') {
+                $result[] = '/';
+            }
+        }
+        return implode(' ', $result);
+    }
+
+    public function decode($morse)
+    {
+        $morse = explode(' ', $morse);
+        $result = '';
+        foreach ($morse as $code) {
+            if ($code === '/') {
+                $result .= ' ';
+            } else {
+                $char = array_search($code, $this->morseAlphabet);
+                if ($char !== false) {
+                    $result .= $char;
+                }
+            }
+        }
+        return $result;
+    }
+}
+
+$text = "Hello, World!";
+CipherGeneric::addProcessor(MorseCodeConverter::class);
+$morseConverter = new CipherGeneric(new MorseCodeConverter());
+$morseEncode = $morseConverter->encode($text);
+$morseDecode = $morseConverter->decode($morseEncode);
+Log::d($morseEncode );
+Log::d($morseDecode );
 ?>
