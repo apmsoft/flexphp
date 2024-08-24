@@ -1,8 +1,9 @@
 # Changelog
 
-## [1.2]
+## [1.3]
 
 ### - 2024-08-24
+- 암호화 관련 Encrypt,Decrypt 클래스 전체 변경 및  AES256,Base64,Hash(256,512),PasswordHash 클래서 암호화변 분리 생성
 - Random class 0.5-> 0.7 업데이트
 - md5 관련 암호화 알고리즘 전체 제거 및 변경
 - Random 관련 클래스들 0.7 버전에 으로 업그레이드

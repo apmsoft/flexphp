@@ -57,7 +57,7 @@ final class Log
     public static function d (mixed $message, ... $message2) : void
     {
         if(in_array('d', Log::$debugs)){
-            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map(['self', 'filterMessage'],$message2));
             Log::print_('D', $output);
         }
     }
@@ -66,7 +66,7 @@ final class Log
     public static function v (mixed $message, ... $message2) : void
     {
         if(in_array('v', Log::$debugs)){
-            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map(['self', 'filterMessage'],$message2));
             Log::print_('V', $output);
         }
     }
@@ -75,7 +75,7 @@ final class Log
     public static function i (mixed $message, ... $message2) : void
     {
         if(in_array('i', Log::$debugs)){
-            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map(['self', 'filterMessage'],$message2));
             Log::print_('I', $output);
         }
     }
@@ -84,7 +84,7 @@ final class Log
     public static function w (mixed $message, ... $message2) : void
     {
         if(in_array('w', Log::$debugs)){
-            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map(['self', 'filterMessage'],$message2));
             Log::print_('W', $output);
         }
     }
@@ -93,7 +93,7 @@ final class Log
     public static function e (mixed $message, ... $message2) : void
     {
         if(in_array('e', Log::$debugs)){
-            $output = Log::filterMessage($message).' | '.implode(' | ',array_map('Log::filterMessage',$message2));
+            $output = Log::filterMessage($message).' | '.implode(' | ',array_map(['self', 'filterMessage'],$message2));
             Log::print_('E', $output);
         }
     }
