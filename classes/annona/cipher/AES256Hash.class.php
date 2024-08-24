@@ -5,7 +5,7 @@ use Exception;
 
 class AES256Hash
 {
-    public const __version = '1.0';
+    public const __version = '1.1';
 
     private string $encrypt_method = 'AES-256-CBC';
 
@@ -13,8 +13,8 @@ class AES256Hash
      * AES-256 암호화를 수행
      *
      * @param string $plaintext 암호화할 평문
-     * @param string $secret_key 비밀 키
-     * @param string $secret_iv 초기화 벡터 (IV)
+     * @param string $secret_key 비밀 키 random_bytes(32) | hex2bin($hex_string) 
+     * @param string $secret_iv 초기화 벡터 (IV) random_bytes(16) | bin2hex
      * @return string 암호화된 문자열 (base64 인코딩됨)
      * @throws Exception 암호화 실패 시
      */
@@ -26,7 +26,7 @@ class AES256Hash
         $encrypted = openssl_encrypt($plaintext, $this->encrypt_method, $key, 0, $iv);
 
         if ($encrypted === false) {
-            throw new Exception("Encryption failed: " . openssl_error_string());
+            return '';
         }
 
         return $encrypted;
@@ -49,32 +49,44 @@ class AES256Hash
         $decrypted = openssl_decrypt($ciphertext, $this->encrypt_method, $key, 0, $iv);
 
         if ($decrypted === false) {
-            throw new Exception("Decryption failed: " . openssl_error_string());
+            return '';
         }
 
         return $decrypted;
     }
 
     /**
-     * 비밀 키를 준비
+     * 비밀 키를 준비 (32바이트로 조정)
      *
      * @param string $secret_key 원본 비밀 키
-     * @return string 준비된 키
+     * @return string 32바이트로 조정된 키
      */
     private function prepareKey(string $secret_key): string
     {
-        return hash('sha256', $secret_key);
+        if (strlen($secret_key) === 32) {
+            return $secret_key;
+        }
+        if (strlen($secret_key) > 32) {
+            return substr($secret_key, 0, 32);
+        }
+        return str_pad($secret_key, 32, "\0", STR_PAD_RIGHT);
     }
 
     /**
-     * 초기화 벡터(IV)를 준비
+     * 초기화 벡터(IV)를 준비 (16바이트로 조정)
      *
      * @param string $secret_iv 원본 IV
-     * @return string 준비된 IV
+     * @return string 16바이트로 조정된 IV
      */
     private function prepareIV(string $secret_iv): string
     {
-        return substr(hash('sha256', $secret_iv), 0, 16);
+        if (strlen($secret_iv) === 16) {
+            return $secret_iv;
+        }
+        if (strlen($secret_iv) > 16) {
+            return substr($secret_iv, 0, 16);
+        }
+        return str_pad($secret_iv, 16, "\0", STR_PAD_RIGHT);
     }
 }
 ?>
