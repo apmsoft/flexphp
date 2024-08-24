@@ -24,6 +24,7 @@ Log::d("====================================");
 
 $key = random_bytes(32); // 256 비트 키
 $iv = random_bytes(16);  // 128 비트 IV
+Log::d(bin2hex($key), bin2hex($iv));
 
 // 1. AES256 암호화/복호화 테스트
 $aesCipher = new CipherGeneric(new AES256Hash());
@@ -36,8 +37,7 @@ Log::i("AES256 Result", $decrypted === $random_text ? "PASS" : "FAIL");
 Log::d('');
 
 // 2. 해시 생성/검증 테스트
-$hashCipher = new CipherGeneric(new HashEncoder($random_text));
-$hash = $hashCipher->hash();
+$hash = (new CipherGeneric(new HashEncoder($random_text)))->hash();
 
 $hashVerifier = new CipherGeneric(new HashEncoder($random_text));
 $isHashValid = hash_equals($hash, $hashVerifier->hash());
