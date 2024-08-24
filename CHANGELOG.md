@@ -8,6 +8,7 @@
 - Random class 0.5-> 0.7 업데이트
 - md5 관련 암호화 알고리즘 전체 제거 및 변경
 - Random 관련 클래스들 0.7 버전에 으로 업그레이드
+- ROT13Encoder class update
 
 ### - 2024-08-09
 - ImageViewer 버그 패치

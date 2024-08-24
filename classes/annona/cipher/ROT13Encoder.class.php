@@ -9,11 +9,17 @@ namespace Flex\Annona\Cipher;
  */
 class ROT13Encoder 
 {
-    public function encode($str) {
-        return str_rot13($str);
+    public const __version = '1.0';
+	private $encrypt_str = '';
+
+	public function __construct(string $str){
+		$this->encrypt_str = $str;
+	}
+    public function encode() {
+        return str_rot13($this->encrypt_str);
     }
-    public function decode($str) {
-        return str_rot13($str);
+    public function decode() {
+        return str_rot13($this->encrypt_str);
     }
 }
 ?>
