@@ -97,7 +97,7 @@ class Upload extends DirInfo
     {
         #저장할파일명
 		$tempfilename  = str_replace(['.',' '],['_','_'],microtime());
-		$this->savefilename = sprintf("%s.%s", (new Encrypt($tempfilename))->_md5(), $this->file_extension);
+		$this->savefilename = sprintf("%s.%s", (new Encrypt($tempfilename))->_hash(), $this->file_extension);
         $fullname = sprintf("%s/%s", $this->directory, $this->savefilename);
 
 		if(!move_uploaded_file($this->process['tmp_name'], $fullname )){

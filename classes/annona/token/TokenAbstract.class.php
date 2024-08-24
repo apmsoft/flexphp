@@ -13,12 +13,12 @@ abstract class TokenAbstract
     # 길이만큼랜덤으로 문자를 조합
     public function generateString(int $length) : string
     {
-        return (new Random([]))->array($length);
+        return (new Random([]))->_string($length);
     }
 
     # 특정한 문자를 암호화 한다.
     public function generateSecretKey(string $secret_token) : string{
-        return md5(utf8_encode($secret_token));
+        return hash('sha256', $secret_token);
     }
 
     # 해시키 만들기
