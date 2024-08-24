@@ -15,7 +15,7 @@ class Decrypt
 
 	#@ return String
 	public function _base64_urldecode() : string{
-		$result = base64_decode(urldecode($this->decrypt_str)) ?? throw new Exception($e->getMessage(),__LINE__);
+		$result = base64_decode(urldecode($this->decrypt_str));
 	return $result;
 	}
 
