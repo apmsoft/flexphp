@@ -20,7 +20,7 @@ class Random {
 	# 숫자로 정해진 범위의 숫자로 난수를 만드어 낸다
 	# min : 시작범위, max : 끝범위
 	# 리턴 길이 
-	public function number(int $min=0,int $max=9, int $length=1) : int
+	public function _number(int $min=0,int $max=9, int $length=1) : int
 	{
 		$result = '';
 		// 첫 번째 숫자는 0이 아닌 숫자로 시작
@@ -34,7 +34,7 @@ class Random {
 	}
 
 	# 특수문자 랜덤
-	public function createSpecialChars(int $length = 1): string {
+	public function _specialChars(int $length = 1): string {
         $result = '';
         $charCount = count($this->specialChars);
 
@@ -45,14 +45,14 @@ class Random {
     }
 
 	# 배열중에서 갯수 만큼 추출해 내기
-	public function array(int $length=1, bool $includeSpecialChars = false) : string
+	public function _string(int $length=1, bool $includeSpecialChars = false) : string
 	{
 		$result = '';
 
 		# 특수문자 포함 여부
 		if($includeSpecialChars){
 			$specialCharsCount = count($this->specialChars);
-			$this->characters = array_merge($this->characters, $this->createSpecialChars( $specialCharsCount ));
+			$this->characters = array_merge($this->characters, $this->_specialChars( $specialCharsCount ));
 		}
 
 		# 갯수만큼 추출
