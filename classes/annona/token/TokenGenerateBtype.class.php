@@ -14,11 +14,11 @@ class TokenGenerateBtype extends TokenAbstract
         $this->value = $generate_string ?? parent::generateString($length);
     }
 
-    # @abstract 해시키 : _md5_base64
+    # @abstract 해시키 : sha256
     # 5jF4rq3N9V3RLHEBW2RKg
     public function generateHashKey() : TokenGenerateBtype
     {
-        $temp_usertoken = (new Encrypt($this->value))->_md5_base64();
+        $temp_usertoken = (new Encrypt($this->value))->_hash('sha256');
         $this->value = parent::cleanEtcWords($temp_usertoken);
     return $this;
     }

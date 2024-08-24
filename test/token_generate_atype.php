@@ -40,17 +40,13 @@ Log::d('sha256','secret_key',$token_256);
 #$token_512 = (new TokenGenerateAtype( $random_moduleid ))->generateHashKey('sha512')->value;
 #Log::d('sha512','secret_key',$token_512);
 
-# md5
-#$token_md5 = (new TokenGenerateAtype( $random_moduleid ))->generateHashKey('md5')->value;
-#Log::d('md5   ','secret_key',$token_md5);
-Log::d("=========================");
 
-$hash_key = (new TokenGenerateAtype( $token_256 ))->generateHashKey('md5')->value;
+$hash_key = (new TokenGenerateAtype( $token_256 ))->generateHashKey('sha256')->value;
 Log::d('md5','secret_key->hash_key',$hash_key);
 
 Log::d("=========================");
 # 토큰만들기
-$token = (new TokenGenerateAtype( $token_256 ))->generateHashKey('md5')->generateToken(sprintf("%s.",$module_id))->value;
+$token = (new TokenGenerateAtype( $token_256 ))->generateHashKey('sha256')->generateToken(sprintf("%s.",$module_id))->value;
 $token = strtr($token,['%3D'=>'_']);
 Log::d('EnCrypt :',$token);
 

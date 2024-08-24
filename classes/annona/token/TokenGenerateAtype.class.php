@@ -18,8 +18,7 @@ class TokenGenerateAtype extends TokenAbstract
     public function generateHashKey(string $encrypt_type ='sha512') : TokenGenerateAtype
     {
         $this->value = match ($encrypt_type) {
-            'sha256','sha512' => (new Encrypt($this->value))->_hash($encrypt_type),
-            'md5' => (new Encrypt($this->value))->_md5()
+            'sha256','sha512' => (new Encrypt($this->value))->_hash($encrypt_type)
         };
     return $this;
     }
