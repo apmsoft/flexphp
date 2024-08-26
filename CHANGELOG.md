@@ -5,6 +5,7 @@
 ### - 2024-08-26
 - ArrayHelper ver1.3.1 버그 패치 
 - Encrypt, Decrypt Class Deprecated
+- TokenGenerateBtype, TokenGenerateAtype 토큰화 클래스 v1.1 ->v1.2 업데이트
 
 
 ### - 2024-08-24
