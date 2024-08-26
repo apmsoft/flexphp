@@ -5,6 +5,7 @@ use Exception;
 
 class Base64UrlEncoder
 {
+    public const __version = '1.0';
     protected string $data;
 
     public function __construct(string $data = '')

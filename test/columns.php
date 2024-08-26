@@ -10,7 +10,7 @@ $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;
-Log::init();
+// Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
 // Log::options([

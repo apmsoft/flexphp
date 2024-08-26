@@ -4,6 +4,7 @@
 
 ### - 2024-08-26
 - ArrayHelper ver1.3.1 버그 패치 
+- Encrypt, Decrypt Class Deprecated
 
 
 ### - 2024-08-24

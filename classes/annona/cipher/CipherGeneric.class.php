@@ -6,7 +6,7 @@ use \Exception;
 
 class CipherGeneric
 {
-    public const __version = '3.0';
+    public const __version = '1.0';
 
     private $processor;
     private static $allowedProcessors = [
