@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    public const __version = '1.3';
+    public const __version = '1.3.1';
     public function __construct(
         private array $value
     ){}
@@ -310,7 +310,9 @@ class ArrayHelper
             foreach($args as $cidx => $cargs)
             {
                 foreach($columns[$uikey] as $column_name){
-                    $arr[$index][$column_name] = $cargs[$column_name];
+                    if(isset($temp[$column_name][$cidx])){
+                        $arr[$index][$column_name] = $cargs[$column_name];
+                    }
                 }
             $index++;
             }

@@ -2,6 +2,10 @@
 
 ## [1.3]
 
+### - 2024-08-26
+- ArrayHelper ver1.3.1 버그 패치 
+
+
 ### - 2024-08-24
 - ** Encrypt,Decrypt Deprecated
 - 암호화 관련 AES256,Base64,Hash(256,512),PasswordHash,ROT13Encoder 클래서 암호화변 분리 생성 및 CipherGeneric 클래스 추가
