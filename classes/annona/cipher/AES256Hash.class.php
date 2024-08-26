@@ -5,7 +5,7 @@ use Exception;
 
 class AES256Hash
 {
-    public const __version = '1.1';
+    public const __version = '1.0';
 
     private string $encrypt_method = 'AES-256-CBC';
 

@@ -6,7 +6,7 @@ use Exception;
 
 class HashEncoder extends Base64UrlEncoder
 {
-    public const __version = '1.1';
+    public const __version = '1.0';
     private string $encrypt_str;
 
     public function __construct(string $encrypt_str)

@@ -6,7 +6,7 @@
 - ArrayHelper ver1.3.1 버그 패치 
 - Encrypt, Decrypt Class Deprecated
 - TokenGenerateBtype, TokenGenerateAtype 토큰화 클래스 v1.1 ->v1.2 업데이트
-
+- Cipher* 클래스들 버전 명시 v1.0
 
 ### - 2024-08-24
 - ** Encrypt,Decrypt Deprecated
