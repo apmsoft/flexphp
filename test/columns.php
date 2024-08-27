@@ -3,7 +3,7 @@ use Flex\Annona\App;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Columns\ColumnsEnum as Column;
+use Flex\Columns\ColumnsEnum as Columns;
 use Flex\Annona\Array\ArrayHelper;
 
 $path = dirname(__DIR__);
@@ -23,64 +23,69 @@ Log::init(Log::MESSAGE_ECHO);
 R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns/columns.json', 'column');
 
 # 전체 구조 출력
-Log::d( "cases ==>", Column::cases());
+Log::d( "cases ==>", Columns::cases());
 
 # 이름만 배열로 받기
-Log::d( 'names ==>',Column::names());
-Log::d( 'values ==>', Column::values());
-Log::d( 'array ==>',Column::array());
+Log::d( 'names ==>',Columns::names());
+Log::d( 'values ==>', Columns::values());
+Log::d( 'array ==>',Columns::array());
 
 Log::d(
-    'column->name : '.Column::NAME->name,
-    'column->value : '.Column::NAME->value,
-    'column->label : '.R::column(Column::NAME->value)
+    'column->name : '.Columns::NAME->name,
+    'column->value : '.Columns::NAME->value,
+    'column->label : '.R::column(Columns::NAME->value)
 );
-Log::d('>>>>>****',Column::ID());
+Log::d('>>>>>****',Columns::ID());
 
 # 전체
 Log::d(
     "key => value",
-    Column::byName('name')
+    Columns::byName('name')
 );
 
 Log::d(
     "default",
-    Column::byName('name')->name,
-    Column::byName('name')->value
+    Columns::byName('name')->name,
+    Columns::byName('name')->value
 );
 
 Log::d(
     "대문자",
-    Column::byName('name',case:'upper')->name,
-    Column::byName('name',case:'upper')->value
+    Columns::byName('name',case:'upper')->name,
+    Columns::byName('name',case:'upper')->value
 );
 
 Log::d(
     "소문자",
-    Column::byName('muid',case:'lower')->name,
-    Column::byName('muid',case:'lower')->value
+    Columns::byName('muid',case:'lower')->name,
+    Columns::byName('muid',case:'lower')->value
 );
 
 Log::d(
     "변환없음",
-    Column::byName('Total',case:'none')->name,
-    Column::byName('Total',case:'none')->value
+    Columns::byName('Total',case:'none')->name,
+    Columns::byName('Total',case:'none')->value
 );
 
 
 Log::d(
     "#대문자",
-    Column::NAME('upper')
+    Columns::NAME('upper')
 );
 
 Log::d(
     "#소문자",
-    Column::muid('lower')
+    Columns::muid('lower')
 );
 
 Log::d(
     "#변환없음",
-    Column::Total('none')
+    Columns::Total('none')
 );
 
+
+Log::d(
+    'column->name : '.Columns::NAME->value,
+    'column->type : '.Columns::NAME->type()
+);
 ?>

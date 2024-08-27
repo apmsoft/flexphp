@@ -115,6 +115,7 @@ class WhereHelper
 
 			return $this->{$propertyName};
 		}
+		return "";
 	}
 
 	# 초기화

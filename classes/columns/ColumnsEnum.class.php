@@ -12,5 +12,13 @@ enum ColumnsEnum : string
     case USERID        = 'userid';
     case muid          = 'muid';
     case Total         = 'total';
+
+    public function type(): string
+    {
+        return match($this) {
+            self::ID, self::NAME, self::USERID => 'string',
+            self::muid, self::Total => 'int',
+        };
+    }
 }
 ?>
