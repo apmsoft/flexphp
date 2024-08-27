@@ -85,7 +85,6 @@ Log::d('');
 
 // 6. ROT13Encoder 클래스
 try {
-    CipherGeneric::addProcessor(ROT13Encoder::class);
     $rot13Cipher = new CipherGeneric(new ROT13Encoder($random_text));
     $rot13Encoded = $rot13Cipher->encode();
 
