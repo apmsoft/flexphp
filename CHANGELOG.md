@@ -2,6 +2,9 @@
 
 ## [1.3]
 
+### - 2024-08-27
+- HashEncoder 와 Base64UrlEncoder 상속저의 해제
+
 ### - 2024-08-26
 - ArrayHelper ver1.3.1 버그 패치 
 - Encrypt, Decrypt Class Deprecated
