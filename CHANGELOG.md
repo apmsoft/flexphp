@@ -2,6 +2,10 @@
 
 ## [1.3]
 
+### - 2024-08-28
+- 디비데이터에 따른 타입 지정 샘플 코드 추가
+- Adapter 개념 도입
+
 ### - 2024-08-27
 - HashEncoder 와 Base64UrlEncoder 상속저의 해제
 - components/data/action 좀더 세세하게 interface 분리 및 결함
