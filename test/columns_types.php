@@ -8,7 +8,7 @@ use Flex\Columns\ColumnsEnum;
 use Flex\ColumnsTypes\ColumnsTypes;
 use Flex\Annona\Request\FormValidation as Validation;
 
-use Flex\Components\Adapter\DbBaseAdapter;
+use Flex\Components\Adapter\DbMysqlAdapter;
 use Flex\Components\Data\Action\ListInterface;
 
 $path = dirname(__DIR__);
@@ -73,7 +73,7 @@ $multiget_values = (new ColumnsTypes())
 
 Log::d($multiget_values);
 
-class Test extends DbBaseAdapter implements ListInterface 
+class Test extends DbMysqlAdapter implements ListInterface 
 {
 
     public function __construct() {

@@ -6,6 +6,7 @@
 - WhereHelper 클래스 업데이트 WhereHelperInterface 를 통해 확장 가능성 높임
 - DbBaseAdapter 클래스에 WhereHelper 클래스 자동 선언 및 WhereHelper를 상속받은 CustumWhereHelper 클래스 등록 할 수 있도록 기능 추가
 - WhereHelper v2.0 업데이트
+- *DbBaseAdapter 클래스명을 DbMysqlAdapter 로 변경 다른 데이터베이스로도 확장하며 어떤 디비용인지 명확하게 하기 위함
 
 ### - 2024-08-28
 - 디비데이터에 따른 타입 지정 샘플 코드 추가
