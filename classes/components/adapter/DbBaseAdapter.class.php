@@ -2,11 +2,18 @@
 namespace Flex\Components\Adapter;
 
 use Flex\Annona\Db\DbMySqli;
+use Flex\Annona\Db\WhereHelper;
+use Flex\Annona\Db\WhereHelperInterface;
+
 class DbBaseAdapter extends BaseAdapter{
+    public const __version = '0.2';
+    public WhereHelperInterface $whereHelper;
     public function __construct(
-        public DbMySqli $db
+        public DbMySqli $db,
+        ?WhereHelperInterface $whereHelper = null
     ){
-        $this->db = new DbMySqli();
+        # WhereHelper 를 상속은 커스텀 클래스 등록 가능
+        $this->whereHelper = $whereHelper ?? new WhereHelper();
     }
 }
 

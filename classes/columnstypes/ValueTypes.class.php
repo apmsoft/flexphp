@@ -3,6 +3,7 @@ namespace Flex\ColumnsTypes;
 
 class ValueTypes
 {
+    public const __version = '0.1';
     protected array $values = [];
 
     protected function getter($key, $chain = false, $self = null, $callback = null)

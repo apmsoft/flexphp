@@ -1,5 +1,6 @@
 <?php
 use Flex\Annona\App;
+use Flex\Annona\Db\DbMySqli;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
@@ -33,12 +34,31 @@ $signdate = (new ColumnsTypes())->setSigndate(date('Y-m-d H:i:s'))->getSigndate(
 Log::d( 'id',$id,  'userId',$userId, 'signdate',$signdate);
 
 # 멀티 셋
-$multiset_values = (new ColumnsTypes())->setId(1)->setUserId('ddd@naver.com')->setSigndate(date('Y-m-d H:i:s'))->values();
+$multiset_values = (new ColumnsTypes())
+    ->setId(1)
+    ->setUserId('ddd@naver.com')
+    ->setSigndate(date('Y-m-d H:i:s'))
+    ->values();
+
+
 Log::d( $multiset_values );
 
+# class 
 $columnsTypes = new ColumnsTypes();
-$columnsTypes->setId(1)->setUserId('ddd@naver.com')->setSigndate(date('Y-m-d H:i:s'));
-$multiget_values_v = $columnsTypes->getId(true)->getSigndate(chain:true)->values();
+
+# set
+$columnsTypes
+    ->setId(1)
+    ->setUserId('ddd@naver.com')
+    ->setSigndate(date('Y-m-d H:i:s'));
+
+# get
+$multiget_values_v = $columnsTypes
+    ->getId(true)
+    ->getSigndate(chain:true)
+    ->values();
+
+
 Log::d($multiget_values_v);
 
 
@@ -56,7 +76,16 @@ Log::d($multiget_values);
 class Test extends DbBaseAdapter implements ListInterface 
 {
 
-    public function __construct() {}
+    public function __construct() {
+        # 방법1 (WhereHelper 클래스 자동 선언됨)
+        parent::__construct(new DbMySqli());
+
+        # 방법2
+        #parent::__construct(new DbMySqli(), new WhereHelper());
+
+        # 방법2
+        #parent::__construct(new DbMySqli(), new MyCustumWhereHelper());
+    }
 
     public function doList(?array $params=[]) : ?string
     {
@@ -70,6 +99,9 @@ class Test extends DbBaseAdapter implements ListInterface
 
         # DB 클래스 호출
         // $this->db
+
+        # DB where 문 헬퍼 클래스
+        // $this->whereHelper->
 
         # total record
         // $total_record = $this->db->table(R::tables('driving_log'))->where($model->where)->total();

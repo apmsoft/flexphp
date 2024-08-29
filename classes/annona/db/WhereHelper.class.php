@@ -2,9 +2,9 @@
 namespace Flex\Annona\Db;
 
 # 데이터베이스 QUERY구문에 사용되는 WHERE문 만드는데 도움을 주는 클래스
-class WhereHelper
+class WhereHelper implements WhereHelperInterface
 {
-	public const __version = '1.8';
+	public const __version = '2.0';
 	private string $where = '';
 	private array $where_group = [];
 	private string $current_group = '';
@@ -27,7 +27,7 @@ class WhereHelper
 	# @where_str : name='홍길동'
 	# @condition : [=,!=,<,>,<=,>=,IN,LIKE-R=dd%,LIKE-L=%dd,LIKE=%dd%]
 	# @value : NULL | VALUE | % | Array
-	public function case(string $field_name, string $condition ,mixed $value, bool $is_qutawrap=true, bool $join_detection=true) : WhereHelper
+	public function case(string $field_name, string $condition ,mixed $value, bool $is_qutawrap=true, bool $join_detection=true) : WhereHelperInterface
 	{
 		$is_append = false;
 		if($value == "0") $is_append = true;
@@ -134,7 +134,7 @@ class WhereHelper
 	}
 
 	# where 그룹묶기 시작
-	public function begin(string $coord) : WhereHelper
+	public function begin(string $coord) : WhereHelperInterface
 	{
 		$groupname = strtr(microtime(),[' '=>'','0.'=>'w']);
 		$this->where_group[$groupname] = [];
@@ -151,7 +151,7 @@ class WhereHelper
 	}
 
 	# where 그룹묶기 종료
-	public function end() : WhereHelper{
+	public function end() : WhereHelperInterface{
 		if(count($this->where_group[$this->current_group])){
 			$wher_str = implode(sprintf(" %s ", $this->current_coord), $this->where_group[$this->current_group]);
 			$this->where_groups_data[] = $wher_str;
