@@ -5,7 +5,7 @@ use Flex\Annona\Db\DbMySqli;
 use Flex\Annona\Db\WhereHelper;
 use Flex\Annona\Db\WhereHelperInterface;
 
-class DbMysqlAdapter extends BaseAdapter{
+class DbMySqlAdapter extends BaseAdapter{
     public const __version = '0.2';
     public WhereHelperInterface $whereHelper;
     public function __construct(
