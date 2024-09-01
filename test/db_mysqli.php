@@ -25,7 +25,7 @@ R::tables();
 R::tables(['test'=>'test']);
 $tables = R::dic(R::$tables[R::$language]);
 
-#$db = new DbMySqli();
+$db = new DbMySqli();
 
 // $query = $db->table( R::tables('member') )->query;
 // Log::d($query);
