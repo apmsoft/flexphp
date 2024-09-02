@@ -1,16 +1,13 @@
 <?php
 namespace Flex\Components\Adapter;
+use Flex\Components\Adapter\BaseAdapterInterface;
 
-use Flex\Annona\Paging\Relation;
-class BaseAdapter {
+class BaseAdapter implements BaseAdapterInterface{
     public const __version = '0.1';
-    public array $relation = [];
 
-    public function relation(int $total_record, int $page, int $limit, int $block) : Relation{
-        $paging = new Relation($total_record, $page);
-        $this->relation = $paging->query( $limit, $block)->build()->paging();
-
-    return $paging;
+    public function getVersion(): string
+    {
+        return static::__version;
     }
 }
 

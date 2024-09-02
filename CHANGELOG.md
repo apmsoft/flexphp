@@ -2,6 +2,10 @@
 
 ## [1.3]
 
+### - 2024-09-02
+- BaseAdapterInterface 추가
+- BaseAdapter BaseAdapterInterface 구현하도록 명시 및 Relation 클래스 제거
+
 ### - 2024-08-29
 - WhereHelper 클래스 업데이트 WhereHelperInterface 를 통해 확장 가능성 높임
 - DbBaseAdapter 클래스에 WhereHelper 클래스 자동 선언 및 WhereHelper를 상속받은 CustumWhereHelper 클래스 등록 할 수 있도록 기능 추가
