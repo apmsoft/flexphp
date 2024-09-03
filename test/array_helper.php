@@ -318,6 +318,60 @@ Log::d("find where %LIKE AND", $find_where_like_l);
 // Log::d($changeKeysData3 );
 
 ### 원하는 키값만 뽑아서 1차원 배열로 받기
-$extractValues = (new ArrayHelper( $args ))->extractValues("muid")->value;
-Log::d("extractValues", $extractValues);
+$pluckValues = (new ArrayHelper( $args ))->pluck("muid")->value;
+Log::d("pluck", $pluckValues);
+
+### map
+$data = [
+    ['id' => 1, 'name' => 'Alice', 'age' => 30],
+    ['id' => 2, 'name' => 'Bob', 'age' => 25],
+    ['id' => 3, 'name' => 'Charlie', 'age' => 35],
+];
+
+$helper = new ArrayHelper($data);
+
+// ID를 문자열로 변환
+$helper->map(function($item) {
+    $item['id'] = (string)$item['id'];
+    return $item;
+});
+Log::d("map ID 형변환 /=========");
+var_dump($helper->value);
+
+// 새로운 필드 추가
+$helper->map(function($item) {
+    $item['is_adult'] = $item['age'] >= 18;
+    return $item;
+});
+
+Log::d("map 새로운 필드 추가", $helper->value);
+
+### reduce
+// 나이의 총합을 계산하는 reduce 사용 예제
+$totalAge = $helper->reduce(function($carry, $item) {
+    return $carry + $item['age'];
+}, 0);
+
+Log::d( "reduce","Total age: " , $totalAge );
+
+
+// 모든 이름을 연결하는 reduce 사용 예제
+$allNames = $helper->reduce(function($carry, $item) {
+    return $carry . $item['name'] . ' ';
+}, ', ');
+Log::d ("reduce","All names: " . trim($allNames));
+
+// 가장 나이가 많은 사람 찾기
+$oldestPerson = $helper->reduce(function($carry, $item) {
+    return $carry['age'] > $item['age'] ? $carry : $item;
+}, ['age' => 0]);
+
+Log::d( "reduce","가장 나이 많은 사람: " . $oldestPerson['name'] . " (" . $oldestPerson['age'] . " 세)");
+
+
+// 나이가 30 이상인 사람의 수 세기
+$countOver30 = $helper->reduce(function($carry, $item) {
+    return $carry + ($item['age'] >= 30 ? 1 : 0);
+}, 0);
+Log::d( "30세 이상 인구수: " . $countOver30 );
 ?>

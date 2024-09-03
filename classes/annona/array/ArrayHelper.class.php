@@ -396,11 +396,11 @@ class ArrayHelper
 
     public function reduce(callable $callback, mixed $initial = null): mixed
     {
-        return array_reduce($this->data, $callback, $initial);
+        return array_reduce($this->value, $callback, $initial);
     }
 
     # 원하는 키만 뽑아서 1차원 배열로 출력하기
-    public function extractValues(string $key) : ArrayHelper
+    public function pluck(string $key) : ArrayHelper
     {
         $this->value = array_column($this->value, $key);
         return $this;
@@ -431,6 +431,13 @@ class ArrayHelper
             $result = $this->{$propertyName};
         }
     return $result;
+    }
+
+    public function __set(string $propertyName, array $args) : void{
+        if(property_exists($this,$propertyName)){
+            if(is_array($args))
+            $this->{$propertyName} = $args;
+        }
     }
 }
 ?>
