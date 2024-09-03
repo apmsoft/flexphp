@@ -2,6 +2,9 @@
 
 ## [1.3]
 
+### - 2024-09-03
+- ArrayHelper class v1.3.2 업데이트 map,reduce 메소드 기능 추가
+
 ### - 2024-09-02
 - BaseAdapterInterface 추가
 - BaseAdapter BaseAdapterInterface 구현하도록 명시 및 Relation 클래스 제거

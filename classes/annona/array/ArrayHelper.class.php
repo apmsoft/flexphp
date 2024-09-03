@@ -4,7 +4,7 @@ namespace Flex\Annona\Array;
 # 배열 사용에 도움을 주는 클래스
 class ArrayHelper
 {
-    public const __version = '1.3.1';
+    public const __version = '1.3.2';
     public function __construct(
         private array $value
     ){}
@@ -388,6 +388,17 @@ class ArrayHelper
     return $this;
     }
 
+    public function map(callable $callback): self
+    {
+        $this->value = array_map($callback, $this->value);
+        return $this;
+    }
+
+    public function reduce(callable $callback, mixed $initial = null): mixed
+    {
+        return array_reduce($this->data, $callback, $initial);
+    }
+
     # 원하는 키만 뽑아서 1차원 배열로 출력하기
     public function extractValues(string $key) : ArrayHelper
     {
@@ -405,14 +416,6 @@ class ArrayHelper
         }
     return $result;
     }
-
-    // private function asc ($a, $b ): mixed {
-    //     return ($a <=> $b) ? -1 : 1;
-    // }
-
-    // private function desc ($a, $b ): mixed {
-    //     return ($a <= $b) ? 1 : -1;
-    // }
 
     private function asc ($a, $b ): mixed {
         return $a <=> $b;
