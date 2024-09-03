@@ -8,6 +8,5 @@ interface DbSqliteInterface
     public function insert() : bool;			# 저장
     public function update() : bool;	# 수정
     public function delete() : bool;	# 삭제
-    public function delete() : bool;	# 삭제
 }
 ?>
