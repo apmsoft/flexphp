@@ -1,5 +1,5 @@
 <?php
-namespace Flex\ColumnsTypes;
+namespace Flex\Columns;
 
 class ValueTypes
 {

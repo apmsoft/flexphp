@@ -2,6 +2,11 @@
 
 ## [1.3]
 
+### - 2024-09-04
+- ColumnsTypes Columns 으로 이동 및 패키지명 변경
+- Components\Data\Action ReplyInterface.class 파일명 수정
+- test/columns_types 예제파일 수정
+
 ### - 2024-09-03
 - ArrayHelper class v1.3.2 업데이트 map,reduce,__set 메소드 기능 추가, extractValues -> pluck 으로 메소드명 변경
 

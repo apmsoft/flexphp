@@ -5,7 +5,7 @@ use Flex\Annona\Log;
 use Flex\Annona\R;
 
 use Flex\Columns\ColumnsEnum;
-use Flex\ColumnsTypes\ColumnsTypes;
+use Flex\Columns\ColumnsTypes;
 use Flex\Annona\Request\FormValidation as Validation;
 
 use Flex\Components\Adapter\DbMysqlAdapter;

@@ -1,8 +1,8 @@
 <?php
-namespace Flex\ColumnsTypes;
+namespace Flex\Columns;
 
 use Flex\Columns\ColumnsEnum;
-use Flex\ColumnsTypes\ValueTypes;
+use Flex\Columns\ValueTypes;
 use Flex\Annona\Date\DateTimez;
 
 class ColumnsTypes extends ValueTypes
