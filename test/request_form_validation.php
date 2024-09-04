@@ -54,7 +54,7 @@ $request->end_date   = '2012-01-04';
 $request->authnumber = 'FlexPHP';
 $request->point      = '23.7';
 $request->key        = 'dsdf_23_7';
-$request->enum       = 'z';
+$request->enum       = 'a';
 // $request->linkurl    = 'http://flexvue.fancyupsoft.com';
 
 
@@ -74,6 +74,9 @@ try{
     (new FormValidation('key', '영어+숫자+_ 만허용',$request->key))->null()->space()->disliking(['_'])->alnum();
     (new FormValidation('linkurl', 'http 주소타입인지 체크',$request->linkurl))->space()->url();
     (new FormValidation('enum', 'enum',$request->enum))->null()->enum(["a","b","c"]);
+    (new FormValidation('enum', 'enum',$request->enum))->when(function() use ($request){
+        return $request->enum =='a';
+    })->null()->enum(["d"]);
 }catch(\Exception $e){
     Log::e(json_decode($e->getMessage(),true));
     exit;
