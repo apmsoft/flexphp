@@ -7,6 +7,9 @@
 - Components\Data\Action ReplyInterface.class 파일명 수정
 - test/columns_types 예제파일 수정
 - FormValidation v2.2 클래스에 when 조건문을 작성할 수 있는 메소드 추가 when이 true 일때만 다음 체크 메소드들을 실행함
+- EntryArrayTrait, EnumInstanceTrait, EnumValueInsterface, EnumValueStorage update && new add
+- Enum Trait Example : ExampleEnum, ExampleTypesTrait class new add
+- test/columns_types.php 예제 업데이트
 
 ### - 2024-09-03
 - ArrayHelper class v1.3.2 업데이트 map,reduce,__set 메소드 기능 추가, extractValues -> pluck 으로 메소드명 변경

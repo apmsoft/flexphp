@@ -22,21 +22,21 @@ trait EntryArrayTrait
         }
     }
 
-    public static function byName(string $name, string $case = 'UPPER'): mixed
+    public static function byName(string $name, string $case = 'UPPER'): ?object
     {
         $NAME = ('UPPER' == strtoupper($case)) ? strtoupper($name) :
                 (('LOWER' == strtoupper($case)) ? strtolower($name) : $name);
 
-        if (!defined(self::class . "::{$NAME}")) {
-            return null; // or throw an exception
+        foreach (self::cases() as $case) {
+            if (strtoupper($case->name) === $NAME) {
+                return (object)[
+                    'name'  => $case->name,
+                    'value' => $case->value
+                ];
+            }
         }
 
-        $enum = constant(self::class . "::{$NAME}");
-        $result = (object)[
-            'name'  => $enum->name,
-            'value' => $enum->value
-        ];
-        return $result;
+        return null;
     }
 
     public static function __callStatic(string $name, array $args = []): string

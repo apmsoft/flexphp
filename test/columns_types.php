@@ -4,12 +4,13 @@ use Flex\Annona\Db\DbMySqli;
 use Flex\Annona\Log;
 use Flex\Annona\R;
 
-use Flex\Columns\ColumnsEnum;
-use Flex\Columns\ColumnsTypes;
+use Flex\Columns\Example\ExampleEnum;
 use Flex\Annona\Request\FormValidation as Validation;
-
+use Flex\Annona\Array\ArrayHelper;
 use Flex\Components\Adapter\DbMysqlAdapter;
 use Flex\Components\Data\Action\ListInterface;
+use Flex\Annona\Model;
+use Flex\Annona\Json\JsonEncoder;
 
 $path = dirname(__DIR__);
 require $path. '/config/config.inc.php';
@@ -18,70 +19,69 @@ require $path. '/config/config.inc.php';
 // Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
-// Log::options([
-//     'datetime'   => false, # 날짜시간 출력여부
-//     'debug_type' => true, # 디버그 타입 출력여부
-//     'newline'    => true  # 개행문자 출력여부
-// ]);
-
 # resource
-// R::parser(_ROOT_PATH_.'/'._QUERY_.'/columns/columns.json', 'column');
+R::tables();
 
-# 단일 setter, getter
-$id       = (new ColumnsTypes())->setId(1)->getId();
-$userId   = (new ColumnsTypes())->setUserId('ddd@naver.com')->getUserId();
-$signdate = (new ColumnsTypes())->setSigndate(date('Y-m-d H:i:s'))->getSigndate('Y.m.d');
-Log::d( 'id',$id,  'userId',$userId, 'signdate',$signdate);
+# ExampleEnum 인스턴스 생성
+$example = ExampleEnum::create();
 
-# 멀티 셋
-$multiset_values = (new ColumnsTypes())
-    ->setId(1)
-    ->setUserId('ddd@naver.com')
-    ->setSigndate(date('Y-m-d H:i:s'))
-    ->values();
+// 값 설정
+$example->setId(1);
+$example->setName("John Doe");
+$example->setUserId("john.doe@example.com");
+$example->setMuid(1001);
+$example->setTotal(100);
+$example->setSigndate("2023-09-04 10:00:00");
 
+// 값 가져오기
+Log::d( "ID: " . $example->getId() );
+Log::d( "Name: " . $example->getName() );
+Log::d( "User ID: " . $example->getUserId() );
+Log::d( "MUID: " . $example->getMuid() );
+Log::d( "Total: " . $example->getTotal() );
+Log::d( "Sign Date: " . $example->getSigndate() );
 
-Log::d( $multiset_values );
+// 특정 형식으로 날짜 가져오기
+Log::d( "Formatted Sign Date: " . $example->getSigndate("Y-m-d") );
 
-# class 
-$columnsTypes = new ColumnsTypes();
+// 모든 설정된 값 가져오기
+Log::d($example->getInstanceValues());
 
-# set
-$columnsTypes
-    ->setId(1)
-    ->setUserId('ddd@naver.com')
-    ->setSigndate(date('Y-m-d H:i:s'));
+// Enum의 기본 값들 가져오기
+Log::d(ExampleEnum::values());
 
-# get
-$multiget_values_v = $columnsTypes
-    ->getId(true)
-    ->getSigndate(chain:true)
-    ->values();
+// Enum의 이름들 가져오기
+Log::d(ExampleEnum::names());
 
+// Enum의 이름과 값을 연관 배열로 가져오기
+Log::d(ExampleEnum::array());
 
-Log::d($multiget_values_v);
+// byName 메서드 사용
+$idCase = ExampleEnum::byName('ID');
+Log::d( "ID case: " . $idCase->name . " - " . $idCase->value );
 
+// 값 초기화
+ExampleEnum::resetValues();
 
-$multiget_values = (new ColumnsTypes())
-    ->setId(1)
-    ->setUserId('ddd@naver.com')
-    ->setSigndate(date('Y-m-d H:i:s'))
-    ->getId(true)
-    ->getUserId(true)
-    ->getSigndate('Y.m.d', true)
-    ->values();
+// 초기화 후 값 확인
+Log::d($example->getInstanceValues());
 
-Log::d($multiget_values);
+// 메서드 체이닝 사용
+$example->setId(2)
+        ->setName("Jane Smith")
+        ->setUserId("jane.smith@example.com");
 
+Log::d( "After chaining - ID: " . $example->getId() . ", Name: " . $example->getName() );
+
+# example class
 class Test extends DbMysqlAdapter implements ListInterface 
 {
-
+    private ExampleEnum $exampleEnum;
     public function __construct() {
         # 방법1 (WhereHelper 클래스 자동 선언됨)
         parent::__construct(new DbMySqli());
 
-        # 방법2
-        #parent::__construct(new DbMySqli(), new WhereHelper());
+        $this->exampleEnum = ExampleEnum::create();
 
         # 방법2
         #parent::__construct(new DbMySqli(), new MyCustumWhereHelper());
@@ -89,52 +89,38 @@ class Test extends DbMysqlAdapter implements ListInterface
 
     public function doList(?array $params=[]) : ?string
     {
+        # model
+        $model = new Model();
+        $model->data = [];
 
-        // try{
-        //     (new Validation(ComColumn::PAGE(),R::strings(ComColumn::PAGE()),$this->requested->{ComColumn::PAGE()} ?? 1))->number();
-        // }catch(\Exception $e){
-        //     Log::e($e->getMessage());
-        //     return $e->getMessage();
-        // }
+        # query
+        $result = $this->db->table("test")
+            ->select(
+                ExampleEnum::ID(),
+                ExampleEnum::NAME(),
+                ExampleEnum::USERID(),
+            )
+            ->where(
+                ExampleEnum::ID() ,">=",10
+            )
+            ->query();
 
-        # DB 클래스 호출
-        // $this->db
+        while ($row = $result->fetch_assoc()())
+        {
+            # set/get
+            $row[ExampleEnum::ID()]     = $this->exampleEnum->setId((int)$row[ExampleEnum::ID()])->getId();
+            $row[ExampleEnum::NAME()]   = $this->exampleEnum->setName(ExampleEnum::NAME())->getName();
+            $row[ExampleEnum::USERID()] = $this->exampleEnum->setUserId(ExampleEnum::USERID())->getUserId();
 
-        # DB where 문 헬퍼 클래스
-        // $this->whereHelper->
+            // array push
+            $model->data[] = $row;
+        }
 
-        # total record
-        // $total_record = $this->db->table(R::tables('driving_log'))->where($model->where)->total();
-
-        # 페이징 클래스 호출
-        /**
-         * $paging = $this->relation(total_record :100, page :1, limit : 10, block:5);
-         * $relaction = $this->relation;
-         * $paging->page;
-         * $paging->totalPage;
-         * $paging->qLimitStart;
-         * $paging->qLimitEnd;
-         * */ 
-
-         /**
-          * # query
-          * $rlt = $this->db->table(R::tables('driving_log'))->orderBy(Column::ID().' DESC')->limit($paging->qLimitStart, $paging->qLimitEnd)->query();
-
-        *while($row = $rlt->fetch_assoc())
-        *{
-        *
-        *    $model->data[] = (new ColumnsTypes())
-            *    ->setId(1)
-            *    ->setUserId( (int)$row[ColumnsEnum::ID()] )
-            *    ->setSigndate( $row[ColumnsEnum::SIGNDATE() )
-            *    ->getId(true)
-            *    ->getUserId(true)
-            *    ->getSigndate(chain:true)
-            *    ->values();
-        *}
-          */
-
-        return "";
+        # output
+        return JsonEncoder::toJson([
+            "result" => "true",
+            "msg"    => $model->data
+        ]);
     }
 }
 ?>
