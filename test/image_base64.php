@@ -1,8 +1,6 @@
 <?php
 
-use Flex\Annona\Db\DbMySqli;
 use Flex\Annona\Log;
-use Flex\Annona\R;
 use Flex\Annona\Image\ImageGDS;
 
 use Flex\Components\Data\Mgmt\ImageCompressorInterface;
@@ -15,10 +13,6 @@ require $path. '/config/config.inc.php';
 
 # 기본값 MESSAGE_FILE, log.txt;
 Log::init(Log::MESSAGE_ECHO);
-
-# resource
-R::tables();
-$db = new DbMySqli();
 
 # example class
 class ImageCompressor implements ImageCompressorInterface
