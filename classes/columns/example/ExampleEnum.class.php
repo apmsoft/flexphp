@@ -12,10 +12,8 @@ enum ExampleEnum: string implements EnumValueInterface
     use ExampleTypesTrait;
 
     case ID       = 'id';
-    case NAME     = 'name';
-    case USERID   = 'userid';
-    case MUID     = 'muid';
-    case TOTAL    = 'total';
+    case TITLE    = 'title';
     case SIGNDATE = 'signdate';
+    case FID      = 'fid';
 }
 ?>

@@ -16,37 +16,15 @@ trait ExampleTypesTrait
         return ($enum = self::byName('ID')) !== null ? $this->getValue($enum->value) : null;
     }
 
-    public function setMuid(int $muid): self
+    public function setTitle(string $title): self
     {
-        ($enum = self::byName('MUID')) && $this->setValue($enum->value, $muid);
+        ($enum = self::byName('TITLE')) && $this->setValue($enum->value, $title);
         return $this;
     }
 
-    public function getMuid(): ?int
+    public function getTitle(): ?string
     {
-        return ($enum = self::byName('MUID')) !== null ? $this->getValue($enum->value) : null;
-    }
-
-    public function setName(string $name): self
-    {
-        ($enum = self::byName('NAME')) && $this->setValue($enum->value, $name);
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return ($enum = self::byName('NAME')) !== null ? $this->getValue($enum->value) : null;
-    }
-
-    public function setUserId(string $userId): self
-    {
-        ($enum = self::byName('USERID')) && $this->setValue($enum->value, $userId);
-        return $this;
-    }
-
-    public function getUserId(): ?string
-    {
-        return ($enum = self::byName('USERID')) !== null ? $this->getValue($enum->value) : null;
+        return ($enum = self::byName('TITLE')) !== null ? $this->getValue($enum->value) : null;
     }
 
     public function setSigndate(string $signdate): self
@@ -64,15 +42,15 @@ trait ExampleTypesTrait
         return $value !== null ? (new DateTimez($value))->format($format) : null;
     }
 
-    public function setTotal(int $total): self
+    public function setFid(string $fid): self
     {
-        ($enum = self::byName('TOTAL')) && $this->setValue($enum->value, $total);
+        ($enum = self::byName('FID')) && $this->setValue($enum->value, $fid);
         return $this;
     }
 
-    public function getTotal(): ?int
+    public function getFid(): ?string
     {
-        return ($enum = self::byName('TOTAL')) !== null ? $this->getValue($enum->value) : null;
+        return ($enum = self::byName('FID')) !== null ? $this->getValue($enum->value) : null;
     }
 }
 ?>

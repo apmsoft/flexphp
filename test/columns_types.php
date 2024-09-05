@@ -27,18 +27,12 @@ $example = ExampleEnum::create();
 
 // 값 설정
 $example->setId(1);
-$example->setName("John Doe");
-$example->setUserId("john.doe@example.com");
-$example->setMuid(1001);
-$example->setTotal(100);
+$example->setTitle("Text");
 $example->setSigndate("2023-09-04 10:00:00");
 
 // 값 가져오기
 Log::d( "ID: " . $example->getId() );
-Log::d( "Name: " . $example->getName() );
-Log::d( "User ID: " . $example->getUserId() );
-Log::d( "MUID: " . $example->getMuid() );
-Log::d( "Total: " . $example->getTotal() );
+Log::d( "Name: " . $example->getTitle() );
 Log::d( "Sign Date: " . $example->getSigndate() );
 
 // 특정 형식으로 날짜 가져오기
@@ -68,10 +62,9 @@ Log::d($example->getInstanceValues());
 
 // 메서드 체이닝 사용
 $example->setId(2)
-        ->setName("Jane Smith")
-        ->setUserId("jane.smith@example.com");
+        ->setTitle("Jane Smith");
 
-Log::d( "After chaining - ID: " . $example->getId() . ", Name: " . $example->getName() );
+Log::d( "After chaining - ID: " . $example->getId() . ", Name: " . $example->getTitle() );
 
 # example class
 class Test extends DbMysqlAdapter implements ListInterface 
@@ -97,20 +90,18 @@ class Test extends DbMysqlAdapter implements ListInterface
         $result = $this->db->table("test")
             ->select(
                 ExampleEnum::ID(),
-                ExampleEnum::NAME(),
-                ExampleEnum::USERID(),
+                ExampleEnum::TITLE(),
+                ExampleEnum::SIGNDATE(),
             )
-            ->where(
-                ExampleEnum::ID() ,">=",10
-            )
+            ->where( ExampleEnum::ID() ,">=",10 )
             ->query();
 
         while ($row = $result->fetch_assoc()())
         {
             # set/get
-            $row[ExampleEnum::ID()]     = $this->exampleEnum->setId((int)$row[ExampleEnum::ID()])->getId();
-            $row[ExampleEnum::NAME()]   = $this->exampleEnum->setName(ExampleEnum::NAME())->getName();
-            $row[ExampleEnum::USERID()] = $this->exampleEnum->setUserId(ExampleEnum::USERID())->getUserId();
+            $row[ExampleEnum::ID()]      = $this->exampleEnum->setId((int)$row[ExampleEnum::ID()])->getId();
+            $row[ExampleEnum::TITLE()]   = $this->exampleEnum->setTitle(ExampleEnum::TITLE())->getTitle();
+            $row[ExampleEnum::SIGNDATE()]= $this->exampleEnum->setSigndate(ExampleEnum::USERID())->getSigndate();
 
             // array push
             $model->data[] = $row;
@@ -123,4 +114,6 @@ class Test extends DbMysqlAdapter implements ListInterface
         ]);
     }
 }
+
+#(new Test())->doList();
 ?>
