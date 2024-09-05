@@ -9,7 +9,8 @@ enum ExampleEnum: string implements EnumValueInterface
 {
     use EnumInstanceTrait;
     use EntryArrayTrait;
-    use ExampleTypesTrait;
+    
+    use ExampleEnumTypesTrait;
 
     case ID       = 'id';
     case TITLE    = 'title';

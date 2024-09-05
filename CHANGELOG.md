@@ -11,6 +11,11 @@
 - Enum Trait Example : ExampleEnum, ExampleTypesTrait class new add
 - test/columns_types.php 예제 업데이트
 
+- components/mgmt/ 컴포넌트 trait 클래스 변경 및 추가
+    -- FidProviderInterface, FidTrait
+    -- ImageCompressorInterface, ImageCompressorBase64Trait, ImageComporessorEditjsTrait
+    -- test/imag_base64.php 예제파일
+
 ### - 2024-09-03
 - ArrayHelper class v1.3.2 업데이트 map,reduce,__set 메소드 기능 추가, extractValues -> pluck 으로 메소드명 변경
 

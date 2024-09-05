@@ -3,7 +3,7 @@ namespace Flex\Columns\Example;
 
 use Flex\Annona\Date\DateTimez;
 
-trait ExampleTypesTrait
+trait ExampleEnumTypesTrait
 {
     public function setId(int $id): self
     {
