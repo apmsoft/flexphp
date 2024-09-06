@@ -7,7 +7,7 @@ use Flex\Annona\R;
 use Flex\Components\Schema\TablesMap;
 use Flex\Annona\Array\ArrayHelper;
 use Flex\Annona\Model;
-use Flex\Annona\Adapter\BaseAdapter;
+use Flex\Components\Adapter\BaseAdapter;
 use Flex\Annona\Uuid\UuidGenerator;
 
 $path = dirname(__DIR__);
@@ -25,28 +25,5 @@ Log::options([
 
 $baseAdapter = new BaseAdapter();
 
-$model = $baseAdapter->new(Model::class, []);
-$model->a = 1;
-$model->b = 4;
-$model->data = [];
-$model->{"data+"} = 1;
-$model->{"data+"} = 2;
-$model->{"data+"} = 3;
 
-Log::d($model->fetch());
-
-$model2 = $baseAdapter->new(Model::class, ["a2"=>"a2"]);
-Log::d($model2->fetch());
-
-$baseAdapter->new(ArrayHelper::class, [["a"=>"a"],["a"=>"b"]]);
-Log::d($baseAdapter->ArrayHelper->sorting('a','DESC')->value);
-
-$baseAdapter->new(UuidGenerator::class);
-Log::d($baseAdapter->UuidGenerator->v4());
-
-
-$baseAdapter->new('Flex\Annona\Paging\Relation', 1000,1);
-Log::d($baseAdapter->Relation->query( 10, 10 )->build()->paging());
-
-Log::d($baseAdapter->fetchInstances());
 ?>
