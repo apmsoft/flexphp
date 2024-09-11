@@ -2,6 +2,9 @@
 
 ## [1.3]
 
+### - 2024-09-11
+- ColumnsTypes 예제 업데이트
+
 ### - 2024-09-04
 - ColumnsTypes Columns 으로 이동 및 패키지명 변경
 - Components\Data\Action ReplyInterface.class 파일명 수정

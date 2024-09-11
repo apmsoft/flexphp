@@ -98,13 +98,12 @@ class Test extends DbMysqlAdapter implements ListInterface
 
         while ($row = $result->fetch_assoc()())
         {
-            # set/get
-            $row[ExampleEnum::ID()]      = $this->exampleEnum->setId((int)$row[ExampleEnum::ID()])->getId();
-            $row[ExampleEnum::TITLE()]   = $this->exampleEnum->setTitle(ExampleEnum::TITLE())->getTitle();
-            $row[ExampleEnum::SIGNDATE()]= $this->exampleEnum->setSigndate(ExampleEnum::USERID())->getSigndate();
-
             // array push
-            $model->data[] = $row;
+            $model->data[] = [
+                ExampleEnum::ID()      => $this->exampleEnum->setId( (int)$row[ExampleEnum::ID()] )->getId(),
+                ExampleEnum::TITLE()   => $this->exampleEnum->setTitle( $row[ExampleEnum::TITLE()] )->getTitle(),
+                ExampleEnum::SIGNDATE()=> $this->exampleEnum->setSigndate( $row[ExampleEnum::SIGNDATE()] )->getSigndate()
+            ];
         }
 
         # output
