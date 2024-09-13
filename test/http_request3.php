@@ -13,23 +13,43 @@ Log::init();
 Log::init(Log::MESSAGE_ECHO);
 
 
+// try{
+//     (new Flex\Annona\Http\HttpRequest())
+//     ->set(
+//         'http://localhost:8000/remaining/amount',
+//         http_build_query([]),
+//         [
+//             "Content-Type:application/x-www-form-urlencoded",
+//             "Accept-Language:ko",
+//             "Authorization-Access-Token:dfsafdsafdsasd"
+//         ]
+//     )
+//     ->post(function($data){
+//         print_r($data);
+//     });
+//     // (new Flex\Annona\Http\HttpRequest( $urls ))->post(function($data){
+//     //      Log::d($data);
+//     // });
+// }catch(\Exception $e){
+//     Log::e($e->getMessage());
+// }
+
+
 try{
     (new Flex\Annona\Http\HttpRequest())
     ->set(
-        'http://115.68.73.34:8000/remaining/amount',
-        http_build_query([]),
+        'http://192.168.50.165:8104/read',
+        http_build_query([
+            "name" => "홍길동",
+            "uploadfile" => "@/app/test/ddd.png"
+        ]),
         [
-            "Content-Type:application/x-www-form-urlencoded",
-            "Accept-Language:ko",
-            "Authorization-Access-Token:Y29taGhzZWVnMzpGWDRqcklsZGhxMjk0ZThnV0NoTDJ3"
+            "Content-Type:multipart/form-data"
         ]
     )
     ->post(function($data){
         print_r($data);
     });
-    // (new Flex\Annona\Http\HttpRequest( $urls ))->post(function($data){
-    //      Log::d($data);
-    // });
 }catch(\Exception $e){
     Log::e($e->getMessage());
 }

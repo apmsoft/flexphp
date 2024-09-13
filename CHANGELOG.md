@@ -1,6 +1,10 @@
 # Changelog
 
-## [2.0]
+## [2.0.1]
+
+### - 2024-09-13
+- HttpRequest class v1.1.0 update 
+    - post 첨부파일 포함해서 전송할 수 있도록 업데이트
 
 ### - 2024-09-11
 - ColumnsTypes 예제 업데이트
