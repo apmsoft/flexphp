@@ -18,14 +18,13 @@ class Upload extends DirInfo
     public string $savefilename = '';
 
     private array $error_msg = [
-        'E2' => 'e_upload_max_filesize',
-        'E3' => 'e_partially_uploaded',
-        'E4' => 'e_no_was_uploaded',
-        'E5' => 'e_extension_not_allowed',
-        'E6' => 'e_miss_temp_folder',
-        'E7' => 'e_failed_write_disk',
-        'E8' => 'e_upload_stopped',
-        'E9' => 'e_not_uploaded_file',
+        UPLOAD_ERR_INI_SIZE    => 'e_upload_max_filesize',
+        UPLOAD_ERR_FORM_SIZE   => 'e_upload_max_filesize',
+        UPLOAD_ERR_PARTIAL     => 'e_partially_uploaded',
+        UPLOAD_ERR_NO_FILE     => 'e_no_was_uploaded',
+        UPLOAD_ERR_NO_TMP_DIR  => 'e_miss_temp_folder',
+        UPLOAD_ERR_CANT_WRITE  => 'e_failed_write_disk',
+        UPLOAD_ERR_EXTENSION   => 'e_upload_stopped',
     ];
 
     # 1
@@ -38,27 +37,27 @@ class Upload extends DirInfo
     public function process(string $process_id, array $_files) : Upload
     {
         # 값이 정상적인지 체크
-        if(!isset($_files[$process_id])){
-            self::exceptionsErrorHandler(4);
+        if (!isset($_files[$process_id])) {
+            self::exceptionsErrorHandler(UPLOAD_ERR_NO_FILE);
         }
 
         $this->process = $_files[$process_id];
+        $filename = method_exists($this->process, 'getClientFilename') ? $this->process->getClientFilename() : $this->process['name'];
+        $mimeType = method_exists($this->process, 'getClientMediaType') ? $this->process->getClientMediaType() : $this->process['type'];
+        $size = method_exists($this->process, 'getSize') ? $this->process->getSize() : $this->process['size'];
+        $error = method_exists($this->process, 'getError') ? $this->process->getError() : $this->process['error'];
+
         Log::d('-----------< Upload >-------------------');
-        Log::d('filename' ,$this->process->getClientFilename());
-        Log::d('mimeType',$this->process->getClientMediaType());
-        Log::d('size', $this->process->getSize());
-        Log::d('error', $this->process->getError());
+        Log::d('filename', $filename);
+        Log::d('mimeType', $mimeType);
+        Log::d('size', $size);
+        Log::d('error', $error);
         Log::d('--------------------------------------');
 
         # 기초에러
-        if($this->process->getError() > 0){
-            self::exceptionsErrorHandler($this->process->getError());
+        if ($error !== UPLOAD_ERR_OK) {
+            self::exceptionsErrorHandler($error);
         }
-
-        # 업로드 된 파일인지 체크
-        // if(!self::is_upload_files()){
-        //     self::exceptionsErrorHandler(9);
-        // }
 
     return $this;
     }
@@ -67,8 +66,8 @@ class Upload extends DirInfo
     public function filterExtension(array $allowe_extension=['jpg','jpeg','png','gif']) : Upload
 	{
         self::getExtName();
-        if(!in_array($this->file_extension,$allowe_extension)){
-			self::exceptionsErrorHandler(5);
+        if (!in_array($this->file_extension, $allowe_extension)) {
+			self::exceptionsErrorHandler(UPLOAD_ERR_EXTENSION);
         }
     return $this;
     }
@@ -77,8 +76,8 @@ class Upload extends DirInfo
     public function filterSize(int $size) : Upload 
     {
         $maxsize = (int)(1024 * 1024 * $size);
-        if($this->process->getSize() >= $maxsize){
-            self::exceptionsErrorHandler(2);
+        if ($this->process->getSize() >= $maxsize) {
+            self::exceptionsErrorHandler(UPLOAD_ERR_INI_SIZE);
         }
     return $this;
     }
@@ -86,9 +85,9 @@ class Upload extends DirInfo
     # 5 업로드할 디렉토리 체크 및 만들기
     public function makeDirs() : Upload
     {
-        try{
+        try {
             parent::makesDir();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
     return $this;
@@ -98,18 +97,26 @@ class Upload extends DirInfo
 	public function save(): Upload
     {
         #저장할파일명
-		$tempfilename  = str_replace(['.',' '],['_','_'],microtime());
+		$tempfilename  = str_replace(['.',' '],['_','_'], microtime());
 		$this->savefilename = sprintf("%s.%s", (new CipherGeneric(new HashEncoder($tempfilename)))->hash(), $this->file_extension);
         $fullname = sprintf("%s/%s", $this->directory, $this->savefilename);
 
         # 파일 저장
         try {
-            # BufferedBody 객체에서 내용을 가져옴
-            $bodyContent = (string)$this->process->getStream();
-            file_put_contents($fullname, $bodyContent);
+            if ($this->process->getStream() !== null) {
+                # BufferedBody 객체에서 내용을 가져옴
+                $bodyContent = (string)$this->process->getStream();
+                if (file_put_contents($fullname, $bodyContent) === false) {
+                    throw new Exception('Failed to write file to disk.');
+                }
+            } else {
+                if (!move_uploaded_file($this->process['tmp_name'], $fullname)) {
+                    self::exceptionsErrorHandler(UPLOAD_ERR_CANT_WRITE);
+                }
+            }
         } catch (Exception $e) {
             Log::e(__LINE__, $e->getMessage());
-            self::exceptionsErrorHandler(7);
+            self::exceptionsErrorHandler(UPLOAD_ERR_CANT_WRITE);
         }
 
     return $this;
@@ -119,28 +126,25 @@ class Upload extends DirInfo
     public function filterOrientation() : Upload
     {
         # jpeg, jpg 인지 체크
-		if( preg_match('/(jpeg|jpg)/',$this->file_extension) )
-		{
+		if (preg_match('/(jpeg|jpg)/', $this->file_extension)) {
             $fullname = sprintf("%s/%s", $this->directory, $this->savefilename);
-			$ifdo = (new ImageExif( $fullname ))->getIfdo();
-			if(isset($ifdo['Orientation']) && !empty($ifdo['Orientation']))
-            {
-                // Flex\Annona\Log::d('filterOrientation >>>>',$ifdo);
-				$im = imagecreatefromjpeg( $fullname );
-				switch($ifdo['Orientation']) {
+			$ifdo = (new ImageExif($fullname))->getIfdo();
+			if (isset($ifdo['Orientation']) && !empty($ifdo['Orientation'])) {
+				$im = imagecreatefromjpeg($fullname);
+				switch ($ifdo['Orientation']) {
                     case 8:
-                        $rotate = imagerotate($im,90,0);
-                        imagejpeg($rotate, $fullname );
+                        $rotate = imagerotate($im, 90, 0);
+                        imagejpeg($rotate, $fullname);
                         break;
                     case 3:
-                        $rotate = imagerotate($im,180,0);
+                        $rotate = imagerotate($im, 180, 0);
                         imagejpeg($rotate, $fullname);
                         break;
                     case 6:
-                        $rotate = imagerotate($im,-90,0);
-                        imagejpeg($rotate,$fullname);
+                        $rotate = imagerotate($im, -90, 0);
+                        imagejpeg($rotate, $fullname);
                         break;
-                    }
+                }
 			}
 		}
     return $this;
@@ -150,7 +154,7 @@ class Upload extends DirInfo
     public function fetch() : array 
     {
         return [
-            'filesize'  => $this->process->getSize(),
+            'filesize'  => $this->process->getSize() ?? $this->process['size'],
             'mimeType'  => $this->mimeType,
             'ofilename' => self::cleansEtcWords(),
             'sfilename' => $this->savefilename
@@ -160,30 +164,30 @@ class Upload extends DirInfo
     # 파일 확장자 추출
 	private function getExtName() : void
     {
-		$count    = strrpos($this->process->getClientFilename(),'.');
+		$count    = strrpos($this->process->getClientFilename(), '.');
 		$this->file_extension = strtolower(substr($this->process->getClientFilename(), $count+1));
-        $this->mimeType = (preg_match('/(gif|jpeg|jpg|png)/',$this->file_extension)) ? 'image/'.$this->file_extension : 'application/'.$this->file_extension;
+        $this->mimeType = (preg_match('/(gif|jpeg|jpg|png)/', $this->file_extension)) ? 'image/'.$this->file_extension : 'application/'.$this->file_extension;
 	}
 
     # 업로드된 파일인지 체크
-	private function is_upload_files(): bool{
-		if(!is_uploaded_file( $this->process['tmp_name'] )) return false;
+	private function is_upload_files(): bool {
+        if (!isset($this->process['tmp_name']) || !is_uploaded_file($this->process['tmp_name'])) {
+            return false;
+        }
 	return true;
 	}
 
     # 첨부 실파일명 특수문자 제거
-	private function cleansEtcWords() : string{
-		$ofilename = preg_replace("/[ #\&\+\-%@=\/\\\:;,\'\"\^`~\|\!\?\*$#<>()\[\]\{\}]/i",'_',$this->process->getClientFilename()); 
+	private function cleansEtcWords() : string {
+		$ofilename = preg_replace("/[ #\&\+\-%@=\/\\\:;,\'\"\^`~\|\!\?\*$#<>()\[\]\{\}]/i", '_', $this->process->getClientFilename() ?? $this->process['name']); 
 		$ofilename = preg_replace('/\s\s+/', '_', $ofilename); // 연속된 공백을 하나의 문자로 변경
 	return $ofilename;
 	}
 
     # 에러 발생시키기
-    private function exceptionsErrorHandler(int $error_no) : void
-    {
-        if($error_no >= 2 && $error_no <= 9) {
-            $error_code = sprintf("E%d",$error_no);
-            throw new Exception($this->error_msg[$error_code]);
+    private function exceptionsErrorHandler(int $error_no) : void {
+        if (array_key_exists($error_no, $this->error_msg)) {
+            throw new Exception($this->error_msg[$error_no]);
         }
     }
 }
