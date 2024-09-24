@@ -3,13 +3,14 @@ namespace Flex\Annona\File;
 
 use Flex\Annona\Dir\DirInfo;
 use Flex\Annona\Cipher\Encrypt;
-use Flex\Annona;
 use Flex\Annona\Image\ImageExif;
 use \Exception;
+use Flex\Annona\Cipher\CipherGeneric;
+use Flex\Annona\Cipher\HashEncoder;
 
 class Upload extends DirInfo
 {
-    public const __version = '2.0';
+    public const __version = '2.1';
     public string $file_extension = '';
 	public string $mimeType;
 	public string $basename;
@@ -86,8 +87,8 @@ class Upload extends DirInfo
     {
         try{
             parent::makesDir();
-        }catch(\Exception $e){
-            throw new ErrorException($e->getMessage());
+        }catch(Exception $e){
+            throw new Exception($e->getMessage());
         }
     return $this;
     }
@@ -97,7 +98,7 @@ class Upload extends DirInfo
     {
         #저장할파일명
 		$tempfilename  = str_replace(['.',' '],['_','_'],microtime());
-		$this->savefilename = sprintf("%s.%s", (new Encrypt($tempfilename))->_hash(), $this->file_extension);
+		$this->savefilename = sprintf("%s.%s", (new CipherGeneric(new HashEncoder($tempfilename)))->hash(), $this->file_extension);
         $fullname = sprintf("%s/%s", $this->directory, $this->savefilename);
 
 		if(!move_uploaded_file($this->process['tmp_name'], $fullname )){
@@ -143,7 +144,7 @@ class Upload extends DirInfo
         return [
             'filesize'  => $this->process['size'],
             'mimeType'  => $this->mimeType,
-            'ofilename' => $this->cleansEtcWords($this->process['name']),
+            'ofilename' => $this->cleansEtcWords(),
             'sfilename' => $this->savefilename,
         ];
     }
@@ -174,7 +175,7 @@ class Upload extends DirInfo
     {
         if($error_no >= 2 && $error_no <= 9) {
             $error_code = sprintf("E%d",$error_no);
-            throw new \Exception($this->error_msg[$error_code]);
+            throw new Exception($this->error_msg[$error_code]);
         }
     }
 }

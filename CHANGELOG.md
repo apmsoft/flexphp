@@ -2,6 +2,9 @@
 
 ## [2.0.1]
 
+### - 2024-09-24
+- annona/file/Upload.class 파일명 암호화 Deprecated 관련 패치
+
 ### - 2024-09-13
 - HttpRequest class v1.1.0 update 
     - post 첨부파일 포함해서 전송할 수 있도록 업데이트
