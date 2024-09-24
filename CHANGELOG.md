@@ -3,7 +3,7 @@
 ## [2.0.2]
 
 ### - 2024-09-24
-- annona/file/Upload.class 파일명 암호화 Deprecated 관련 패치
+- annona/file/Upload.class 파일명 암호화 Deprecated 관련 패치 및 v2.2 업데이트
 - annona/file/*.class 자잘한 코딩 패치 작업
 
 ### - 2024-09-13

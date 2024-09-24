@@ -2,19 +2,19 @@
 namespace Flex\Annona\File;
 
 use Flex\Annona\Dir\DirInfo;
-use Flex\Annona\Cipher\Encrypt;
 use Flex\Annona\Image\ImageExif;
-use \Exception;
 use Flex\Annona\Cipher\CipherGeneric;
 use Flex\Annona\Cipher\HashEncoder;
+use Flex\Annona\Log;
+use \Exception;
 
 class Upload extends DirInfo
 {
-    public const __version = '2.1';
+    public const __version = '2.2';
     public string $file_extension = '';
 	public string $mimeType;
 	public string $basename;
-    private array $process = [];
+    public $process;
     public string $savefilename = '';
 
     private array $error_msg = [
@@ -35,29 +35,30 @@ class Upload extends DirInfo
 	}
 
     # 2 첨부파일
-    public function process(string $process_id) : Upload
+    public function process(string $process_id, array $_files) : Upload
     {
         # 값이 정상적인지 체크
-        if(!isset($_FILES[$process_id])){
-            $this->exceptionsErrorHandler(4);
+        if(!isset($_files[$process_id])){
+            self::exceptionsErrorHandler(4);
         }
 
-        $this->process = $_FILES[$process_id];
-        // Flex\Annona\Log::d('tmp_name' ,$this->process['tmp_name']);
-        // Flex\Annona\Log::d('filename' ,$this->process['name']);
-        // Flex\Annona\Log::d('mimeType',$this->process['type']);
-        // Flex\Annona\Log::d('size', $this->process['size']);
-        // Flex\Annona\Log::d('error', $this->process['error']);
+        $this->process = $_files[$process_id];
+        Log::d('-----------< Upload >-------------------');
+        Log::d('filename' ,$this->process->getClientFilename());
+        Log::d('mimeType',$this->process->getClientMediaType());
+        Log::d('size', $this->process->getSize());
+        Log::d('error', $this->process->getError());
+        Log::d('--------------------------------------');
 
         # 기초에러
-        if($this->process['error'] > 0){
-            $this->exceptionsErrorHandler($this->process['error']);
+        if($this->process->getError() > 0){
+            self::exceptionsErrorHandler($this->process->getError());
         }
 
         # 업로드 된 파일인지 체크
-        if(!$this->is_upload_files()){
-            $this->exceptionsErrorHandler(9);
-        }
+        // if(!self::is_upload_files()){
+        //     self::exceptionsErrorHandler(9);
+        // }
 
     return $this;
     }
@@ -65,9 +66,9 @@ class Upload extends DirInfo
     # 3 업로드 허용된 파일 인치 체크
     public function filterExtension(array $allowe_extension=['jpg','jpeg','png','gif']) : Upload
 	{
-        $this->getExtName();
+        self::getExtName();
         if(!in_array($this->file_extension,$allowe_extension)){
-			$this->exceptionsErrorHandler(5);
+			self::exceptionsErrorHandler(5);
         }
     return $this;
     }
@@ -76,8 +77,8 @@ class Upload extends DirInfo
     public function filterSize(int $size) : Upload 
     {
         $maxsize = (int)(1024 * 1024 * $size);
-        if($this->process['size'] >= $maxsize){
-            $this->exceptionsErrorHandler(2);
+        if($this->process->getSize() >= $maxsize){
+            self::exceptionsErrorHandler(2);
         }
     return $this;
     }
@@ -101,9 +102,16 @@ class Upload extends DirInfo
 		$this->savefilename = sprintf("%s.%s", (new CipherGeneric(new HashEncoder($tempfilename)))->hash(), $this->file_extension);
         $fullname = sprintf("%s/%s", $this->directory, $this->savefilename);
 
-		if(!move_uploaded_file($this->process['tmp_name'], $fullname )){
-            $this->exceptionsErrorHandler(7);
+        # 파일 저장
+        try {
+            # BufferedBody 객체에서 내용을 가져옴
+            $bodyContent = (string)$this->process->getStream();
+            file_put_contents($fullname, $bodyContent);
+        } catch (Exception $e) {
+            Log::e(__LINE__, $e->getMessage());
+            self::exceptionsErrorHandler(7);
         }
+
     return $this;
 	}
 
@@ -142,18 +150,18 @@ class Upload extends DirInfo
     public function fetch() : array 
     {
         return [
-            'filesize'  => $this->process['size'],
+            'filesize'  => $this->process->getSize(),
             'mimeType'  => $this->mimeType,
-            'ofilename' => $this->cleansEtcWords(),
-            'sfilename' => $this->savefilename,
+            'ofilename' => self::cleansEtcWords(),
+            'sfilename' => $this->savefilename
         ];
     }
 
     # 파일 확장자 추출
 	private function getExtName() : void
     {
-		$count    = strrpos($this->process['name'],'.');
-		$this->file_extension = strtolower(substr($this->process['name'], $count+1));
+		$count    = strrpos($this->process->getClientFilename(),'.');
+		$this->file_extension = strtolower(substr($this->process->getClientFilename(), $count+1));
         $this->mimeType = (preg_match('/(gif|jpeg|jpg|png)/',$this->file_extension)) ? 'image/'.$this->file_extension : 'application/'.$this->file_extension;
 	}
 
@@ -165,7 +173,7 @@ class Upload extends DirInfo
 
     # 첨부 실파일명 특수문자 제거
 	private function cleansEtcWords() : string{
-		$ofilename = preg_replace("/[ #\&\+\-%@=\/\\\:;,\'\"\^`~\|\!\?\*$#<>()\[\]\{\}]/i",'_',$this->process['name']); 
+		$ofilename = preg_replace("/[ #\&\+\-%@=\/\\\:;,\'\"\^`~\|\!\?\*$#<>()\[\]\{\}]/i",'_',$this->process->getClientFilename()); 
 		$ofilename = preg_replace('/\s\s+/', '_', $ofilename); // 연속된 공백을 하나의 문자로 변경
 	return $ofilename;
 	}
