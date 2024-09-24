@@ -10,7 +10,7 @@ use \Exception;
 
 class Upload extends DirInfo
 {
-    public const __version = '2.2';
+    public const __version = '2.2.1';
     public string $file_extension = '';
 	public string $mimeType;
 	public string $basename;
@@ -164,10 +164,12 @@ class Upload extends DirInfo
     # 파일 확장자 추출
 	private function getExtName() : void
     {
-		$count    = strrpos($this->process->getClientFilename(), '.');
-		$this->file_extension = strtolower(substr($this->process->getClientFilename(), $count+1));
-        $this->mimeType = (preg_match('/(gif|jpeg|jpg|png)/', $this->file_extension)) ? 'image/'.$this->file_extension : 'application/'.$this->file_extension;
-	}
+        $filename = $this->process->getClientFilename() ?? $this->process['name'];
+        $count = strrpos($filename, '.');
+        $this->file_extension = strtolower(substr($filename, $count + 1));
+        $this->mimeType = (preg_match('/(gif|jpeg|jpg|png)/', $this->file_extension)) ? 'image/' . $this->file_extension : 'application/' . $this->file_extension;
+    }
+
 
     # 업로드된 파일인지 체크
 	private function is_upload_files(): bool {
