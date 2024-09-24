@@ -13,7 +13,6 @@ class Upload extends DirInfo
     public const __version = '2.2.2';
     public string $file_extension = '';
 	public string $mimeType;
-	public string $basename;
     public $process;
     public string $savefilename = '';
 
@@ -65,7 +64,7 @@ class Upload extends DirInfo
     # 3 업로드 허용된 파일 인치 체크
     public function filterExtension(array $allowe_extension=['jpg','jpeg','png','gif']) : Upload
 	{
-        self::getExtName();
+        $this->getExtName();
         if (!in_array($this->file_extension, $allowe_extension)) {
 			self::exceptionsErrorHandler(UPLOAD_ERR_EXTENSION);
         }
@@ -76,11 +75,13 @@ class Upload extends DirInfo
     public function filterSize(int $size) : Upload 
     {
         $maxsize = (int)(1024 * 1024 * $size);
-        if ($this->process->getSize() >= $maxsize) {
+        $fileSize = $this->process->getSize() ?? $this->process['size'];
+        if ($fileSize >= $maxsize) {
             self::exceptionsErrorHandler(UPLOAD_ERR_INI_SIZE);
         }
-    return $this;
+        return $this;
     }
+
 
     # 5 업로드할 디렉토리 체크 및 만들기
     public function makeDirs() : Upload
