@@ -1,9 +1,7 @@
 <?php
 namespace Flex\Annona\File;
 
-use Flex\Annona;
 use Flex\Annona\File\FileSize;
-use \Exception;
 
 # parnet :
 # purpose : 파일다운로드

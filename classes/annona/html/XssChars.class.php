@@ -111,7 +111,7 @@ class XssChars
 			case 'TEXT':
 				$this->description = strtr($this->description, ["&nbsp;"=>' ']);
 				$this->description = strtr($this->description,["\r\n"=>"\n"]);
-				$this->description = $this->setAutoLink($this->description);
+				$this->description = $this->setAutoLink();
 				$this->allow_tags  = ['<a>'];
 				$this->description = $this->cleanTags();
 				break;
@@ -125,11 +125,11 @@ class XssChars
 			case 'HTML':
 				$this->description = strtr($this->description,["\r\n"=>"\n"]);
 				$this->description = strtr($this->description,["\n"=>"<br>"]);
-				$this->description = $this->setAutoLink($this->description);
+				$this->description = $this->setAutoLink();
 				$this->description = htmlspecialchars($this->description);
 				break;
 			case 'XHTML' :
-				$this->description = $this->getXHtmlHighlight($this->description);
+				$this->description = $this->getXHtmlHighlight();
 				$this->description = $this->setAutoLink();
 				break;
 		}

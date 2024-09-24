@@ -33,7 +33,7 @@ final class FileRemove extends DirObject
         {
             foreach($this->list as $filename){
                 \Flex\Annona\Log::d($this->directory.'/'.$filename);
-                unlink($this->directory.'/'.$filename) or throw new ErrorException('e_file_deletion_failed');
+                unlink($this->directory.'/'.$filename) or throw new \Exception('e_file_deletion_failed');
             }
         }
     }

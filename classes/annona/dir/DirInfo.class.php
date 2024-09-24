@@ -24,8 +24,8 @@ class DirInfo
 				foreach($dir_args as $folder){
 					$current_dir = $current_dir.'/'.$folder;
 					if(!$this->isDir($current_dir)){
-						if(!mkdir($current_dir,self::permission)) throw new ErrorException('e_filenotfound');
-						if(!chmod($current_dir,self::permission)) throw new ErrorException('e_filenotfound');
+						if(!mkdir($current_dir,self::permission)) throw new \Exception('e_filenotfound');
+						if(!chmod($current_dir,self::permission)) throw new \Exception('e_filenotfound');
 					}
 				}
 			}

@@ -23,13 +23,13 @@ class ImageExif
 	public function __construct(string $picture){
 		# 로컬 파인인지 체크
 		if(!file_exists($picture))
-			throw new ErrorException(__CLASS__.' :: '.__LINE__.' '.strval($picture).' not found');
+			throw new \Exception(__CLASS__.' :: '.__LINE__.' '.strval($picture).' not found');
 
 		# 함수 enable 체크
 		if(function_exists('exif_read_data')){
 			$this->exifargs = @exif_read_data($picture,0,true);
 			if($this->exifargs ===false)
-				throw new ErrorException(__CLASS__.' :: '.__LINE__.' exif_read_data functions are not available');
+				throw new \Exception(__CLASS__.' :: '.__LINE__.' exif_read_data functions are not available');
 		}
 	}
 	

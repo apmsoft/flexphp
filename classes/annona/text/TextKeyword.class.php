@@ -82,7 +82,7 @@ class TextKeyword
 		}
 
 		# 필터
-		$argv = $this->value;
+		$argv = (is_array($this->value)) ? $this->value : [$this->value];
 		$data = array();
 		foreach($argv as $w)
 		{
