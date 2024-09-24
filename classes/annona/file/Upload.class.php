@@ -10,7 +10,7 @@ use \Exception;
 
 class Upload extends DirInfo
 {
-    public const __version = '2.2.1';
+    public const __version = '2.2.2';
     public string $file_extension = '';
 	public string $mimeType;
 	public string $basename;
@@ -110,6 +110,12 @@ class Upload extends DirInfo
                     throw new Exception('Failed to write file to disk.');
                 }
             } else {
+                # 업로드된 파일인지 체크
+                if (!$this->is_upload_files()) {
+                    self::exceptionsErrorHandler(UPLOAD_ERR_NO_FILE);
+                }
+
+                # 파일 이동 저장
                 if (!move_uploaded_file($this->process['tmp_name'], $fullname)) {
                     self::exceptionsErrorHandler(UPLOAD_ERR_CANT_WRITE);
                 }
