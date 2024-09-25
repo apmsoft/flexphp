@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 # reactphp ServerRequestInterface 용 확장 클래스
 class Requested
 {
-    public const __version = '0.7';
+    public const __version = '1.0';
 	private array $params   = [];
 
 	public function __construct(
@@ -31,38 +31,14 @@ class Requested
     return $this;
 	}
 
-	public function getHeaderLine( string $headline_key) : string
-	{
-		$result = '';
-
-		if($this->request->getHeaderLine($headline_key)) {
-            $result = $this->request->getHeaderLine($headline_key);
-        }
-
-		return $result;
-	}
-
-	public function getServerParams() : array{
-		return $this->request->getServerParams();
-	}
-
-	public function getUriPath() : string
-	{
-		return $this->request->getUri()->getPath();
-	}
-
-	public function getMethod(): string
-	{
-		return $this->request->getMethod();
-	}
+	public function __call($name, $arguments)
+    {
+        return call_user_func_array([$this->request, $name], $arguments);
+    }
 
     public function fetch() : array{
 		return $this->params;
     }
-
-	public function getUploadedFiles() : array{
-		return $this->request->getUploadedFiles();
-	}
 
 	public function __get($propertyName) : mixed
 	{
@@ -70,6 +46,7 @@ class Requested
 		if(isset($this->params[$propertyName])){
 			return $this->params[$propertyName];
 		}
+		return null;
 	}
 
 	public function __set($key, $value){

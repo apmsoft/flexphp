@@ -2,6 +2,9 @@
 
 ## [2.0.2]
 
+### - 2024-09-25
+- util/Requested.class v1.0 reactphp ServerRequestInterface 전체 기능을 사용할 수 있도록 확장
+
 ### - 2024-09-24
 - annona/file/Upload.class v2.2.3 버그 패치
 - annona/file/Upload.class v2.2.2 reactphp request, _FILES 관련 호환성 업데이트
