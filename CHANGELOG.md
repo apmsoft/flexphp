@@ -2,6 +2,9 @@
 
 ## [2.0.2]
 
+### - 2024-09-26
+- annona/token/*.class update
+
 ### - 2024-09-25
 - util/Requested.class v1.0 reactphp ServerRequestInterface 전체 기능을 사용할 수 있도록 확장
 

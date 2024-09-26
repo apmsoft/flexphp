@@ -9,11 +9,10 @@ use Flex\Annona\Token\TokenAbstract;
 
 class TokenGenerateAtype extends TokenAbstract
 {
-    public const __version = '1.2';
-    public string $value = '';
+    public const __version = '1.2.1';
 
     public function __construct(string|null $generate_string, int $length=50){
-        $this->value = $generate_string ?? parent::generateString($length);
+        $this->value = $generate_string ?? parent::generateRandomString($length);
     }
 
     # @abstract 해시키 : SHA512 | SHA256
@@ -31,7 +30,7 @@ class TokenGenerateAtype extends TokenAbstract
     return $this;
     }
 
-    # @abstract 토큰생성 : _base64_urlencode
+    # @abstract 토큰 디코드 : _base64_urldecode
     public function decodeToken(string $token) : TokenGenerateAtype {
         $this->value = (new CipherGeneric(new Base64UrlEncoder()))->decode($token);
     return $this;

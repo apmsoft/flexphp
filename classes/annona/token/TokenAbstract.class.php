@@ -5,13 +5,15 @@ use Flex\Annona\Random\Random;
 
 abstract class TokenAbstract
 {
-    public const __version = '1.1';
+    public const __version = '1.2.1';
+    public string $value = '';
+
     protected function cleanEtcWords(string $token){
         return preg_replace("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i",'',$token);
     }
 
     # 길이만큼랜덤으로 문자를 조합
-    public function generateString(int $length) : string
+    public function generateRandomString(int $length) : string
     {
         return (new Random([]))->_string($length);
     }

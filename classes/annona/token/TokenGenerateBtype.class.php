@@ -7,15 +7,14 @@ use Flex\Annona\Token\TokenAbstract;
 
 class TokenGenerateBtype extends TokenAbstract
 {
-    public const __version = '1.2';
-    private string $value = '';
+    public const __version = '1.2.1';
 
     # 랜덤 : AE68A9MPVZ
     public function __construct(string|null $generate_string, int $length=50){
-        $this->value = $generate_string ?? parent::generateString($length);
+        $this->value = $generate_string ?? parent::generateRandomString($length);
     }
 
-    # @abstract 해시키 : _md5_base64
+    # @abstract 해시키 : Hash 256, 512
     # 5jF4rq3N9V3RLHEBW2RKg
     public function generateHashKey() : TokenGenerateBtype
     {
