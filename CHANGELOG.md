@@ -2,6 +2,9 @@
 
 ## [2.0.2]
 
+### - 2024-09-30
+- DoInterface.class new add
+
 ### - 2024-09-26
 - annona/token/*.class update
 
