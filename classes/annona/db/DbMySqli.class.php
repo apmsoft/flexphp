@@ -9,7 +9,7 @@ use \ErrorException;
 
 class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAccess
 {
-	public const __version = '2.1.2';
+	public const __version = '2.2.0';
 
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
@@ -75,7 +75,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 		$encryption_mode_qry = sprintf("SELECT @@session.block_encryption_mode as em");
 		$encryption_row = $this->get_record_assoc($encryption_mode_qry);
 		if(isset($encryption_row['em'])){
-			if($encryption_row['em'] != $encryption_mode){
+			if($encryption_row['em'] != self::BLOCK_ENCRYPTION_MODE){
 				$set_encrypt_qry = sprintf("SET @@session.block_encryption_mode = '%s'", self::BLOCK_ENCRYPTION_MODE);
 				$this->query($set_encrypt_qry);
 			}
@@ -100,14 +100,16 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 		$result = '';
 		if($column_name && $column_name !='')
 		{
+			$result = sprintf(
+				"(CASE WHEN %s REGEXP '^[0-9]+$' THEN %s ELSE CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8) END)",
+			$column_name,
+						$column_name,
+							$column_name,
+								_DB_SHA2_ENCRYPT_KEY_,
+									self::RANDOM_BYTES
+			);
 			if(!$is_as){
-				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8)) as %s",
-					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES, $column_name
-				);
-			}else{
-				$result = sprintf("(CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8))",
-					$column_name, _DB_SHA2_ENCRYPT_KEY_, self::RANDOM_BYTES
-				);
+				$result = sprintf("%s as %s",$result, $column_name);
 			}
 		}
 		return $result;
@@ -180,12 +182,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 	public function selectCrypt(...$columns) : DbMySqli{
 		$argv = [];
 		foreach($columns as $name){
-			$validation = new Validation($name);
-			if($validation->isNumber()){
-				$argv[] = $name;
-			}else{
-				$argv[] = $this->aes_decrypt($name,false);
-			}
+			$argv[] = $this->aes_decrypt($name,false);
 		}
 		$value = implode(',', $argv);
 		parent::set('columns', $value);
