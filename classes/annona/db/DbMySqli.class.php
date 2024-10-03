@@ -9,7 +9,7 @@ use \ErrorException;
 
 class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAccess
 {
-	public const __version = '2.2.0';
+	public const __version = '2.2.1';
 
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
@@ -101,7 +101,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 		if($column_name && $column_name !='')
 		{
 			$result = sprintf(
-				"(CASE WHEN %s REGEXP '^[0-9]+$' THEN %s ELSE CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8) END)",
+				"(CASE WHEN DATA_TYPE IN ('int', 'decimal', 'bigint', 'smallint', 'tinyint') THEN %s ELSE CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8) END)",
 			$column_name,
 						$column_name,
 							$column_name,

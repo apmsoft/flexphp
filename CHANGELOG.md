@@ -2,6 +2,9 @@
 
 ## [2.0.2]
 
+### - 2024-10-03
+- annona/db/DbMySqli.class.php v2.2.1 decrypt REGEXP 에서 DATE_TYPE 으로 변경 속도 향상
+
 ### - 2024-10-02
 - annona/db/DbMySqli.class.php v2.2.0 으로 버전업
 -- selectCrypt 숫자 데이터는 decrypt 하지 않도록 업데이트 퀄럼 기반이 아닌 데이터 값 기준
