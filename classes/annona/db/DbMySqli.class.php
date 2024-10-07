@@ -101,7 +101,7 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 		if($column_name && $column_name !='')
 		{
 			$result = sprintf(
-				"(CASE WHEN %s LIKE '%%^[0-9]%%' THEN %s ELSE CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8) END)",
+				"(CASE WHEN %s REGEXP '^[0-9]+$' THEN %s ELSE CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8) END)",
 			$column_name,
 						$column_name,
 							$column_name,
