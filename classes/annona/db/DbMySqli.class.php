@@ -9,7 +9,7 @@ use \ErrorException;
 
 class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAccess
 {
-	public const __version = '2.2.4';
+	public const __version = '2.2.3';
 
 	# 암호화 / 복호화
 	const BLOCK_ENCRYPTION_MODE = "aes-256-cbc";	#AES
@@ -95,20 +95,22 @@ class DbMySqli extends QueryBuilderAbstract implements DbMySqlInterface,ArrayAcc
 	}
 
 	# 복호화
-	private function aes_decrypt(string $column_name) : string
+	private function aes_decrypt(string $column_name,bool $is_as =true) : string
 	{
 		$result = '';
 		if($column_name && $column_name !='')
 		{
 			$result = sprintf(
-				"(CASE WHEN %s NOT LIKE '%[^0-9]%' THEN %s ELSE CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8) END)",
+				"(CASE WHEN %s REGEXP '^[0-9]+$' THEN %s ELSE CONVERT( AES_DECRYPT(UNHEX(%s), SHA2('%s',512), RANDOM_BYTES(%d)) USING utf8) END)",
 			$column_name,
 						$column_name,
 							$column_name,
 								_DB_SHA2_ENCRYPT_KEY_,
 									self::RANDOM_BYTES
 			);
-			$result = sprintf("%s as %s",$result, $column_name);
+			if(!$is_as){
+				$result = sprintf("%s as %s",$result, $column_name);
+			}
 		}
 		return $result;
 	}
