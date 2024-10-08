@@ -2,6 +2,9 @@
 
 ## [2.0.2]
 
+### - 2024-10-08
+- annona/db/DbMySqli.class.php v2.2.4 decrypt 버그수정
+
 ### - 2024-10-07
 - annona/db/DbMySqli.class.php v2.2.3 decrypt 버그수정
 
