@@ -8,6 +8,7 @@
 - composer 규격에 따른 클래스명에 .class 를 제거
 - components 폴더명 및 패키지명 대거 수정
 - README.md 에 composer install 명령어 설명 추가
+- .class 클래스 파일명에서 제거
 
 ### - 2024-10-09
 - util/불필요한 클래스 파일 삭제

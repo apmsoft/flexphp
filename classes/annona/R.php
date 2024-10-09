@@ -24,9 +24,6 @@ final class R
     public static function init(string $lang='', array $support_langs=[])
     {
         $language = (trim($lang)) ? $lang : '';
-        if(!$language){
-            $language = (defined('_LANG_')) ? _LANG_ : 'ko';
-        }
 
         R::$language = $language;
 
