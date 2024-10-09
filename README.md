@@ -25,5 +25,8 @@ http://flexphp.fancyupsoft.com
     }
 }
 
-# 
+# 최신 버전으로받기
 composer require flexphp/annona:^dev-main
+
+# 버전 명시 해서 받기
+composer require flexphp/annona:^2.5
