@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Flex\\": "classes/"
+            "Flex\\Annona\\": "classes/annona/"
         },
         "files": [
             "config/config.inc.php"
