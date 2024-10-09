@@ -4,6 +4,7 @@
 
 ### - 2024-10-09
 - util/불필요한 클래스 파일 삭제
+- 불필요한 test 파일 삭제
 
 ### - 2024-10-08
 - annona/db/DbMySqli.class.php v2.2.4 decrypt 버그수정
