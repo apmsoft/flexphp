@@ -2,7 +2,7 @@
 session_start();
 
 # $path 경로 설정 필요 및 설정
-define('_ROOT_PATH_',$path);
+define('_ROOT_PATH_',dirname(dirname(__DIR__)));
 
 # 기본 설정
 define('_LIBS_','libs');            #PHP 외부라이브러리
