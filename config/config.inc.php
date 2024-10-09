@@ -1,8 +1,9 @@
 <?php
-session_start();
+use Flex\Annona\R;
+use Flex\Annona\App;
 
 # $path 경로 설정 필요 및 설정
-define('_ROOT_PATH_',dirname(dirname(__DIR__)));
+define('_ROOT_PATH_',dirname(__DIR__));
 
 # 기본 설정
 define('_LIBS_','libs');            #PHP 외부라이브러리
@@ -18,33 +19,14 @@ define('_DATA_','_data');           #파일업로드 및 캐슁파일 위치(707
 define('_UPLOAD_','_data/files');   #첨부파일등
 
 # 데이타베이스 정보
-// include_once _ROOT_PATH_.'/config/config.db.php';
-
-# 클래스 자동 인클루드 /--------------
-spl_autoload_register(function($class_name){
-    $paths =explode('\\',preg_replace('/([a-z0-9])([A-Z.])/',"$1$2",$class_name));
-    if(!strcmp($paths[0],'Flex'))
-    {
-        $cnt = count($paths)-1;
-        $cut = $cnt-1;
-        $class_package   = implode('/',array_map('strtolower',array_slice($paths,1,$cut)));
-        $class_path_name = sprintf("%s/%s",$class_package,$paths[$cnt]);
-        if(!class_exists($class_path_name,false))
-        {
-            # classes 폴더
-            if(file_exists(_ROOT_PATH_.'/classes/'.$class_path_name.'.class.php')){
-                include_once _ROOT_PATH_.'/classes/'.$class_path_name.'.class.php';
-            }
-        }
-    }
-});
+include_once _ROOT_PATH_.'/config/config.db.php';
 
 # 기본 선언 클래스 /-------------------
-Flex\Annona\App::init();
+App::init();
 
 # resource JSON 자동 로드 /---------------
-Flex\Annona\R::init(Flex\Annona\App::$language);
-Flex\Annona\R::__autoload_resource([
+R::init(App::$language ?? '');
+R::__autoload_resource([
     _VALUES_  => ['sysmsg','strings','integers','arrays']
 ]);
 
@@ -57,21 +39,4 @@ foreach($__autoload_helper_funs as $fun_name){
         include_once $tmp_fun_filename;
     }
 }
-
-# 세션값 설정
-# 웹 세션
-$auth_type['service'] = [
-    'id'     => 'auth_id',
-    'userid' => 'auth_userid',
-    'level'  => 'auth_level',
-    'name'   => 'auth_name'
-];
-
-# 관리자 세션
-$auth_type['topadm'] = [
-    'id'     => 'topadm_id',
-    'userid' => 'topadm_userid',
-    'level'  => 'topadm_level',
-    'name'   => 'topadm_name'
-];
 ?>
