@@ -8,3 +8,5 @@ _data
 
 # chmod -R 707 _data
 
+# 메뉴얼
+http://flexphp.fancyupsoft.com
